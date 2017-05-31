@@ -8,8 +8,8 @@ export const login = (data) => {
 
     axios.post(apiRoute('/login'), { auth: data })
       .then(response => {
-        if (response.data.error) {
-          dispatch({ type: 'SET_LOGIN_ERROR', data: response.data.msg })
+        if (!response.data.jwt) {
+          dispatch({ type: 'SET_LOGIN_ERROR' })
         }
         else {
           const jwt = response.data.jwt
@@ -20,7 +20,7 @@ export const login = (data) => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        dispatch({ type: 'SET_LOGIN_ERROR' })
       })
       .then(() => {
         dispatch({ type: 'SET_LOGIN_LOADING', data: false })
@@ -95,7 +95,7 @@ export const getCurrentUser = () => {
   return dispatch => {
     dispatch({ type: 'SET_USER_LOADING', data: true })
 
-    axios.get(apiRoute('/v1/users/current'))
+    axios.get(apiRoute('/users/current'))
       .then(response => {
         dispatch({ type: 'SET_CURRENT_USER', data: response.data })
       })

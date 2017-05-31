@@ -19,7 +19,10 @@ const session = (state={}, action) => {
     case 'SET_VERIFY_EMAIL_LOADING':
       return {...state, verifyEmailLoading: action.data}
     case 'SET_LOGIN_ERROR':
-      return {...state, loginError: action.data}
+      return {
+        ...state,
+        loginError: "Invalid email/password"
+      }
     case 'SET_SIGNUP_ERROR':
       return {...state, signupErrors: action.data}
     case 'SET_VERIFY_EMAIL_ERROR':
