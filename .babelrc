@@ -3,7 +3,7 @@
     ["es2015", {"modules": false}],
     // webpack understands the native import syntax, and uses it for tree shaking
 
-    "stage-0",
+    "stage-1",
 
     "react"
     // Transpile React components to JavaScript
