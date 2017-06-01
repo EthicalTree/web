@@ -41,7 +41,7 @@ class VerifyEmailModal extends React.Component {
         className="verify-email small-modal"
         loading={session.verifyEmailLoading}
         contentLabel="Verify Email"
-        onRequestClose={e => { dispatch({ type: 'SET_VERIFY_EMAIL_MODAL', data: false }) }}
+        onRequestClose={e => { dispatch({ type: 'SET_VERIFYING_EMAIL_MODAL', data: false }) }}
         isOpen={session.isVerifyingEmail}>
 
         <Container>
