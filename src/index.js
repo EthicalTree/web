@@ -23,12 +23,11 @@ render(
 // for hot reloading
 if (module.hot) {
   module.hot.accept('./root/Root', () => {
-    const RootContainer = require('./root/Root').default
     render(
       <AppContainer>
-        <RootContainer store={store} />
+        <Root store={reduxStore} />
       </AppContainer>,
-      document.getElementById('app')
+      document.getElementById('root')
     )
   })
 }

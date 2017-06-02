@@ -51,15 +51,15 @@ module.exports = {
     // Note: instead of the default WebpackDevServer client, we use a custom one
     // to bring better experience for Create React App users. You can replace
     // the line below with these two lines if you prefer the stock client:
-    // require.resolve('webpack-dev-server/client') + '?/',
-    // require.resolve('webpack/hot/dev-server'),
-    require.resolve('react-dev-utils/webpackHotDevClient'),
+    require.resolve('react-hot-loader/patch'),
+    require.resolve('webpack-dev-server/client') + '?/',
+    require.resolve('webpack/hot/only-dev-server'),
+    // require.resolve('react-dev-utils/webpackHotDevClient'),
     // We ship a few polyfills by default:
     require.resolve('./polyfills'),
     // Errors should be considered fatal in development
     require.resolve('react-error-overlay'),
     // Finally, this is your app's code:
-    'react-hot-loader/patch',
     paths.appIndexJs,
     // We include the app code last so that if there is a runtime error during
     // initialization, it doesn't blow up the WebpackDevServer client, and
@@ -192,10 +192,6 @@ module.exports = {
         include: paths.appSrc,
         loader: require.resolve('babel-loader'),
         options: {
-          // @remove-on-eject-begin
-          babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
-          // @remove-on-eject-end
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
           // directory for faster rebuilds.
@@ -263,6 +259,7 @@ module.exports = {
     new webpack.DefinePlugin(env.stringified),
     // This is necessary to emit hot updates (currently CSS only):
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     // Watcher doesn't work well if you mistype casing in a path so we use
     // a plugin that prints an error when you attempt to do this.
     // See https://github.com/facebookincubator/create-react-app/issues/240
