@@ -1,3 +1,5 @@
+import './Modal.sass'
+
 import React from 'react'
 import ReactModal from 'react-modal'
 

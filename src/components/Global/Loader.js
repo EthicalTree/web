@@ -1,3 +1,5 @@
+import './Loader.sass'
+
 import React from 'react'
 import Spinner from 'react-spinkit'
 

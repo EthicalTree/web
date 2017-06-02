@@ -5,7 +5,7 @@ import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
 import axios from 'axios'
 
-import './css/listing_detail.sass'
+import './ListingDetail.sass'
 
 const ListingImages = (props) => {
   let slides = props.images.map(image => {

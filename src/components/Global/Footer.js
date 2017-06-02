@@ -1,3 +1,5 @@
+import './Footer.sass'
+
 import React from 'react'
 
 const Footer = (props) => {

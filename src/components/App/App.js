@@ -1,10 +1,8 @@
-import './css/application.sass'
-
 import React from 'react'
 import { connect } from 'react-redux'
 import { Header, Footer } from '../Global'
 import { getCurrentUser } from '../../actions/session'
-import ListingDetail from '../ListingDetail'
+import ListingDetail from '../ListingDetail/ListingDetail'
 import { authenticate } from '../../utils/api'
 
 import {
