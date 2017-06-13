@@ -43,10 +43,27 @@ body
   p
     font-family: $font-family-2
 
-  ::-webkit-input-placeholder
-    font-weight: normal
-    font-family: $font-family-1
+  .form-control
+    &::-webkit-input-placeholder
+      font-weight: $font-light
+      font-family: $font-family-1
+      color: lighten($color-inverse, 30%)
 
-  ::-moz-placeholder
-    font-weight: normal
-    font-family: $font-family-1
+    &::-moz-placeholder
+      font-weight: $font-light
+      font-family: $font-family-1
+      color: lighten($color-inverse, 30%)
+
+// Buttons
+#root
+  .btn
+    color: $color-white
+
+  .btn-danger
+    background: lighten($color-success, 20%)
+    border-color: lighten($color-success, 20%)
+
+    &:hover
+      background: $color-success
+      border-color: $color-success
+

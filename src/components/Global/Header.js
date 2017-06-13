@@ -50,11 +50,20 @@ const Header = (props) => {
                 </NavLink>
               </NavItem>
 
-              <NavItem>
+              <NavItem className="mr-4">
                 <NavLink
                   href="#"
                   onClick={e => { dispatch({ type: 'SET_LOGIN_MODAL', data: true }) }}>
                   Login
+                </NavLink>
+              </NavItem>
+
+              <NavItem>
+                <NavLink
+                  className="btn btn-success"
+                  href="#"
+                  onClick={e => { dispatch({ type: 'SET_NEW_LISTING_MODAL', data: true }) }}>
+                  Add Listing
                 </NavLink>
               </NavItem>
             </Nav>

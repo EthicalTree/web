@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Header, Footer } from '../Global'
 import { getCurrentUser } from '../../actions/session'
-import ListingDetail from '../ListingDetail/ListingDetail'
 import { authenticate } from '../../utils/api'
 
 import {
@@ -10,6 +9,11 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+
+import {
+  Listing,
+  AddListingModal
+} from '../Listing'
 
 import {
   LoginModal,
@@ -45,13 +49,14 @@ class App extends React.Component {
             <Header />
             <div className="container">
               <Route path="/" exact={true} component={TmpRoot} />
-              <Route path="/listing/:slug" component={ListingDetail} />
+              <Route path="/listing/:slug" component={Listing} />
             </div>
             <Footer />
             <LoginModal />
             <LogoutModal />
             <SignupModal />
             <VerifyEmailModal />
+            <AddListingModal />
           </div>
         </Router>
       </div>

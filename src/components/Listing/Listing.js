@@ -5,7 +5,7 @@ import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
 import axios from 'axios'
 
-import './ListingDetail.sass'
+import './Listing.sass'
 
 const ListingImages = (props) => {
   let slides = props.images.map(image => {
@@ -186,7 +186,7 @@ const ListingInfo = (props) => {
   )
 }
 
-export default class ListingDetail extends React.Component {
+export default class Listing extends React.Component {
 
   constructor(props) {
     super(props)
