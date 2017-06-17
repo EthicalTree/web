@@ -62,7 +62,7 @@ const Header = (props) => {
                 <NavLink
                   className="btn btn-success"
                   href="#"
-                  onClick={e => { dispatch({ type: 'SET_NEW_LISTING_MODAL', data: true }) }}>
+                  onClick={e => { dispatch({ type: 'SET_ADD_LISTING_MODAL', data: true }) }}>
                   Add Listing
                 </NavLink>
               </NavItem>

@@ -49,7 +49,7 @@ class App extends React.Component {
             <Header />
             <div className="container">
               <Route path="/" exact={true} component={TmpRoot} />
-              <Route path="/listing/:slug" component={Listing} />
+              <Route path="/listings/:slug" component={Listing} />
             </div>
             <Footer />
             <LoginModal />

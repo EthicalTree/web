@@ -3,8 +3,6 @@ import Slider from 'react-slick'
 
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
-import axios from 'axios'
-
 import './Listing.sass'
 
 const ListingImages = (props) => {
@@ -231,14 +229,6 @@ export default class Listing extends React.Component {
       rating: rating,
       locations: locations
     }
-
-    //this.fetchListing()
-  }
-
-  fetchListing() {
-    axios.get(`/listings/${this.props.mathc.slug}`).then(listing => {
-      this.setState(listing.data)
-    })
   }
 
   render() {

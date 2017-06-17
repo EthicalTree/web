@@ -1,29 +1,44 @@
 import axios from 'axios'
 
-import { apiRoute, authenticate, deauthenticate } from '../utils/api'
+import { apiRoute } from '../utils/api'
 
-export const login = (data) => {
+export const getListing = (slug) => {
   return dispatch => {
-    dispatch({ type: 'SET_LOGIN_LOADING', data: true })
+    dispatch({ type: 'SET_GET_LISTING_LOADING', data: true })
 
-    axios.post(apiRoute('/login'), { auth: data })
+    axios.get(`/v1/listings/${slug}`).then(listing => {
+        dispatch({ type: 'SET_LISTING', data: listing.data })
+      })
+      .catch(() => {
+        dispatch({ type: 'SET_GET_LISTING_ERROR' })
+      })
+      .then(() => {
+        dispatch({ type: 'SET_GET_LISTING_LOADING', data: false })
+      })
+  }
+}
+
+export const addListing = (data, history) => {
+  return dispatch => {
+    dispatch({ type: 'SET_ADD_LISTING_LOADING', data: true })
+
+    axios.post(apiRoute('/v1/listings'), { listing: data })
       .then(response => {
-        if (!response.data.jwt) {
-          dispatch({ type: 'SET_LOGIN_ERROR' })
+        if (response.data.errors) {
+          dispatch({ type: 'SET_ADD_LISTING_ERROR', data: response.data.errors })
         }
         else {
-          const jwt = response.data.jwt
-          authenticate(jwt)
-
-          dispatch({ type: 'LOGIN', data: response.data })
-          dispatch(getCurrentUser())
+          dispatch({ type: 'SET_LISTING', data: response.data })
+          dispatch({ type: 'SET_ADD_LISTING_MODAL', data: false })
+          console.log(response.data.slug)
+          history.push(`/listings/${response.data.slug}`)
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_LOGIN_ERROR' })
+        dispatch({ type: 'SET_ADD_LISTING_ERROR' })
       })
       .then(() => {
-        dispatch({ type: 'SET_LOGIN_LOADING', data: false })
+        dispatch({ type: 'SET_ADD_LISTING_LOADING', data: false })
       })
   }
 }
