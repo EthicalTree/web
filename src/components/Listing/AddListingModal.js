@@ -40,8 +40,8 @@ class AddListingModal extends React.Component {
 
     return (
       <Modal
-        className="login-modal small-modal"
-        loading={listing.loginLoading}
+        className="add-description-modal small-modal"
+        loading={listing.isAddingListingLoading}
         contentLabel="Add New Listing"
         onRequestClose={e => { dispatch({ type: 'SET_ADD_LISTING_MODAL', data: false }) }}
         isOpen={listing.isAddingListing}>
@@ -59,7 +59,7 @@ class AddListingModal extends React.Component {
 
           <Row>
             <Col>
-              <Form action="/login" method="post" onSubmit={this.submit.bind(this)}>
+              <Form method="post" onSubmit={this.submit.bind(this)}>
                 <FormGroup>
                   <Label for="listingTitle">Listing Title</Label>
                   <Input

@@ -11,7 +11,9 @@ const listing = (state={}, action) => {
     case 'SET_GET_LISTING_LOADING':
       return {...state, isListingLoading: action.data}
     case 'SET_LISTING':
-      return {...state, listing: action.data}
+      return {...state, ...action.data}
+    case 'SET_EDITING_LISTING_DESCRIPTION':
+      return {...state, isEditingDescription: action.data}
     default:
       return state
   }

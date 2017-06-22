@@ -2,6 +2,7 @@
 
 .listing-detail
   border: 1px solid $color-border
+  border-top: none
 
   .title-bar
     position: relative
@@ -28,6 +29,34 @@
       .fa
         margin-left: 6px
 
+
+  .no-content
+    font-weight: $font-light
+
+  .listing-map-area, .bio
+    .no-content
+      display: flex
+      align-items: center
+      justify-content: center
+
+  .listing-images
+    height: 300px
+
+    &.no-content
+      padding-top: 100px
+
+      font-size: 1.3em
+
+      i
+        font-size: 2.5em
+        margin-bottom: 10px
+
+  .bio
+    .no-content
+      border: 1px dashed $color-inverse
+      min-height: 150px
+      text-align: center
+
   aside
     width: 200px
     margin: 1em auto
@@ -50,6 +79,15 @@
       height: 3rem
       text-align: center
 
+    .ethicality, .operating-hours
+      .no-content
+        font-size: 1.1em
+        padding: 25px 20px
+
+        i
+          font-size: 2.0em
+          margin-bottom: 20px
+
     .ethicality
 
       .ethicalities
@@ -57,7 +95,6 @@
         border-top: none
         color: $color-inverse
         text-align: center
-        padding: 0.1rem 0
 
         .quality
           margin: 2rem 0
@@ -84,7 +121,6 @@
 
       .daily-hours
         text-align: center
-        margin: 1rem 1.5rem 0.5rem
         border-bottom: 1px solid $color-inverse
 
         &:last-child
@@ -109,3 +145,8 @@
       height: 400px
       width: 100%
       margin-top: 12px
+
+      .no-content
+
+        border: 1px dashed $color-inverse
+        height: 100%

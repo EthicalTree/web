@@ -68,7 +68,7 @@ class VerifyEmailModal extends React.Component {
 
           <Row>
             <Col>
-              <Form action="/confirm_email" method="post" onSubmit={this.submit.bind(this)}>
+              <Form method="post" onSubmit={this.submit.bind(this)}>
                 <FormGroup>
                   <Label for="verifyEmailToken">Token</Label>
                   <Input

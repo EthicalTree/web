@@ -43,6 +43,9 @@ body
   p
     font-family: $font-family-2
 
+  .btn
+    font-weight: $font-light
+
   .form-control
     &::-webkit-input-placeholder
       font-weight: $font-light
@@ -58,6 +61,15 @@ body
 #root
   .btn
     color: $color-white
+
+    &.btn-default
+      border: 1px solid $color-gray-5
+      color: $color-gray-3
+
+      &:hover
+        border-color: $color-inverse
+        background-color: $color-inverse
+        color: $color-white
 
   .btn-danger
     background: lighten($color-success, 20%)

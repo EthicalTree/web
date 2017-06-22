@@ -1,7 +1,9 @@
 import Listing from './Listing'
-import AddListingModal from './ListingModals'
+import AddListingModal from './AddListingModal'
+import EditDescriptionModal from './EditDescriptionModal'
 
 export {
   Listing,
-  AddListingModal
+  AddListingModal,
+  EditDescriptionModal
 }

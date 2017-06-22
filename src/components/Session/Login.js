@@ -69,7 +69,7 @@ class LoginModal extends React.Component {
 
           <Row>
             <Col>
-              <Form action="/login" method="post" onSubmit={this.submit.bind(this)}>
+              <Form method="post" onSubmit={this.submit.bind(this)}>
                 <FormGroup>
                   <Label for="loginEmail">Email Address</Label>
                   <Input

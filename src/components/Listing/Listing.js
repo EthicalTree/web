@@ -1,11 +1,26 @@
 import React from 'react'
 import Slider from 'react-slick'
 
+import { connect } from 'react-redux'
+
+import { getListing } from '../../actions/listing'
+import Loader from '../Global/Loader'
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
 import './Listing.sass'
 
 const ListingImages = (props) => {
+
+  if (!props.images || !props.images.length) {
+    return (
+      <div className="listing-images no-content text-center">
+        <i className="fa fa-camera-retro"></i>
+        <br/>
+        <a href="" role="button" className="btn btn-default">Add a picture!</a>
+      </div>
+    )
+  }
+
   let slides = props.images.map(image => {
     let style = {
       background: `url('${image.src}') no-repeat center center`,
@@ -21,47 +36,53 @@ const ListingImages = (props) => {
     )
   })
 
-  return (
-    <div className="listing-images">
-      <Slider
-        dots={false}
-        infinite={true}
-        slidesToShow={slides.length}>
+  if (slides.length) {
+    return (
+      <div className="listing-images">
+        {slides.length &&
+          <Slider
+            dots={false}
+            infinite={true}
+            slidesToShow={slides.length}>
 
-        {slides}
-      </Slider>
-    </div>
-  )
-}
+            {slides}
+          </Slider>
+        }
+      </div>
+    )
+  }
 
-const Rating = (props) => {
-  return (
-    <div className="rating">
-      {props.value}
-      <i className="fa fa-star"></i>
-    </div>
-  )
 }
 
 const TitleBar = (props) => {
   return (
     <div className="title-bar">
       <h2 className="title">{props.title}</h2>
-      <Rating value={props.rating} />
     </div>
   )
 }
 
 const Ethicality = (props) => {
+  let ethicalities
 
-  let ethicalities = props.ethicalities.map(quality => {
-    return (
-      <div key={quality.name} className="quality">
-        <i className="fa fa-superpowers"></i>
-        <p className="name">{quality.name}</p>
+  if (props.ethicalities && props.ethicalities.length) {
+    ethicalities = props.ethicalities.map(quality => {
+      return (
+        <div key={quality.name} className="quality">
+          <i className="fa fa-superpowers"></i>
+          <p className="name">{quality.name}</p>
+        </div>
+      )
+    })
+  }
+  else {
+    ethicalities = (
+      <div className="no-content">
+        <i className="fa fa-heart-o"></i>
+        <a href="" role="button" className="btn btn-default btn-block">Add</a>
       </div>
     )
-  })
+  }
 
   return (
     <div className="ethicality">
@@ -84,11 +105,23 @@ const DailyHours = (props) => {
 }
 
 const OperatingHours = (props) => {
-  let hours = props.hours.map(hours => {
-    return (
-      <DailyHours key={hours.day} day={hours.day} hours={hours.hours} />
+  let hours
+
+  if (props.hours && props.hours.length) {
+    hours = props.hours.map(hours => {
+      return (
+        <DailyHours key={hours.day} day={hours.day} hours={hours.hours} />
+      )
+    })
+  }
+  else {
+    hours = (
+      <div className="daily-hours no-content">
+        <i className="fa fa-clock-o"></i>
+        <a href="" role="button" className="btn btn-default btn-block">Add</a>
+      </div>
     )
-  })
+  }
 
   return (
     <div className="operating-hours">
@@ -97,7 +130,6 @@ const OperatingHours = (props) => {
     </div>
   )
 }
-
 
 const AsideInfo = (props) => {
   return (
@@ -109,10 +141,30 @@ const AsideInfo = (props) => {
 }
 
 const Bio = (props) => {
+  let bio
+
+  if (props.bio) {
+    bio = (
+      <p>{props.bio}</p>
+    )
+  }
+  else {
+    bio = (
+      <div className="no-content">
+        <a
+          href=""
+          onClick={props.onClickDescriptionEdit}
+          className="btn btn-default">
+          Add a description
+        </a>
+      </div>
+    )
+  }
+
   return (
     <div className="bio">
       <h3>About {props.title}</h3>
-      <p>{props.bio}</p>
+      {bio}
     </div>
   )
 }
@@ -135,35 +187,52 @@ const Map = withGoogleMap(props => {
     }
   }
 
-  return (
-    <GoogleMap
-      ref={onLoad}
-      defaultZoom={12}
-      defaultCenter={props.locations[0]}
-      defaultOptions={{
-        scrollwheel: false
-      }}>
+  if (props.locations.length) {
+    return (
+      <GoogleMap
+        ref={onLoad}
+        defaultZoom={12}
+        defaultCenter={props.locations[0]}
+        defaultOptions={{
+          scrollwheel: false
+        }}>
 
-      {markers}
+        {markers}
 
-    </GoogleMap>
-  )
+      </GoogleMap>
+    )
+  }
+
 })
 
 const ListingMap = props => {
+  let location
+
+  if (!props.locations || !props.locations.length) {
+    location = (
+      <div className="no-content">
+        <a href="" className="btn btn-default">Add a location</a>
+      </div>
+    )
+  }
+  else {
+    location = (
+      <Map
+        locations={props.locations}
+        containerElement={
+          <div style={{ height: `100%` }} />
+        }
+        mapElement={
+          <div style={{ height: `100%` }} />
+        }/>
+    )
+  }
 
   return (
     <div className="listing-map">
       <h3>How to get here</h3>
       <div className="listing-map-area">
-        <Map
-          locations={props.locations}
-          containerElement={
-            <div style={{ height: `100%` }} />
-          }
-          mapElement={
-            <div style={{ height: `100%` }} />
-          }/>
+        {location}
       </div>
     </div>
   )
@@ -174,81 +243,65 @@ const ListingInfo = (props) => {
   return (
     <div className="listing-info">
       <Bio
+        onClickDescriptionEdit={props.onClickDescriptionEdit}
         title={props.title}
         bio={props.bio} />
 
       <ListingMap
         locations={props.locations}
         />
+
+      <div className="clearfix"></div>
     </div>
   )
 }
 
-export default class Listing extends React.Component {
+class Listing extends React.Component {
 
-  constructor(props) {
-    super(props)
+  componentDidMount() {
+    const { dispatch, match } = this.props
 
-    let images = [{
-      src: '/assets/images/stock/listing_default.jpg'
-    }]
+    dispatch(getListing(match.params.slug))
+  }
 
-    let ethicalities = [{
-      name: 'Vegetarian',
-    }, {
-      name: 'Vegan'
-    }]
 
-    let title = "Willy's Kitchen"
-    let bio = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat"
+  onClickDescriptionEdit(e) {
+    const { dispatch } = this.props
 
-    let hours = [{
-      day: 'Monday',
-      hours: '12pm - 2pm'
-    }, {
-      day: 'Tuesday',
-      hours: '12pm - 5pm'
-    }]
-
-    let rating = "4.3"
-
-    let locations = [{
-      lat: 45.391,
-      lng: -75.754
-    }, {
-      lat: 45.394,
-      lng: -75.749
-    }]
-
-    this.state = {
-      images: images,
-      ethicalities: ethicalities,
-      title: title,
-      bio: bio,
-      hours: hours,
-      rating: rating,
-      locations: locations
-    }
+    e.preventDefault()
+    dispatch({ type: 'SET_EDITING_LISTING_DESCRIPTION', data: true })
   }
 
   render() {
+    const { listing, isListingLoading } = this.props
+
     return (
-      <div className="listing-detail">
-        <ListingImages images={this.state.images} />
-        <TitleBar
-          rating={this.state.rating}
-          title={this.state.title} />
+      <Loader loading={isListingLoading}>
+        <div className="listing-detail">
+          <ListingImages images={listing.images} />
+          <TitleBar
+            title={listing.title} />
 
-        <AsideInfo
-          ethicalities={this.state.ethicalities}
-          hours={this.state.hours}/>
+          <AsideInfo
+            ethicalities={listing.ethicalities}
+            hours={listing.hours}/>
 
-        <ListingInfo
-          locations={this.state.locations}
-          bio={this.state.bio}
-          title={this.state.title} />
-      </div>
+          <ListingInfo
+            onClickDescriptionEdit={this.onClickDescriptionEdit.bind(this)}
+            locations={listing.locations}
+            bio={listing.bio}
+            title={listing.title} />
+        </div>
+      </Loader>
     )
-  }
 
+  }
 }
+
+const select = (state) => {
+  return {
+    listing: state.listing
+  }
+}
+
+export default connect(select)(Listing)

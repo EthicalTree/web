@@ -62,7 +62,7 @@ class SignupModal extends React.Component {
 
           <Row>
             <Col>
-              <Form action="/signup" method="post" onSubmit={this.submit.bind(this)}>
+              <Form method="post" onSubmit={this.submit.bind(this)}>
                 <FormGroup>
                   <Label for="signupEmail">Email Address</Label>
                   <Input

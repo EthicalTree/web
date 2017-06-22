@@ -12,7 +12,8 @@ import {
 
 import {
   Listing,
-  AddListingModal
+  AddListingModal,
+  EditDescriptionModal
 } from '../Listing'
 
 import {
@@ -56,7 +57,9 @@ class App extends React.Component {
             <LogoutModal />
             <SignupModal />
             <VerifyEmailModal />
+
             <AddListingModal />
+            <EditDescriptionModal />
           </div>
         </Router>
       </div>

@@ -6,7 +6,7 @@ export const getListing = (slug) => {
   return dispatch => {
     dispatch({ type: 'SET_GET_LISTING_LOADING', data: true })
 
-    axios.get(`/v1/listings/${slug}`).then(listing => {
+    axios.get(apiRoute(`/v1/listings/${slug}`)).then(listing => {
         dispatch({ type: 'SET_LISTING', data: listing.data })
       })
       .catch(() => {
@@ -30,7 +30,6 @@ export const addListing = (data, history) => {
         else {
           dispatch({ type: 'SET_LISTING', data: response.data })
           dispatch({ type: 'SET_ADD_LISTING_MODAL', data: false })
-          console.log(response.data.slug)
           history.push(`/listings/${response.data.slug}`)
         }
       })
@@ -40,5 +39,11 @@ export const addListing = (data, history) => {
       .then(() => {
         dispatch({ type: 'SET_ADD_LISTING_LOADING', data: false })
       })
+  }
+}
+
+export const editDescription = (data) => {
+  return dispatch => {
+    dispatch({ type: 'SET_EDIT_DESCRIPTION_LOADING', data: true })
   }
 }
