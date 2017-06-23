@@ -264,7 +264,6 @@ class Listing extends React.Component {
     dispatch(getListing(match.params.slug))
   }
 
-
   onClickDescriptionEdit(e) {
     const { dispatch } = this.props
 

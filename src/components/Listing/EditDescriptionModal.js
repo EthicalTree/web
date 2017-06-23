@@ -22,16 +22,19 @@ class EditDescriptionModal extends React.Component {
     super(props)
 
     this.state = {
-      description: ''
+      bio: ''
     }
   }
 
   submit(e) {
     e.preventDefault()
 
-    const { dispatch } = this.props
+    const { dispatch, listing } = this.props
 
-    dispatch(editDescription(this.state))
+    dispatch(editDescription({
+      ...this.state,
+      slug: listing.slug
+    }))
   }
 
   render() {
@@ -63,8 +66,8 @@ class EditDescriptionModal extends React.Component {
                   <Label for="listingDescription">Listing Description</Label>
                   <Input
                     autoFocus
-                    value={this.state.description}
-                    onChange={e => { this.setState({ description: e.target.value }) }}
+                    value={this.state.bio}
+                    onChange={e => { this.setState({ bio: e.target.value }) }}
                     type="textarea"
                     name="listingDescription"
                     id="listingDescription"
