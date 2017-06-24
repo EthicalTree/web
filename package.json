@@ -19,6 +19,8 @@
     "jquery": "^3.2.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-dropzone": "^3.13.3",
+    "react-dropzone-s3-uploader": "^1.0.0",
     "react-google-maps": "^7.0.0",
     "react-hot-loader": "^3.0.0-beta.7",
     "react-modal": "^1.7.7",

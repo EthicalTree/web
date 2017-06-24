@@ -1,23 +1,37 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Slider from 'react-slick'
 
-import { connect } from 'react-redux'
+import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
 import { getListing } from '../../actions/listing'
 import Loader from '../Global/Loader'
-import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import S3Uploader from '../Global/S3'
 
 import './Listing.sass'
+
+const ImageDropzone = (props) => {
+
+  return (
+    <div className="listing-images no-content text-center">
+      <i className="fa fa-camera-retro camera"></i>
+      <i className="fa fa-plus-circle plus"></i>
+      <span className="add-picture-cta">
+        Add a picture!
+      </span>
+    </div>
+  )
+
+}
 
 const ListingImages = (props) => {
 
   if (!props.images || !props.images.length) {
+
     return (
-      <div className="listing-images no-content text-center">
-        <i className="fa fa-camera-retro"></i>
-        <br/>
-        <a href="" role="button" className="btn btn-default">Add a picture!</a>
-      </div>
+      <S3Uploader signingUrlQueryParams={{ slug: props.listing.slug }}>
+        <ImageDropzone />
+      </S3Uploader>
     )
   }
 
@@ -271,13 +285,21 @@ class Listing extends React.Component {
     dispatch({ type: 'SET_EDITING_LISTING_DESCRIPTION', data: true })
   }
 
+  onImageUpload() {
+    console.log('uploading!')
+  }
+
   render() {
-    const { listing, isListingLoading } = this.props
+    const { listing } = this.props
 
     return (
-      <Loader loading={isListingLoading}>
+      <Loader loading={listing.isListingLoading}>
         <div className="listing-detail">
-          <ListingImages images={listing.images} />
+          <ListingImages
+            listing={listing}
+            onImageUpload={this.onImageUpload.bind(this)}
+            images={listing.images}
+            />
           <TitleBar
             title={listing.title} />
 

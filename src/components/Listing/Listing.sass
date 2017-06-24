@@ -31,6 +31,7 @@
 
 
   .no-content
+    color: $color-muted
     font-weight: $font-light
 
   .listing-map-area, .bio
@@ -40,7 +41,29 @@
       justify-content: center
 
   .listing-images
+    color: $color-muted
     height: 300px
+
+    .plus
+      display: none
+
+    .camera
+      display: block
+
+    &:hover
+      color: $color-inverse
+      border: 2px dashed $color-inverse
+      margin: -2px -1px 2px -2px
+      cursor: pointer
+
+      .plus
+        display: block
+
+      .camera
+        display: none
+
+      .add-picture-cta
+        font-size: 1.4em
 
     &.no-content
       padding-top: 100px
