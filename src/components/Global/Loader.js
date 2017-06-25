@@ -5,19 +5,29 @@ import Spinner from 'react-spinkit'
 
 const Loader = (props) => {
 
-  if (props.loading) {
+  const { loading, progress } = props
+
+  if (loading || progress >= 0) {
     return (
       <div className="loading">
-        <Spinner
-          color="#526173"
-          fadeIn="quarter"
-          name='cube-grid'
-          className="et-spinner"/>
+        <div className="et-spinner-wrapper">
+          <Spinner
+            color="#526173"
+            fadeIn="quarter"
+            name='cube-grid'
+            className="et-spinner"/>
+
+          {progress >= 0 &&
+            <span className="loading-progress">{progress}%</span>
+          }
+        </div>
+
+
 
         <div className="loading-overlay">
         </div>
 
-        <div>
+        <div className="loading-content">
           {props.children}
         </div>
       </div>

@@ -64,3 +64,21 @@ export const editDescription = (data) => {
       })
   }
 }
+
+export const addImageToListing = (listing_slug, image_key) => {
+  return dispatch => {
+
+    axios.post(apiRoute(`/v1/listings/${listing_slug}/images`), { key: image_key })
+      .then(response => {
+        if (response.data.images) {
+          dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
+        }
+      })
+      .catch(() => {
+        dispatch({ type: 'SET_ERROR' })
+      })
+      .then(() => {
+        dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS' , data: undefined })
+      })
+  }
+}

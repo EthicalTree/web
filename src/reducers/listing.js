@@ -18,6 +18,10 @@ const listing = (state={}, action) => {
       return {...state, isEditingDescriptionLoading: action.data}
     case 'SET_EDIT_DESCRIPTION_ERROR':
       return {...state, editDescriptionErrors: action.data}
+    case 'SET_IMAGE_UPLOAD_PROGRESS':
+      return {...state, uploadProgress: action.data}
+    case 'SET_LISTING_IMAGES':
+      return {...state, images: action.data}
     default:
       return state
   }

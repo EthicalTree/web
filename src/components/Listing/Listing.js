@@ -4,22 +4,26 @@ import Slider from 'react-slick'
 
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
-import { getListing } from '../../actions/listing'
+import { getListing, addImageToListing } from '../../actions/listing'
+
 import Loader from '../Global/Loader'
 import S3Uploader from '../Global/S3'
 
 import './Listing.sass'
 
 const ImageDropzone = (props) => {
+  const progress = props.listing.uploadProgress
 
   return (
-    <div className="listing-images no-content text-center">
-      <i className="fa fa-camera-retro camera"></i>
-      <i className="fa fa-plus-circle plus"></i>
-      <span className="add-picture-cta">
-        Add a picture!
-      </span>
-    </div>
+    <Loader
+      progress={progress}>
+      <div className="listing-images uploadable no-content text-center">
+        <i className="fa fa-camera-retro camera"></i>
+        <span className="add-picture-cta">
+          Add a picture!
+        </span>
+      </div>
+    </Loader>
   )
 
 }
@@ -29,22 +33,27 @@ const ListingImages = (props) => {
   if (!props.images || !props.images.length) {
 
     return (
-      <S3Uploader signingUrlQueryParams={{ slug: props.listing.slug }}>
-        <ImageDropzone />
+      <S3Uploader
+        onProgress={props.onImageUploadProgress}
+        onFinish={props.onImageUploadFinish}
+        signingUrlQueryParams={{ slug: props.listing.slug }}>
+        <ImageDropzone listing={props.listing} />
       </S3Uploader>
     )
   }
 
   let slides = props.images.map(image => {
+    const url = `${process.env.REACT_APP_S3_URL}/${image.key}`
+
     let style = {
-      background: `url('${image.src}') no-repeat center center`,
+      background: `url('${url}') no-repeat center center`,
       height: '300px'
     }
 
     return (
       <div
         className="listing-image"
-        key={image.src}>
+        key={image.key}>
         <div style={style} />
       </div>
     )
@@ -285,8 +294,16 @@ class Listing extends React.Component {
     dispatch({ type: 'SET_EDITING_LISTING_DESCRIPTION', data: true })
   }
 
-  onImageUpload() {
-    console.log('uploading!')
+  onImageUploadProgress(progress) {
+    this.props.dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: progress })
+  }
+
+  onImageUploadFinish(image) {
+    const { listing, dispatch } = this.props
+
+    console.log(listing)
+
+    dispatch(addImageToListing(listing.slug, image.key))
   }
 
   render() {
@@ -297,7 +314,8 @@ class Listing extends React.Component {
         <div className="listing-detail">
           <ListingImages
             listing={listing}
-            onImageUpload={this.onImageUpload.bind(this)}
+            onImageUploadProgress={this.onImageUploadProgress.bind(this)}
+            onImageUploadFinish={this.onImageUploadFinish.bind(this)}
             images={listing.images}
             />
           <TitleBar
