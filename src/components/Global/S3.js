@@ -14,6 +14,7 @@ const S3Uploader = (props) => {
     <DropzoneS3Uploader
       s3Url={`${process.env.REACT_APP_S3_URL}`}
       style={{}}
+      multiple={false}
       onProgress={props.onProgress}
       onFinish={props.onFinish}
       upload={s3Options}>

@@ -1,12 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Slider from 'react-slick'
-
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
-
 import { getListing, addImageToListing } from '../../actions/listing'
 
 import Loader from '../Global/Loader'
+import ETSlider from '../Global/Slider'
 import S3Uploader from '../Global/S3'
 
 import './Listing.sass'
@@ -63,13 +61,7 @@ const ListingImages = (props) => {
     return (
       <div className="listing-images">
         {slides.length &&
-          <Slider
-            dots={false}
-            infinite={true}
-            slidesToShow={slides.length}>
-
-            {slides}
-          </Slider>
+          <ETSlider slides={slides} />
         }
       </div>
     )
