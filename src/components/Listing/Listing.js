@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import { Marker } from 'react-google-maps'
 import { getListing, addImageToListing } from '../../actions/listing'
 
 import Loader from '../Global/Loader'
 import ETSlider from '../Global/Slider'
 import S3Uploader from '../Global/S3'
+import Map from '../Global/Map'
 
 import './Listing.sass'
 
@@ -184,56 +185,33 @@ const Bio = (props) => {
   )
 }
 
-const Map = withGoogleMap(props => {
-
-  let bounds = new window.google.maps.LatLngBounds()
-
-  let markers = props.locations.map(l => {
-    bounds.extend(l)
-
-    return (
-      <Marker key={`${l.lat}+${l.lng}`} position={l} />
-    )
-  })
-
-  let onLoad = (map) => {
-    if (map) {
-      map.fitBounds(bounds)
-    }
-  }
-
-  if (props.locations.length) {
-    return (
-      <GoogleMap
-        ref={onLoad}
-        defaultZoom={12}
-        defaultCenter={props.locations[0]}
-        defaultOptions={{
-          scrollwheel: false
-        }}>
-
-        {markers}
-
-      </GoogleMap>
-    )
-  }
-
-})
-
 const ListingMap = props => {
   let location
 
   if (!props.locations || !props.locations.length) {
     location = (
       <div className="no-content">
-        <a href="" className="btn btn-default">Add a location</a>
+        <a
+          href=""
+          onClick={props.onClickLocationEdit}
+          className="btn btn-default">
+          Add a location
+        </a>
       </div>
     )
   }
   else {
+    const { lat, lng } = props.locations[0]
+
+    const markers = [<Marker key={`${lat}+${lng}`} position={{ lat, lng }} />]
+
     location = (
       <Map
-        locations={props.locations}
+        markers={markers}
+        defaultOptions={{
+          scrollwheel: false
+        }}
+        center={{ lat, lng }}
         containerElement={
           <div style={{ height: `100%` }} />
         }
@@ -263,6 +241,7 @@ const ListingInfo = (props) => {
         bio={props.bio} />
 
       <ListingMap
+        onClickLocationEdit={props.onClickLocationEdit}
         locations={props.locations}
         />
 
@@ -284,6 +263,13 @@ class Listing extends React.Component {
 
     e.preventDefault()
     dispatch({ type: 'SET_EDITING_LISTING_DESCRIPTION', data: true })
+  }
+
+  onClickLocationEdit(e) {
+    const { dispatch } = this.props
+
+    e.preventDefault()
+    dispatch({ type: 'SET_EDITING_LISTING_LOCATION', data: true })
   }
 
   onImageUploadProgress(progress) {
@@ -319,6 +305,7 @@ class Listing extends React.Component {
 
           <ListingInfo
             onClickDescriptionEdit={this.onClickDescriptionEdit.bind(this)}
+            onClickLocationEdit={this.onClickLocationEdit.bind(this)}
             locations={listing.locations}
             bio={listing.bio}
             title={listing.title} />

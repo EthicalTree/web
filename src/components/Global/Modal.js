@@ -72,8 +72,9 @@ const Modal = (props) => {
           </a>
         </div>
 
-        {props.children}
-
+        {props.isOpen &&
+          props.children
+        }
       </Loader>
     </ReactModal>
   )

@@ -65,6 +65,30 @@ export const editDescription = (data) => {
   }
 }
 
+export const editLocation = (listing_slug, data) => {
+  const { location } = data
+
+  return dispatch => {
+    axios.post(apiRoute(`/v1/listings/${listing_slug}/locations`), { location })
+      .then(response => {
+        if (response.data.errors) {
+          dispatch({ type: 'SET_EDIT_LOCATION_ERROR', data: response.data.errors })
+        }
+        else {
+          dispatch({ type: 'SET_LISTING_LOCATION', data: response.data.locations})
+          dispatch({ type: 'SET_EDITING_LISTING_LOCATION', data: false })
+        }
+      })
+      .catch(() => {
+        dispatch({ type: 'SET_ERROR' })
+      })
+      .then(() => {
+        dispatch({ type: 'SET_EDIT_LOCATION_LOADING', data: false })
+      })
+
+  }
+}
+
 export const addImageToListing = (listing_slug, image_key) => {
   return dispatch => {
 
@@ -78,7 +102,7 @@ export const addImageToListing = (listing_slug, image_key) => {
         dispatch({ type: 'SET_ERROR' })
       })
       .then(() => {
-        dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS' , data: undefined })
+        dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: undefined })
       })
   }
 }

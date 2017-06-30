@@ -1,3 +1,4 @@
+import { error } from '../components/Util/Notifications'
 
 const session = (state={}, action) => {
 
@@ -60,6 +61,10 @@ const session = (state={}, action) => {
       return {
         user: action.data.user
       }
+    case 'SET_ERROR':
+      const msg = action.msg || "Something broke, sorry about that!"
+      error(msg)
+      return state
     default:
       return state
   }

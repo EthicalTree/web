@@ -10,18 +10,8 @@ import {
   Link
 } from 'react-router-dom'
 
-import {
-  Listing,
-  AddListingModal,
-  EditDescriptionModal
-} from '../Listing'
-
-import {
-  LoginModal,
-  LogoutModal,
-  SignupModal,
-  VerifyEmailModal
-} from '../Session'
+import Modals from './Modals'
+import { Listing } from '../Listing'
 
 const TmpRoot = (props) => {
   return (
@@ -53,13 +43,7 @@ class App extends React.Component {
               <Route path="/listings/:slug" component={Listing} />
             </div>
             <Footer />
-            <LoginModal />
-            <LogoutModal />
-            <SignupModal />
-            <VerifyEmailModal />
-
-            <AddListingModal />
-            <EditDescriptionModal />
+            <Modals />
           </div>
         </Router>
       </div>
