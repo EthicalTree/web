@@ -94,16 +94,19 @@ const Ethicality = (props) => {
   else {
     ethicalities = (
       <div className="no-content">
-        <i className="fa fa-heart-o"></i>
+        <p>No ethicalities set!</p>
         <a href="" role="button" className="btn btn-default btn-block">Add</a>
       </div>
     )
   }
 
   return (
-    <div className="ethicality">
-      <h3 className="title">Ethicality</h3>
-      <div className="ethicalities">
+    <div className="card ethicality">
+      <div className="card-header">
+        <i className="fa fa-heart-o"></i>
+        Ethicalities
+      </div>
+      <div className="card-block ethicalities">
         {ethicalities}
       </div>
     </div>
@@ -133,23 +136,28 @@ const OperatingHours = (props) => {
   else {
     hours = (
       <div className="daily-hours no-content">
-        <i className="fa fa-clock-o"></i>
+        <p>No operating hours set!</p>
         <a href="" role="button" className="btn btn-default btn-block">Add</a>
       </div>
     )
   }
 
   return (
-    <div className="operating-hours">
-      <h3 className="title">Operating Hours</h3>
-      {hours}
+    <div className="card operating-hours">
+      <div className="card-header">
+        <i className="fa fa-clock-o"></i>
+        Operating Hours
+      </div>
+      <div className="card-block">
+        {hours}
+      </div>
     </div>
   )
 }
 
 const AsideInfo = (props) => {
   return (
-    <aside>
+    <aside className={props.className}>
       <Ethicality ethicalities={props.ethicalities} />
       <OperatingHours hours={props.hours} />
     </aside>
@@ -179,7 +187,7 @@ const Bio = (props) => {
 
   return (
     <div className="bio">
-      <h3>About {props.title}</h3>
+      <h3>{props.title}</h3>
       {bio}
     </div>
   )
@@ -234,7 +242,7 @@ const ListingMap = props => {
 
 const ListingInfo = (props) => {
   return (
-    <div className="listing-info">
+    <div className={props.className}>
       <Bio
         onClickDescriptionEdit={props.onClickDescriptionEdit}
         title={props.title}
@@ -246,6 +254,26 @@ const ListingInfo = (props) => {
         />
 
       <div className="clearfix"></div>
+    </div>
+  )
+}
+
+const ListingContent = (props) => {
+  const { locations, bio, title, ethicalities, hours } = props.listing
+  return (
+    <div className="row listing-content">
+      <ListingInfo
+        className="listing-info col-md-9"
+        onClickDescriptionEdit={props.onClickDescriptionEdit}
+        onClickLocationEdit={props.onClickLocationEdit}
+        locations={locations}
+        bio={bio}
+        title={title} />
+
+      <AsideInfo
+        className="col-md-3"
+        ethicalities={ethicalities}
+        hours={hours}/>
     </div>
   )
 }
@@ -279,8 +307,6 @@ class Listing extends React.Component {
   onImageUploadFinish(image) {
     const { listing, dispatch } = this.props
 
-    console.log(listing)
-
     dispatch(addImageToListing(listing.slug, image.key))
   }
 
@@ -299,16 +325,11 @@ class Listing extends React.Component {
           <TitleBar
             title={listing.title} />
 
-          <AsideInfo
-            ethicalities={listing.ethicalities}
-            hours={listing.hours}/>
-
-          <ListingInfo
+          <ListingContent
+            listing={listing}
             onClickDescriptionEdit={this.onClickDescriptionEdit.bind(this)}
             onClickLocationEdit={this.onClickLocationEdit.bind(this)}
-            locations={listing.locations}
-            bio={listing.bio}
-            title={listing.title} />
+            />
         </div>
       </Loader>
     )

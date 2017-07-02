@@ -7,14 +7,8 @@
   .title-bar
     position: relative
     background-color: $color-inverse
-    height: 3rem
-    color: $color-white
-
-    .title
-      display: inline-block
-      font-size: 1.5rem
-      font-weight: $font-light
-      padding: 0.7rem 2.5rem
+    height: 0.5rem
+    opacity: 0.8
 
     .rating
       display: inline-block
@@ -29,6 +23,9 @@
       .fa
         margin-left: 6px
 
+  .card-header
+    background-color: rgba($color-inverse, 0.8)
+    color: $color-white
 
   .no-content
     color: $color-muted
@@ -74,43 +71,21 @@
       text-align: center
 
   aside
-    width: 200px
-    margin: 1em auto
-
-    @media (min-width: $screen-sm-min)
-      position: relative
-      margin-top: -3rem
-      right: 2.5rem
-      width: 150px
-      float: right
-
-    .title
-      text-transform: uppercase
-      background-color: $color-danger
-      padding: 1rem 2rem
-      font-weight: normal
-      font-size: 1rem
-      margin: 0
-      color: $color-white
-      height: 3rem
-      text-align: center
+    padding: 3em
 
     .ethicality, .operating-hours
-      .no-content
-        font-size: 1.1em
-        padding: 25px 20px
-
-        i
-          font-size: 2.0em
-          margin-bottom: 20px
+      .card-header i
+        display: none
+        position: absolute
+        left: 0
+        padding-left: 0.6em
+        font-size: 1.5em
 
     .ethicality
+      text-align: center
+
 
       .ethicalities
-        border: 1px solid $color-inverse
-        border-top: none
-        color: $color-inverse
-        text-align: center
 
         .quality
           margin: 2rem 0
@@ -125,8 +100,7 @@
             text-transform: uppercase
 
     .operating-hours
-      border: 1px solid $color-inverse
-      margin: 1rem 0
+      text-align: center
 
       @media (min-width: $screen-sm-min)
         margin: 4rem 0
@@ -142,12 +116,14 @@
         &:last-child
           border-bottom: none
 
-  .listing-info
-    padding: 2rem
-    margin-right: 13rem
+  .listing-content
+    padding: 0 2em 2em
 
     @media (max-width: $screen-xs-max)
-      margin-right: 0
+      padding: 0.5em
+
+
+  .listing-info
 
     h3
       font-size: 2.5rem
