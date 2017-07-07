@@ -130,3 +130,25 @@ export const deleteImageFromListing = (data) => {
 
   }
 }
+
+export const makeImageCover = (data) => {
+  const { listing_slug, image_id } = data
+
+  return dispatch => {
+    dispatch({ type: 'SET_IMAGE_LOADING', data: true })
+
+    axios.put(apiRoute(`/v1/listings/${listing_slug}/images/${image_id}`), { make_cover: true })
+      .then(response => {
+        if (response.data.images) {
+          dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
+          dispatch({ type: 'SET_LISTING_CURRENT_IMAGE' })
+        }
+      })
+      .catch(() => {
+        dispatch({ type: 'SET_ERROR' })
+      })
+      .then(() => {
+        dispatch({ type: 'SET_IMAGE_LOADING', data: false })
+      })
+  }
+}

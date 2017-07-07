@@ -2,7 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Marker } from 'react-google-maps'
 
-import { getListing, addImageToListing, deleteImageFromListing } from '../../actions/listing'
+import { UncontrolledTooltip as Tooltip } from 'reactstrap'
+
+import {
+  getListing,
+  addImageToListing,
+  makeImageCover,
+  deleteImageFromListing
+} from '../../actions/listing'
+
 import { setConfirm } from '../../actions/confirm'
 
 import Loader from '../Global/Loader'
@@ -20,9 +28,25 @@ const AddImage = (props) => {
         <div className="actions">
           <div><div className="triangle"></div></div>
           <i
+            id="makeCoverPhoto"
+            title="Make cover photo"
+            role="button"
             tabIndex="0"
+            onClick={() => props.dispatch(setConfirm({
+              msg: 'Are you sure you want to make this photo your cover photo?',
+              action: makeImageCover,
+              data: {
+                listing_slug: props.listing.slug,
+                image_id: props.listing.currentImage.id
+              }
+            }))}
             className="icon-button fa fa-file-picture-o" />
+          <Tooltip placement="bottom" target="makeCoverPhoto" delay={0}>Make cover photo</Tooltip>
+
           <i
+            id="deleteImage"
+            title="Delete photo"
+            role="button"
             tabIndex="0"
             onClick={() => props.dispatch(setConfirm({
               msg: 'Are you sure you want to delete this photo?',
@@ -33,6 +57,7 @@ const AddImage = (props) => {
               }
             }))}
             className="icon-button fa fa-trash image-delete" />
+          <Tooltip placement="bottom" target="deleteImage" delay={0}>Delete photo</Tooltip>
 
           <S3Uploader
             onProgress={props.onImageUploadProgress}
@@ -40,8 +65,13 @@ const AddImage = (props) => {
             signingUrlQueryParams={{ slug: props.listing.slug }}>
 
             <i
+              id="addImage"
+              title="Add new photo"
               tabIndex="0"
+              role="button"
               className="icon-button fa fa-plus-circle" />
+            <Tooltip placement="bottom" target="addImage" delay={0}>Add new photo</Tooltip>
+
           </S3Uploader>
         </div>
       </div>
