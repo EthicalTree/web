@@ -1,25 +1,25 @@
 import React from 'react'
 import store from 'store'
-import DropzoneS3Uploader from 'react-dropzone-s3-uploader'
+import ReactS3Uploader from 'react-s3-uploader'
+
+import './S3.sass'
 
 const S3Uploader = (props) => {
-  const s3Options = {
-    signingUrlWithCredentials: true,
-    signingUrlHeaders: { Authorization: `Bearer ${store.get('ETHICALTREE_AUTH_TOKEN')}` },
-    signingUrlQueryParams: props.signingUrlQueryParams,
-    server: `${process.env.REACT_APP_API_URL}`,
-  }
-
   return (
-    <DropzoneS3Uploader
-      s3Url={`${process.env.REACT_APP_S3_URL}`}
-      style={{}}
-      multiple={false}
-      onProgress={props.onProgress}
-      onFinish={props.onFinish}
-      upload={s3Options}>
+    <label className="upload-label">
+      <ReactS3Uploader
+        style={{ display: 'none'}}
+        signingUrl="/s3/sign"
+        signingUrlWithCredentials={true}
+        signingUrlHeaders={{ Authorization: `Bearer ${store.get('ETHICALTREE_AUTH_TOKEN')}` }}
+        signingUrlQueryParams={props.signingUrlQueryParams}
+        server={`${process.env.REACT_APP_API_URL}`}
+        multiple={false}
+        onProgress={props.onProgress}
+        onFinish={props.onFinish}>
+      </ReactS3Uploader>
       {props.children}
-    </DropzoneS3Uploader>
+    </label>
 
   )
 }

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import GenericConfirmModal from '../Global/GenericConfirmModal'
+
 import {
   AddListingModal,
   EditDescriptionModal,
@@ -24,6 +26,7 @@ const Modals = (props) => {
       <AddListingModal />
       <EditDescriptionModal />
       <EditLocationModal />
+      <GenericConfirmModal />
     </div>
   )
 }

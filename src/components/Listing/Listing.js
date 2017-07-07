@@ -1,7 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Marker } from 'react-google-maps'
-import { getListing, addImageToListing } from '../../actions/listing'
+
+import { getListing, addImageToListing, deleteImageFromListing } from '../../actions/listing'
+import { setConfirm } from '../../actions/confirm'
 
 import Loader from '../Global/Loader'
 import ETSlider from '../Global/Slider'
@@ -10,61 +12,122 @@ import Map from '../Global/Map'
 
 import './Listing.sass'
 
-const ImageDropzone = (props) => {
-  const progress = props.listing.uploadProgress
+const AddImage = (props) => {
+
+  if (props.hasSlides) {
+    return (
+      <div>
+        <div className="actions">
+          <div><div className="triangle"></div></div>
+          <i
+            tabIndex="0"
+            className="icon-button fa fa-file-picture-o" />
+          <i
+            tabIndex="0"
+            onClick={() => props.dispatch(setConfirm({
+              msg: 'Are you sure you want to delete this photo?',
+              action: deleteImageFromListing,
+              data: {
+                listing_slug: props.listing.slug,
+                image_id: props.listing.currentImage.id
+              }
+            }))}
+            className="icon-button fa fa-trash image-delete" />
+
+          <S3Uploader
+            onProgress={props.onImageUploadProgress}
+            onFinish={props.onImageUploadFinish}
+            signingUrlQueryParams={{ slug: props.listing.slug }}>
+
+            <i
+              tabIndex="0"
+              className="icon-button fa fa-plus-circle" />
+          </S3Uploader>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <Loader
-      progress={progress}>
-      <div className="listing-images uploadable no-content text-center">
+    <S3Uploader
+        onProgress={props.onImageUploadProgress}
+        onFinish={props.onImageUploadFinish}
+        signingUrlQueryParams={{ slug: props.listing.slug }}>
+
+      <div className="upload-wrapper">
         <i className="fa fa-camera-retro camera"></i>
         <span className="add-picture-cta">
           Add a picture!
         </span>
       </div>
-    </Loader>
+    </S3Uploader>
   )
-
 }
 
-const ListingImages = (props) => {
+class ListingImages extends React.Component {
 
-  if (!props.images || !props.images.length) {
-
-    return (
-      <S3Uploader
-        onProgress={props.onImageUploadProgress}
-        onFinish={props.onImageUploadFinish}
-        signingUrlQueryParams={{ slug: props.listing.slug }}>
-        <ImageDropzone listing={props.listing} />
-      </S3Uploader>
-    )
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch({ type: 'SET_LISTING_CURRENT_IMAGE' })
   }
 
-  let slides = props.images.map(image => {
-    const url = `${process.env.REACT_APP_S3_URL}/${image.key}`
+  handleSlideChange(index) {
+    const { dispatch } = this.props
+    const image = this.props.listing.images[index]
 
-    let style = {
-      background: `url('${url}') no-repeat center center`,
-      height: '300px'
+    dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: image })
+  }
+
+  render() {
+    let slides
+    const props = this.props
+
+    const hasSlides = props.images && props.images.length > 0
+
+    const noContent = !hasSlides ? 'no-content uploadable' : ''
+
+    if (hasSlides) {
+      slides = props.images.map(image => {
+        const url = `${process.env.REACT_APP_S3_URL}/${image.key}`
+
+        let style = {
+          background: `url('${url}') no-repeat center center`,
+          height: '300px'
+        }
+
+        return (
+          <div
+            className="listing-image"
+            key={image.key}>
+            <div style={style} />
+          </div>
+        )
+      })
     }
 
     return (
-      <div
-        className="listing-image"
-        key={image.key}>
-        <div style={style} />
-      </div>
-    )
-  })
+      <Loader
+        loading={props.listing.isImageLoading}
+        progress={props.listing.uploadProgress}>
 
-  if (slides.length) {
-    return (
-      <div className="listing-images">
-        {slides.length &&
-          <ETSlider slides={slides} />
-        }
-      </div>
+        <div
+          tabIndex="0"
+          className={`listing-images text-center ${noContent}`}>
+
+          {hasSlides &&
+            <ETSlider
+              afterChange={this.handleSlideChange.bind(this)}
+              slides={slides} />
+          }
+
+          <AddImage
+            dispatch={props.dispatch}
+            listing={props.listing}
+            onImageUploadProgress={props.onImageUploadProgress}
+            onImageUploadFinish={props.onImageUploadFinish}
+            hasSlides={hasSlides} />
+        </div>
+      </Loader>
     )
   }
 
@@ -73,7 +136,6 @@ const ListingImages = (props) => {
 const TitleBar = (props) => {
   return (
     <div className="title-bar">
-      <h2 className="title">{props.title}</h2>
     </div>
   )
 }
@@ -102,10 +164,6 @@ const Ethicality = (props) => {
 
   return (
     <div className="card ethicality">
-      <div className="card-header">
-        <i className="fa fa-heart-o"></i>
-        Ethicalities
-      </div>
       <div className="card-block ethicalities">
         {ethicalities}
       </div>
@@ -317,6 +375,7 @@ class Listing extends React.Component {
       <Loader loading={listing.isListingLoading}>
         <div className="listing-detail">
           <ListingImages
+            dispatch={this.props.dispatch}
             listing={listing}
             onImageUploadProgress={this.onImageUploadProgress.bind(this)}
             onImageUploadFinish={this.onImageUploadFinish.bind(this)}

@@ -70,6 +70,9 @@ body
         background-color: $color-inverse
         color: $color-white
 
+    &.btn-secondary
+      color: $color-inverse
+
     &:hover
       cursor: pointer
 
@@ -80,4 +83,23 @@ body
     &:hover
       background: $color-success
       border-color: $color-success
+
+  .icon-button
+    opacity: 0.7
+
+    &:hover, &:focus
+      cursor: pointer
+      outline: none
+      opacity: 1
+
+  .icon-button-overlay
+    opacity: 0.2
+    color: $color-white
+
+    &:hover, &:focus
+      cursor: pointer
+      color: $color-inverse
+      opacity: 1
+
+
 
