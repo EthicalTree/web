@@ -6,6 +6,8 @@ import './Slider.sass'
 const Prev = (props) => {
   return (
     <div
+      role="button"
+      tabIndex="0"
       onClick={props.onClick}
       className="slider-prev icon-button-overlay fa fa-arrow-circle-left">
     </div>
@@ -15,6 +17,8 @@ const Prev = (props) => {
 const Next = (props) => {
   return (
     <div
+      role="button"
+      tabIndex="0"
       onClick={props.onClick}
       className="slider-next icon-button-overlay fa fa-arrow-circle-right">
     </div>

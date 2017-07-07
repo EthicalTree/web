@@ -275,7 +275,12 @@ const Bio = (props) => {
 
   return (
     <div className="bio">
-      <h3>{props.title}</h3>
+      <h3>
+        {props.title}
+        <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickDescriptionEdit}>
+          Edit
+        </a>
+      </h3>
       {bio}
     </div>
   )
@@ -319,7 +324,12 @@ const ListingMap = props => {
 
   return (
     <div className="listing-map">
-      <h3>How to get here</h3>
+      <h3>
+        How to get here
+        <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickLocationEdit}>
+          Edit
+        </a>
+      </h3>
       <div className="listing-map-area">
         {location}
       </div>

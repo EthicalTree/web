@@ -82,13 +82,19 @@ class EditLocationModal extends React.Component {
 
   render() {
     const { listing, dispatch } = this.props
-    const { location } = this.state
+    let { location }= this.state
 
     let marker
+    let center
+
+    if (!location) {
+      location = listing.locations ? listing.locations[0] : null
+    }
 
     if (location) {
       const { lat, lng } = location
       marker = <Marker key={`${lat}+${lng}`} position={location} />
+      center = { lat, lng }
     }
 
     return (
@@ -135,7 +141,7 @@ class EditLocationModal extends React.Component {
               <Map
                 onClick={this.onMapClick.bind(this)}
                 markers={[marker]}
-                center={this.state.center}
+                center={center}
                 defaultOptions={{
                   zoomControl: true,
                   draggableCursor: 'pointer'
