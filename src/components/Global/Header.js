@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import {
+  Button,
   Navbar,
   NavbarToggler,
   Collapse,
@@ -39,12 +40,12 @@ const Header = (props) => {
               </NavItem>
 
               <NavItem>
-                <NavLink
-                  className="btn btn-success"
-                  href="#"
+                <Button
+                  color="success"
+                  className="ml-3"
                   onClick={e => { dispatch({ type: 'SET_ADD_LISTING_MODAL', data: true }) }}>
                   Add Listing
-                </NavLink>
+                </Button>
               </NavItem>
             </Nav>
           }

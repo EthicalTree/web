@@ -3,21 +3,43 @@
 .ReactModal__Body--open
   overflow: hidden
 
+.ReactModal__Overlay--after-open
+  z-index: 3
+
 .et-modal
   height: auto
 
-  @media (max-width: $screen-xs-max)
-    width: 100%
+  .top-bar
+    background-color: $color-inverse
+    border-bottom: 1px solid darken($color-inverse, 40%)
+    margin: -20px -20px 0
+    padding: 0.7em
+    padding-bottom: 0
+
+    .title
+      font-size: 16px
+      font-weight: $font-normal
+      padding: 0.2em
+      color: $color-white
+
+  .bottom-bar
+    border-top: 1px solid $color-border
+    margin: 0 -20px -20px
+    padding: 0.7em
 
   .modal-close-wrapper
-    text-align: right
+    position: absolute
+    right: 18px
+    top: 10px
 
     .modal-close
-      color: $color-inverse
+      color: $color-white
 
       &:hover
         text-decoration: none
 
+  @media (max-width: $screen-xs-max) // {}
+    width: 100%
 
 .edit-description-modal
   textarea

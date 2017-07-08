@@ -5,7 +5,8 @@ import GenericConfirmModal from '../Global/GenericConfirmModal'
 import {
   AddListingModal,
   EditDescriptionModal,
-  EditLocationModal
+  EditLocationModal,
+  EditOperatingHoursModal
 } from '../Listing'
 
 import {
@@ -26,6 +27,7 @@ const Modals = (props) => {
       <AddListingModal />
       <EditDescriptionModal />
       <EditLocationModal />
+      <EditOperatingHoursModal />
       <GenericConfirmModal />
     </div>
   )

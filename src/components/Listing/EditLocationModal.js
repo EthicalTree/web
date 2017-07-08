@@ -102,6 +102,7 @@ class EditLocationModal extends React.Component {
         className="edit-location-modal medium-modal"
         loading={listing.isEditingLocationLoading}
         contentLabel="Edit Location"
+        onSave={this.submit.bind(this)}
         onRequestClose={e => { dispatch({ type: 'SET_EDITING_LISTING_LOCATION', data: false }) }}
         isOpen={listing.isEditingLocation}>
 
@@ -128,7 +129,7 @@ class EditLocationModal extends React.Component {
                     id="locationAddress"
                     placeholder="eg. Ricky's Rockin Restaurant"/>
                   <InputGroupButton>
-                    <Button className="btn btn-default" onClick={this.onAddressChange.bind(this)}>
+                    <Button color="default" onClick={this.onAddressChange.bind(this)}>
                       Find
                     </Button>
                   </InputGroupButton>
@@ -152,15 +153,6 @@ class EditLocationModal extends React.Component {
                 mapElement={
                   <div style={{ height: `100%` }} />
                 }/>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <FormGroup className="mt-4 text-center">
-                <Button color="success" role="button" onClick={this.submit.bind(this)}>
-                  Save
-                </Button>
-              </FormGroup>
             </Col>
           </Row>
         </Container>

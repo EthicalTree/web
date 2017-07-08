@@ -152,3 +152,9 @@ export const makeImageCover = (data) => {
       })
   }
 }
+
+export const saveOperatingHours = (listing_slug, hours) => {
+  return dispatch => {
+
+  }
+}

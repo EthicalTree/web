@@ -3,11 +3,8 @@ import { connect } from 'react-redux'
 import { Modal } from '../Global'
 
 import {
-  Form,
-  FormGroup,
   Label,
   Input,
-  Button,
   Container,
   Row,
   Col,
@@ -45,6 +42,7 @@ class EditDescriptionModal extends React.Component {
         className="edit-description-modal medium-modal"
         loading={listing.isEditingDescriptionLoading}
         contentLabel="Edit Decription"
+        onSave={this.submit.bind(this)}
         onRequestClose={e => { dispatch({ type: 'SET_EDITING_LISTING_DESCRIPTION', data: false }) }}
         isOpen={listing.isEditingDescription}>
 
@@ -61,25 +59,15 @@ class EditDescriptionModal extends React.Component {
 
           <Row>
             <Col>
-              <Form method="post" onSubmit={this.submit.bind(this)}>
-                <FormGroup>
-                  <Label for="listingDescription">Listing Description</Label>
-                  <Input
-                    autoFocus
-                    defaultValue={listing.bio}
-                    onChange={e => { this.setState({ bio: e.target.value }) }}
-                    type="textarea"
-                    name="listingDescription"
-                    id="listingDescription"
-                    placeholder="Tell the world what makes you special!"/>
-                </FormGroup>
-
-                <FormGroup className="mt-4 text-center">
-                  <Button color="success" role="button" type="submit">
-                    Save
-                  </Button>
-                </FormGroup>
-              </Form>
+              <Label for="listingDescription">Listing Description</Label>
+              <Input
+                autoFocus
+                defaultValue={listing.bio}
+                onChange={e => { this.setState({ bio: e.target.value }) }}
+                type="textarea"
+                name="listingDescription"
+                id="listingDescription"
+                placeholder="Tell the world what makes you special!"/>
             </Col>
           </Row>
         </Container>

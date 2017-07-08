@@ -7,7 +7,7 @@ import {
   Container,
   Row,
   Col,
-  Button
+  Button,
 } from 'reactstrap'
 
 import Loader from './Loader'
@@ -19,7 +19,6 @@ const baseStyles = {
     background: '#fff',
     overflow: 'auto',
     WebkitOverflowScrolling: 'touch',
-    borderRadius: '4px',
     outline: 'none',
     padding: '20px',
     top: '10%',
@@ -32,6 +31,45 @@ const baseStyles = {
   overlay: {
 
   }
+}
+
+const TopBar = (props) => {
+  return (
+    <div className="top-bar text-left mb-4">
+      <h5 className="title">{props.title}</h5>
+
+      <div className="modal-close-wrapper">
+        <a href="" className="modal-close" onClick={props.onClose}>
+          <i className="fa fa-times"></i>
+        </a>
+      </div>
+    </div>
+  )
+}
+
+const BottomBar = (props) => {
+  if (props.onSave) {
+    const saveLabel = props.saveLabel || 'Save'
+
+    return (
+      <div className="bottom-bar text-right mt-5">
+        <Button
+          className="mr-2"
+          color="default"
+          onClick={props.onClose}>
+          Cancel
+        </Button>
+
+        <Button
+          color="primary"
+          onClick={props.onSave}>
+          {saveLabel}
+        </Button>
+      </div>
+    )
+  }
+
+  return <div></div>
 }
 
 const Modal = (props) => {
@@ -65,16 +103,20 @@ const Modal = (props) => {
       >
 
       <Loader loading={props.loading}>
-
-        <div className="modal-close-wrapper">
-          <a href="" className="modal-close" onClick={onClose}>
-            <i className="fa fa-times"></i>
-          </a>
-        </div>
+        <TopBar
+          onClose={onClose}
+          title={props.contentLabel}
+        />
 
         {props.isOpen &&
           props.children
         }
+
+        <BottomBar
+          saveLabel={props.saveLabel}
+          onSave={props.onSave}
+          onClose={onClose}
+        />
       </Loader>
     </ReactModal>
   )
@@ -83,24 +125,14 @@ const Modal = (props) => {
 const ConfirmModal = (props) => {
   return (
     <Modal
+      onSave={props.onConfirm}
+      saveLabel="Yes"
       {...props}>
 
       <Container>
         <Row>
           <Col>
             <h5>{props.msg}</h5>
-          </Col>
-        </Row>
-
-        <Row className="mt-4 text-center">
-          <Col>
-            <Button role="button" onClick={props.onRequestClose} className="">
-              No
-            </Button>
-
-            <Button role="button" onClick={props.onConfirm} color="primary" className="ml-2">
-              Yes
-            </Button>
           </Col>
         </Row>
       </Container>

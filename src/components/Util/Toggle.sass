@@ -1,0 +1,30 @@
+@import 'variables'
+
+.et-toggle.react-toggle
+
+  .react-toggle-track, &:hover .react-toggle-track
+    background-color: darken($color-border, 10%)
+
+  .react-toggle-thumb
+    border-color: darken($color-border, 10%)
+
+  &.react-toggle--focus
+    .react-toggle-thumb
+      border-color: $color-inverse
+      background-color: $color-border
+      outline: none
+      box-shadow: none
+
+  &.react-toggle--checked, &.react-toggle--checked:hover
+    .react-toggle-track
+      background-color: $color-inverse
+
+    .react-toggle-thumb
+      border-color: $color-inverse
+
+
+
+
+
+
+

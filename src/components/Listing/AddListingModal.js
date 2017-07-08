@@ -5,10 +5,8 @@ import { Modal } from '../Global'
 
 import {
   Form,
-  FormGroup,
   Label,
   Input,
-  Button,
   Container,
   Row,
   Col,
@@ -43,6 +41,8 @@ class AddListingModal extends React.Component {
         className="add-description-modal small-modal"
         loading={listing.isAddingListingLoading}
         contentLabel="Add New Listing"
+        onSave={this.submit.bind(this)}
+        saveLabel="Create"
         onRequestClose={e => { dispatch({ type: 'SET_ADD_LISTING_MODAL', data: false }) }}
         isOpen={listing.isAddingListing}>
 
@@ -51,7 +51,7 @@ class AddListingModal extends React.Component {
             <Row>
               <Col>
                 <Alert color="danger">
-                  {listing.addListingErrors}
+                  Name has already been taken
                 </Alert>
               </Col>
             </Row>
@@ -59,24 +59,16 @@ class AddListingModal extends React.Component {
 
           <Row>
             <Col>
-              <Form method="post" onSubmit={this.submit.bind(this)}>
-                <FormGroup>
-                  <Label for="listingTitle">Listing Title</Label>
-                  <Input
-                    autoFocus
-                    value={this.state.title}
-                    onChange={e => { this.setState({ title: e.target.value }) }}
-                    type="text"
-                    name="listingTitle"
-                    id="listingTitle"
-                    placeholder="What's this place called?"/>
-                </FormGroup>
-
-                <FormGroup className="mt-4">
-                  <Button block color="success" role="button" type="submit">
-                    Create Listing!
-                  </Button>
-                </FormGroup>
+              <Form onSubmit={this.submit.bind(this)}>
+                <Label for="listingTitle">Listing Title</Label>
+                <Input
+                  autoFocus
+                  value={this.state.title}
+                  onChange={e => { this.setState({ title: e.target.value }) }}
+                  type="text"
+                  name="listingTitle"
+                  id="listingTitle"
+                  placeholder="What's this place called?"/>
               </Form>
             </Col>
           </Row>

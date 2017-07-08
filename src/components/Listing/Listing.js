@@ -33,6 +33,7 @@ const AddImage = (props) => {
             role="button"
             tabIndex="0"
             onClick={() => props.dispatch(setConfirm({
+              title: 'Set Cover Photo',
               msg: 'Are you sure you want to make this photo your cover photo?',
               action: makeImageCover,
               data: {
@@ -49,6 +50,7 @@ const AddImage = (props) => {
             role="button"
             tabIndex="0"
             onClick={() => props.dispatch(setConfirm({
+              title: 'Delete Photo',
               msg: 'Are you sure you want to delete this photo?',
               action: deleteImageFromListing,
               data: {
@@ -212,6 +214,7 @@ const DailyHours = (props) => {
 }
 
 const OperatingHours = (props) => {
+  const { dispatch } = props
   let hours
 
   if (props.hours && props.hours.length) {
@@ -225,7 +228,11 @@ const OperatingHours = (props) => {
     hours = (
       <div className="daily-hours no-content">
         <p>No operating hours set!</p>
-        <a href="" role="button" className="btn btn-default btn-block">Add</a>
+        <button
+          onClick={() => dispatch({ type: 'SET_EDITING_LISTING_OPERATING_HOURS', data: true })}
+          className="btn btn-default btn-block">
+          Add
+        </button>
       </div>
     )
   }
@@ -250,17 +257,26 @@ const AsideInfo = (props) => {
         <Ethicality ethicalities={props.ethicalities} />
       </div>
 
-      <OperatingHours hours={props.hours} />
+      <OperatingHours
+        dispatch={props.dispatch}
+        hours={props.hours} />
     </aside>
   )
 }
 
 const Bio = (props) => {
   let bio
+  let edit
 
   if (props.bio) {
     bio = (
       <p>{props.bio}</p>
+    )
+
+    edit = (
+      <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickDescriptionEdit}>
+        Edit
+      </a>
     )
   }
   else {
@@ -280,9 +296,7 @@ const Bio = (props) => {
     <div className="bio">
       <h3>
         {props.title}
-        <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickDescriptionEdit}>
-          Edit
-        </a>
+        {edit}
       </h3>
       {bio}
     </div>
@@ -291,6 +305,7 @@ const Bio = (props) => {
 
 const ListingMap = props => {
   let location
+  let edit
 
   if (!props.locations || !props.locations.length) {
     location = (
@@ -323,15 +338,19 @@ const ListingMap = props => {
           <div style={{ height: `100%` }} />
         }/>
     )
+
+    edit = (
+      <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickLocationEdit}>
+        Edit
+      </a>
+    )
   }
 
   return (
     <div className="listing-map">
       <h3>
         How to get here
-        <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickLocationEdit}>
-          Edit
-        </a>
+        {edit}
       </h3>
       <div className="listing-map-area">
         {location}
@@ -377,6 +396,7 @@ const ListingContent = (props) => {
         title={title} />
 
       <AsideInfo
+        dispatch={props.dispatch}
         className="col-xl-3 col-lg-4 col-md-5"
         ethicalities={ethicalities}
         hours={hours}/>
@@ -417,7 +437,7 @@ class Listing extends React.Component {
   }
 
   render() {
-    const { listing } = this.props
+    const { listing, dispatch } = this.props
 
     return (
       <Loader loading={listing.isListingLoading}>
@@ -433,6 +453,7 @@ class Listing extends React.Component {
             title={listing.title} />
 
           <ListingContent
+            dispatch={dispatch}
             listing={listing}
             onClickDescriptionEdit={this.onClickDescriptionEdit.bind(this)}
             onClickLocationEdit={this.onClickLocationEdit.bind(this)}

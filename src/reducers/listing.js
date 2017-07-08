@@ -24,6 +24,8 @@ const listing = (state={}, action) => {
       return {...state, isImageLoading: action.data}
     case 'SET_LISTING_IMAGES':
       return {...state, images: action.data}
+    case 'SET_EDITING_LISTING_OPERATING_HOURS':
+      return {...state, isEditingOperatingHours: action.data}
     case 'SET_EDITING_LISTING_LOCATION':
       return {...state, isEditingLocation: action.data}
     case 'SET_EDIT_LOCATION_ERROR':

@@ -8,7 +8,7 @@
 $fa-font-path: "../../node_modules/font-awesome/fonts"
 
 // Custom Bootstrap
-$brand-primary: $color-primary
+$brand-primary: $color-inverse
 $brand-success: $color-success
 $brand-info: $color-info
 $brand-warning: $color-warning
@@ -26,6 +26,8 @@ $headings-font-family: inherit !default
 $headings-font-weight: 300 !default
 $headings-line-height: 1.1 !default
 $headings-color: inherit !default
+
+$enable-rounded: false
 
 @import "../../node_modules/font-awesome/scss/font-awesome"
 @import "~bootstrap/scss/bootstrap.scss"
@@ -48,19 +50,17 @@ body
       padding-left: 0
       padding-right: 0
 
+  .inverse
+    color: $color-white
+    background-color: $color-inverse
+
   .btn
     font-weight: $font-light
 
   .form-control
-    &::-webkit-input-placeholder
-      font-weight: $font-light
-      font-family: $font-family-1
-      color: lighten($color-inverse, 30%)
-
-    &::-moz-placeholder
-      font-weight: $font-light
-      font-family: $font-family-1
-      color: lighten($color-inverse, 30%)
+    font-weight: $font-light
+    font-family: $font-family-1
+    color: lighten($color-inverse, 30%)
 
   .btn
     color: $color-white
@@ -71,23 +71,25 @@ body
       color: $color-gray-3
 
       &:hover
+        color: darken($color-inverse, 70%)
         border-color: $color-inverse
-        background-color: $color-inverse
-        color: $color-white
 
     &.btn-secondary
       color: $color-inverse
 
-    &:hover
-      cursor: pointer
+    &.btn-success
+      background: $color-white
+      border: 2px solid $color-success
+      color: $color-success
+      font-size: 14px
 
-  .btn-danger
-    background: lighten($color-success, 20%)
-    border-color: lighten($color-success, 20%)
+      &:hover, &:focus
+        background: $color-success
+        border-color: $color-success
+        color: $color-white
 
     &:hover
-      background: $color-success
-      border-color: $color-success
+          cursor: pointer
 
   .icon-button
     opacity: 0.7
@@ -102,6 +104,7 @@ body
     color: $color-white
 
     &:hover, &:focus
+      outline: none
       cursor: pointer
       color: $color-inverse
       opacity: 1
