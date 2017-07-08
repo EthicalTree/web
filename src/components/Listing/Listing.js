@@ -193,7 +193,7 @@ const Ethicality = (props) => {
   }
 
   return (
-    <div className="card ethicality">
+    <div className={`card ethicality ${props.className}`}>
       <div className="card-block ethicalities">
         {ethicalities}
       </div>
@@ -246,7 +246,10 @@ const OperatingHours = (props) => {
 const AsideInfo = (props) => {
   return (
     <aside className={props.className}>
-      <Ethicality ethicalities={props.ethicalities} />
+      <div className="hidden-sm-down">
+        <Ethicality ethicalities={props.ethicalities} />
+      </div>
+
       <OperatingHours hours={props.hours} />
     </aside>
   )
@@ -360,8 +363,13 @@ const ListingContent = (props) => {
   const { locations, bio, title, ethicalities, hours } = props.listing
   return (
     <div className="row listing-content">
+
+      <div className="col-12 hidden-md-up">
+        <Ethicality ethicalities={ethicalities} />
+      </div>
+
       <ListingInfo
-        className="listing-info col-md-9"
+        className="listing-info col-xl-9 col-lg-8 col-md-7"
         onClickDescriptionEdit={props.onClickDescriptionEdit}
         onClickLocationEdit={props.onClickLocationEdit}
         locations={locations}
@@ -369,7 +377,7 @@ const ListingContent = (props) => {
         title={title} />
 
       <AsideInfo
-        className="col-md-3"
+        className="col-xl-3 col-lg-4 col-md-5"
         ethicalities={ethicalities}
         hours={hours}/>
     </div>
