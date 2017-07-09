@@ -205,10 +205,18 @@ const Ethicality = (props) => {
 }
 
 const DailyHours = (props) => {
+  const { label, hours } = props.hours
+
   return (
-    <div className="daily-hours">
-      <p>{props.day}</p>
-      <p>{props.hours}</p>
+    <div className="daily-hours pt-2 pb-2">
+      <p className="day">{label}</p>
+      <p className="hours">
+        {hours ||
+          <span className="closed">
+            CLOSED
+          </span>
+        }
+      </p>
     </div>
   )
 }
@@ -220,7 +228,7 @@ const OperatingHours = (props) => {
   if (props.hours && props.hours.length) {
     hours = props.hours.map(hours => {
       return (
-        <DailyHours key={hours.day} day={hours.day} hours={hours.hours} />
+        <DailyHours key={hours.day} hours={hours} />
       )
     })
   }
@@ -240,10 +248,16 @@ const OperatingHours = (props) => {
   return (
     <div className="card operating-hours">
       <div className="card-header">
-        <i className="fa fa-clock-o"></i>
         Operating Hours
       </div>
-      <div className="card-block">
+      <div className="card-block pt-3">
+        {props.hours && props.hours.length > 0 &&
+          <button
+            onClick={() => dispatch({ type: 'SET_EDITING_LISTING_OPERATING_HOURS', data: true })}
+            className="btn btn-sm btn-default btn-block">
+            Edit
+          </button>
+        }
         {hours}
       </div>
     </div>
@@ -379,7 +393,8 @@ const ListingInfo = (props) => {
 }
 
 const ListingContent = (props) => {
-  const { locations, bio, title, ethicalities, hours } = props.listing
+  const { locations, bio, title, ethicalities, operating_hours } = props.listing
+
   return (
     <div className="row listing-content">
 
@@ -399,7 +414,7 @@ const ListingContent = (props) => {
         dispatch={props.dispatch}
         className="col-xl-3 col-lg-4 col-md-5"
         ethicalities={ethicalities}
-        hours={hours}/>
+        hours={operating_hours}/>
     </div>
   )
 }

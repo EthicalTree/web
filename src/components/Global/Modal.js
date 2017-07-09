@@ -20,7 +20,7 @@ const baseStyles = {
     overflow: 'auto',
     WebkitOverflowScrolling: 'touch',
     outline: 'none',
-    padding: '20px',
+    padding: '0',
     top: '10%',
     left: '50%',
     right: 'auto',
@@ -107,10 +107,11 @@ const Modal = (props) => {
           onClose={onClose}
           title={props.contentLabel}
         />
-
-        {props.isOpen &&
-          props.children
-        }
+        <div className="p-3">
+          {props.isOpen &&
+            props.children
+          }
+        </div>
 
         <BottomBar
           saveLabel={props.saveLabel}

@@ -96,19 +96,19 @@ export const DateSelector = (props) => {
                 <CardBlock>
                   {selectedDay.enabled &&
                     <Row>
-                      <Col xs="5">
+                      <Col xs="12" sm="5">
                         <TimePicker12Hour
-                          defaultValue={props.selectedDay.open}
-                          onChange={time => props.setTime('open', time)}
+                          defaultValue={props.selectedDay.open_str}
+                          onChange={time => props.setTime('open_str', time)}
                         />
                       </Col>
-                      <Col xs="2" className="text-center">
+                      <Col xs="12" sm="2" className="text-center">
                         to
                       </Col>
-                      <Col xs="5">
+                      <Col xs="12" sm="5">
                         <TimePicker12Hour
-                          defaultValue={props.selectedDay.close}
-                          onChange={time => props.setTime('close', time)}
+                          defaultValue={props.selectedDay.close_str}
+                          onChange={time => props.setTime('close_str', time)}
                         />
                       </Col>
                     </Row>

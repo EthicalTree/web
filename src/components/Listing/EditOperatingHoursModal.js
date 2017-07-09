@@ -20,7 +20,22 @@ class EditOperatingHoursModal extends React.Component {
 
     this.state = {
       selectedDay: null,
-      operatingHours: {
+      operatingHours: null
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    const { listing } = props
+    let operatingHours = listing && listing.operating_hours
+    let hours = {}
+
+    if (operatingHours && operatingHours.length) {
+      operatingHours.forEach(item => {
+        hours[item.day] = item
+      })
+    }
+    else {
+      hours = {
         'sunday': { label: 'Sunday' },
         'monday': { label: 'Monday' },
         'tuesday': { label: 'Tuesday' },
@@ -30,6 +45,8 @@ class EditOperatingHoursModal extends React.Component {
         'saturday': { label: 'Saturday' },
       }
     }
+
+    this.setState({ operatingHours: hours })
   }
 
   submit(e) {
@@ -57,8 +74,8 @@ class EditOperatingHoursModal extends React.Component {
       }
 
       if (value.enabled === true) {
-        operatingHours[day].open = '12:00 pm'
-        operatingHours[day].close = '10:00 pm'
+        operatingHours[day].open_str = '12:00 pm'
+        operatingHours[day].close_str = '10:00 pm'
       }
 
       return {
@@ -68,8 +85,13 @@ class EditOperatingHoursModal extends React.Component {
     })
   }
 
-  setTime(e) {
+  setTime(key, time) {
+    const { selectedDay } = this.state
+    let operatingHours = {...this.state.operatingHours}
 
+    operatingHours[selectedDay][key] = time.format('h:mm a')
+
+    this.setState({ operatingHours })
   }
 
   render() {

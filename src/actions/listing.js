@@ -153,8 +153,25 @@ export const makeImageCover = (data) => {
   }
 }
 
-export const saveOperatingHours = (listing_slug, hours) => {
+export const saveOperatingHours = (listing_slug, operating_hours) => {
   return dispatch => {
+    dispatch({ type: 'SET_EDITING_OPERATING_HOURS_LOADING', data: true })
+
+    axios.post(apiRoute(`/v1/listings/${listing_slug}/operating_hours`), operating_hours)
+      .then(response => {
+        const operatingHours = response.data.operating_hours
+
+        if (operatingHours) {
+          dispatch({ type: 'SET_LISTING_OPERATING_HOURS', data: operatingHours})
+          dispatch({ type: 'SET_EDITING_LISTING_OPERATING_HOURS', data: false })
+        }
+      })
+      .catch(() => {
+        dispatch({ type: 'SET_ERROR' })
+      })
+      .then(() => {
+        dispatch({ type: 'SET_EDITING_OPERATING_HOURS_LOADING', data: false })
+      })
 
   }
 }
