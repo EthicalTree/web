@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+import { error } from '../components/Util/Notifications'
 import { apiRoute, authenticate, deauthenticate } from '../utils/api'
 
 export const login = (data) => {
@@ -58,7 +59,7 @@ export const signup = (data) => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        error()
       })
       .then(() => {
         dispatch({ type: 'SET_SIGNUP_LOADING', data: false })
@@ -83,7 +84,7 @@ export const verifyEmail = (data) => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        error()
       })
       .then(() => {
         dispatch({ type: 'SET_VERIFY_EMAIL_LOADING', data: false })
@@ -100,7 +101,7 @@ export const getCurrentUser = () => {
         dispatch({ type: 'SET_CURRENT_USER', data: response.data })
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        error()
       })
       .then(() => {
         dispatch({ type: 'SET_USER_LOADING', data: false })

@@ -22,78 +22,63 @@ import './Listing.sass'
 
 const AddImage = (props) => {
 
-  if (props.hasSlides) {
-    return (
-      <div>
-        <div className="actions">
-          <div><div className="triangle"></div></div>
-          <i
-            id="makeCoverPhoto"
-            title="Make cover photo"
-            role="button"
-            tabIndex="0"
-            onClick={() => props.dispatch(setConfirm({
-              title: 'Set Cover Photo',
-              msg: 'Are you sure you want to make this photo your cover photo?',
-              action: makeImageCover,
-              data: {
-                listing_slug: props.listing.slug,
-                image_id: props.listing.currentImage.id
-              }
-            }))}
-            className="icon-button fa fa-file-picture-o" />
-          <Tooltip placement="bottom" target="makeCoverPhoto" delay={0}>Make cover photo</Tooltip>
-
-          <i
-            id="deleteImage"
-            title="Delete photo"
-            role="button"
-            tabIndex="0"
-            onClick={() => props.dispatch(setConfirm({
-              title: 'Delete Photo',
-              msg: 'Are you sure you want to delete this photo?',
-              action: deleteImageFromListing,
-              data: {
-                listing_slug: props.listing.slug,
-                image_id: props.listing.currentImage.id
-              }
-            }))}
-            className="icon-button fa fa-trash image-delete" />
-          <Tooltip placement="bottom" target="deleteImage" delay={0}>Delete photo</Tooltip>
-
-          <S3Uploader
-            onProgress={props.onImageUploadProgress}
-            onFinish={props.onImageUploadFinish}
-            signingUrlQueryParams={{ slug: props.listing.slug }}>
-
-            <i
-              id="addImage"
-              title="Add new photo"
-              tabIndex="0"
-              role="button"
-              className="icon-button fa fa-plus-circle" />
-            <Tooltip placement="bottom" target="addImage" delay={0}>Add new photo</Tooltip>
-
-          </S3Uploader>
-        </div>
-      </div>
-    )
-  }
-
   return (
-    <S3Uploader
-        onProgress={props.onImageUploadProgress}
-        onFinish={props.onImageUploadFinish}
-        signingUrlQueryParams={{ slug: props.listing.slug }}>
+    <div>
+      <div className="actions">
+        <div><div className="triangle"></div></div>
+        <i
+          id="makeCoverPhoto"
+          title="Make cover photo"
+          role="button"
+          tabIndex="0"
+          onClick={() => props.dispatch(setConfirm({
+            title: 'Set Cover Photo',
+            msg: 'Are you sure you want to make this photo your cover photo?',
+            action: makeImageCover,
+            data: {
+              listing_slug: props.listing.slug,
+              image_id: props.listing.currentImage.id
+            }
+          }))}
+          className="icon-button fa fa-file-picture-o" />
+        <Tooltip placement="bottom" target="makeCoverPhoto" delay={0}>Make cover photo</Tooltip>
 
-      <div className="upload-wrapper">
-        <i className="fa fa-camera-retro camera"></i>
-        <span className="add-picture-cta">
-          Add a picture!
-        </span>
+        <i
+          id="deleteImage"
+          title="Delete photo"
+          role="button"
+          tabIndex="0"
+          onClick={() => props.dispatch(setConfirm({
+            title: 'Delete Photo',
+            msg: 'Are you sure you want to delete this photo?',
+            action: deleteImageFromListing,
+            data: {
+              listing_slug: props.listing.slug,
+              image_id: props.listing.currentImage.id
+            }
+          }))}
+          className="icon-button fa fa-trash image-delete" />
+        <Tooltip placement="bottom" target="deleteImage" delay={0}>Delete photo</Tooltip>
+
+        <S3Uploader
+          onProgress={props.onImageUploadProgress}
+          onFinish={props.onImageUploadFinish}
+          signingUrlQueryParams={{ slug: props.listing.slug }}>
+
+          <i
+            id="addImage"
+            title="Add new photo"
+            tabIndex="0"
+            role="button"
+            className="icon-button fa fa-plus-circle" />
+          <Tooltip placement="bottom" target="addImage" delay={0}>Add new photo</Tooltip>
+
+        </S3Uploader>
       </div>
-    </S3Uploader>
+    </div>
   )
+
+
 }
 
 class ListingImages extends React.Component {
@@ -112,11 +97,10 @@ class ListingImages extends React.Component {
 
   render() {
     let slides
+    let content
+
     const props = this.props
-
     const hasSlides = props.images && props.images.length > 0
-
-    const noContent = !hasSlides ? 'no-content uploadable' : ''
 
     if (hasSlides) {
       slides = props.images.map(image => {
@@ -135,17 +119,9 @@ class ListingImages extends React.Component {
           </div>
         )
       })
-    }
 
-    return (
-      <Loader
-        loading={props.listing.isImageLoading}
-        progress={props.listing.uploadProgress}>
-
-        <div
-          tabIndex="0"
-          className={`listing-images text-center ${noContent}`}>
-
+      content = (
+        <div className="listing-images text-center">
           {hasSlides &&
             <ETSlider
               afterChange={this.handleSlideChange.bind(this)}
@@ -159,6 +135,32 @@ class ListingImages extends React.Component {
             onImageUploadFinish={props.onImageUploadFinish}
             hasSlides={hasSlides} />
         </div>
+      )
+    }
+    else {
+      content = (
+        <S3Uploader
+          onProgress={props.onImageUploadProgress}
+          onFinish={props.onImageUploadFinish}
+          signingUrlQueryParams={{ slug: props.listing.slug }}>
+
+          <div className="listing-images text-center no-content uploadable">
+            <div className="upload-wrapper">
+              <i className="fa fa-camera-retro camera"></i>
+              <span className="add-picture-cta">
+                Add a photo
+              </span>
+            </div>
+          </div>
+        </S3Uploader>
+      )
+    }
+
+    return (
+      <Loader
+        loading={props.listing.isImageLoading}
+        progress={props.listing.uploadProgress}>
+        {content}
       </Loader>
     )
   }
@@ -453,6 +455,15 @@ class Listing extends React.Component {
 
   render() {
     const { listing, dispatch } = this.props
+
+    if (!listing.id && !listing.isListingLoading) {
+      return (
+        <div className="mt-5 text-center col">
+          <h2>Whoops...</h2>
+          <h5>Listing could not be found!</h5>
+        </div>
+      )
+    }
 
     return (
       <Loader loading={listing.isListingLoading}>

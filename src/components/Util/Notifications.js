@@ -1,7 +1,23 @@
+import 'noty/lib/noty.css'
 import Noty from 'noty'
 
+let stack = []
+
 const notify = (options) => {
-  return new Noty(options).show()
+  const newNoty = new Noty({
+    layout: 'bottomRight',
+    timeout: 3000,
+    theme: 'sunset',
+    ...options
+  }).show()
+
+  const exists = stack.find(note => note.type === newNoty.type)
+
+  if (exists) {
+    exists.close()
+  }
+
+  stack = [...stack, newNoty]
 }
 
 const info = (text, options={}) => {
@@ -12,7 +28,8 @@ const warn = (text, options={}) => {
   return notify({ ...options, type: 'warn', text })
 }
 
-const error = (text, options={}) => {
+const error = (msg, options={}) => {
+  const text = msg || "Something broke, sorry about that!"
   return notify({ ...options, type: 'error', text })
 }
 

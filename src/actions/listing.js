@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+import { error } from '../components/Util/Notifications'
 import { apiRoute } from '../utils/api'
 
 export const getListing = (slug) => {
@@ -10,7 +11,7 @@ export const getListing = (slug) => {
         dispatch({ type: 'SET_LISTING', data: listing.data })
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        error()
       })
       .then(() => {
         dispatch({ type: 'SET_GET_LISTING_LOADING', data: false })
@@ -34,7 +35,7 @@ export const addListing = (data, history) => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        error()
       })
       .then(() => {
         dispatch({ type: 'SET_ADD_LISTING_LOADING', data: false })
@@ -57,7 +58,7 @@ export const editDescription = (data) => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        error()
       })
       .then(() => {
         dispatch({ type: 'SET_EDIT_DESCRIPTION_LOADING', data: false })
@@ -80,7 +81,7 @@ export const editLocation = (listing_slug, data) => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        error()
       })
       .then(() => {
         dispatch({ type: 'SET_EDIT_LOCATION_LOADING', data: false })
@@ -100,7 +101,7 @@ export const addImageToListing = (listing_slug, image_key) => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        error()
       })
       .then(() => {
         dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: undefined })
@@ -122,7 +123,7 @@ export const deleteImageFromListing = (data) => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        error()
       })
       .then(() => {
         dispatch({ type: 'SET_IMAGE_LOADING', data: false })
@@ -145,7 +146,7 @@ export const makeImageCover = (data) => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        error()
       })
       .then(() => {
         dispatch({ type: 'SET_IMAGE_LOADING', data: false })
@@ -167,7 +168,7 @@ export const saveOperatingHours = (listing_slug, operating_hours) => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_ERROR' })
+        error()
       })
       .then(() => {
         dispatch({ type: 'SET_EDITING_OPERATING_HOURS_LOADING', data: false })
