@@ -1,5 +1,6 @@
 import store from 'store'
 import axios from 'axios'
+import { error } from '../components/Util/Notifications'
 
 const apiRoute = (path) => {
   return `${process.env.REACT_APP_API_URL}${path}`
@@ -15,7 +16,43 @@ const deauthenticate = () => {
   axios.defaults.headers.common['Authorization'] = ''
 }
 
+// AXIOS API WRAPPER
+const wrapper = (method, url, config={}) => {
+  return axios({
+    method,
+    url: apiRoute(url),
+    ...config
+  }).catch(err => {
+    const status = err.response
+
+    if (status !== 404) {
+      error()
+    }
+
+    return {error: err.response}
+  })
+}
+
+const get = (url, config) => { return wrapper('get', url, config) }
+const _delete = (url, config) => { return wrapper('delete', url, config) }
+const head = (url, config) => { return wrapper('head', url, config) }
+const options = (url, config) => { return wrapper('options', url, config) }
+const post = (url, data, config) => { return wrapper('post', url, {...config, data}) }
+const put = (url, data, config) => { return wrapper('put', url, {...config, data}) }
+const patch = (url, data, config) => { return wrapper('patch', url, {...config, data}) }
+
+const api = {
+  get,
+  delete: _delete,
+  head,
+  options,
+  post,
+  put,
+  patch
+}
+
 export {
+  api,
   apiRoute,
   authenticate,
   deauthenticate
