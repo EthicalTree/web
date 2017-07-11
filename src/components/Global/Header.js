@@ -30,7 +30,7 @@ const Header = (props) => {
 
         <Collapse isOpen={props.header.isOpen} navbar>
           {props.session.user &&
-            <Nav navbar className="mr-4 ml-auto">
+            <Nav navbar className="ml-auto">
               <NavItem>
                 <NavLink
                   href="#"
@@ -42,7 +42,6 @@ const Header = (props) => {
               <NavItem>
                 <Button
                   color="success"
-                  className="ml-3"
                   onClick={e => { dispatch({ type: 'SET_ADD_LISTING_MODAL', data: true }) }}>
                   Add Listing
                 </Button>
