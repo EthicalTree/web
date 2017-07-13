@@ -1,0 +1,39 @@
+@import 'variables'
+
+.ethicality-icon
+  border: 1px solid rgba($color-white, 0)
+
+  svg
+    width: 32px
+    height: 32px
+    fill: lighten($color-inverse, 20%)
+
+  .name
+    font-weight: $font-light
+
+  &.selectable
+    cursor: pointer
+    border: 1px solid $color-border
+    border-radius: 5px
+
+    transition: all 0.2s ease
+
+    &:hover
+      color: darken($color-success, 5%)
+      border-color: $color-success
+      background-color: rgba($color-success, 0.01)
+      box-shadow: 0 0 5px rgba($color-success, 0.67)
+
+      svg
+        fill: darken($color-success, 5%)
+
+    &.selected
+      color: darken($color-primary, 5%)
+      border-color: $color-primary
+      background-color: rgba($color-primary, 0.01)
+      box-shadow: 0 0 5px rgba($color-primary, 0.67)
+
+      svg
+        fill: darken($color-primary, 5%)
+
+

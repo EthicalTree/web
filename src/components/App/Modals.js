@@ -6,7 +6,8 @@ import {
   AddListingModal,
   EditDescriptionModal,
   EditLocationModal,
-  EditOperatingHoursModal
+  EditOperatingHoursModal,
+  EditEthicalitiesModal
 } from '../Listing'
 
 import {
@@ -28,6 +29,8 @@ const Modals = (props) => {
       <EditDescriptionModal />
       <EditLocationModal />
       <EditOperatingHoursModal />
+      <EditEthicalitiesModal />
+
       <GenericConfirmModal />
     </div>
   )

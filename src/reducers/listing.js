@@ -12,6 +12,14 @@ const listing = (state={}, action) => {
       return {...state, isListingLoading: action.data}
     case 'SET_LISTING':
       return {...state,...action.data}
+    case 'SET_EDIT_LISTING_ETHICALITIES_LOADING':
+      return {...state, isEditingListingEthicalitiesLoading: action.data}
+    case 'SET_EDIT_ETHICALITIES_ERROR':
+      return {...state, editEthicalitiesErrors: action.data}
+    case 'SET_LISTING_ETHICALITIES':
+      return {...state, ethicalities: action.data}
+    case 'SET_EDITING_LISTING_ETHICALITIES':
+      return {...state, isEditingListingEthicalities: action.data}
     case 'SET_EDITING_LISTING_DESCRIPTION':
       return {...state, isEditingDescription: action.data}
     case 'SET_EDIT_DESCRIPTION_LOADING':

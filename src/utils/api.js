@@ -2,6 +2,8 @@ import store from 'store'
 import axios from 'axios'
 import { error } from '../components/Util/Notifications'
 
+const ERRORS = [500]
+
 const apiRoute = (path) => {
   return `${process.env.REACT_APP_API_URL}${path}`
 }
@@ -23,13 +25,13 @@ const wrapper = (method, url, config={}) => {
     url: apiRoute(url),
     ...config
   }).catch(err => {
-    const status = err.response
+    const status = err.response && err.response.status
 
-    if (status !== 404) {
+    if (ERRORS.includes(status)) {
       error()
     }
 
-    return {error: err.response}
+    throw err
   })
 }
 

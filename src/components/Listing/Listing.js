@@ -2,7 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Marker } from 'react-google-maps'
 
-import { UncontrolledTooltip as Tooltip } from 'reactstrap'
+import {
+  Button,
+  UncontrolledTooltip as Tooltip
+} from 'reactstrap'
 
 import {
   getListing,
@@ -17,6 +20,7 @@ import Loader from '../Global/Loader'
 import ETSlider from '../Global/Slider'
 import S3Uploader from '../Global/S3'
 import Map from '../Global/Map'
+import Ethicality from '../Ethicality/Ethicality'
 
 import './Listing.sass'
 
@@ -174,24 +178,45 @@ const TitleBar = (props) => {
   )
 }
 
-const Ethicality = (props) => {
+const EthicalityArea = (props) => {
   let ethicalities
 
+  const { dispatch } = props
+
   if (props.ethicalities && props.ethicalities.length) {
-    ethicalities = props.ethicalities.map(quality => {
-      return (
-        <div key={quality.name} className="quality">
-          <i className="fa fa-superpowers"></i>
-          <p className="name">{quality.name}</p>
-        </div>
-      )
-    })
+    ethicalities = (
+      <div>
+        <Button
+          block
+          size="sm"
+          color="default"
+          onClick={() => dispatch({ type: 'SET_EDITING_LISTING_ETHICALITIES', data: true })}>
+          Edit
+        </Button>
+        {props.ethicalities.map(ethicality => {
+          return (
+            <Ethicality
+              key={ethicality.slug}
+              className="p-3"
+              name={ethicality.name}
+              slug={ethicality.slug}
+              icon_key={ethicality.icon_key}
+            />
+          )
+        })}
+      </div>
+    )
   }
   else {
     ethicalities = (
       <div className="no-content">
         <p>No ethicalities set!</p>
-        <a href="" role="button" className="btn btn-default btn-block">Add</a>
+        <Button
+          block
+          color="default"
+          onClick={() => dispatch({ type: 'SET_EDITING_LISTING_ETHICALITIES', data: true })}>
+          Add
+        </Button>
       </div>
     )
   }
@@ -270,7 +295,11 @@ const AsideInfo = (props) => {
   return (
     <aside className={props.className}>
       <div className="hidden-sm-down">
-        <Ethicality ethicalities={props.ethicalities} />
+        <EthicalityArea
+          dispatch={props.dispatch}
+          ethicalityChoices={props.ethicalityChoices}
+          ethicalities={props.ethicalities}
+        />
       </div>
 
       <OperatingHours
@@ -395,13 +424,23 @@ const ListingInfo = (props) => {
 }
 
 const ListingContent = (props) => {
-  const { locations, bio, title, ethicalities, operating_hours } = props.listing
+  const {
+    locations,
+    bio,
+    title,
+    ethicalities,
+    operating_hours,
+    ethicalityChoices,
+  } = props.listing
 
   return (
     <div className="row listing-content">
 
       <div className="col-12 hidden-md-up">
-        <Ethicality ethicalities={ethicalities} />
+        <EthicalityArea
+          dispatch={props.dispatch}
+          ethicalityChoices={ethicalityChoices}
+          ethicalities={ethicalities} />
       </div>
 
       <ListingInfo
@@ -415,6 +454,7 @@ const ListingContent = (props) => {
       <AsideInfo
         dispatch={props.dispatch}
         className="col-xl-3 col-lg-4 col-md-5"
+        ethicalityChoices={ethicalityChoices}
         ethicalities={ethicalities}
         hours={operating_hours}/>
     </div>
