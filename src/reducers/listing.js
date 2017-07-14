@@ -21,7 +21,11 @@ const listing = (state={}, action) => {
     case 'SET_EDITING_LISTING_ETHICALITIES':
       return {...state, isEditingListingEthicalities: action.data}
     case 'SET_EDITING_LISTING_DESCRIPTION':
-      return {...state, isEditingDescription: action.data}
+      return {
+        ...state,
+        editDescriptionErrors: false,
+        isEditingDescription: action.data
+      }
     case 'SET_EDIT_DESCRIPTION_LOADING':
       return {...state, isEditingDescriptionLoading: action.data}
     case 'SET_EDIT_DESCRIPTION_ERROR':

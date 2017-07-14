@@ -19,7 +19,7 @@ class EditDescriptionModal extends React.Component {
     super(props)
 
     this.state = {
-      bio: props.listing.bio
+      bio: ''
     }
   }
 
@@ -62,7 +62,7 @@ class EditDescriptionModal extends React.Component {
               <Label for="listingDescription">Listing Description</Label>
               <Input
                 autoFocus
-                defaultValue={listing.bio}
+                defaultValue={this.state.bio || listing.bio}
                 onChange={e => { this.setState({ bio: e.target.value }) }}
                 type="textarea"
                 name="listingDescription"
