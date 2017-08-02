@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Marker } from 'react-google-maps'
 
 import {
+  Container,
   Button,
   UncontrolledTooltip as Tooltip
 } from 'reactstrap'
@@ -507,24 +508,26 @@ class Listing extends React.Component {
 
     return (
       <Loader loading={listing.isListingLoading}>
-        <div className="listing-detail">
-          <ListingImages
-            dispatch={this.props.dispatch}
-            listing={listing}
-            onImageUploadProgress={this.onImageUploadProgress.bind(this)}
-            onImageUploadFinish={this.onImageUploadFinish.bind(this)}
-            images={listing.images}
-            />
-          <TitleBar
-            title={listing.title} />
+        <Container>
+          <div className="listing-detail">
+            <ListingImages
+              dispatch={this.props.dispatch}
+              listing={listing}
+              onImageUploadProgress={this.onImageUploadProgress.bind(this)}
+              onImageUploadFinish={this.onImageUploadFinish.bind(this)}
+              images={listing.images}
+              />
+            <TitleBar
+              title={listing.title} />
 
-          <ListingContent
-            dispatch={dispatch}
-            listing={listing}
-            onClickDescriptionEdit={this.onClickDescriptionEdit.bind(this)}
-            onClickLocationEdit={this.onClickLocationEdit.bind(this)}
-            />
-        </div>
+            <ListingContent
+              dispatch={dispatch}
+              listing={listing}
+              onClickDescriptionEdit={this.onClickDescriptionEdit.bind(this)}
+              onClickLocationEdit={this.onClickLocationEdit.bind(this)}
+              />
+          </div>
+        </Container>
       </Loader>
     )
 
