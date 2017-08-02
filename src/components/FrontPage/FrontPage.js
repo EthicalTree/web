@@ -33,7 +33,7 @@ const FrontPage = (props) => {
         </Col>
 
         <Col xs="12">
-          <div className="text-center mt-5">
+          <div className="text-center mt-5 pb-5">
             {ethicalities.map(ethicality => {
               return (
                 <span key={ethicality.slug} className="p-2">
