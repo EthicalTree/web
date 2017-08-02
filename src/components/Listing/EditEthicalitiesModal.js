@@ -98,7 +98,7 @@ class EditEthicalitiesModal extends React.Component {
               return (
                 <Col key={ethicality.slug} sm="6" className="p-2">
                   <Ethicality
-                    className="p-3"
+                    className="p-3 bordered"
                     name={ethicality.name}
                     slug={ethicality.slug}
                     icon_key={ethicality.icon_key}

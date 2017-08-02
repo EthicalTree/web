@@ -6,20 +6,12 @@ import { authenticate } from '../../utils/api'
 
 import {
   BrowserRouter as Router,
-  Route,
-  Link
+  Route
 } from 'react-router-dom'
 
 import Modals from './Modals'
+import FrontPage from '../FrontPage/FrontPage'
 import { Listing } from '../Listing'
-
-const TmpRoot = (props) => {
-  return (
-    <Link to="/listing/1">
-      Test Listing!
-    </Link>
-  )
-}
 
 class App extends React.Component {
 
@@ -38,10 +30,8 @@ class App extends React.Component {
         <Router>
           <div>
             <Header />
-            <div className="container">
-              <Route path="/" exact={true} component={TmpRoot} />
-              <Route path="/listings/:slug" component={Listing} />
-            </div>
+            <Route path="/" exact={true} component={FrontPage} />
+            <Route path="/listings/:slug" component={Listing} />
             <Footer />
             <Modals />
           </div>
