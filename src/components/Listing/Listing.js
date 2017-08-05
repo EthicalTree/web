@@ -21,7 +21,7 @@ import Loader from '../Global/Loader'
 import ETSlider from '../Global/Slider'
 import S3Uploader from '../Global/S3'
 import Map from '../Global/Map'
-import Ethicality from '../Ethicality/Ethicality'
+import { Ethicality } from '../Ethicality/Ethicality'
 
 import './Listing.sass'
 

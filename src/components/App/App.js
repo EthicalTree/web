@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Header, Footer } from '../Global'
 import { getCurrentUser } from '../../actions/session'
 import { authenticate } from '../../utils/api'
+import { logPageView } from '../Global/GA'
 
 import {
   BrowserRouter as Router,
@@ -11,6 +12,7 @@ import {
 
 import Modals from './Modals'
 import FrontPage from '../FrontPage/FrontPage'
+import { SearchResults } from '../Search'
 import { Listing } from '../Listing'
 
 class App extends React.Component {
@@ -29,9 +31,12 @@ class App extends React.Component {
       <div className="app">
         <Router>
           <div>
+            <Route component={logPageView} />
+
             <Header />
             <Route path="/" exact={true} component={FrontPage} />
             <Route path="/listings/:slug" component={Listing} />
+            <Route path="/s/:search" component={SearchResults} />
             <Footer />
             <Modals />
           </div>

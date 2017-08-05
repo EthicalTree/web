@@ -9,7 +9,7 @@ import {
   Alert
 } from 'reactstrap'
 
-import Ethicality from '../Ethicality/Ethicality'
+import { Ethicality } from '../Ethicality/Ethicality'
 
 import { getEthicalities, editEthicalities } from '../../actions/listing'
 
@@ -96,7 +96,7 @@ class EditEthicalitiesModal extends React.Component {
           <Row className="pl-4 pr-4">
             {ethicalities.map(ethicality => {
               return (
-                <Col key={ethicality.slug} sm="6" className="p-2">
+                <Col key={ethicality.slug} xs="6" className="p-2">
                   <Ethicality
                     className="p-3 bordered"
                     name={ethicality.name}

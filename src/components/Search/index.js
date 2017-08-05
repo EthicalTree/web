@@ -1,3 +1,7 @@
 import Search from './Search'
+import SearchResults from './SearchResults'
 
-export default Search
+export {
+  Search,
+  SearchResults
+}

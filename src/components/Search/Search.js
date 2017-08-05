@@ -15,11 +15,14 @@ const Suggestion = (props) => {
 }
 
 const SearchInput = (props) => {
+  let inputProps = {...props}
+  delete inputProps.onSearch
+
   return (
     <InputGroup>
-      <input {...props} />
+      <input {...inputProps} />
       <InputGroupButton>
-        <Button color="danger" onClick={props.onClick}>
+        <Button color="danger" onClick={props.onSearch}>
           Search
         </Button>
       </InputGroupButton>
@@ -37,7 +40,11 @@ class Search extends React.Component {
   }
 
   search(e) {
+    const { history, search } = this.props
 
+    if ((e.key && e.key === 'Enter') || !e.key) {
+      history.push(`/s/${search.query}`)
+    }
   }
 
   onSuggestionsFetchRequested() {
@@ -64,7 +71,8 @@ class Search extends React.Component {
               className: "form-control",
               placeholder: 'What are you looking for?',
               onChange: this.onChange.bind(this),
-              onClick: this.search.bind(this),
+              onSearch: this.search.bind(this),
+              onKeyDown: this.search.bind(this),
               value: search.query
             }}
           />

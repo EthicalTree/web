@@ -3,6 +3,35 @@ import './Ethicality.sass'
 import React from 'react'
 import icons from './EthicalityIcons'
 
+const EthicalityBar = (props) => {
+  const {
+    ethicalities,
+    selectedEthicalities,
+    onEthicalitySelect,
+    showLabels
+  } = props
+
+  return (
+    <div className={props.className}>
+      {ethicalities.map(ethicality => {
+        return (
+          <span key={ethicality.slug} className="p-2">
+            <Ethicality
+              className="p-3"
+              name={ethicality.name}
+              slug={ethicality.slug}
+              icon_key={ethicality.icon_key}
+              selected={!!selectedEthicalities.find(e => e === ethicality.slug)}
+              onSelect={onEthicalitySelect}
+              showLabel={showLabels}
+            />
+          </span>
+        )
+      })}
+    </div>
+  )
+}
+
 const Ethicality = (props) => {
   const {
     onSelect,
@@ -10,7 +39,8 @@ const Ethicality = (props) => {
     icon_key,
     name,
     className,
-    selected
+    selected,
+    showLabel
   } = props
 
   const selectable = !!onSelect
@@ -34,11 +64,22 @@ const Ethicality = (props) => {
       <div>
         <EthicalityIcon />
       </div>
-      <div className="name mt-2">
-        {name}
-      </div>
+      {showLabel !== false &&
+        <div className="name mt-2">
+          {name}
+        </div>
+      }
     </div>
   )
 }
 
-export default Ethicality
+const EthicalityIcon = (props) => {
+  const Icon = icons[props.ethicalityKey]
+  return <Icon className={`ethicality-icon ${props.className}`} />
+}
+
+export {
+  Ethicality,
+  EthicalityBar,
+  EthicalityIcon
+}

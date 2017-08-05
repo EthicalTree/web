@@ -8,11 +8,11 @@ import {
   Col
 } from 'reactstrap'
 
-import Ethicality from '../Ethicality/Ethicality'
-import Search from '../Search'
+import { EthicalityBar } from '../Ethicality/Ethicality'
+import { Search } from '../Search'
 
 const FrontPage = (props) => {
-  const { app, search, dispatch } = props
+  const { app, search, dispatch, history } = props
 
   const ethicalities = app.ethicalities || []
   const selectedEthicalities = search.selectedEthicalities || []
@@ -29,26 +29,18 @@ const FrontPage = (props) => {
         </Col>
 
         <Col xs="12">
-          <Search />
+          <Search
+            history={history}
+          />
         </Col>
 
         <Col xs="12">
-          <div className="text-center mt-5 pb-5">
-            {ethicalities.map(ethicality => {
-              return (
-                <span key={ethicality.slug} className="p-2">
-                  <Ethicality
-                    className="p-3"
-                    name={ethicality.name}
-                    slug={ethicality.slug}
-                    icon_key={ethicality.icon_key}
-                    selected={!!selectedEthicalities.find(e => e === ethicality.slug)}
-                    onSelect={slug => { dispatch({ type: 'TOGGLE_SEARCH_ETHICALITY', data: slug }) }}
-                  />
-                </span>
-              )
-            })}
-          </div>
+          <EthicalityBar
+            className="text-center mt-5 pb-5"
+            ethicalities={ethicalities}
+            onEthicalitySelect={slug => { dispatch({ type: 'TOGGLE_SEARCH_ETHICALITY', data: slug }) }}
+            selectedEthicalities={selectedEthicalities}
+          />
         </Col>
       </Container>
     </div>

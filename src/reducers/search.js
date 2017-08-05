@@ -1,6 +1,7 @@
 const defaultSearch = {
   query: '',
-  selectedEthicalities: []
+  selectedEthicalities: [],
+  results: []
 }
 
 const search = (state=defaultSearch, action) => {
@@ -8,6 +9,10 @@ const search = (state=defaultSearch, action) => {
   switch (action.type) {
     case 'SET_SEARCH_QUERY':
       return {...state, query: action.data}
+    case 'SET_SEARCH_LOADING':
+      return {...state, isSearchLoading: action.data}
+    case 'SET_SEARCH_RESULTS':
+      return {...state, results: action.data}
     case 'TOGGLE_SEARCH_ETHICALITY':
       let { selectedEthicalities } = state
 

@@ -15,6 +15,12 @@ export const getListing = (slug) => {
   }
 }
 
+export const gotoListing = (slug, history) => {
+  return dispatch => {
+    history.push(`/listings/${slug}`)
+  }
+}
+
 export const addListing = (data, history) => {
   return dispatch => {
     dispatch({ type: 'SET_ADD_LISTING_LOADING', data: true })
