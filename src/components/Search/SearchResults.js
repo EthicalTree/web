@@ -93,8 +93,8 @@ const SearchResults = (props) => {
       />
 
       <Row className="d-flex align-items-stretch">
-        {search.results && search.results.length > 0 &&
-          search.results.map(result => {
+        {search.listings && search.listings.length > 0 &&
+          search.listings.map(result => {
             const listing = {
               title: result.title,
               ethicalities: result.ethicalities.map(e => e.icon_key),
@@ -112,9 +112,13 @@ const SearchResults = (props) => {
         }
       </Row>
 
-
-
-
+      <Row className="text-center">
+        <Paginator
+          pageCount={search.pageCount}
+          currentPage={search.currentPage}
+          onPageChange={data => props.handlePageChange(data.selected)}
+        />
+      </Row>
     </Col>
   )
 }
@@ -125,10 +129,10 @@ class SearchResultsPage extends React.Component {
     this.search()
   }
 
-  search() {
-    const { dispatch, search } = this.props
+  search(newPage=0) {
+    const { dispatch, search, history } = this.props
 
-    dispatch(performSearch(search.query, search.selectedEthicalities))
+    dispatch(performSearch(search.query, search.selectedEthicalities, history, newPage))
   }
 
   render() {
@@ -143,6 +147,7 @@ class SearchResultsPage extends React.Component {
               dispatch={dispatch}
               history={history}
               search={search}
+              handlePageChange={this.search.bind(this)}
             />
             <MapArea search={search} />
           </Row>

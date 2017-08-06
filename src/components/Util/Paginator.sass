@@ -1,0 +1,26 @@
+@import 'variables'
+
+.et-paginator
+  list-style: none
+  width: 100%
+
+  li
+    display: inline
+    padding: 5px
+
+    &:hover
+      cursor: pointer
+
+    &.disabled
+      opacity: 0
+      cursor: default
+
+    &.et-paginator-active
+      color: $color-gray-6
+      opacity: 0.3
+      cursor: default
+      outline: none
+
+      a
+        text-decoration: none
+        outline: none

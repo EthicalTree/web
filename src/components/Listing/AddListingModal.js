@@ -31,6 +31,7 @@ class AddListingModal extends React.Component {
     const { dispatch, history } = this.props
 
     dispatch(addListing(this.state, history))
+    this.setState({ title: '' })
   }
 
   render() {

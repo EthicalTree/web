@@ -1,7 +1,8 @@
 const defaultSearch = {
   query: '',
   selectedEthicalities: [],
-  results: []
+  results: [],
+  currentPage: 0
 }
 
 const search = (state=defaultSearch, action) => {
@@ -12,7 +13,14 @@ const search = (state=defaultSearch, action) => {
     case 'SET_SEARCH_LOADING':
       return {...state, isSearchLoading: action.data}
     case 'SET_SEARCH_RESULTS':
-      return {...state, results: action.data}
+      const { listings, pageCount, currentPage } = action.data
+
+      return {
+        ...state,
+        listings,
+        pageCount: parseInt(pageCount, 10),
+        currentPage: parseInt(currentPage, 10)
+      }
     case 'TOGGLE_SEARCH_ETHICALITY':
       let { selectedEthicalities } = state
 
