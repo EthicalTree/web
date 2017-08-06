@@ -10,7 +10,7 @@ export const performSearch = (query, ethicalities, history, page) => {
   }
 
   return dispatch => {
-    history.push(`/s/${query}?${querystring.stringify(queryObj)}`)
+    history.push(`/s/${query}?${querystring.stringify({ page })}`)
 
     dispatch({ type: 'SET_SEARCH_LOADING', data: true })
 

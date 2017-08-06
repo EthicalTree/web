@@ -130,9 +130,10 @@ class SearchResultsPage extends React.Component {
   }
 
   search(newPage=0) {
-    const { dispatch, search, history } = this.props
+    const { match, dispatch, search, history } = this.props
+    const query = search.query ? search.query : match.params.query
 
-    dispatch(performSearch(search.query, search.selectedEthicalities, history, newPage))
+    dispatch(performSearch(query, search.selectedEthicalities, history, newPage))
   }
 
   render() {
