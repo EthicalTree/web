@@ -16,11 +16,13 @@ import {
 } from 'reactstrap'
 
 const Header = (props) => {
-  const { dispatch } = props
+  const { dispatch, header } = props
+  const fixedHeader = header.isFixed ? 'fixed-top' : ''
+  const fixedHeaderWrapper = header.isFixed ? 'fixed-header-wrapper' : ''
 
   return (
-    <div>
-      <Navbar light toggleable>
+    <div className={fixedHeaderWrapper}>
+      <Navbar light toggleable className={fixedHeader}>
         <NavbarToggler right onClick={e => { dispatch({ type: 'TOGGLE_HEADER_ACCESSIBLE' }) }} />
 
         <Link className="navbar-brand" to="/">

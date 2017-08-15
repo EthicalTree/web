@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 import { Header, Footer } from '../Global'
 import { getCurrentUser } from '../../actions/session'
 import { authenticate } from '../../utils/api'
-import { logPageView } from '../Global/GA'
+
+import { logPageView } from '../RouteActions/GA'
+import setHeader from '../RouteActions/Header'
+
 
 import {
   BrowserRouter as Router,
@@ -32,6 +35,7 @@ class App extends React.Component {
         <Router>
           <div>
             <Route component={logPageView} />
+            <Route component={setHeader} />
 
             <Header />
             <Route path="/" exact={true} component={FrontPage} />

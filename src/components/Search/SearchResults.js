@@ -12,6 +12,7 @@ import {
 } from 'reactstrap'
 
 import Loader from '../Global/Loader'
+import Map from '../Global/Map'
 import { EthicalityBar, EthicalityIcon } from '../Ethicality/Ethicality'
 import { Paginator } from '../Util/Paginator'
 
@@ -20,7 +21,22 @@ import { gotoListing } from '../../actions/listing'
 
 const MapArea = (props) => {
   return (
-    <Col sm="4">
+    <Col className="search-map-area" sm="4">
+      <div className="search-map">
+        <Map
+          onClick={e => {}}
+          markers={[]}
+          defaultOptions={{
+            zoomControl: true,
+            draggableCursor: 'pointer'
+          }}
+          containerElement={
+            <div style={{ height: `100%` }} />
+          }
+          mapElement={
+            <div style={{ height: `100%` }} />
+          }/>
+      </div>
     </Col>
   )
 }
