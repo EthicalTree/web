@@ -15,10 +15,22 @@ import {
   NavLink
 } from 'reactstrap'
 
+
+const FixedPaths = [
+  '/s/'
+]
+
+const hasFixedHeader = () => {
+  return FixedPaths.filter(
+    fp => window.location.pathname.startsWith(fp)
+  ).length
+}
+
 const Header = (props) => {
-  const { dispatch, header } = props
-  const fixedHeader = header.isFixed ? 'fixed-top' : ''
-  const fixedHeaderWrapper = header.isFixed ? 'fixed-header-wrapper' : ''
+  const { dispatch } = props
+  const isFixed = hasFixedHeader()
+  const fixedHeader = isFixed ? 'fixed-top' : ''
+  const fixedHeaderWrapper = isFixed ? 'fixed-header-wrapper' : ''
 
   return (
     <div className={fixedHeaderWrapper}>

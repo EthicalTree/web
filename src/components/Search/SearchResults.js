@@ -1,7 +1,9 @@
+/* global google */
 import './SearchResults.sass'
 
 import React from 'react'
 import { connect } from 'react-redux'
+import { Marker } from 'react-google-maps'
 
 import {
   Row,
@@ -19,26 +21,40 @@ import { Paginator } from '../Util/Paginator'
 import { performSearch } from '../../actions/search'
 import { gotoListing } from '../../actions/listing'
 
-const MapArea = (props) => {
-  return (
-    <Col className="search-map-area" sm="4">
-      <div className="search-map">
-        <Map
-          onClick={e => {}}
-          markers={[]}
-          defaultOptions={{
-            zoomControl: true,
-            draggableCursor: 'pointer'
-          }}
-          containerElement={
-            <div style={{ height: `100%` }} />
-          }
-          mapElement={
-            <div style={{ height: `100%` }} />
-          }/>
-      </div>
-    </Col>
-  )
+class MapArea extends React.Component {
+
+  render() {
+    const { search } = this.props
+    let bounds = new google.maps.LatLngBounds()
+
+    const markers = search.listings.map(listing => {
+      const { lat, lng } = listing.locations[0]
+      bounds.extend(new google.maps.LatLng(lat, lng))
+      return <Marker key={`${lat}+${lng}`} position={listing.locations[0]} />
+    })
+
+    return (
+      <Col className="search-map-area" sm="4">
+        <div className="search-map">
+          <Map
+            onLoad={map => { map && map.fitBounds(bounds) }}
+            onClick={e => {}}
+            markers={markers}
+            defaultOptions={{
+              zoomControl: true,
+              draggableCursor: 'pointer'
+            }}
+            containerElement={
+              <div style={{ height: `100%` }} />
+            }
+            mapElement={
+              <div style={{ height: `100%` }} />
+            }/>
+        </div>
+      </Col>
+    )
+  }
+
 }
 
 class Result extends React.Component {
@@ -166,7 +182,11 @@ class SearchResultsPage extends React.Component {
               search={search}
               handlePageChange={this.search.bind(this)}
             />
-            <MapArea search={search} />
+            {search.listings && search.listings.length &&
+              <MapArea
+                search={search}
+              />
+            }
           </Row>
         </Col>
       </Loader>

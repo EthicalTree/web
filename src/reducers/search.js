@@ -1,7 +1,7 @@
 const defaultSearch = {
   query: '',
   selectedEthicalities: [],
-  results: [],
+  listings: [],
   currentPage: 0
 }
 
