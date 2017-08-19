@@ -20,7 +20,7 @@ const FixedPaths = [
   '/s/'
 ]
 
-const hasFixedHeader = () => {
+export const hasFixedHeader = () => {
   return FixedPaths.filter(
     fp => window.location.pathname.startsWith(fp)
   ).length

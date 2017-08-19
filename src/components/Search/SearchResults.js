@@ -179,25 +179,33 @@ class SearchResultsPage extends React.Component {
 
   render() {
     const { search, app, dispatch, history } = this.props
+    const hasListings = search.listings && search.listings.length > 0
 
     return (
       <Loader loading={search.isSearchLoading}>
         <Col className="search-results-page">
-          <Row>
-            <SearchResults
-              app={app}
-              dispatch={dispatch}
-              history={history}
-              search={search}
-              handlePageChange={this.search.bind(this)}
-              handleSearch={this.search.bind(this)}
-            />
-            {search.listings && search.listings.length &&
+          {hasListings &&
+            <Row>
+              <SearchResults
+                app={app}
+                dispatch={dispatch}
+                history={history}
+                search={search}
+                handlePageChange={this.search.bind(this)}
+                handleSearch={this.search.bind(this)}
+              />
               <MapArea
                 search={search}
               />
-            }
-          </Row>
+            </Row>
+          }
+          {!hasListings &&
+            <Row>
+              <Col className="text-center pt-5">
+                No listings found!
+              </Col>
+            </Row>
+          }
         </Col>
       </Loader>
     )

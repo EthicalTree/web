@@ -3,10 +3,10 @@ import './Footer.sass'
 import React from 'react'
 import { connect } from 'react-redux'
 
-const Footer = (props) => {
-  const { header } = props
+import { hasFixedHeader } from './Header'
 
-  if (header.isFixed) {
+const Footer = (props) => {
+  if (hasFixedHeader) {
     return null
   }
 
@@ -19,7 +19,6 @@ const Footer = (props) => {
 
 const select = (state) => {
   return {
-    header: state.header
   }
 }
 
