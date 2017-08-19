@@ -18,7 +18,7 @@ import Map from '../Global/Map'
 import { EthicalityBar, EthicalityIcon } from '../Ethicality/Ethicality'
 import { Paginator } from '../Util/Paginator'
 
-import { performSearch } from '../../actions/search'
+import { performSearch, toggleSearchEthicalities } from '../../actions/search'
 import { gotoListing } from '../../actions/listing'
 
 class MapArea extends React.Component {
@@ -110,17 +110,25 @@ class Result extends React.Component {
 }
 
 const SearchResults = (props) => {
-  const { app, search, dispatch, history } = props
+  const { app, search, dispatch, history, handleSearch } = props
 
   const ethicalities = app.ethicalities || []
   const selectedEthicalities = search.selectedEthicalities || []
+
+  const onEthicalitySelect = slug => {
+    const newSelectedEthicalities = toggleSearchEthicalities(selectedEthicalities, slug)
+
+    dispatch({ type: 'SET_SEARCH_ETHICALITIES', data: newSelectedEthicalities })
+    handleSearch(0, newSelectedEthicalities)
+  }
 
   return (
     <Col xs="12" xl="8" className="search-results p-4">
       <EthicalityBar
         showLabels={false}
+        showTooltips={true}
         ethicalities={ethicalities}
-        onEthicalitySelect={slug => { dispatch({ type: 'TOGGLE_SEARCH_ETHICALITY', data: slug }) }}
+        onEthicalitySelect={onEthicalitySelect}
         selectedEthicalities={selectedEthicalities}
       />
 
@@ -161,11 +169,12 @@ class SearchResultsPage extends React.Component {
     this.search()
   }
 
-  search(newPage=0) {
+  search(newPage=0, ethicalities) {
     const { match, dispatch, search, history } = this.props
-    const query = search.query ? search.query : match.params.query
+    const query = search.query ? search.query : match.params.query || ''
+    const selectedEthicalities = ethicalities ? ethicalities : search.selectedEthicalities
 
-    dispatch(performSearch(query, search.selectedEthicalities, history, newPage))
+    dispatch(performSearch(query, selectedEthicalities, history, newPage))
   }
 
   render() {
@@ -181,6 +190,7 @@ class SearchResultsPage extends React.Component {
               history={history}
               search={search}
               handlePageChange={this.search.bind(this)}
+              handleSearch={this.search.bind(this)}
             />
             {search.listings && search.listings.length &&
               <MapArea

@@ -43,7 +43,7 @@ class Search extends React.Component {
     const { history, search } = this.props
 
     if ((e.key && e.key === 'Enter') || !e.key) {
-      history.push(`/s/${search.query}`)
+      history.push(`/s/${search.query}?page=${search.currentPage}`)
     }
   }
 

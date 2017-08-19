@@ -21,20 +21,8 @@ const search = (state=defaultSearch, action) => {
         pageCount: parseInt(pageCount, 10),
         currentPage: parseInt(currentPage, 10)
       }
-    case 'TOGGLE_SEARCH_ETHICALITY':
-      let { selectedEthicalities } = state
-
-      if (selectedEthicalities.includes(action.data)) {
-        selectedEthicalities = selectedEthicalities.filter(e => e !== action.data)
-      }
-      else {
-        selectedEthicalities = [...selectedEthicalities, action.data]
-      }
-
-      return {
-        ...state,
-        selectedEthicalities
-      }
+    case 'SET_SEARCH_ETHICALITIES':
+      return {...state, selectedEthicalities: action.data}
     default:
       return state
   }

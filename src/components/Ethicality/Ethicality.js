@@ -1,14 +1,20 @@
 import './Ethicality.sass'
+import uuid4 from 'uuid'
 
 import React from 'react'
 import icons from './EthicalityIcons'
+
+import {
+  UncontrolledTooltip as Tooltip
+} from 'reactstrap'
 
 const EthicalityBar = (props) => {
   const {
     ethicalities,
     selectedEthicalities,
     onEthicalitySelect,
-    showLabels
+    showLabels,
+    showTooltips
   } = props
 
   return (
@@ -24,6 +30,7 @@ const EthicalityBar = (props) => {
               selected={!!selectedEthicalities.find(e => e === ethicality.slug)}
               onSelect={onEthicalitySelect}
               showLabel={showLabels}
+              showTooltip={showTooltips}
             />
           </span>
         )
@@ -40,12 +47,14 @@ const Ethicality = (props) => {
     name,
     className,
     selected,
-    showLabel
+    showLabel,
+    showTooltip
   } = props
 
   const selectable = !!onSelect
   const selectClass = selectable ? 'selectable' : ''
   const selectedClass = selected ? 'selected' : ''
+  const uuid = showTooltip ? uuid4() : ''
 
   const clickWrapper = (e) => {
     e.preventDefault()
@@ -55,14 +64,17 @@ const Ethicality = (props) => {
     }
   }
 
-  const EthicalityIcon = icons[icon_key]
-
   return (
     <div
+      id={uuid}
       onClick={clickWrapper}
-      className={`ethicality-icon text-center ${slug} ${selectClass} ${selectedClass} ${className}`}>
+      className={`ethicality-toggle text-center ${slug} ${selectClass} ${selectedClass} ${className}`}>
       <div>
-        <EthicalityIcon />
+        <EthicalityIcon
+          ethicalityKey={icon_key}
+          name={name}
+          uuid={uuid}
+        />
       </div>
       {showLabel !== false &&
         <div className="name mt-2">
@@ -75,7 +87,16 @@ const Ethicality = (props) => {
 
 const EthicalityIcon = (props) => {
   const Icon = icons[props.ethicalityKey]
-  return <Icon className={`ethicality-icon ${props.className}`} />
+  const { name, uuid } = props
+
+  return (
+    <div className="d-inline ethicality-icon">
+      <Icon className={`${props.className}`} />
+      {uuid &&
+        <Tooltip placement="top" target={uuid} delay={0}>{name}</Tooltip>
+      }
+    </div>
+  )
 }
 
 export {

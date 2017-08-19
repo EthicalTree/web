@@ -37,7 +37,7 @@ class App extends React.Component {
             <Header />
             <Route path="/" exact={true} component={FrontPage} />
             <Route path="/listings/:slug" component={Listing} />
-            <Route path="/s/:query" component={SearchResults} />
+            <Route path="/s/:query?" component={SearchResults} />
             <Footer />
             <Modals />
           </div>

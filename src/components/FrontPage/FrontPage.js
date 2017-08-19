@@ -10,6 +10,7 @@ import {
 
 import { EthicalityBar } from '../Ethicality/Ethicality'
 import { Search } from '../Search'
+import { toggleSearchEthicalities } from '../../actions/search'
 
 const FrontPage = (props) => {
   const { app, search, dispatch, history } = props
@@ -38,7 +39,12 @@ const FrontPage = (props) => {
           <EthicalityBar
             className="text-center mt-5 pb-5"
             ethicalities={ethicalities}
-            onEthicalitySelect={slug => { dispatch({ type: 'TOGGLE_SEARCH_ETHICALITY', data: slug }) }}
+            onEthicalitySelect={slug => {
+              dispatch({
+                type: 'SET_SEARCH_ETHICALITIES',
+                data: toggleSearchEthicalities(selectedEthicalities, slug)
+              })
+            }}
             selectedEthicalities={selectedEthicalities}
           />
         </Col>

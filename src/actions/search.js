@@ -25,3 +25,15 @@ export const performSearch = (query, ethicalities, history, page) => {
   }
 }
 
+export const toggleSearchEthicalities = (ethicalities, slug) => {
+  let selectedEthicalities
+
+  if (ethicalities.includes(slug)) {
+    selectedEthicalities = ethicalities.filter(e => e !== slug)
+  }
+  else {
+    selectedEthicalities = [...ethicalities, slug]
+  }
+
+  return selectedEthicalities
+}
