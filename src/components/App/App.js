@@ -8,13 +8,36 @@ import { logPageView } from '../RouteActions/GA'
 
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  withRouter
 } from 'react-router-dom'
 
 import Modals from './Modals'
 import FrontPage from '../FrontPage/FrontPage'
 import { SearchResults } from '../Search'
 import { Listing } from '../Listing'
+
+class _InnerApp extends React.Component {
+  constructor(props) {
+    super(props)
+
+    const { dispatch } = props
+
+    props.history.listen(location => {
+      dispatch({ type: "ROUTE_HAS_CHANGED" })
+    })
+  }
+
+  render() {
+    return (
+      <div className="app">
+        {this.props.children}
+      </div>
+    )
+  }
+}
+
+const InnerApp = withRouter(_InnerApp)
 
 class App extends React.Component {
 
@@ -29,27 +52,25 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="app">
-        <Router>
-          <div>
-            <Route component={logPageView} />
+      <Router>
+        <InnerApp {...this.props}>
+          <Route component={logPageView} />
 
-            <Header />
-            <Route path="/" exact={true} component={FrontPage} />
-            <Route path="/listings/:slug" component={Listing} />
-            <Route path="/s/:query?" component={SearchResults} />
-            <Footer />
-            <Modals />
-          </div>
-        </Router>
-      </div>
+          <Header />
+          <Route path="/" exact={true} component={FrontPage} />
+          <Route path="/listings/:slug" component={Listing} />
+          <Route path="/s/:query?" component={SearchResults} />
+          <Footer />
+          <Modals />
+        </InnerApp>
+      </Router>
     )
   }
 }
 
 const select = (state) => {
   return {
-    session: state.session,
+    session: state.session
   }
 }
 
