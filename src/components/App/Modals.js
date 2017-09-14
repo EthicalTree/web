@@ -14,7 +14,8 @@ import {
   LoginModal,
   LogoutModal,
   SignupModal,
-  VerifyEmailModal
+  VerifyEmailModal,
+  ForgotPasswordModal
 } from '../Session'
 
 const Modals = (props) => {
@@ -32,6 +33,7 @@ const Modals = (props) => {
       <EditEthicalitiesModal />
 
       <GenericConfirmModal />
+      <ForgotPasswordModal />
     </div>
   )
 }

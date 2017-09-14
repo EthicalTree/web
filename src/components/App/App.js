@@ -14,6 +14,7 @@ import {
 
 import Modals from './Modals'
 import FrontPage from '../FrontPage/FrontPage'
+import { ForgotPasswordPage }from '../Session'
 import { SearchResults } from '../Search'
 import { Listing } from '../Listing'
 
@@ -57,9 +58,12 @@ class App extends React.Component {
           <Route component={logPageView} />
 
           <Header />
+
           <Route path="/" exact={true} component={FrontPage} />
+          <Route path="/forgot_password/:token" component={ForgotPasswordPage} />
           <Route path="/listings/:slug" component={Listing} />
           <Route path="/s/:query?" component={SearchResults} />
+
           <Footer />
           <Modals />
         </InnerApp>

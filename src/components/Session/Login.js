@@ -35,6 +35,14 @@ class LoginModal extends React.Component {
     this.setState({ password: '' })
   }
 
+  openForgotPassword(e) {
+    const { dispatch } = this.props
+    e.preventDefault()
+
+    dispatch({ type: 'SET_LOGIN_MODAL', data: false })
+    dispatch({ type: 'SET_FORGOT_PASSWORD_MODAL', data: true })
+  }
+
   render() {
     const { dispatch, session } = this.props
 
@@ -98,6 +106,15 @@ class LoginModal extends React.Component {
                     Login
                   </Button>
                 </FormGroup>
+
+                <div className="text-center mb-3">
+                  <a
+                    href=""
+                    onClick={this.openForgotPassword.bind(this)}
+                  >
+                    Forgot your password?
+                  </a>
+                </div>
               </Form>
             </Col>
           </Row>

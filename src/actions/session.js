@@ -1,6 +1,6 @@
 import { api, authenticate, deauthenticate } from '../utils/api'
 
-export const login = (data) => {
+export const login = data => {
   return dispatch => {
     dispatch({ type: 'SET_LOGIN_LOADING', data: true })
 
@@ -33,7 +33,53 @@ export const logout = () => {
   }
 }
 
-export const signup = (data) => {
+export const sendForgotPasswordRequest = email => {
+  return dispatch => {
+    dispatch({ type: 'SET_FORGOT_PASSWORD_LOADING', data: true })
+
+    api.post('/forgot_password', { email })
+      .then(response => {
+        if (response.data.errors) {
+          dispatch({ type: 'SET_FORGOT_PASSWORD_ERROR', data: response.data.errors })
+        }
+        else {
+          dispatch({ type: 'SET_FORGOT_PASSWORD_MODAL', data: false })
+          dispatch({ type: 'SET_LOGIN_MODAL', data: true })
+          dispatch({ type: 'SET_LOGIN_INFO', data: "Password reset link has been sent! Check your email and follow the link provided." })
+        }
+      })
+      .then(() => {
+        dispatch({ type: 'SET_FORGOT_PASSWORD_LOADING', data: false })
+      })
+  }
+}
+
+export const changePassword = (data, token, history) => {
+  const { password, confirmPassword } = data
+
+  return dispatch => {
+    dispatch({ type: 'SET_CHANGE_PASSWORD_LOADING', data: true })
+
+    api.post('/forgot_password', {
+      password,
+      password_confirmation: confirmPassword,
+      token
+    }).then(response => {
+      if (response.data.errors) {
+        dispatch({ type: 'SET_CHANGE_PASSWORD_ERROR', data: response.data.errors })
+      }
+      else {
+        history.push(`/`)
+        dispatch({ type: 'SET_LOGIN_INFO', data: "Your password has been successfully reset!" })
+        dispatch({ type: 'SET_LOGIN_MODAL', data: true })
+      }
+    }).then(() => {
+      dispatch({ type: 'SET_CHANGE_PASSWORD_LOADING', data: false })
+    })
+  }
+}
+
+export const signup = data => {
   return dispatch => {
     dispatch({ type: 'SET_SIGNUP_LOADING', data: true })
 
@@ -62,7 +108,7 @@ export const signup = (data) => {
   }
 }
 
-export const verifyEmail = (data) => {
+export const verifyEmail = data => {
   return dispatch => {
     dispatch({ type: 'SET_VERIFY_EMAIL_LOADING', data: true })
 
