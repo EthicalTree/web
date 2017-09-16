@@ -39,6 +39,7 @@
     "reactstrap": "^4.8.0",
     "redux": "^3.6.0",
     "redux-form": "^6.7.0",
+    "shipit-shared": "^4.4.2",
     "store": "^2.0.4",
     "uuid": "^3.1.0"
   },

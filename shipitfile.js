@@ -2,11 +2,18 @@ var utils = require('shipit-utils')
 
 module.exports = function (shipit) {
   require('shipit-deploy')(shipit)
+  require('shipit-shared')(shipit)
 
   const deployTo = '/home/applepicke/apps/ethicaltree-web'
 
   shipit.initConfig({
     default: {
+      shared: {
+        overwrite: true,
+        files: [
+          '.env.local'
+        ]
+      },
       workspace: '/tmp/ethicaltree-web-build',
       deployTo: deployTo,
       repositoryUrl: 'git@github.com:applepicke/ethicaltree-web.git',
