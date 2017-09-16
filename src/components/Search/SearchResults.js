@@ -77,7 +77,7 @@ class Result extends React.Component {
     const extraStyle = currentImage ? { backgroundImage } : {}
 
     return (
-      <Col xs="12" sm="6" xl="4" className="pt-3 pb-1 pl-4 pr-4">
+      <Col xs="12" sm="6" lg="4" className="pt-3 pb-1 pl-4 pr-4">
         <Card className="search-result hoverable" onClick={viewListing}>
           <div
             className="card-img"
@@ -125,6 +125,7 @@ const SearchResults = (props) => {
   return (
     <Col xs="12" xl="8" className="search-results p-4">
       <EthicalityBar
+        className="search-results-ethicalities"
         showLabels={false}
         showTooltips={true}
         ethicalities={ethicalities}

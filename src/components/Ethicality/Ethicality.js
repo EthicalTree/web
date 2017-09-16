@@ -18,12 +18,11 @@ const EthicalityBar = (props) => {
   } = props
 
   return (
-    <div className={props.className}>
+    <div className={`${props.className} d-flex justify-content-between`}>
       {ethicalities.map(ethicality => {
         return (
           <span key={ethicality.slug} className="p-2">
             <Ethicality
-              className="p-3"
               name={ethicality.name}
               slug={ethicality.slug}
               icon_key={ethicality.icon_key}
