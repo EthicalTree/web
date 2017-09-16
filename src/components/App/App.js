@@ -52,29 +52,35 @@ class App extends React.Component {
   }
 
   render() {
+    const { modal } = this.props
+    const modalOpenClass = !!modal.openModal ? 'modal-open' : ''
+
     return (
-      <Router>
-        <InnerApp {...this.props}>
-          <Route component={logPageView} />
+      <div className={`app ${modalOpenClass}`}>
+        <Router>
+          <InnerApp {...this.props}>
+            <Route component={logPageView} />
 
-          <Header />
+            <Header />
 
-          <Route path="/" exact={true} component={FrontPage} />
-          <Route path="/forgot_password/:token" component={ForgotPasswordPage} />
-          <Route path="/listings/:slug" component={Listing} />
-          <Route path="/s/:query?" component={SearchResults} />
+            <Route path="/" exact={true} component={FrontPage} />
+            <Route path="/forgot_password/:token" component={ForgotPasswordPage} />
+            <Route path="/listings/:slug" component={Listing} />
+            <Route path="/s/:query?" component={SearchResults} />
 
-          <Footer />
-          <Modals />
-        </InnerApp>
-      </Router>
+            <Footer />
+            <Modals />
+          </InnerApp>
+        </Router>
+      </div>
     )
   }
 }
 
 const select = (state) => {
   return {
-    session: state.session
+    session: state.session,
+    modal: state.modal
   }
 }
 
