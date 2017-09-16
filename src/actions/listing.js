@@ -32,7 +32,7 @@ export const addListing = (data, history) => {
         }
         else {
           dispatch({ type: 'SET_LISTING', data: response.data })
-          dispatch({ type: 'SET_ADD_LISTING_MODAL', data: false })
+          dispatch({ type: 'CLOSE_MODAL' })
           history.push(`/listings/${response.data.slug}`)
         }
       })
@@ -69,7 +69,7 @@ export const editEthicalities = (listing_slug, ethicalities) => {
         }
         else {
           dispatch({ type: 'SET_LISTING_ETHICALITIES', data: response.data.ethicalities })
-          dispatch({ type: 'SET_EDITING_LISTING_ETHICALITIES', data: false })
+          dispatch({ type: 'CLOSE_MODAL' })
         }
       })
       .catch(() => {})
@@ -90,7 +90,7 @@ export const editDescription = (data) => {
         }
         else {
           dispatch({ type: 'SET_LISTING', data: response.data.listing })
-          dispatch({ type: 'SET_EDITING_LISTING_DESCRIPTION', data: false })
+          dispatch({ type: 'CLOSE_MODAL' })
         }
       })
       .catch(() => {})
@@ -110,7 +110,7 @@ export const editLocation = (listing_slug, data) => {
         }
         else {
           dispatch({ type: 'SET_LISTING_LOCATION', data: response.data.locations})
-          dispatch({ type: 'SET_EDITING_LISTING_LOCATION', data: false })
+          dispatch({ type: 'CLOSE_MODAL' })
         }
       })
       .catch(error => {
@@ -193,7 +193,7 @@ export const saveOperatingHours = (listing_slug, operating_hours) => {
 
         if (operatingHours) {
           dispatch({ type: 'SET_LISTING_OPERATING_HOURS', data: operatingHours})
-          dispatch({ type: 'SET_EDITING_LISTING_OPERATING_HOURS', data: false })
+          dispatch({ type: 'CLOSE_MODAL' })
         }
       })
       .catch(() => {})

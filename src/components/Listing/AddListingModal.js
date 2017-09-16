@@ -35,7 +35,7 @@ class AddListingModal extends React.Component {
   }
 
   render() {
-    const { listing, dispatch } = this.props
+    const { listing } = this.props
 
     return (
       <Modal
@@ -43,9 +43,9 @@ class AddListingModal extends React.Component {
         loading={listing.isAddingListingLoading}
         contentLabel="Add New Listing"
         onSave={this.submit.bind(this)}
+        modalName="add_listing"
         saveLabel="Create"
-        onRequestClose={e => { dispatch({ type: 'SET_ADD_LISTING_MODAL', data: false }) }}
-        isOpen={listing.isAddingListing}>
+      >
 
         <Container>
           {listing.addListingErrors &&

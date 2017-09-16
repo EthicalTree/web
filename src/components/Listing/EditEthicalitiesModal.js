@@ -64,7 +64,7 @@ class EditEthicalitiesModal extends React.Component {
   }
 
   render() {
-    const { listing, app, dispatch } = this.props
+    const { listing, app } = this.props
     const ethicalities = app.ethicalities || []
 
     return (
@@ -73,8 +73,8 @@ class EditEthicalitiesModal extends React.Component {
         loading={listing.isEditingListingEthicalitiesLoading}
         contentLabel="Edit Listing Ethicalities"
         onSave={this.submit.bind(this)}
-        onRequestClose={e => { dispatch({ type: 'SET_EDITING_LISTING_ETHICALITIES', data: false }) }}
-        isOpen={listing.isEditingListingEthicalities}>
+        modalName="edit_listing_ethicalities"
+      >
 
         <Container>
           {listing.editEthicalitiesErrors &&

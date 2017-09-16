@@ -95,7 +95,7 @@ class EditOperatingHoursModal extends React.Component {
   }
 
   render() {
-    const { listing, dispatch } = this.props
+    const { listing } = this.props
     let { selectedDay } = this.state
 
     selectedDay = selectedDay && {
@@ -108,9 +108,9 @@ class EditOperatingHoursModal extends React.Component {
         className="edit-operating-hours-modal medium-modal"
         loading={listing.isEditingOperatingHoursLoading}
         contentLabel="Edit Hours"
-        onRequestClose={e => { dispatch({ type: 'SET_EDITING_LISTING_OPERATING_HOURS', data: false }) }}
+        modalName="edit_listing_operating_hours"
         onSave={this.submit.bind(this)}
-        isOpen={listing.isEditingOperatingHours}>
+      >
 
         <Container>
           {listing.editOperatingHoursErrors &&

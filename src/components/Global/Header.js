@@ -48,7 +48,7 @@ const Header = (props) => {
               <NavItem>
                 <NavLink
                   href="#"
-                  onClick={e => { dispatch({ type: 'SET_LOGOUT_MODAL', data: true }) }}>
+                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'logout' }) }}>
                   Logout
                 </NavLink>
               </NavItem>
@@ -56,7 +56,7 @@ const Header = (props) => {
               <NavItem>
                 <Button
                   color="success"
-                  onClick={e => { dispatch({ type: 'SET_ADD_LISTING_MODAL', data: true }) }}>
+                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'add_listing' }) }}>
                   Add Listing
                 </Button>
               </NavItem>
@@ -68,7 +68,7 @@ const Header = (props) => {
               <NavItem>
                 <NavLink
                   href="#"
-                  onClick={e => { dispatch({ type: 'SET_SIGNUP_MODAL', data: true }) }}>
+                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'signup' }) }}>
                   Signup
                 </NavLink>
               </NavItem>
@@ -76,7 +76,7 @@ const Header = (props) => {
               <NavItem className="mr-4">
                 <NavLink
                   href="#"
-                  onClick={e => { dispatch({ type: 'SET_LOGIN_MODAL', data: true }) }}>
+                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'login' }) }}>
                   Login
                 </NavLink>
               </NavItem>

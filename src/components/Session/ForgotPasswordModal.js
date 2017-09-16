@@ -33,15 +33,15 @@ class ForgotPasswordModal extends React.Component {
   }
 
   render() {
-    const { dispatch, session } = this.props
+    const { session } = this.props
 
     return (
       <Modal
         className="forgot-password-modal small-modal"
         loading={session.forgotPasswordLoading}
         contentLabel="Forgot Passord"
-        onRequestClose={e => { dispatch({ type: 'SET_FORGOT_PASSWORD_MODAL', data: false }) }}
-        isOpen={session.isForgotPasswordOpen}>
+        modalName="forgot_password"
+      >
 
         <Container>
           {session.sendForgotPasswordError &&

@@ -1,6 +1,7 @@
 import './Modal.sass'
 
 import React from 'react'
+import { connect } from 'react-redux'
 import ReactModal from 'react-modal'
 
 import {
@@ -11,6 +12,8 @@ import {
 } from 'reactstrap'
 
 import Loader from './Loader'
+
+import { closeModal } from '../../actions/modal'
 
 const baseStyles = {
   content: {
@@ -74,7 +77,8 @@ const BottomBar = (props) => {
 
 const Modal = (props) => {
 
-  let { style } = props
+  let { style, modalName, modal, dispatch } = props
+  const isOpen = modal.openModal === modalName
 
   style = style || {}
 
@@ -90,19 +94,25 @@ const Modal = (props) => {
   }
 
   const onClose = (e) => {
-    e.preventDefault()
-    props.onRequestClose()
+    if (e) {
+      e.preventDefault()
+    }
+
+    dispatch(closeModal());
   }
 
   return (
     <div>
-      {props.isOpen &&
+      <div className="modal-wrapper" />
+      {isOpen &&
         <ReactModal
           shouldCloseOnOverlayClick={false}
+          onRequestClose={onClose}
+          isOpen={isOpen}
           {...props}
           style={newStyles}
           className={`et-modal ${props.className}`}
-          >
+        >
 
           <Loader loading={props.loading}>
             <TopBar
@@ -110,7 +120,7 @@ const Modal = (props) => {
               title={props.contentLabel}
             />
             <div className="p-3">
-              {props.isOpen &&
+              {isOpen &&
                 props.children
               }
             </div>
@@ -127,9 +137,17 @@ const Modal = (props) => {
   )
 }
 
+const select = (state) => {
+  return {
+    modal: state.modal
+  }
+}
+
+const ConnectedModal = connect(select)(Modal)
+
 const ConfirmModal = (props) => {
   return (
-    <Modal
+    <ConnectedModal
       onSave={props.onConfirm}
       saveLabel="Yes"
       {...props}>
@@ -141,7 +159,7 @@ const ConfirmModal = (props) => {
           </Col>
         </Row>
       </Container>
-    </Modal>
+    </ConnectedModal>
   )
 }
 
@@ -149,5 +167,5 @@ export {
   ConfirmModal
 }
 
-export default Modal
+export default ConnectedModal
 

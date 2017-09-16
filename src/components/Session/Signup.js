@@ -37,15 +37,15 @@ class SignupModal extends React.Component {
   }
 
   render() {
-    const { dispatch, session } = this.props
+    const { session } = this.props
 
     return (
       <Modal
         className="signup-modal small-modal"
         loading={session.signupLoading}
         contentLabel="Signup"
-        onRequestClose={e => { dispatch({ type: 'SET_SIGNUP_MODAL', data: false }) }}
-        isOpen={session.isSigningUp}>
+        modalName="signup"
+      >
 
         <Container>
           {session.signupErrors &&

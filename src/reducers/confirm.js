@@ -2,8 +2,6 @@
 const confirm = (state={}, action) => {
 
   switch (action.type) {
-    case 'SET_CONFIRM_MODAL':
-      return {...state, isOpen: action.data}
     case 'SET_CONFIRM_MODAL_DATA':
       return {...state, ...action.data}
     case 'CLEAR_CONFIRM_MODAL_DATA':

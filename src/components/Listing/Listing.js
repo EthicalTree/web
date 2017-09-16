@@ -206,7 +206,7 @@ const EthicalityArea = (props) => {
             block
             size="sm"
             color="default"
-            onClick={() => dispatch({ type: 'SET_EDITING_LISTING_ETHICALITIES', data: true })}>
+            onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_ethicalities' })}>
             Edit
           </Button>
         }
@@ -233,7 +233,7 @@ const EthicalityArea = (props) => {
           <Button
             block
             color="default"
-            onClick={() => dispatch({ type: 'SET_EDITING_LISTING_ETHICALITIES', data: true })}>
+            onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_ethicalities' })}>
             Add
           </Button>
         }
@@ -286,7 +286,7 @@ const OperatingHours = (props) => {
         <p>No operating hours set!</p>
         {hasPermission(session, 'edit-operating-hours') &&
           <button
-            onClick={() => dispatch({ type: 'SET_EDITING_LISTING_OPERATING_HOURS', data: true })}
+            onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_operating_hours' })}
             className="btn btn-default btn-block">
             Add
           </button>
@@ -303,7 +303,7 @@ const OperatingHours = (props) => {
       <div className="card-block pt-3">
         {hasPermission(session, 'edit-operating-hours') && props.hours && props.hours.length > 0 &&
           <button
-            onClick={() => dispatch({ type: 'SET_EDITING_LISTING_OPERATING_HOURS', data: true })}
+            onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_operating_hours' })}
             className="btn btn-sm btn-default btn-block">
             Edit
           </button>
@@ -528,14 +528,14 @@ class Listing extends React.Component {
     const { dispatch } = this.props
 
     e.preventDefault()
-    dispatch({ type: 'SET_EDITING_LISTING_DESCRIPTION', data: true })
+    dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_description' })
   }
 
   onClickLocationEdit(e) {
     const { dispatch } = this.props
 
     e.preventDefault()
-    dispatch({ type: 'SET_EDITING_LISTING_LOCATION', data: true })
+    dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_location' })
   }
 
   onImageUploadProgress(progress) {

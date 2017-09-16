@@ -81,7 +81,7 @@ class EditLocationModal extends React.Component {
   }
 
   render() {
-    const { listing, dispatch } = this.props
+    const { listing } = this.props
     let { location }= this.state
 
     let marker
@@ -103,8 +103,8 @@ class EditLocationModal extends React.Component {
         loading={listing.isEditingLocationLoading}
         contentLabel="Edit Location"
         onSave={this.submit.bind(this)}
-        onRequestClose={e => { dispatch({ type: 'SET_EDITING_LISTING_LOCATION', data: false }) }}
-        isOpen={listing.isEditingLocation}>
+        modalName="edit_listing_location"
+      >
 
         <Container>
           {listing.editLocationErrors &&

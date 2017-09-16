@@ -12,10 +12,10 @@ const LogoutModal = (props) => {
       className="logout-modal small-modal"
       contentLabel="Logout"
       loading={props.session.logoutLoading}
-      isOpen={props.session.isLoggingOut}
-      onRequestClose={e => { dispatch({ type: 'SET_LOGOUT_MODAL', data: false }) }}
       onConfirm={e => { dispatch(logout()) }}
-      msg="Are you sure you want to log out?">
+      modalName="logout"
+      msg="Are you sure you want to log out?"
+    >
 
     </ConfirmModal>
   )

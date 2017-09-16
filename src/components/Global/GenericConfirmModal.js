@@ -12,10 +12,10 @@ const GenericConfirmModal = props => {
       className="confirm-modal small-modal"
       contentLabel={confirm.title || 'Confirm'}
       loading={confirm.isLoading}
-      isOpen={confirm.isOpen}
-      onRequestClose={e => { dispatch({ type: 'SET_CONFIRM_MODAL', data: false }) }}
+      modalName="confirm"
       onConfirm={e => { dispatch(confirmProxy(confirm)) }}
-      msg={confirm.msg}>
+      msg={confirm.msg}
+    >
 
     </ConfirmModal>
   )

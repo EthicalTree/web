@@ -14,6 +14,7 @@ export const login = data => {
           authenticate(jwt)
 
           dispatch({ type: 'LOGIN', data: response.data })
+          dispatch({ type: 'CLOSE_MODAL' })
           dispatch(getCurrentUser())
         }
       })
@@ -30,6 +31,7 @@ export const logout = () => {
   return dispatch => {
     deauthenticate()
     dispatch({ type: 'LOGOUT' })
+    dispatch({ type: 'CLOSE_MODAL' })
   }
 }
 
@@ -43,8 +45,7 @@ export const sendForgotPasswordRequest = email => {
           dispatch({ type: 'SET_FORGOT_PASSWORD_ERROR', data: response.data.errors })
         }
         else {
-          dispatch({ type: 'SET_FORGOT_PASSWORD_MODAL', data: false })
-          dispatch({ type: 'SET_LOGIN_MODAL', data: true })
+          dispatch({ type: 'OPEN_MODAL', data: 'login' })
           dispatch({ type: 'SET_LOGIN_INFO', data: "Password reset link has been sent! Check your email and follow the link provided." })
         }
       })
@@ -71,7 +72,7 @@ export const changePassword = (data, token, history) => {
       else {
         history.push(`/`)
         dispatch({ type: 'SET_LOGIN_INFO', data: "Your password has been successfully reset!" })
-        dispatch({ type: 'SET_LOGIN_MODAL', data: true })
+        dispatch({ type: 'OPEN_MODAL', data: 'login' })
       }
     }).then(() => {
       dispatch({ type: 'SET_CHANGE_PASSWORD_LOADING', data: false })
@@ -98,7 +99,7 @@ export const signup = data => {
         }
         else {
           dispatch({ type: 'SIGNUP' })
-          dispatch({ type: 'SET_VERIFYING_EMAIL_MODAL', data: true })
+          dispatch({ type: 'OPEN_MODAL', data: 'verifying_email' })
         }
       })
       .then(() => {
@@ -119,7 +120,7 @@ export const verifyEmail = data => {
         }
         else {
           dispatch({ type: 'VERIFY_EMAIL' })
-          dispatch({ type: 'SET_LOGIN_MODAL', data: true })
+          dispatch({ type: 'OPEN_MODAL', data: 'login' })
           dispatch({ type: 'SET_LOGIN_INFO', data: "Great, you're verified! Feel free to login whenever, and thanks for registering :)"})
         }
       })

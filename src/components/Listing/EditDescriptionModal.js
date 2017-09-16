@@ -35,7 +35,7 @@ class EditDescriptionModal extends React.Component {
   }
 
   render() {
-    const { listing, dispatch } = this.props
+    const { listing } = this.props
 
     return (
       <Modal
@@ -43,8 +43,8 @@ class EditDescriptionModal extends React.Component {
         loading={listing.isEditingDescriptionLoading}
         contentLabel="Edit Decription"
         onSave={this.submit.bind(this)}
-        onRequestClose={e => { dispatch({ type: 'SET_EDITING_LISTING_DESCRIPTION', data: false }) }}
-        isOpen={listing.isEditingDescription}>
+        modalName="edit_listing_description"
+      >
 
         <Container>
           {listing.editDescriptionErrors &&

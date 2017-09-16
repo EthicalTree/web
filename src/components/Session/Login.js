@@ -39,20 +39,19 @@ class LoginModal extends React.Component {
     const { dispatch } = this.props
     e.preventDefault()
 
-    dispatch({ type: 'SET_LOGIN_MODAL', data: false })
-    dispatch({ type: 'SET_FORGOT_PASSWORD_MODAL', data: true })
+    dispatch({ type: 'OPEN_MODAL', data: 'forgot_password' })
   }
 
   render() {
-    const { dispatch, session } = this.props
+    const { session } = this.props
 
     return (
       <Modal
         className="login-modal small-modal"
         loading={session.loginLoading}
         contentLabel="Login"
-        onRequestClose={e => { dispatch({ type: 'SET_LOGIN_MODAL', data: false }) }}
-        isOpen={session.isLoggingIn}>
+        modalName="login"
+      >
 
         <Container>
           {session.loginError &&
