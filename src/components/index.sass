@@ -60,7 +60,9 @@ body
   .form-control
     font-weight: $font-light
     font-family: $font-family-1
-    color: lighten($color-inverse, 30%)
+
+    &::placeholder, &::-webkit-input-placeholder
+      opacity: 0.3
 
   .btn
     color: $color-white

@@ -19,6 +19,7 @@ class EditDescriptionModal extends React.Component {
     super(props)
 
     this.state = {
+      title: props.listing.title,
       bio: ''
     }
   }
@@ -59,15 +60,29 @@ class EditDescriptionModal extends React.Component {
 
           <Row>
             <Col>
+              <Label for="listingTitle">Title</Label>
+              <Input
+                defaultValue={this.state.title || listing.title}
+                onChange={e => {this.setState({ title: e.target.value })}}
+                type="text"
+                name="listingTitle"
+                id="listingTitle"
+              />
+            </Col>
+          </Row>
+
+          <Row className="mt-3">
+            <Col>
               <Label for="listingDescription">Listing Description</Label>
               <Input
                 autoFocus
                 defaultValue={this.state.bio || listing.bio}
-                onChange={e => { this.setState({ bio: e.target.value }) }}
+                onChange={e => { this.setState({ bio: e.target.value })}}
                 type="textarea"
                 name="listingDescription"
                 id="listingDescription"
-                placeholder="Tell the world what makes you special!"/>
+                placeholder="Tell the world what makes you special!"
+              />
             </Col>
           </Row>
         </Container>
