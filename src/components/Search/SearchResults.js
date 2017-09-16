@@ -86,8 +86,7 @@ class Result extends React.Component {
 
           </div>
           <CardBlock>
-            <CardTitle>
-              {listing.title}
+            <CardTitle className="d-flex justify-content-between flex-row-reverse">
               <span className="ethicalities">
                 {listing.ethicalities.map(iconKey => {
                   return (
@@ -98,6 +97,9 @@ class Result extends React.Component {
                     />
                   )
                 })}
+              </span>
+              <span className="text-truncate">
+                {listing.title}
               </span>
             </CardTitle>
 

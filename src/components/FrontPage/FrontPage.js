@@ -37,7 +37,7 @@ const FrontPage = (props) => {
 
         <Col xs="12">
           <EthicalityBar
-            className="text-center mt-5 pb-5"
+            className="front-page-ethicalities"
             ethicalities={ethicalities}
             onEthicalitySelect={slug => {
               dispatch({
