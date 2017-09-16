@@ -95,31 +95,35 @@ const Modal = (props) => {
   }
 
   return (
-    <ReactModal
-      shouldCloseOnOverlayClick={false}
-      {...props}
-      style={newStyles}
-      className={`et-modal ${props.className}`}
-      >
+    <div>
+      {props.isOpen &&
+        <ReactModal
+          shouldCloseOnOverlayClick={false}
+          {...props}
+          style={newStyles}
+          className={`et-modal ${props.className}`}
+          >
 
-      <Loader loading={props.loading}>
-        <TopBar
-          onClose={onClose}
-          title={props.contentLabel}
-        />
-        <div className="p-3">
-          {props.isOpen &&
-            props.children
-          }
-        </div>
+          <Loader loading={props.loading}>
+            <TopBar
+              onClose={onClose}
+              title={props.contentLabel}
+            />
+            <div className="p-3">
+              {props.isOpen &&
+                props.children
+              }
+            </div>
 
-        <BottomBar
-          saveLabel={props.saveLabel}
-          onSave={props.onSave}
-          onClose={onClose}
-        />
-      </Loader>
-    </ReactModal>
+            <BottomBar
+              saveLabel={props.saveLabel}
+              onSave={props.onSave}
+              onClose={onClose}
+            />
+          </Loader>
+        </ReactModal>
+      }
+    </div>
   )
 }
 
