@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from '../Global'
+import PasswordStrength from '../Util/PasswordStrength'
 
 import {
   Form,
@@ -83,7 +84,8 @@ class SignupModal extends React.Component {
                     type="password"
                     name="password"
                     id="signupPassword"
-                    placeholder="Enter password..." />
+                    placeholder="Enter password..."
+                  />
                 </FormGroup>
 
                 <FormGroup>
@@ -96,6 +98,11 @@ class SignupModal extends React.Component {
                     id="signupConfirmPassword"
                     placeholder="Enter password again..." />
                 </FormGroup>
+
+                <PasswordStrength
+                  email={this.state.email}
+                  password={this.state.password}
+                />
 
                 <FormGroup className="mt-4">
                   <Button block color="primary" role="button" type="submit">

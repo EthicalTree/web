@@ -13,6 +13,7 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "dependencies": {
+    "@fnando/password_strength": "^1.1.4",
     "axios": "^0.16.1",
     "bootstrap": "^4.0.0-alpha.6",
     "font-awesome": "^4.7.0",
