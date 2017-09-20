@@ -12,8 +12,9 @@ import {
   Alert
 } from 'reactstrap'
 
-import { changePassword } from '../../actions/session'
+import { changePassword, checkForgotPassword } from '../../actions/session'
 import Loader from '../Global/Loader'
+import PasswordStrength from '../Util/PasswordStrength'
 
 class ForgotPasswordPage extends React.Component {
 
@@ -26,6 +27,11 @@ class ForgotPasswordPage extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const { dispatch, match } = this.props
+    dispatch(checkForgotPassword(match.params.token))
+  }
+
   submit(e) {
     const { dispatch, match, history } = this.props
     e.preventDefault();
@@ -35,6 +41,14 @@ class ForgotPasswordPage extends React.Component {
 
   render() {
     const { session } = this.props
+
+    if (session.forgotPasswordEmail === '') {
+      return (
+        <p className="mt-4 text-center">
+          Your password request is invalid or expired.
+        </p>
+      )
+    }
 
     return (
       <Loader loading={session.isChangePasswordLoading}>
@@ -75,7 +89,6 @@ class ForgotPasswordPage extends React.Component {
 
                 <FormGroup>
                   <Input
-                    autoFocus
                     value={this.state.email}
                     onChange={e => { this.setState({ confirmPassword: e.target.value }) }}
                     type="password"
@@ -83,6 +96,11 @@ class ForgotPasswordPage extends React.Component {
                     id="confirmPassword"
                     placeholder="Re-enter the same password..."/>
                 </FormGroup>
+
+                <PasswordStrength
+                  email={session.forgotPasswordEmail}
+                  password={this.state.password}
+                />
 
                 <FormGroup className="mt-4">
                   <Button block color="primary" role="button" type="submit">

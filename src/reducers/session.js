@@ -16,6 +16,8 @@ const session = (state={}, action) => {
       return {...state, changePasswordError: action.data}
     case 'SET_FORGOT_PASSWORD_ERROR':
       return {...state, sendForgotPasswordError: action.data}
+    case 'SET_FORGOT_PASSWORD_EMAIL':
+      return {...state, forgotPasswordEmail: action.data}
     case 'SET_CHANGE_PASSWORD_LOADING':
       return {...state, isChangePasswordLoading: action.data}
     case 'SET_LOGIN_ERROR':

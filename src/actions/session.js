@@ -55,6 +55,22 @@ export const sendForgotPasswordRequest = email => {
   }
 }
 
+export const checkForgotPassword = token => {
+  return dispatch => {
+    dispatch({ type: 'SET_CHANGE_PASSWORD_LOADING', data: true })
+
+    api.post('/forgot_password', {
+      token,
+      check: true
+    }).then(response => {
+      const email = response.data.email || ''
+      dispatch({ type: 'SET_FORGOT_PASSWORD_EMAIL', data: email })
+      dispatch({ type: 'SET_CHANGE_PASSWORD_LOADING', data: false })
+    })
+
+  }
+}
+
 export const changePassword = (data, token, history) => {
   const { password, confirmPassword } = data
 
