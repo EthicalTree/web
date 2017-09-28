@@ -30,8 +30,12 @@ export const login = data => {
 export const logout = () => {
   return dispatch => {
     deauthenticate()
+    dispatch({ type: 'SET_USER_LOADING', data: true })
     dispatch({ type: 'LOGOUT' })
     dispatch({ type: 'CLOSE_MODAL' })
+    setTimeout(() => {
+      dispatch({ type: 'SET_USER_LOADING', data: false })
+    }, 500)
   }
 }
 
@@ -159,3 +163,4 @@ export const getCurrentUser = () => {
       })
   }
 }
+

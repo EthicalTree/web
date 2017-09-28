@@ -22,11 +22,12 @@ import ETSlider from '../Global/Slider'
 import S3Uploader from '../Global/S3'
 import Map from '../Global/Map'
 import { Ethicality } from '../Ethicality/Ethicality'
-import { hasPermission } from '../Session/permissions'
+import { hasPermission } from '../../utils/permissions'
 
 import './Listing.sass'
 
-const AddImage = (props) => {
+const ImageActions = (props) => {
+  const { dispatch, slug, currentImage } = props
 
   return (
     <div>
@@ -37,13 +38,13 @@ const AddImage = (props) => {
           title="Make cover photo"
           role="button"
           tabIndex="0"
-          onClick={() => props.dispatch(setConfirm({
+          onClick={() => dispatch(setConfirm({
             title: 'Set Cover Photo',
             msg: 'Are you sure you want to make this photo your cover photo?',
             action: makeImageCover,
             data: {
-              listing_slug: props.listing.slug,
-              image_id: props.listing.currentImage.id
+              listing_slug: slug,
+              image_id: currentImage.id
             }
           }))}
           className="icon-button fa fa-file-picture-o" />
@@ -54,13 +55,13 @@ const AddImage = (props) => {
           title="Delete photo"
           role="button"
           tabIndex="0"
-          onClick={() => props.dispatch(setConfirm({
+          onClick={() => dispatch(setConfirm({
             title: 'Delete Photo',
             msg: 'Are you sure you want to delete this photo?',
             action: deleteImageFromListing,
             data: {
               listing_slug: props.listing.slug,
-              image_id: props.listing.currentImage.id
+              image_id: currentImage.id
             }
           }))}
           className="icon-button fa fa-trash image-delete" />
@@ -69,7 +70,7 @@ const AddImage = (props) => {
         <S3Uploader
           onProgress={props.onImageUploadProgress}
           onFinish={props.onImageUploadFinish}
-          signingUrlQueryParams={{ slug: props.listing.slug }}>
+          signingUrlQueryParams={{ slug: slug }}>
 
           <i
             id="addImage"
@@ -95,90 +96,83 @@ class ListingImages extends React.Component {
   }
 
   handleSlideChange(index) {
-    const { dispatch } = this.props
-    const image = this.props.listing.images[index]
+    const { dispatch, images } = this.props
+    const image = images[index]
 
     dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: image })
   }
 
   render() {
-    let slides
-    let content
-
-    const { images, dispatch, listing, session } = this.props
+    const { images, dispatch, canEdit, slug, isLoading, uploadProgress, currentImage } = this.props
     const hasSlides = images && images.length > 0
-    const canEdit = hasPermission(session, 'edit-images')
-
-    if (hasSlides) {
-      slides = images.map(image => {
-        const url = `${process.env.REACT_APP_S3_URL}/${image.key}`
-
-        let style = {
-          background: `url('${url}') no-repeat center center`,
-          height: '300px'
-        }
-
-        return (
-          <div
-            className="listing-image"
-            key={image.key}>
-            <div style={style} />
-          </div>
-        )
-      })
-
-      content = (
-        <div className="listing-images text-center">
-          {hasSlides &&
-            <ETSlider
-              afterChange={this.handleSlideChange.bind(this)}
-              slides={slides} />
-          }
-
-          {canEdit &&
-            <AddImage
-              dispatch={dispatch}
-              listing={listing}
-              onImageUploadProgress={this.props.onImageUploadProgress}
-              onImageUploadFinish={this.props.onImageUploadFinish}
-              hasSlides={hasSlides}
-            />
-          }
-        </div>
-      )
-    }
-    else if (canEdit) {
-      content = (
-        <S3Uploader
-          onProgress={this.props.onImageUploadProgress}
-          onFinish={this.props.onImageUploadFinish}
-          signingUrlQueryParams={{ slug: listing.slug }}>
-
-          <div className="listing-images text-center no-content uploadable">
-            <div className="upload-wrapper">
-              <i className="fa fa-camera-retro camera"></i>
-              <span className="add-picture-cta">
-                Add a photo
-              </span>
-            </div>
-          </div>
-        </S3Uploader>
-      )
-    }
-    else {
-      content = (
-        <div className="listing-images text-center no-content">
-          <i className="fa fa-camera-retro camera"></i>
-          No photos added
-        </div>
-      )
-    }
 
     return (
       <Loader
-        loading={listing.isImageLoading}
-        progress={listing.uploadProgress}>
-        {content}
+        loading={isLoading}
+        progress={uploadProgress}
+      >
+        {hasSlides &&
+          <div className="listing-images text-center">
+            {hasSlides &&
+              <ETSlider
+                afterChange={this.handleSlideChange.bind(this)}
+                slides={
+                  images.map(image => {
+                    const url = `${process.env.REACT_APP_S3_URL}/${image.key}`
+
+                    let style = {
+                      background: `url('${url}') no-repeat center center`,
+                      height: '300px'
+                    }
+
+                    return (
+                      <div
+                        className="listing-image"
+                        key={image.key}>
+                        <div style={style} />
+                      </div>
+                    )
+                  })
+                }
+              />
+            }
+
+            {canEdit &&
+              <ImageActions
+                dispatch={dispatch}
+                onImageUploadProgress={this.props.onImageUploadProgress}
+                onImageUploadFinish={this.props.onImageUploadFinish}
+                hasSlides={hasSlides}
+                slug={slug}
+                currentImage={currentImage}
+              />
+            }
+          </div>
+        }
+
+        {!hasSlides && canEdit &&
+          <S3Uploader
+            onProgress={this.props.onImageUploadProgress}
+            onFinish={this.props.onImageUploadFinish}
+            signingUrlQueryParams={{ slug }}>
+
+            <div className="listing-images text-center no-content uploadable">
+              <div className="upload-wrapper">
+                <i className="fa fa-camera-retro camera"></i>
+                <span className="add-picture-cta">
+                  Add a photo
+                </span>
+              </div>
+            </div>
+          </S3Uploader>
+        }
+
+        {!hasSlides && !canEdit &&
+          <div className="listing-images text-center no-content">
+            <i className="fa fa-camera-retro camera"></i>
+            No photos added
+          </div>
+        }
       </Loader>
     )
   }
@@ -193,59 +187,53 @@ const TitleBar = (props) => {
 }
 
 const EthicalityArea = (props) => {
-  let ethicalities
-
-  const { dispatch, session } = props
-  const canEdit = hasPermission(session, 'edit-ethicalities')
-
-  if (props.ethicalities && props.ethicalities.length) {
-    ethicalities = (
-      <div>
-        {canEdit &&
-          <Button
-            block
-            size="sm"
-            color="default"
-            onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_ethicalities' })}>
-            Edit
-          </Button>
-        }
-
-        {props.ethicalities.map(ethicality => {
-          return (
-            <Ethicality
-              key={ethicality.slug}
-              className="p-3"
-              name={ethicality.name}
-              slug={ethicality.slug}
-              icon_key={ethicality.icon_key}
-            />
-          )
-        })}
-      </div>
-    )
-  }
-  else {
-    ethicalities = (
-      <div className="no-content">
-        <p>No ethicalities set!</p>
-        {canEdit &&
-          <Button
-            block
-            color="default"
-            onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_ethicalities' })}>
-            Add
-          </Button>
-        }
-
-      </div>
-    )
-  }
+  const { dispatch, ethicalities, className, canEdit } = props
+  const hasEthicalities = ethicalities && ethicalities.length > 0
 
   return (
-    <div className={`card ethicality ${props.className}`}>
+    <div className={`card ethicality ${className}`}>
       <div className="card-block ethicalities">
-        {ethicalities}
+        {hasEthicalities &&
+          <div>
+            {canEdit &&
+              <Button
+                block
+                size="sm"
+                color="default"
+                onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_ethicalities' })}>
+                Edit
+              </Button>
+            }
+
+            {ethicalities.map(ethicality => {
+              return (
+                <Ethicality
+                  key={ethicality.slug}
+                  className="p-3"
+                  name={ethicality.name}
+                  slug={ethicality.slug}
+                  icon_key={ethicality.icon_key}
+                />
+              )
+            })}
+          </div>
+        }
+
+        {!hasEthicalities &&
+          <div className="no-content">
+            <p>No ethicalities set!</p>
+            {canEdit &&
+              <Button
+                block
+                color="default"
+                onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_ethicalities' })}
+              >
+                Add
+              </Button>
+            }
+
+          </div>
+        }
       </div>
     </div>
   )
@@ -270,30 +258,8 @@ const DailyHours = (props) => {
 }
 
 const OperatingHours = (props) => {
-  const { dispatch, session } = props
-  let hours
-
-  if (props.hours && props.hours.length) {
-    hours = props.hours.map(hours => {
-      return (
-        <DailyHours key={hours.day} hours={hours} />
-      )
-    })
-  }
-  else {
-    hours = (
-      <div className="daily-hours no-content">
-        <p>No operating hours set!</p>
-        {hasPermission(session, 'edit-operating-hours') &&
-          <button
-            onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_operating_hours' })}
-            className="btn btn-default btn-block">
-            Add
-          </button>
-        }
-      </div>
-    )
-  }
+  const { dispatch, hours, canEdit } = props
+  const hasHours = hours && hours.length > 0
 
   return (
     <div className="card operating-hours">
@@ -301,148 +267,160 @@ const OperatingHours = (props) => {
         Operating Hours
       </div>
       <div className="card-block pt-3">
-        {hasPermission(session, 'edit-operating-hours') && props.hours && props.hours.length > 0 &&
+        {canEdit && hasHours &&
           <button
             onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_operating_hours' })}
             className="btn btn-sm btn-default btn-block">
             Edit
           </button>
         }
-        {hours}
+
+        {hasHours &&
+          <div>
+            {hours.map(hours => {
+              return (
+                <DailyHours key={hours.day} hours={hours} />
+              )
+            })}
+          </div>
+        }
+
+        {!hasHours &&
+          <div className="daily-hours no-content">
+            <p>No operating hours set!</p>
+            {canEdit &&
+              <button
+                onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_operating_hours' })}
+                className="btn btn-default btn-block">
+                Add
+              </button>
+            }
+          </div>
+        }
       </div>
     </div>
   )
 }
 
 const AsideInfo = (props) => {
+  const { dispatch, listing, className } = props
+
   return (
-    <aside className={props.className}>
+    <aside className={className}>
       <div className="hidden-sm-down">
         <EthicalityArea
-          dispatch={props.dispatch}
-          ethicalityChoices={props.ethicalityChoices}
-          ethicalities={props.ethicalities}
-          session={props.session}
+          dispatch={dispatch}
+          ethicalityChoices={listing.ethicalityChoices}
+          ethicalities={listing.ethicalities}
+          canEdit={hasPermission('update', listing)}
         />
       </div>
 
       <OperatingHours
-        dispatch={props.dispatch}
-        hours={props.hours}
-        session={props.session}
+        dispatch={dispatch}
+        hours={listing.operating_hours}
+        canEdit={hasPermission('update', listing)}
       />
     </aside>
   )
 }
 
 const Bio = (props) => {
-  let bio
-  let edit
-
-  const canEdit = hasPermission(props.session, 'edit-description')
-
-  if (props.bio) {
-    bio = (
-      <p>{props.bio}</p>
-    )
-
-    edit = (
-      <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickDescriptionEdit}>
-        Edit
-      </a>
-    )
-  }
-  else {
-    bio = (
-      <div className="no-content">
-        {canEdit &&
-          <a
-            href=""
-            onClick={props.onClickDescriptionEdit}
-            className="btn btn-default">
-            Add a description
-          </a>
-        }
-        {!canEdit &&
-          <p>This listing has no desciption!</p>
-        }
-      </div>
-    )
-  }
+  const { bio, canEdit } = props
 
   return (
     <div className="bio">
       <h3>
         {props.title}
-        {canEdit &&
-          edit
+
+        {canEdit && bio &&
+          <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickDescriptionEdit}>
+            Edit
+          </a>
         }
       </h3>
-      {bio}
+
+      {bio &&
+        <p>{bio}</p>
+      }
+
+      {!bio &&
+        <div className="no-content">
+          {canEdit &&
+            <a
+              href=""
+              onClick={props.onClickDescriptionEdit}
+              className="btn btn-default"
+            >
+              Add a description
+            </a>
+          }
+          {!canEdit &&
+            <p>This listing has no desciption!</p>
+          }
+        </div>
+      }
     </div>
   )
 }
 
 const ListingMap = props => {
-  let location
-  let edit
-
-  const canEdit = hasPermission(props.session, 'edit-location')
-
-  if (!props.locations || !props.locations.length) {
-    location = (
-      <div className="no-content">
-        {canEdit &&
-          <a
-            href=""
-            onClick={props.onClickLocationEdit}
-            className="btn btn-default">
-            Add a location
-          </a>
-        }
-        {!canEdit &&
-          <p>No location set!</p>
-        }
-      </div>
-    )
-  }
-  else {
-    const { lat, lng } = props.locations[0]
-
-    const markers = [<Marker key={`${lat}+${lng}`} position={{ lat, lng }} />]
-
-    location = (
-      <Map
-        markers={markers}
-        defaultOptions={{
-          scrollwheel: false
-        }}
-        center={{ lat, lng }}
-        containerElement={
-          <div style={{ height: `100%` }} />
-        }
-        mapElement={
-          <div style={{ height: `100%` }} />
-        }/>
-    )
-
-    edit = (
-      <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickLocationEdit}>
-        Edit
-      </a>
-    )
-  }
+  const { locations, canEdit } = props
+  const hasLocations = locations && locations.length > 0
 
   return (
     <div className="listing-map">
       <h3>
         How to get here
-        {canEdit &&
-          edit
+        {canEdit && hasLocations &&
+          <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickLocationEdit}>
+            Edit
+          </a>
         }
       </h3>
       <div className="listing-map-area">
-        {location}
+        {hasLocations &&
+          <Map
+            markers={[
+              <Marker
+                key={`${locations[0].lat}+${locations[0].lng}`}
+                position={{
+                  lat: locations[0].lat,
+                  lng: locations[0].lng
+                }}
+              />
+            ]}
+            defaultOptions={{
+              scrollwheel: false
+            }}
+            center={{
+              lat: locations[0].lat,
+              lng: locations[0].lng
+            }}
+            containerElement={
+              <div style={{ height: `100%` }} />
+            }
+            mapElement={
+              <div style={{ height: `100%` }} />
+            }
+          />
+        }
+
+        {!hasLocations &&
+          <div className="no-content">
+            {canEdit &&
+              <a
+                href=""
+                onClick={props.onClickLocationEdit}
+                className="btn btn-default">
+                Add a location
+              </a>
+            }
+            {!canEdit &&
+              <p>No location set!</p>
+            }
+          </div>
+        }
       </div>
     </div>
   )
@@ -450,19 +428,21 @@ const ListingMap = props => {
 }
 
 const ListingInfo = (props) => {
+  const { listing, className } = props
+
   return (
-    <div className={props.className}>
+    <div className={className}>
       <Bio
         onClickDescriptionEdit={props.onClickDescriptionEdit}
-        title={props.title}
-        bio={props.bio}
-        session={props.session}
+        title={listing.title}
+        bio={listing.bio}
+        canEdit={hasPermission('update', listing)}
       />
 
       <ListingMap
         onClickLocationEdit={props.onClickLocationEdit}
-        locations={props.locations}
-        session={props.session}
+        locations={listing.locations}
+        canEdit={hasPermission('update', listing)}
       />
 
       <div className="clearfix"></div>
@@ -471,26 +451,16 @@ const ListingInfo = (props) => {
 }
 
 const ListingContent = (props) => {
-  const {
-    locations,
-    bio,
-    title,
-    ethicalities,
-    operating_hours,
-    ethicalityChoices,
-  } = props.listing
-
-  const { session } = props
+  const { listing, dispatch } = props
 
   return (
     <div className="row listing-content">
 
       <div className="col-12 hidden-md-up">
         <EthicalityArea
-          dispatch={props.dispatch}
-          ethicalityChoices={ethicalityChoices}
-          ethicalities={ethicalities}
-          session={session}
+          dispatch={dispatch}
+          ethicalityChoices={listing.ethicalityChoices}
+          ethicalities={listing.ethicalities}
         />
       </div>
 
@@ -498,19 +468,13 @@ const ListingContent = (props) => {
         className="listing-info col-xl-9 col-lg-8 col-md-7"
         onClickDescriptionEdit={props.onClickDescriptionEdit}
         onClickLocationEdit={props.onClickLocationEdit}
-        locations={locations}
-        bio={bio}
-        title={title}
-        session={session}
+        listing={listing}
       />
 
       <AsideInfo
-        dispatch={props.dispatch}
+        dispatch={dispatch}
         className="col-xl-3 col-lg-4 col-md-5"
-        ethicalityChoices={ethicalityChoices}
-        ethicalities={ethicalities}
-        hours={operating_hours}
-        session={session}
+        listing={listing}
       />
     </div>
   )
@@ -549,7 +513,7 @@ class Listing extends React.Component {
   }
 
   render() {
-    const { listing, dispatch, session } = this.props
+    const { listing, dispatch } = this.props
 
     if (!listing.id && !listing.isListingLoading) {
       return (
@@ -566,12 +530,16 @@ class Listing extends React.Component {
           <div className="listing-detail">
             <ListingImages
               dispatch={this.props.dispatch}
-              listing={listing}
               onImageUploadProgress={this.onImageUploadProgress.bind(this)}
               onImageUploadFinish={this.onImageUploadFinish.bind(this)}
               images={listing.images}
-              session={session}
+              slug={listing.slug}
+              currentImage={listing.currentImage}
+              isLoading={listing.isImageLoading}
+              uploadProgress={listing.uploadProgress}
+              canEdit={hasPermission('update', listing)}
             />
+
             <TitleBar
               title={listing.title}
             />
@@ -581,7 +549,6 @@ class Listing extends React.Component {
               listing={listing}
               onClickDescriptionEdit={this.onClickDescriptionEdit.bind(this)}
               onClickLocationEdit={this.onClickLocationEdit.bind(this)}
-              session={session}
             />
           </div>
         </Container>
@@ -593,8 +560,7 @@ class Listing extends React.Component {
 
 const select = (state) => {
   return {
-    listing: state.listing,
-    session: state.session
+    listing: state.listing
   }
 }
 

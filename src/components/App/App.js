@@ -17,6 +17,7 @@ import FrontPage from '../FrontPage/FrontPage'
 import { ForgotPasswordPage }from '../Session'
 import { SearchResults } from '../Search'
 import { Listing } from '../Listing'
+import Loader from '../Global/Loader'
 
 class _InnerApp extends React.Component {
   constructor(props) {
@@ -42,36 +43,42 @@ const InnerApp = withRouter(_InnerApp)
 
 class App extends React.Component {
 
-  componentDidMount() {
+  componentWillMount() {
     const { dispatch, session } = this.props
 
     if (session.authToken) {
       authenticate(session.authToken)
       dispatch(getCurrentUser())
+    } else {
+      dispatch({ type: 'SET_USER_LOADING', data: false })
     }
   }
 
   render() {
-    const { modal } = this.props
+    const { modal, session } = this.props
     const modalOpenClass = !!modal.openModal ? 'modal-open' : ''
 
     return (
       <div className={`app ${modalOpenClass}`}>
-        <Router>
-          <InnerApp {...this.props}>
-            <Route component={logPageView} />
+        <Loader loading={session.userLoading}>
+          <Router>
+            {!session.userLoading &&
+              <InnerApp {...this.props}>
+                <Route component={logPageView} />
 
-            <Header />
+                <Header />
 
-            <Route path="/" exact={true} component={FrontPage} />
-            <Route path="/forgot_password/:token" component={ForgotPasswordPage} />
-            <Route path="/listings/:slug" component={Listing} />
-            <Route path="/s/:query?" component={SearchResults} />
+                <Route path="/" exact={true} component={FrontPage} />
+                <Route path="/forgot_password/:token" component={ForgotPasswordPage} />
+                <Route path="/listings/:slug" component={Listing} />
+                <Route path="/s/:query?" component={SearchResults} />
 
-            <Footer />
-            <Modals />
-          </InnerApp>
-        </Router>
+                <Footer />
+                <Modals />
+              </InnerApp>
+            }
+          </Router>
+        </Loader>
       </div>
     )
   }

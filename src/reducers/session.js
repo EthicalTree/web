@@ -1,5 +1,11 @@
+import store from 'store'
 
-const session = (state={}, action) => {
+const defaultState = {
+  userLoading: true,
+  authToken: store.get('ETHICALTREE_AUTH_TOKEN')
+}
+
+const session = (state=defaultState, action) => {
 
   switch (action.type) {
     case 'SET_LOGIN_INFO':

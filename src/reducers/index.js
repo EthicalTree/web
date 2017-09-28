@@ -8,6 +8,7 @@ import listing from './listing'
 import confirm from './confirm'
 import search from './search'
 import modal from './modal'
+import permissions from './permissions'
 
 const rootReducer = combineReducers({
   app,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   listing,
   confirm,
   search,
-  modal
+  modal,
+  permissions
 })
 
 export default rootReducer
