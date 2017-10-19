@@ -27,12 +27,13 @@ export const login = data => {
   }
 }
 
-export const logout = () => {
+export const logout = (history) => {
   return dispatch => {
     deauthenticate()
     dispatch({ type: 'SET_USER_LOADING', data: true })
     dispatch({ type: 'LOGOUT' })
     dispatch({ type: 'CLOSE_MODAL' })
+    history.push(`/`)
     setTimeout(() => {
       dispatch({ type: 'SET_USER_LOADING', data: false })
     }, 500)

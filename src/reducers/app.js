@@ -5,6 +5,8 @@ const defaultState = {
 const app = (state=defaultState, action) => {
 
   switch (action.type) {
+    case 'NAVIGATE':
+      return {...state, navToggle: !!state.navToggle}
     case 'SET_LOADING':
       return {...state, isAppLoading: action.data}
     case 'SET_GET_ETHICALITIES_LOADING':
