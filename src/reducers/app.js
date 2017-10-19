@@ -1,7 +1,12 @@
+const defaultState = {
+  isAppLoading: true
+}
 
-const app = (state={}, action) => {
+const app = (state=defaultState, action) => {
 
   switch (action.type) {
+    case 'SET_LOADING':
+      return {...state, isAppLoading: action.data}
     case 'SET_GET_ETHICALITIES_LOADING':
       return {...state, isGettingEthicalities: action.data}
     case 'SET_ETHICALITIES':

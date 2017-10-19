@@ -17,6 +17,7 @@ import FrontPage from '../FrontPage/FrontPage'
 import { ForgotPasswordPage }from '../Session'
 import { SearchResults } from '../Search'
 import { Listing } from '../Listing'
+import Admin from '../Admin/Admin'
 import Loader from '../Global/Loader'
 
 class _InnerApp extends React.Component {
@@ -72,6 +73,8 @@ class App extends React.Component {
                 <Route path="/forgot_password/:token" component={ForgotPasswordPage} />
                 <Route path="/listings/:slug" component={Listing} />
                 <Route path="/s/:query?" component={SearchResults} />
+
+                <Route path="/admin" component={Admin} />
 
                 <Footer />
                 <Modals />
