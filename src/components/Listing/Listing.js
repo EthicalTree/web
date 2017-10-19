@@ -365,8 +365,22 @@ const Bio = (props) => {
 }
 
 const ListingMap = props => {
-  const { locations, canEdit } = props
+  const { locations, canEdit, dispatch } = props
   const hasLocations = locations && locations.length > 0
+
+  if (hasLocations) {
+    const geocoder = new window.google.maps.Geocoder()
+    const latLng = {lat: locations[0].lat, lng: locations[0].lng}
+
+    geocoder.geocode({'location': latLng}, function(results, status) {
+      if (status === 'OK') {
+        dispatch({ type: 'SET_LISTING_LOCATION', data: [{
+          ...locations[0],
+          address: results[0].formatted_address
+        }]})
+      }
+    })
+  }
 
   return (
     <div className="listing-map">
@@ -378,6 +392,9 @@ const ListingMap = props => {
           </a>
         }
       </h3>
+      {hasLocations &&
+        <p>{locations[0].address}</p>
+      }
       <div className="listing-map-area">
         {hasLocations &&
           <Map
@@ -428,7 +445,7 @@ const ListingMap = props => {
 }
 
 const ListingInfo = (props) => {
-  const { listing, className } = props
+  const { listing, className, dispatch } = props
 
   return (
     <div className={className}>
@@ -443,6 +460,7 @@ const ListingInfo = (props) => {
         onClickLocationEdit={props.onClickLocationEdit}
         locations={listing.locations}
         canEdit={hasPermission('update', listing)}
+        dispatch={dispatch}
       />
 
       <div className="clearfix"></div>
@@ -469,6 +487,7 @@ const ListingContent = (props) => {
         onClickDescriptionEdit={props.onClickDescriptionEdit}
         onClickLocationEdit={props.onClickLocationEdit}
         listing={listing}
+        dispatch={dispatch}
       />
 
       <AsideInfo
