@@ -2,10 +2,19 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Users from './Users'
 
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import { Container } from 'reactstrap'
 
 class Admin extends React.Component {
+
+  componentWillMount() {
+    const { session, history } = this.props
+
+    if (!session.currentUser || !session.currentUser.admin) {
+      history.push('/')
+    }
+  }
+
   render() {
     return (
       <Container className="mt-5">
@@ -19,7 +28,8 @@ class Admin extends React.Component {
 
 const select = (state) => {
   return {
+    session: state.session
   }
 }
 
-export default connect(select)(Admin)
+export default withRouter(connect(select)(Admin))
