@@ -4,11 +4,28 @@
   background-color: $color-white
   border-bottom: 1px solid $color-border
 
+  .right-nav
+    button
+      margin-top: 12px
+
+  .account-dropdown
+    .dropdown-item
+      font-size: 14px
+      margin: 0
+
   .navbar-toggler
     margin-top: 12px
     margin-right: 12px
 
   .navbar-nav
+    .dropdown-item
+      padding-top: 0.5em
+      padding-bottom: 0.5em
+      font-weight: $font-light
+
+      &:hover
+        cursor: pointer
+
     .nav-link
       margin: 0 0.3em
       font-weight: $font-light

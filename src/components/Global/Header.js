@@ -4,6 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { Link } from 'react-router-dom'
+import AccountIcon from '../Session/AccountIcon'
 
 import {
   Button,
@@ -12,7 +13,11 @@ import {
   Collapse,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  NavDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from 'reactstrap'
 
 
@@ -27,7 +32,8 @@ export const hasFixedHeader = () => {
 }
 
 const Header = (props) => {
-  const { dispatch } = props
+  const { dispatch, session, header } = props
+
   const isFixed = hasFixedHeader()
   const fixedHeader = isFixed ? 'fixed-top' : ''
   const fixedHeaderWrapper = isFixed ? 'fixed-header-wrapper' : ''
@@ -42,28 +48,39 @@ const Header = (props) => {
           <img className="ml-4" src="/assets/images/logo/logo-48x48.png" alt="EthicalTree Logo" />
         </Link>
 
-        <Collapse isOpen={props.header.isOpen} navbar>
-          {props.session.user &&
-            <Nav navbar className="ml-auto">
-              <NavItem>
-                <NavLink
-                  href="#"
-                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'logout' }) }}>
-                  Logout
-                </NavLink>
-              </NavItem>
-
+        <Collapse isOpen={header.isOpen} navbar>
+          {session.user &&
+            <Nav navbar className="right-nav ml-auto">
               <NavItem>
                 <Button
                   color="success"
+                  className="mr-3"
                   onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'add_listing' }) }}>
                   Add Listing
                 </Button>
               </NavItem>
+
+              <NavDropdown
+                className="account-dropdown"
+                isOpen={header.isAccountDropdownOpen}
+                toggle={() => dispatch({ type: 'TOGGLE_HEADER_ACCOUNT_DROPDOWN' })}
+              >
+                <DropdownToggle nav caret>
+                  <AccountIcon email={session.user.email} />
+                </DropdownToggle>
+                <DropdownMenu right className="mt-2">
+                  <DropdownItem onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'logout' }) }}>
+                    Account Settings
+                  </DropdownItem>
+                  <DropdownItem onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'logout' }) }}>
+                    Logout
+                  </DropdownItem>
+                </DropdownMenu>
+              </NavDropdown>
             </Nav>
           }
 
-          {!props.session.user &&
+          {!session.user &&
             <Nav navbar className="mr-4 ml-auto">
               <NavItem>
                 <NavLink
