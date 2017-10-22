@@ -10,6 +10,7 @@ import search from './search'
 import modal from './modal'
 import permissions from './permissions'
 import admin from './admin'
+import account from './account'
 
 const rootReducer = combineReducers({
   app,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   search,
   modal,
   permissions,
-  admin
+  admin,
+  account
 })
 
 export default rootReducer

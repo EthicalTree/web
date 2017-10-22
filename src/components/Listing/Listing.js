@@ -43,7 +43,7 @@ const ImageActions = (props) => {
             msg: 'Are you sure you want to make this photo your cover photo?',
             action: makeImageCover,
             data: {
-              listing_slug: slug,
+              listingSlug: slug,
               image_id: currentImage.id
             }
           }))}
@@ -60,7 +60,7 @@ const ImageActions = (props) => {
             msg: 'Are you sure you want to delete this photo?',
             action: deleteImageFromListing,
             data: {
-              listing_slug: props.listing.slug,
+              listingSlug: props.listing.slug,
               image_id: currentImage.id
             }
           }))}
@@ -212,7 +212,7 @@ const EthicalityArea = (props) => {
                   className="p-3"
                   name={ethicality.name}
                   slug={ethicality.slug}
-                  icon_key={ethicality.icon_key}
+                  iconKey={ethicality.iconKey}
                 />
               )
             })}

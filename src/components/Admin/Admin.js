@@ -2,20 +2,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Users from './Users'
 
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, Redirect } from 'react-router-dom'
 import { Container } from 'reactstrap'
 
+import { isAdmin } from '../../utils/permissions'
+
 class Admin extends React.Component {
-
-  componentWillMount() {
-    const { session, history } = this.props
-
-    if (!session.currentUser || !session.currentUser.admin) {
-      history.push('/')
-    }
-  }
-
   render() {
+    if (!isAdmin()) {
+      return <Redirect to='/' />
+    }
+
     return (
       <Container className="mt-5">
         <h1>Admin</h1>

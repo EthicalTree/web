@@ -58,11 +58,11 @@ export const getEthicalities = () => {
   }
 }
 
-export const editEthicalities = (listing_slug, ethicalities) => {
+export const editEthicalities = (listingSlug, ethicalities) => {
   return dispatch => {
     dispatch({ type: 'SET_EDIT_LISTING_ETHICALITIES_LOADING', data: true })
 
-    api.post(`/v1/listings/${listing_slug}/listing_ethicalities`, { ethicalities })
+    api.post(`/v1/listings/${listingSlug}/listing_ethicalities`, { ethicalities })
       .then(response => {
         if (response.data.errors) {
           dispatch({ type: 'SET_EDIT_ETHICALITIES_ERROR', data: response.data.errors })
@@ -100,11 +100,11 @@ export const editDescription = (data) => {
   }
 }
 
-export const editLocation = (listing_slug, data) => {
+export const editLocation = (listingSlug, data) => {
   const { location } = data
 
   return dispatch => {
-    api.post(`/v1/listings/${listing_slug}/locations`, { location })
+    api.post(`/v1/listings/${listingSlug}/locations`, { location })
       .then(response => {
         if (response.data.errors) {
         }
@@ -125,10 +125,10 @@ export const editLocation = (listing_slug, data) => {
   }
 }
 
-export const addImageToListing = (listing_slug, image_key) => {
+export const addImageToListing = (listingSlug, imageKey) => {
   return dispatch => {
 
-    api.post(`/v1/listings/${listing_slug}/images`, { key: image_key })
+    api.post(`/v1/listings/${listingSlug}/images`, { key: imageKey })
       .then(response => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
@@ -143,12 +143,12 @@ export const addImageToListing = (listing_slug, image_key) => {
 }
 
 export const deleteImageFromListing = (data) => {
-  const { listing_slug, image_id } = data
+  const { listingSlug, image_id } = data
 
   return dispatch => {
     dispatch({ type: 'SET_IMAGE_LOADING', data: true })
 
-    api.delete(`/v1/listings/${listing_slug}/images/${image_id}`)
+    api.delete(`/v1/listings/${listingSlug}/images/${image_id}`)
       .then(response => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
@@ -164,12 +164,12 @@ export const deleteImageFromListing = (data) => {
 }
 
 export const makeImageCover = (data) => {
-  const { listing_slug, image_id } = data
+  const { listingSlug, image_id } = data
 
   return dispatch => {
     dispatch({ type: 'SET_IMAGE_LOADING', data: true })
 
-    api.put(`/v1/listings/${listing_slug}/images/${image_id}`, { make_cover: true })
+    api.put(`/v1/listings/${listingSlug}/images/${image_id}`, { make_cover: true })
       .then(response => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
@@ -183,11 +183,11 @@ export const makeImageCover = (data) => {
   }
 }
 
-export const saveOperatingHours = (listing_slug, operating_hours) => {
+export const saveOperatingHours = (listingSlug, operating_hours) => {
   return dispatch => {
     dispatch({ type: 'SET_EDITING_OPERATING_HOURS_LOADING', data: true })
 
-    api.post(`/v1/listings/${listing_slug}/operating_hours`, operating_hours)
+    api.post(`/v1/listings/${listingSlug}/operating_hours`, operating_hours)
       .then(response => {
         const operatingHours = response.data.operating_hours
 

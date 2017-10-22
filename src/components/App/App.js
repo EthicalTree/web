@@ -57,12 +57,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { modal, session } = this.props
+    const { modal, session, app } = this.props
     const modalOpenClass = !!modal.openModal ? 'modal-open' : ''
 
     return (
       <div className={`app ${modalOpenClass}`}>
-        <Loader loading={session.userLoading}>
+        <Loader loading={session.userLoading || app.isAppLoading}>
           <Router>
             {!session.userLoading &&
               <InnerApp {...this.props}>
@@ -71,10 +71,11 @@ class App extends React.Component {
                 <Header />
 
                 <Route path="/" exact={true} component={FrontPage} />
-                <Route path="/account" exact={true} component={AccountSettings} />
                 <Route path="/forgot_password/:token" component={ForgotPasswordPage} />
                 <Route path="/listings/:slug" component={Listing} />
                 <Route path="/s/:query?" component={SearchResults} />
+
+                <Route path="/account" exact={true} component={AccountSettings} />
 
                 <Route path="/admin" component={Admin} />
 
@@ -92,6 +93,7 @@ class App extends React.Component {
 const select = (state) => {
   return {
     session: state.session,
+    app: state.app,
     modal: state.modal
   }
 }

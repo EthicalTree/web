@@ -140,7 +140,7 @@ const SearchResults = (props) => {
           search.listings.map(result => {
             const listing = {
               title: result.title,
-              ethicalities: result.ethicalities.map(e => e.icon_key),
+              ethicalities: result.ethicalities.map(e => e.iconKey),
               images: result.images.map(i => i.key)
             }
 

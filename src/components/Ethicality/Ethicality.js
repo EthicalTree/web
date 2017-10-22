@@ -25,7 +25,7 @@ const EthicalityBar = (props) => {
             <Ethicality
               name={ethicality.name}
               slug={ethicality.slug}
-              icon_key={ethicality.icon_key}
+              iconKey={ethicality.iconKey}
               selected={!!selectedEthicalities.find(e => e === ethicality.slug)}
               onSelect={onEthicalitySelect}
               showLabel={showLabels}
@@ -42,7 +42,7 @@ const Ethicality = (props) => {
   const {
     onSelect,
     slug,
-    icon_key,
+    iconKey,
     name,
     className,
     selected,
@@ -70,7 +70,7 @@ const Ethicality = (props) => {
       className={`ethicality-toggle text-center ${slug} ${selectClass} ${selectedClass} ${className}`}>
       <div>
         <EthicalityIcon
-          ethicalityKey={icon_key}
+          ethicalityKey={iconKey}
           name={name}
           uuid={uuid}
         />

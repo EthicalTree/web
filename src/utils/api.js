@@ -1,6 +1,10 @@
 import store from 'store'
 import axios from 'axios'
-import { error } from '../components/Util/Notifications'
+import camelcaseKeys from 'camelcase-keys'
+import { error } from '../utils/notifications'
+
+// Set header for camelcasing keys automatically
+axios.defaults.headers.common['X-Key-Inflection'] = 'camel'
 
 const ERRORS = [500]
 
@@ -24,7 +28,15 @@ const wrapper = (method, url, config={}) => {
     method,
     url: apiRoute(url),
     ...config
-  }).catch(err => {
+  })
+    .then(response => {
+      if (response.data && !Array.isArray(response.data)) {
+        response.data = camelcaseKeys(response.data, {deep: true})
+      }
+
+      return response
+    })
+    .catch(err => {
     const status = err.response && err.response.status
 
     if (ERRORS.includes(status)) {

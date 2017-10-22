@@ -3,7 +3,7 @@ import './Header.sass'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import AccountIcon from '../Session/AccountIcon'
 
 import {
@@ -20,7 +20,6 @@ import {
   DropdownItem
 } from 'reactstrap'
 
-
 const FixedPaths = [
   '/s/'
 ]
@@ -32,7 +31,7 @@ export const hasFixedHeader = () => {
 }
 
 const Header = (props) => {
-  const { dispatch, session, header } = props
+  const { dispatch, session, header, history } = props
 
   const isFixed = hasFixedHeader()
   const fixedHeader = isFixed ? 'fixed-top' : ''
@@ -69,7 +68,7 @@ const Header = (props) => {
                   <AccountIcon email={session.user.email} />
                 </DropdownToggle>
                 <DropdownMenu right className="mt-2">
-                  <DropdownItem onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'logout' }) }}>
+                  <DropdownItem onClick={e => { history.push('/account') }}>
                     Account Settings
                   </DropdownItem>
                   <DropdownItem onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'logout' }) }}>
@@ -112,5 +111,5 @@ const select = (state) => {
   }
 }
 
-export default connect(select)(Header)
+export default withRouter(connect(select)(Header))
 

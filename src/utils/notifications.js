@@ -33,7 +33,8 @@ const error = (msg, options={}) => {
   return notify({ ...options, type: 'error', text })
 }
 
-const success = (text, options={}) => {
+const success = (msg, options={}) => {
+  const text = msg || "Success!"
   return notify({ ...options, type: 'success', text })
 }
 

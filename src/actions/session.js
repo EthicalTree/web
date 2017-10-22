@@ -157,7 +157,11 @@ export const getCurrentUser = () => {
 
     api.get('/users/current')
       .then(response => {
-        dispatch({ type: 'SET_CURRENT_USER', data: response.data })
+        const user = response.data.user
+
+        dispatch({ type: 'SET_CURRENT_USER', data: user })
+        dispatch({ type: 'SET_ACCOUNT_FIRST_NAME', data: user.firstName })
+        dispatch({ type: 'SET_ACCOUNT_LAST_NAME', data: user.lastName })
       })
       .then(() => {
         dispatch({ type: 'SET_USER_LOADING', data: false })

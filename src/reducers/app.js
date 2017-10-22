@@ -1,5 +1,5 @@
 const defaultState = {
-  isAppLoading: true
+  isAppLoading: false
 }
 
 const app = (state=defaultState, action) => {

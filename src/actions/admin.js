@@ -1,5 +1,5 @@
 import { api } from '../utils/api'
-import { success } from '../components/Util/Notifications'
+import { success } from '../utils/notifications'
 
 export const getUsers = () => {
   return dispatch => {

@@ -101,7 +101,7 @@ class EditEthicalitiesModal extends React.Component {
                     className="p-3 bordered"
                     name={ethicality.name}
                     slug={ethicality.slug}
-                    icon_key={ethicality.icon_key}
+                    iconKey={ethicality.iconKey}
                     selected={!!this.state.selectedEthicalities.find(e => e.slug === ethicality.slug)}
                     onSelect={this.selectEthicality.bind(this)}
                   />
