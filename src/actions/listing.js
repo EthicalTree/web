@@ -89,7 +89,7 @@ export const editDescription = (data) => {
           dispatch({ type: 'SET_EDIT_DESCRIPTION_ERROR', data: response.data.errors })
         }
         else {
-          dispatch({ type: 'SET_LISTING', data: response.data.listing })
+          dispatch({ type: 'SET_LISTING', data: response.data })
           dispatch({ type: 'CLOSE_MODAL' })
         }
       })
@@ -183,13 +183,13 @@ export const makeImageCover = (data) => {
   }
 }
 
-export const saveOperatingHours = (listingSlug, operating_hours) => {
+export const saveOperatingHours = (listingSlug, operatingHours) => {
   return dispatch => {
     dispatch({ type: 'SET_EDITING_OPERATING_HOURS_LOADING', data: true })
 
-    api.post(`/v1/listings/${listingSlug}/operating_hours`, operating_hours)
+    api.post(`/v1/listings/${listingSlug}/operating_hours`, operatingHours)
       .then(response => {
-        const operatingHours = response.data.operating_hours
+        const operatingHours = response.data.operatingHours
 
         if (operatingHours) {
           dispatch({ type: 'SET_LISTING_OPERATING_HOURS', data: operatingHours})

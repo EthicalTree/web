@@ -29,7 +29,7 @@ const listing = (state={}, action) => {
     case 'SET_EDITING_OPERATING_HOURS_LOADING':
       return {...state, isEditingOperatingHoursLoading: action.data}
     case 'SET_LISTING_OPERATING_HOURS':
-      return {...state, operating_hours: action.data}
+      return {...state, operatingHours: action.data}
     case 'SET_EDIT_LOCATION_ERROR':
       return {...state, editLocationErrors: action.data}
     case 'SET_LISTING_LOCATION':

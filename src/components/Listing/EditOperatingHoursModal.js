@@ -26,7 +26,7 @@ class EditOperatingHoursModal extends React.Component {
 
   componentWillReceiveProps(props) {
     const { listing } = props
-    let operatingHours = listing && listing.operating_hours
+    let operatingHours = listing && listing.operatingHours
     let hours = {}
 
     if (operatingHours && operatingHours.length) {
@@ -74,8 +74,8 @@ class EditOperatingHoursModal extends React.Component {
       }
 
       if (value.enabled === true) {
-        operatingHours[day].open_str = '12:00 pm'
-        operatingHours[day].close_str = '10:00 pm'
+        operatingHours[day].openStr = '12:00 pm'
+        operatingHours[day].closeStr = '10:00 pm'
       }
 
       return {

@@ -17,10 +17,10 @@ import {
 } from 'reactstrap'
 
 export const TimePicker12Hour = (props) => {
-  let { defaultValue } = props
+  let { value } = props
 
-  if (defaultValue) {
-    defaultValue = moment(defaultValue, 'HH:mm A')
+  if (value) {
+    value = moment(value, 'HH:mm A')
   }
 
   return (
@@ -31,7 +31,7 @@ export const TimePicker12Hour = (props) => {
       use12Hours
       allowEmpty={false}
       {...props}
-      defaultValue={defaultValue}
+      value={value}
     />
   )
 }
@@ -61,6 +61,8 @@ export const DateSelector = (props) => {
       </Button>
     )
   }
+
+  console.log(props)
 
   return (
     <div className="day-picker">
@@ -98,8 +100,8 @@ export const DateSelector = (props) => {
                     <Row>
                       <Col xs="12" sm="5">
                         <TimePicker12Hour
-                          defaultValue={props.selectedDay.open_str}
-                          onChange={time => props.setTime('open_str', time)}
+                          value={props.selectedDay.openStr}
+                          onChange={time => props.setTime('openStr', time)}
                         />
                       </Col>
                       <Col xs="12" sm="2" className="text-center">
@@ -107,8 +109,8 @@ export const DateSelector = (props) => {
                       </Col>
                       <Col xs="12" sm="5">
                         <TimePicker12Hour
-                          defaultValue={props.selectedDay.close_str}
-                          onChange={time => props.setTime('close_str', time)}
+                          value={props.selectedDay.closeStr}
+                          onChange={time => props.setTime('closeStr', time)}
                         />
                       </Col>
                     </Row>

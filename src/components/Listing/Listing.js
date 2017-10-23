@@ -318,7 +318,7 @@ const AsideInfo = (props) => {
 
       <OperatingHours
         dispatch={dispatch}
-        hours={listing.operating_hours}
+        hours={listing.operatingHours}
         canEdit={hasPermission('update', listing)}
       />
     </aside>
