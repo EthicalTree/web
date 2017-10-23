@@ -84,7 +84,7 @@ export const changePassword = (data, token, history) => {
 
     api.post('/forgot_password', {
       password,
-      password_confirmation: confirmPassword,
+      passwordConfirmation: confirmPassword,
       token
     }).then(response => {
       if (response.data.errors) {
@@ -109,7 +109,7 @@ export const signup = data => {
       user: {
         email: data.email,
         password: data.password,
-        password_confirmation: data.confirmPassword
+        passwordConfirmation: data.confirmPassword
       }
     }
 

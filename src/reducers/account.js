@@ -2,7 +2,10 @@ const defaultState = {
   isPersonalDetailsDirty: false,
   isEditingPassword: false,
   firstName: '',
-  lastName: ''
+  lastName: '',
+  currentPassword: '************',
+  newPassword: '',
+  confirmPassword: '',
 }
 
 const account = (state=defaultState, action) => {
@@ -10,6 +13,8 @@ const account = (state=defaultState, action) => {
   switch (action.type) {
     case 'SET_EDIT_PERSONAL_DETAILS_ERRORS':
       return {...state, editPersonalDetailsErrors: action.data}
+    case 'SET_EDIT_ACCOUNT_PASSWORD_ERRORS':
+      return {...state, editPasswordErrors: action.data}
     case 'RESET_PERSONAL_DETAILS':
       const { firstName, lastName } = action.data
 
@@ -19,12 +24,25 @@ const account = (state=defaultState, action) => {
         lastName,
         isPersonalDetailsDirty: false
       }
-    case 'SET_EDITING_PASSWORD':
-      return {...state, isEditingPassword: action.data}
+    case 'SET_EDITING_ACCOUNT_PASSWORD':
+      return {
+        ...state,
+        isEditingPassword: action.data,
+        currentPassword: action.data ? '' : '************',
+        newPassword: '',
+        confirmPassword: '',
+        editPasswordErrors: null
+      }
     case 'SET_ACCOUNT_FIRST_NAME':
       return {...state, firstName: action.data}
     case 'SET_ACCOUNT_LAST_NAME':
       return {...state, lastName: action.data}
+    case 'SET_ACCOUNT_CURRENT_PASSWORD':
+      return {...state, currentPassword: action.data}
+    case 'SET_ACCOUNT_NEW_PASSWORD':
+      return {...state, newPassword: action.data}
+    case 'SET_ACCOUNT_CONFIRM_PASSWORD':
+      return {...state, confirmPassword: action.data}
     case 'SET_PERSONAL_DETAILS_DIRTY':
       return {...state, isPersonalDetailsDirty: action.data}
     default:

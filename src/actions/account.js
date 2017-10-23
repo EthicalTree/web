@@ -23,3 +23,34 @@ export const changePersonalDetails = details => {
       })
   }
 }
+
+export const changePassword = (data) => {
+  const { currentPassword, newPassword, confirmPassword } = data
+
+  const user = {
+    currentPassword,
+    password: newPassword,
+    passwordConfirmation: confirmPassword
+  }
+
+  return dispatch => {
+    dispatch({ type: 'SET_LOADING', data: true })
+
+    api.put('/users/current', { user })
+      .then(response => {
+        if (response.data.errors) {
+          dispatch({ type: 'SET_EDIT_ACCOUNT_PASSWORD_ERRORS', data: response.data.errors })
+        }
+        else {
+          success('Your password has been saved.')
+          dispatch({ type: 'SET_EDITING_ACCOUNT_PASSWORD', data: false })
+        }
+      })
+      .catch(() => {})
+      .then(() => {
+        dispatch({ type: 'SET_LOADING', data: false })
+      })
+  }
+}
+
+

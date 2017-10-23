@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import Loader from '../Global/Loader'
+import PasswordStrength from '../Util/PasswordStrength'
 import { isLoggedIn } from '../../utils/permissions'
 
 import {
@@ -19,22 +20,9 @@ import {
   Alert
 } from 'reactstrap'
 
-import { changePersonalDetails } from '../../actions/account'
+import { changePersonalDetails, changePassword } from '../../actions/account'
 
 class AccountSettings extends React.Component {
-
-  dirtyPersonalDetails = e => {
-    e.preventDefault()
-
-    const { dispatch, session, account } = this.props
-
-    const dirtyFirst = session.user.firstName !== account.firstName
-    const dirtyLast = session.user.lastName !== account.lastName
-
-    if ((dirtyFirst || dirtyLast) && !account.isPersonalDetailsDirty) {
-      dispatch({ type: 'SET_PERSONAL_DETAILS_DIRTY', data: true })
-    }
-  }
 
   submitPersonalDetails = e => {
     e.preventDefault()
@@ -43,6 +31,17 @@ class AccountSettings extends React.Component {
     dispatch(changePersonalDetails({
       firstName: account.firstName,
       lastName: account.lastName
+    }))
+  }
+
+  changePassword = e => {
+    e.preventDefault()
+    const { dispatch, account } = this.props
+
+    dispatch(changePassword({
+      currentPassword: account.currentPassword,
+      newPassword: account.newPassword,
+      confirmPassword: account.confirmPassword
     }))
   }
 
@@ -69,7 +68,7 @@ class AccountSettings extends React.Component {
               md={{ size: 6, offset: 3 }}
             >
               <Form
-                onChange={this.dirtyPersonalDetails}
+                onChange={() => dispatch({ type: 'SET_PERSONAL_DETAILS_DIRTY', data: true })}
                 className="pb-3"
                 onSubmit={this.submitPersonalDetails}
               >
@@ -106,7 +105,7 @@ class AccountSettings extends React.Component {
 
                 {account.isPersonalDetailsDirty &&
                   <Row className="mt-4">
-                    <Col sm="6">
+                    <Col xs="12" sm="6" className="mb-2">
                       <Button
                         block
                         color="default"
@@ -118,7 +117,7 @@ class AccountSettings extends React.Component {
                         Cancel
                       </Button>
                     </Col>
-                    <Col sm="6">
+                    <Col xs="12" sm="6">
                       <Button
                         block
                         type="submit"
@@ -133,20 +132,101 @@ class AccountSettings extends React.Component {
 
               <hr />
 
-              <Form className="mt-5">
+              <Form className="mt-5" onSubmit={this.changePassword}>
                 <h5>
                   Password
-                  <Button color="default" size="sm" className="float-right">Change</Button>
+
+                  {!account.isEditingPassword &&
+                    <Button
+                      color="default"
+                      size="sm"
+                      className="float-right"
+                      onClick={() => dispatch({ type: 'SET_EDITING_ACCOUNT_PASSWORD', data: true })}
+                    >
+                      Change
+                    </Button>
+                  }
+
                 </h5>
+
+                {account.editPasswordErrors &&
+                  <Row>
+                    <Col>
+                      <Alert color="danger">
+                        {account.editPasswordErrors}
+                      </Alert>
+                    </Col>
+                  </Row>
+                }
 
                 <FormGroup className="mt-4">
                   <Label for="currentPassword">Current Password</Label>
                   <Input
-                    disabled
+                    disabled={!account.isEditingPassword}
                     id="currentPassword"
-                    value="****************"
+                    type="password"
+                    value={account.currentPassword}
+                    onChange={e => dispatch({ type: 'SET_ACCOUNT_CURRENT_PASSWORD', data: e.target.value })}
+                    placeholder="Enter your current password..."
                   />
                 </FormGroup>
+
+                {account.isEditingPassword &&
+                  <div>
+                    <FormGroup>
+                      <Label for="newPassword">New Password</Label>
+                      <Input
+                        onChange={e => dispatch({ type: 'SET_ACCOUNT_NEW_PASSWORD', data: e.target.value })}
+                        type="password"
+                        name="newPassword"
+                        value={account.newPassword}
+                        id="newPassword"
+                        placeholder="Enter new password..."
+                      />
+                    </FormGroup>
+
+                    <FormGroup>
+                      <Label for="confirmPassword">Confirm Password</Label>
+                      <Input
+                        onChange={e => dispatch({ type: 'SET_ACCOUNT_CONFIRM_PASSWORD', data: e.target.value })}
+                        type="password"
+                        name="confirmPassword"
+                        value={account.confirmPassword}
+                        id="confirmPassword"
+                        placeholder="Confirm your new password..."
+                      />
+                    </FormGroup>
+
+                    <PasswordStrength
+                      email={session.user.email}
+                      password={account.newPassword}
+                    />
+                    <Row className="mt-4">
+                      <Col xs="12" sm="6" className="mb-2">
+                        <Button
+                          block
+                          color="default"
+                          onClick={e => dispatch({
+                            type: 'SET_EDITING_ACCOUNT_PASSWORD',
+                            data: false
+                          })}
+                        >
+                          Cancel
+                        </Button>
+                      </Col>
+                      <Col xs="12" sm="6">
+                        <Button
+                          block
+                          type="submit"
+                          color="primary"
+                        >
+                          Save
+                        </Button>
+                      </Col>
+                    </Row>
+                  </div>
+                }
+
               </Form>
             </Col>
 
