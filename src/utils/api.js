@@ -1,6 +1,5 @@
 import store from 'store'
 import axios from 'axios'
-import camelcaseKeys from 'camelcase-keys'
 import { error } from '../utils/notifications'
 
 // Set header for camelcasing keys automatically
@@ -29,13 +28,6 @@ const wrapper = (method, url, config={}) => {
     url: apiRoute(url),
     ...config
   })
-    .then(response => {
-      if (response.data && !Array.isArray(response.data)) {
-        response.data = camelcaseKeys(response.data, {deep: true})
-      }
-
-      return response
-    })
     .catch(err => {
     const status = err.response && err.response.status
 

@@ -16,7 +16,6 @@
     "@fnando/password_strength": "^1.1.4",
     "axios": "^0.16.1",
     "bootstrap": "^4.0.0-alpha.6",
-    "camelcase-keys": "^4.1.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "moment": "^2.18.1",
