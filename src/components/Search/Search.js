@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
+import { withRouter } from 'react-router-dom'
 
 import {
   InputGroup,
@@ -87,5 +88,5 @@ const select = (state) => {
   }
 }
 
-export default connect(select)(Search)
+export default withRouter(connect(select)(Search))
 

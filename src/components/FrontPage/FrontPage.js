@@ -13,7 +13,7 @@ import { Search } from '../Search'
 import { toggleSearchEthicalities } from '../../actions/search'
 
 const FrontPage = (props) => {
-  const { app, search, dispatch, history } = props
+  const { app, search, dispatch } = props
 
   const ethicalities = app.ethicalities || []
   const selectedEthicalities = search.selectedEthicalities || []
@@ -30,9 +30,7 @@ const FrontPage = (props) => {
         </Col>
 
         <Col xs="12">
-          <Search
-            history={history}
-          />
+          <Search />
         </Col>
 
         <Col xs="12">

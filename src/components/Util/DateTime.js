@@ -62,8 +62,6 @@ export const DateSelector = (props) => {
     )
   }
 
-  console.log(props)
-
   return (
     <div className="day-picker">
       <Row className="pt-3">

@@ -172,6 +172,12 @@ class SearchResultsPage extends React.Component {
     this.search()
   }
 
+  componentWillReceiveProps(props) {
+    if (props.match.params.query !== this.props.match.params.query) {
+      this.search()
+    }
+  }
+
   search(newPage=0, ethicalities) {
     const { match, dispatch, search, history } = this.props
     const query = search.query ? search.query : match.params.query || ''

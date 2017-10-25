@@ -5,12 +5,14 @@ import { connect } from 'react-redux'
 
 import { Link, withRouter } from 'react-router-dom'
 import AccountIcon from '../Session/AccountIcon'
+import { Search } from '../Search'
 
 import {
   Button,
   Navbar,
   NavbarToggler,
   Collapse,
+  Col,
   Nav,
   NavItem,
   NavLink,
@@ -46,6 +48,10 @@ const Header = (props) => {
           <span className="sr-only">EthicalTree</span>
           <img className="ml-4" src="/assets/images/logo/logo-48x48.png" alt="EthicalTree Logo" />
         </Link>
+
+        <Col sm="4">
+          <Search />
+        </Col>
 
         <Collapse isOpen={header.isOpen} navbar>
           {session.user &&
