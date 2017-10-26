@@ -36,6 +36,7 @@ const Header = (props) => {
   const { dispatch, session, header, history } = props
 
   const isFixed = hasFixedHeader()
+  const hasSearch = history.location.pathname !== '/'
   const fixedHeader = isFixed ? 'fixed-top' : ''
   const fixedHeaderWrapper = isFixed ? 'fixed-header-wrapper' : ''
 
@@ -49,9 +50,11 @@ const Header = (props) => {
           <img className="ml-4" src="/assets/images/logo/logo-48x48.png" alt="EthicalTree Logo" />
         </Link>
 
-        <Col sm="4">
-          <Search />
-        </Col>
+        {hasSearch &&
+          <Col sm="6" lg="4" className="hidden-xs-down" >
+            <Search />
+          </Col>
+        }
 
         <Collapse isOpen={header.isOpen} navbar>
           {session.user &&

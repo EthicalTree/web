@@ -3,7 +3,9 @@ import './SearchResults.sass'
 
 import React from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { Marker } from 'react-google-maps'
+import { Search } from '../Search'
 
 import {
   Row,
@@ -117,6 +119,9 @@ const SearchResults = (props) => {
   const ethicalities = app.ethicalities || []
   const selectedEthicalities = search.selectedEthicalities || []
 
+  const hasSearch = history.location.pathname !== '/'
+  const hasListings = search.listings && search.listings.length > 0
+
   const onEthicalitySelect = slug => {
     const newSelectedEthicalities = toggleSearchEthicalities(selectedEthicalities, slug)
 
@@ -126,6 +131,11 @@ const SearchResults = (props) => {
 
   return (
     <Col xs="12" xl="8" className="search-results p-4">
+      {hasSearch &&
+        <Col sm="6" lg="4" className="hidden-sm-up mb-3" >
+          <Search />
+        </Col>
+      }
       <EthicalityBar
         className="search-results-ethicalities"
         showLabels={false}
@@ -136,7 +146,7 @@ const SearchResults = (props) => {
       />
 
       <Row className="d-flex align-items-stretch">
-        {search.listings && search.listings.length > 0 &&
+        {hasListings &&
           search.listings.map(result => {
             const listing = {
               title: result.title,
@@ -153,29 +163,36 @@ const SearchResults = (props) => {
             )
           })
         }
+        {!hasListings &&
+          <Col className="text-center pt-5">
+            No listings found!
+          </Col>
+        }
       </Row>
 
-      <Row className="text-center">
-        <Paginator
-          pageCount={search.pageCount}
-          currentPage={search.currentPage}
-          onPageChange={data => props.handlePageChange(data.selected)}
-        />
-      </Row>
+      {hasListings &&
+        <Row className="text-center">
+          <Paginator
+            pageCount={search.pageCount}
+            currentPage={search.currentPage}
+            onPageChange={data => props.handlePageChange(data.selected)}
+          />
+        </Row>
+      }
+
     </Col>
   )
 }
 
 class SearchResultsPage extends React.Component {
 
-  componentDidMount() {
-    this.search()
+  componentWillMount() {
+    const { match, dispatch } = this.props
+    dispatch({ type: 'SET_SEARCH_QUERY', data: match.params.query })
   }
 
-  componentWillReceiveProps(props) {
-    if (props.match.params.query !== this.props.match.params.query) {
-      this.search()
-    }
+  componentDidMount() {
+    this.search()
   }
 
   search(newPage=0, ethicalities) {
@@ -187,39 +204,39 @@ class SearchResultsPage extends React.Component {
   }
 
   render() {
-    const { search, app, dispatch, history } = this.props
+    const { search, app, dispatch, history, match } = this.props
     const hasListings = search.listings && search.listings.length > 0
+
+    if (match.params.query !== search.query) {
+      return <Redirect to={`/s/${search.query}?page=${search.currentPage}`} />
+    }
 
     return (
       <Loader loading={search.isSearchLoading}>
         <Col className="search-results-page">
-          {hasListings &&
-            <Row>
-              <SearchResults
-                app={app}
-                dispatch={dispatch}
-                history={history}
-                search={search}
-                handlePageChange={this.search.bind(this)}
-                handleSearch={this.search.bind(this)}
-              />
-              <MapArea
-                search={search}
-              />
-            </Row>
-          }
-          {!hasListings &&
-            <Row>
-              <Col className="text-center pt-5">
-                No listings found!
-              </Col>
-            </Row>
-          }
+          <Row>
+            <SearchResults
+              app={app}
+              dispatch={dispatch}
+              history={history}
+              search={search}
+              handlePageChange={this.search.bind(this)}
+              handleSearch={this.search.bind(this)}
+            />
+            <MapArea
+              search={search}
+            />
+          </Row>
+
         </Col>
       </Loader>
     )
   }
+}
 
+const SearchResultsWrapper = props => {
+  const { search } = props
+  return <SearchResultsPage key={search.query} {...props} />
 }
 
 const select = (state) => {
@@ -229,4 +246,4 @@ const select = (state) => {
   }
 }
 
-export default connect(select)(SearchResultsPage)
+export default connect(select)(SearchResultsWrapper)

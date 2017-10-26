@@ -34,17 +34,29 @@ const SearchInput = (props) => {
 
 class Search extends React.Component {
 
-  onChange(e, {newValue}) {
-    const { dispatch } = this.props
+  constructor(props) {
+    super(props)
+    this.state = {
+      query: '',
+      dirty: false
+    }
+  }
 
-    dispatch({ type: 'SET_SEARCH_QUERY', data: newValue })
+  onChange(e, {newValue}) {
+    this.setState({
+      dirty: true,
+      query: newValue
+    })
   }
 
   search(e) {
-    const { history, search } = this.props
+    const { history, search, dispatch } = this.props
+    const { query } = this.state
 
     if ((e.key && e.key === 'Enter') || !e.key) {
-      history.push(`/s/${search.query}?page=${search.currentPage}`)
+      dispatch({ type: 'SET_SEARCH_QUERY', data: query })
+
+      history.push(`/s/${query}?page=${search.currentPage}`)
     }
   }
 
@@ -58,6 +70,11 @@ class Search extends React.Component {
 
   render() {
     const { search } = this.props
+    let { query, dirty } = this.state
+
+    if (!dirty && search.query) {
+      query = search.query
+    }
 
     return (
       <div className="et-search">
@@ -74,7 +91,7 @@ class Search extends React.Component {
               onChange: this.onChange.bind(this),
               onSearch: this.search.bind(this),
               onKeyDown: this.search.bind(this),
-              value: search.query
+              value: query
             }}
           />
       </div>
