@@ -33,6 +33,7 @@
     "react-paginate": "^4.4.3",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
+    "react-router-redux": "^5.0.0-alpha.8",
     "react-s3-uploader": "^4.1.1",
     "react-select": "^1.0.0-rc.3",
     "react-slick": "^0.14.7",

@@ -3,9 +3,9 @@ import './SearchResults.sass'
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import { Marker } from 'react-google-maps'
 import { Search } from '../Search'
+import querystring from 'querystring'
 
 import {
   Row,
@@ -186,30 +186,53 @@ const SearchResults = (props) => {
 
 class SearchResultsPage extends React.Component {
 
+  getQueryParams() {
+    const { location } = this.props
+    let search = querystring.parse(location.search.slice(1))
+
+    search.page = search.page || 0
+    search.ethicalities = search.ethicalities ? search.ethicalities.split(',') : []
+
+    return search
+  }
+
   componentWillMount() {
     const { match, dispatch } = this.props
+    const queryParams = this.getQueryParams()
+
     dispatch({ type: 'SET_SEARCH_QUERY', data: match.params.query })
+    dispatch({ type: 'SET_SEARCH_PAGE', data: queryParams.page })
+    dispatch({ type: 'SET_SEARCH_ETHICALITIES', data: queryParams.ethicalities})
   }
 
   componentDidMount() {
-    this.search()
+    const queryParams = this.getQueryParams()
+
+    this.performSearch(queryParams.page, queryParams.ethicalities)
   }
 
-  search(newPage=0, ethicalities) {
-    const { match, dispatch, search, history } = this.props
+  performSearch(newPage=0, ethicalities) {
+    const { match, dispatch, search } = this.props
     const query = search.query ? search.query : match.params.query || ''
     const selectedEthicalities = ethicalities ? ethicalities : search.selectedEthicalities
 
-    dispatch(performSearch(query, selectedEthicalities, history, newPage))
+    dispatch(performSearch(query, selectedEthicalities, newPage))
+  }
+
+  search(newPage=0, ethicalities) {
+    const { search, history, dispatch } = this.props
+
+    const paramsObj = {
+      ethicalities: ethicalities.join(','),
+      page: newPage
+    }
+
+    dispatch({ type: 'SET_SEARCH_QUERY', data: search.query })
+    history.push(`/s/${search.query}?${querystring.stringify(paramsObj)}`)
   }
 
   render() {
-    const { search, app, dispatch, history, match } = this.props
-    const hasListings = search.listings && search.listings.length > 0
-
-    if (match.params.query !== search.query) {
-      return <Redirect to={`/s/${search.query}?page=${search.currentPage}`} />
-    }
+    const { search, app, dispatch, history } = this.props
 
     return (
       <Loader loading={search.isSearchLoading}>
@@ -235,14 +258,15 @@ class SearchResultsPage extends React.Component {
 }
 
 const SearchResultsWrapper = props => {
-  const { search } = props
-  return <SearchResultsPage key={search.query} {...props} />
+  const { pathname, search } = props.router.location
+  return <SearchResultsPage key={`${pathname}${search}`} {...props} />
 }
 
 const select = (state) => {
   return {
     search: state.search,
-    app: state.app
+    app: state.app,
+    router: state.router
   }
 }
 

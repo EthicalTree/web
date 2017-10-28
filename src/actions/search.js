@@ -1,7 +1,7 @@
 import querystring from 'querystring'
 import { api } from '../utils/api'
 
-export const performSearch = (query, ethicalities, history, page) => {
+export const performSearch = (query, ethicalities, page) => {
 
   const queryObj = {
     query,
@@ -10,8 +10,6 @@ export const performSearch = (query, ethicalities, history, page) => {
   }
 
   return dispatch => {
-    history.push(`/s/${query}?${querystring.stringify({ page })}`)
-
     dispatch({ type: 'SET_SEARCH_LOADING', data: true })
 
     api.get(`/v1/search?${querystring.stringify(queryObj)}`)

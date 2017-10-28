@@ -5,9 +5,10 @@ import { getCurrentUser } from '../../actions/session'
 import { authenticate } from '../../utils/api'
 
 import { logPageView } from '../RouteActions/GA'
+import history from '../../utils/history'
+import { ConnectedRouter } from 'react-router-redux'
 
 import {
-  BrowserRouter as Router,
   Route,
   withRouter
 } from 'react-router-dom'
@@ -63,7 +64,7 @@ class App extends React.Component {
     return (
       <div className={`app ${modalOpenClass}`}>
         <Loader loading={session.userLoading || app.isAppLoading}>
-          <Router>
+          <ConnectedRouter history={history}>
             {!session.userLoading &&
               <InnerApp {...this.props}>
                 <Route component={logPageView} />
@@ -83,7 +84,7 @@ class App extends React.Component {
                 <Modals />
               </InnerApp>
             }
-          </Router>
+          </ConnectedRouter>
         </Loader>
       </div>
     )

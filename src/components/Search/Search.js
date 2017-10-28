@@ -9,6 +9,8 @@ import {
   Button
 } from 'reactstrap'
 
+import querystring from 'querystring'
+
 const Suggestion = (props) => {
   return (
     <div></div>
@@ -50,13 +52,17 @@ class Search extends React.Component {
   }
 
   search(e) {
-    const { history, search, dispatch } = this.props
+    const { search, history, dispatch } = this.props
     const { query } = this.state
+
+    const paramsObj = {
+      ethicalities: search.selectedEthicalities.join(','),
+      page: search.currentPage
+    }
 
     if ((e.key && e.key === 'Enter') || !e.key) {
       dispatch({ type: 'SET_SEARCH_QUERY', data: query })
-
-      history.push(`/s/${query}?page=${search.currentPage}`)
+      history.push(`/s/${query}?${querystring.stringify(paramsObj)}`)
     }
   }
 
@@ -101,7 +107,8 @@ class Search extends React.Component {
 
 const select = (state) => {
   return {
-    search: state.search
+    search: state.search,
+    router: state.router
   }
 }
 
