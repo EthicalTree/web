@@ -28,7 +28,7 @@ class EditLocationModal extends React.Component {
     super(props)
 
     this.state = {
-      location: null,
+      location: {},
       center: null,
       address: ''
     }
