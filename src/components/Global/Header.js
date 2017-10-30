@@ -77,6 +77,11 @@ const Header = (props) => {
                   <AccountIcon email={session.user.email} />
                 </DropdownToggle>
                 <DropdownMenu right className="mt-2">
+                  {session.user.admin &&
+                    <DropdownItem onClick={e => { history.push('/admin/users') }}>
+                      Admin
+                    </DropdownItem>
+                  }
                   <DropdownItem onClick={e => { history.push('/account') }}>
                     Account Settings
                   </DropdownItem>
