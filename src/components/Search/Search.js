@@ -57,7 +57,7 @@ class Search extends React.Component {
 
     const paramsObj = {
       ethicalities: search.selectedEthicalities.join(','),
-      page: search.currentPage
+      page: 0
     }
 
     if ((e.key && e.key === 'Enter') || !e.key) {

@@ -30,9 +30,10 @@ class MapArea extends React.Component {
     let bounds = new google.maps.LatLngBounds()
 
     const markers = search.listings.map(listing => {
-      const { lat, lng } = listing.locations[0]
+      const l = listing.locations[0]
+      const { lat, lng } = l
       bounds.extend(new google.maps.LatLng(lat, lng))
-      return <Marker key={`${lat}+${lng}`} position={listing.locations[0]} />
+      return <Marker key={l.id} position={l} />
     })
 
     return (
@@ -175,7 +176,7 @@ const SearchResults = (props) => {
           <Paginator
             pageCount={search.pageCount}
             currentPage={search.currentPage}
-            onPageChange={data => props.handlePageChange(data.selected)}
+            onPageChange={data => props.handlePageChange(data.selected, search.selectedEthicalities)}
           />
         </Row>
       }

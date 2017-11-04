@@ -9,7 +9,7 @@ const search = (state=defaultSearch, action) => {
 
   switch (action.type) {
     case 'SET_SEARCH_QUERY':
-      return {...state, query: action.data}
+      return {...state, query: action.data || ''}
     case 'SET_SEARCH_LOADING':
       return {...state, isSearchLoading: action.data}
     case 'SET_SEARCH_RESULTS':
