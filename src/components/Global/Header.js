@@ -47,7 +47,7 @@ const Header = (props) => {
 
         <Link className="navbar-brand" to="/">
           <span className="sr-only">EthicalTree</span>
-          <img className="ml-4" src="/assets/images/logo/logo-48x48.png" alt="EthicalTree Logo" />
+          <img className="ml-4 mr-2" src="/assets/images/logo/logo-full-64.png" alt="EthicalTree Logo" />
         </Link>
 
         {hasSearch &&
@@ -76,7 +76,7 @@ const Header = (props) => {
                 <DropdownToggle nav caret>
                   <AccountIcon email={session.user.email} />
                 </DropdownToggle>
-                <DropdownMenu right className="mt-2">
+                <DropdownMenu right className="mt-3">
                   {session.user.admin &&
                     <DropdownItem onClick={e => { history.push('/admin/users') }}>
                       Admin
