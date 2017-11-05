@@ -26,7 +26,7 @@ const FrontPage = (props) => {
 
       <Container className="text-center">
         <Col className="headline" xs="12">
-          <h1>Find local places that <span className="text-info">care</span> about what you care about.</h1>
+          <h1>Find cool local places that <span className="text-info">care</span> about what you care about.</h1>
         </Col>
 
         <Col xs="12">
