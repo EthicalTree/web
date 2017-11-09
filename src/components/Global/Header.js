@@ -47,7 +47,7 @@ const Header = (props) => {
 
         <Link className="navbar-brand" to="/">
           <span className="sr-only">EthicalTree</span>
-          <img className="ml-4 mr-2" src="/assets/images/logo/logo-full-64.png" alt="EthicalTree Logo" />
+          <img className="ml-4 mr-2" src="/assets/images/logo/logo-full-128.png" alt="EthicalTree Logo" />
         </Link>
 
         {hasSearch &&
