@@ -1,18 +1,30 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Container } from 'reactstrap'
 
 import {
-  getListing,
+  Container,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane
+} from 'reactstrap'
+
+import {
   addImageToListing,
+  deleteImageFromListing,
+  getListing,
+  makeImageCover
 } from '../../actions/listing'
 
-import ListingImages from './ListingImages'
 import EthicalityArea from './EthicalityArea'
 import OperatingHours from './OperatingHours'
 import ListingMap from './ListingMap'
+//import ListingMenu from './ListingMenu'
 
 import Loader from '../Global/Loader'
+import ImageManager from '../Global/ImageManager'
 import { hasPermission } from '../../utils/permissions'
 
 import './Listing.sass'
@@ -51,7 +63,7 @@ const Bio = (props) => {
   const { bio, canEdit } = props
 
   return (
-    <div className="bio">
+    <div className="bio mb-5">
       <h3>
         {props.title}
 
@@ -87,7 +99,14 @@ const Bio = (props) => {
 }
 
 const ListingInfo = (props) => {
-  const { listing, className, dispatch } = props
+  const {
+    listing,
+    className,
+    dispatch
+  } = props
+
+  const activeTab = listing.listingInfoTab
+  const menu = listing.menus.length > 0 ? listing.menus[0] : null
 
   return (
     <div className={className}>
@@ -98,16 +117,47 @@ const ListingInfo = (props) => {
         canEdit={hasPermission('update', listing)}
       />
 
-      <ListingMap
-        onClickLocationEdit={props.onClickLocationEdit}
-        locations={listing.locations}
-        canEdit={hasPermission('update', listing)}
-        dispatch={dispatch}
-      />
+      <Nav tabs>
+        <NavItem>
+          <NavLink
+            className={`${activeTab === 'location' ? 'active' : ''}`}
+            onClick={() => { dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'location' }) }}
+          >
+            Location
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={`${activeTab === 'menu' ? 'active' : ''}`}
+            onClick={() => { dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'menu' }) }}
+          >
+            Menu
+          </NavLink>
+        </NavItem>
+      </Nav>
+      <TabContent activeTab={activeTab}>
+        <TabPane tabId="location">
+          <ListingMap
+            onClickLocationEdit={props.onClickLocationEdit}
+            locations={listing.locations}
+            canEdit={hasPermission('update', listing)}
+            dispatch={dispatch}
+          />
+        </TabPane>
+
+        <TabPane tabId="menu">
+        </TabPane>
+      </TabContent>
 
       <div className="clearfix"></div>
     </div>
   )
+}
+
+ListingInfo.propTypes = {
+  listing: PropTypes.object,
+  className: PropTypes.string,
+  dispatch: PropTypes.func
 }
 
 const ListingContent = (props) => {
@@ -163,16 +213,6 @@ class Listing extends React.Component {
     dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_location' })
   }
 
-  onImageUploadProgress(progress) {
-    this.props.dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: progress })
-  }
-
-  onImageUploadFinish(image) {
-    const { listing, dispatch } = this.props
-
-    dispatch(addImageToListing(listing.slug, image.key))
-  }
-
   render() {
     const { listing, dispatch } = this.props
 
@@ -189,16 +229,29 @@ class Listing extends React.Component {
       <Loader loading={listing.isListingLoading}>
         <Container>
           <div className="listing-detail">
-            <ListingImages
-              dispatch={this.props.dispatch}
-              onImageUploadProgress={this.onImageUploadProgress.bind(this)}
-              onImageUploadFinish={this.onImageUploadFinish.bind(this)}
+            <ImageManager
+              dispatch={dispatch}
+              onImageUploadProgress={progress => dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: progress })}
               images={listing.images}
               slug={listing.slug}
               currentImage={listing.currentImage}
               isLoading={listing.isImageLoading}
               uploadProgress={listing.uploadProgress}
               canEdit={hasPermission('update', listing)}
+              coverAction={{
+                handleAction: makeImageCover,
+                title: 'Set Cover Photo',
+                confirmMsg: 'Are you sure you want to make this photo your cover photo?'
+              }}
+              deleteAction={{
+                handleAction: deleteImageFromListing,
+                title: 'Delete Photo',
+                confirmMsg: 'Are you sure you want to delete this photo?',
+              }}
+              addAction={{
+                handleAction: addImageToListing,
+                title: 'Add Photo'
+              }}
             />
 
             <TitleBar

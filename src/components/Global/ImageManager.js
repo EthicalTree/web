@@ -1,11 +1,12 @@
+import './ImageManager.sass'
+
 import React from 'react'
 import PropTypes from 'prop-types'
 
 import { UncontrolledTooltip as Tooltip } from 'reactstrap'
-
 import Loader from '../Global/Loader'
-import ETSlider from '../Global/Slider'
 import S3Uploader from '../Global/S3'
+import ETSlider from './Slider'
 
 import { setConfirm } from '../../actions/confirm'
 
@@ -39,35 +40,37 @@ const ImageActions = (props) => {
                 image_id: currentImage.id
               }
             }))}
-            className="icon-button fa fa-file-picture-o" />
-          <Tooltip placement="bottom" target="makeCoverPhoto" delay={0}>Make cover photo</Tooltip>
+            className="icon-button fa fa-file-picture-o"
+          >
+            <Tooltip placement="bottom" target="makeCoverPhoto" delay={0}>Make cover photo</Tooltip>
+          </i>
         }
 
         {!!deleteAction.handleAction &&
-          <span>
-            <i
-              id="deleteImage"
-              title={deleteAction.title}
-              role="button"
-              tabIndex="0"
-              onClick={() => dispatch(setConfirm({
-                title: deleteAction.title,
-                msg: deleteAction.confirmMsg,
-                action: deleteAction.handleAction,
-                data: {
-                  listingSlug: slug,
-                  image_id: currentImage.id
-                }
-              }))}
-              className="icon-button fa fa-trash image-delete" />
+          <i
+            id="deleteImage"
+            title={deleteAction.title}
+            role="button"
+            tabIndex="0"
+            onClick={() => dispatch(setConfirm({
+              title: deleteAction.title,
+              msg: deleteAction.confirmMsg,
+              action: deleteAction.handleAction,
+              data: {
+                listingSlug: slug,
+                image_id: currentImage.id
+              }
+            }))}
+            className="icon-button fa fa-trash image-delete"
+          >
             <Tooltip placement="bottom" target="deleteImage" delay={0}>{deleteAction.title}</Tooltip>
-          </span>
+          </i>
         }
 
         {!!addAction.handleAction &&
           <S3Uploader
             onProgress={props.onImageUploadProgress}
-            onFinish={image => addAction.handleAction(slug, image.key)}
+            onFinish={image => dispatch(addAction.handleAction(slug, image.key))}
             signingUrlQueryParams={{ slug }}>
 
             <i
@@ -86,7 +89,7 @@ const ImageActions = (props) => {
   )
 }
 
-ImageActions.propsTypes = {
+ImageActions.propTypes = {
   coverAction: PropTypes.object,
   deleteAction: PropTypes.object,
   addAction: PropTypes.object
@@ -98,7 +101,7 @@ ImageActions.defaultProps = {
   addAction: {}
 }
 
-class ListingImages extends React.Component {
+class ImageManager extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props
@@ -113,7 +116,20 @@ class ListingImages extends React.Component {
   }
 
   render() {
-    const { images, dispatch, canEdit, slug, isLoading, uploadProgress, currentImage } = this.props
+    const {
+      images,
+      dispatch,
+      canEdit,
+      slug,
+      isLoading,
+      uploadProgress,
+      currentImage,
+      coverAction,
+      deleteAction,
+      addAction,
+      onImageUploadProgress
+    } = this.props
+
     const hasSlides = images && images.length > 0
 
     return (
@@ -122,7 +138,7 @@ class ListingImages extends React.Component {
         progress={uploadProgress}
       >
         {hasSlides &&
-          <div className="listing-images text-center">
+          <div className="image-manager text-center">
             {hasSlides &&
               <ETSlider
                 afterChange={this.handleSlideChange.bind(this)}
@@ -137,7 +153,7 @@ class ListingImages extends React.Component {
 
                     return (
                       <div
-                        className="listing-image"
+                        className="image-manager-image"
                         key={image.key}>
                         <div style={style} />
                       </div>
@@ -150,11 +166,13 @@ class ListingImages extends React.Component {
             {canEdit &&
               <ImageActions
                 dispatch={dispatch}
-                onImageUploadProgress={this.props.onImageUploadProgress}
-                onImageUploadFinish={this.props.onImageUploadFinish}
+                onImageUploadProgress={onImageUploadProgress}
                 hasSlides={hasSlides}
                 slug={slug}
                 currentImage={currentImage}
+                coverAction={coverAction}
+                deleteAction={deleteAction}
+                addAction={addAction}
               />
             }
           </div>
@@ -162,11 +180,11 @@ class ListingImages extends React.Component {
 
         {!hasSlides && canEdit &&
           <S3Uploader
-            onProgress={this.props.onImageUploadProgress}
-            onFinish={this.props.onImageUploadFinish}
+            onProgress={onImageUploadProgress}
+            onFinish={addAction.handleAdd}
             signingUrlQueryParams={{ slug }}>
 
-            <div className="listing-images text-center no-content uploadable">
+            <div className="image-manager text-center no-content uploadable">
               <div className="upload-wrapper">
                 <i className="fa fa-camera-retro camera"></i>
                 <span className="add-picture-cta">
@@ -178,7 +196,7 @@ class ListingImages extends React.Component {
         }
 
         {!hasSlides && !canEdit &&
-          <div className="listing-images text-center no-content">
+          <div className="image-manager text-center no-content">
             <i className="fa fa-camera-retro camera"></i>
             No photos added
           </div>
@@ -188,4 +206,17 @@ class ListingImages extends React.Component {
   }
 }
 
-export default ListingImages
+ImageManager.propTypes = {
+  coverAction: PropTypes.object,
+  deleteAction: PropTypes.object,
+  addAction: PropTypes.object
+}
+
+ImageManager.defaultProps = {
+  coverAction: {},
+  deleteAction: {},
+  addAction: {}
+}
+
+export default ImageManager
+

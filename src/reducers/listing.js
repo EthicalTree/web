@@ -1,5 +1,9 @@
+const defaultState = {
+  listingInfoTab: 'location',
+  menus: []
+}
 
-const listing = (state={}, action) => {
+const listing = (state=defaultState, action) => {
 
   switch (action.type) {
     case 'SET_ADD_LISTING_LOADING':
@@ -34,6 +38,8 @@ const listing = (state={}, action) => {
       return {...state, editLocationErrors: action.data}
     case 'SET_LISTING_LOCATION':
       return {...state, locations: action.data}
+    case 'CHANGE_LISTING_INFO_TAB':
+      return {...state, listingInfoTab: action.data}
     case 'SET_LISTING_CURRENT_IMAGE':
 
       if (!action.data && state.images && state.images.length > 0) {

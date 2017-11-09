@@ -1,0 +1,70 @@
+@import 'variables'
+
+.image-manager
+  position: relative
+  height: 300px
+
+  .upload-label
+    width: auto
+
+  .actions
+    position: absolute
+    top: 0
+    right: 0
+    padding: 0.5em 1.2em
+    background-color: $color-white
+    color: $color-inverse
+    opacity: 0.2
+    z-index: 2
+    border-bottom: 2px solid $color-inverse
+
+    .icon-button
+      font-size: 1.6em
+      margin: 0 0.4em
+
+    .triangle
+      position: absolute
+      width: 0
+      height: 0
+      top: 0
+      left: -25px
+      border-top: 44px solid $color-white
+      border-left: 25px solid transparent
+
+  .icon-button, .icon-button-overlay
+    font-size: 2em
+
+
+  @media (max-width: $screen-sm-max)//{}
+    .icon-button-overlay, .actions
+      opacity: 1
+
+  &:hover, &:focus
+    outline: none
+
+    .icon-button-overlay, .actions
+      opacity: 1
+
+  .camera
+    display: block
+
+  &.no-content
+    padding-top: 100px
+
+    font-size: 1.3em
+
+    .camera
+      font-size: 2.5em
+      margin-bottom: 10px
+
+  &.uploadable:hover
+    border: 2px dashed $color-inverse
+    margin: -2px -1px 2px -2px
+    cursor: pointer
+
+    .camera
+      font-size: 2.6em
+
+    .add-picture-cta
+      font-size: 1.1em
+

@@ -1,7 +1,7 @@
+import './Slider.sass'
+
 import React from 'react'
 import Slider from 'react-slick'
-
-import './Slider.sass'
 
 const Prev = (props) => {
   return (
@@ -35,8 +35,8 @@ const ETSlider = (props) => {
       prevArrow={<Prev />}
       dots={false}
       infinite={true}
-      slidesToShow={1}>
-
+      slidesToShow={1}
+    >
       {slides}
     </Slider>
   )
