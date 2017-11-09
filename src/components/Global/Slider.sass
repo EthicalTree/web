@@ -3,30 +3,41 @@
 .slick-slider
 
   .slick-slide
-
     & > div
       background-size: cover !important
 
-
   .slider-next, .slider-prev
-    color: rgba($color-inverse, 0.5)
     position: absolute
-    top: 50%
-    bottom: auto
-    transform: translate(0, -50%)
-    padding: 2px
+    top: 0
+    color: rgba($color-white, 0.7)
     z-index: 2
+    width: 5%
+    height: 100%
 
-    background-color: rgba($color-white, 0.8)
-    width: 36px
-    height: 36px
-    padding-left: 3px
-    border-radius: 18px
+    .slider-navigation
+      display: flex
+      align-items: center
+      justify-content: center
+      height: 100%
+      width: 100%
+
+      i
+        width: 100%
+
+      &:hover
+        background-color: rgba($color-inverse, 0.3)
+
+        .icon-button-overlay
+          color: rgba($color-white, 0.9)
+
+  &:hover
+    .slider-navigation
+      background-color: rgba($color-inverse, 0.1)
 
   .slider-prev
-    left: 30px
+    left: 0
 
   .slider-next
-    right: 30px
+    right: 0
 
 

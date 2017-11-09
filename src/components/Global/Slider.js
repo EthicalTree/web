@@ -7,9 +7,12 @@ const Prev = (props) => {
   return (
     <div
       role="button"
-      tabIndex="0"
       onClick={props.onClick}
-      className="slider-prev icon-button-overlay fa fa-arrow-circle-left">
+      className="slider-prev"
+    >
+      <div className="slider-navigation">
+        <i className="icon-button-overlay fa fa-chevron-left" />
+      </div>
     </div>
   )
 }
@@ -18,9 +21,12 @@ const Next = (props) => {
   return (
     <div
       role="button"
-      tabIndex="0"
       onClick={props.onClick}
-      className="slider-next icon-button-overlay fa fa-arrow-circle-right">
+      className="slider-next"
+    >
+      <div className="slider-navigation">
+        <i className="icon-button-overlay fa fa-chevron-right" />
+      </div>
     </div>
   )
 }
