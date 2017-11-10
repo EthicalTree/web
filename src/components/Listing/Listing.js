@@ -21,7 +21,7 @@ import {
 import EthicalityArea from './EthicalityArea'
 import OperatingHours from './OperatingHours'
 import ListingMap from './ListingMap'
-//import ListingMenu from './ListingMenu'
+import ListingMenu from './ListingMenu'
 
 import Loader from '../Global/Loader'
 import ImageManager from '../Global/ImageManager'
@@ -146,6 +146,13 @@ const ListingInfo = (props) => {
         </TabPane>
 
         <TabPane tabId="menu">
+          <ListingMenu
+            dispatch={dispatch}
+            menu={menu}
+            listingSlug={listing.slug}
+            currentImage={listing.currentMenuImage}
+            canEdit={hasPermission('update', listing)}
+          />
         </TabPane>
       </TabContent>
 
@@ -232,24 +239,30 @@ class Listing extends React.Component {
             <ImageManager
               dispatch={dispatch}
               onImageUploadProgress={progress => dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: progress })}
+              onSetCurrentImage={image => dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: image })}
               images={listing.images}
-              slug={listing.slug}
               currentImage={listing.currentImage}
               isLoading={listing.isImageLoading}
               uploadProgress={listing.uploadProgress}
               canEdit={hasPermission('update', listing)}
+              signingParams={{ slug: listing.slug }}
               coverAction={{
                 handleAction: makeImageCover,
                 title: 'Set Cover Photo',
-                confirmMsg: 'Are you sure you want to make this photo your cover photo?'
+                confirmMsg: 'Are you sure you want to make this photo your cover photo?',
+                data: { listingSlug: listing.slug }
               }}
               deleteAction={{
                 handleAction: deleteImageFromListing,
                 title: 'Delete Photo',
                 confirmMsg: 'Are you sure you want to delete this photo?',
+                data: { listingSlug: listing.slug }
               }}
               addAction={{
-                handleAction: addImageToListing,
+                handleAction: image => dispatch(addImageToListing({
+                  listingSlug: listing.slug,
+                  imageKey: image.key
+                })),
                 title: 'Add Photo'
               }}
             />

@@ -1,6 +1,6 @@
 const defaultState = {
   listingInfoTab: 'location',
-  menus: []
+  menus: [{}]
 }
 
 const listing = (state=defaultState, action) => {
@@ -26,10 +26,16 @@ const listing = (state=defaultState, action) => {
       return {...state, editDescriptionErrors: action.data}
     case 'SET_IMAGE_UPLOAD_PROGRESS':
       return {...state, uploadProgress: action.data}
+    case 'SET_MENU_IMAGE_UPLOAD_PROGRESS':
+      return {...state, menus: [{...state.menus[0], uploadProgress: action.data}]}
     case 'SET_IMAGE_LOADING':
       return {...state, isImageLoading: action.data}
+    case 'SET_MENU_IMAGE_LOADING':
+      return {...state, menus: [{...state.menus[0], isImageLoading: action.data}]}
     case 'SET_LISTING_IMAGES':
       return {...state, images: action.data}
+    case 'SET_LISTING_MENU_IMAGES':
+      return {...state, menus: [{...state.menus[0], images: action.data}]}
     case 'SET_EDITING_OPERATING_HOURS_LOADING':
       return {...state, isEditingOperatingHoursLoading: action.data}
     case 'SET_LISTING_OPERATING_HOURS':
@@ -40,8 +46,15 @@ const listing = (state=defaultState, action) => {
       return {...state, locations: action.data}
     case 'CHANGE_LISTING_INFO_TAB':
       return {...state, listingInfoTab: action.data}
-    case 'SET_LISTING_CURRENT_IMAGE':
+    case 'SET_LISTING_MENU_CURRENT_IMAGE':
+      const menu = state.menus[0] || {}
 
+      if (!action.data && menu.images && menu.images.length > 0) {
+        return {...state, currentMenuImage: menu.images[0]}
+      }
+
+      return {...state, currentMenuImage: action.data}
+    case 'SET_LISTING_CURRENT_IMAGE':
       if (!action.data && state.images && state.images.length > 0) {
         return {...state, currentImage: state.images[0]}
       }

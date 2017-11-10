@@ -13,11 +13,11 @@ import { setConfirm } from '../../actions/confirm'
 const ImageActions = (props) => {
   const {
     dispatch,
-    slug,
     currentImage,
     coverAction,
     deleteAction,
-    addAction
+    addAction,
+    signingParams
   } = props
 
   return (
@@ -27,7 +27,7 @@ const ImageActions = (props) => {
 
         {!!coverAction.handleAction &&
           <i
-            id="makeCoverPhoto"
+            id={coverAction.title}
             title={coverAction.title}
             role="button"
             tabIndex="0"
@@ -35,20 +35,17 @@ const ImageActions = (props) => {
               title: coverAction.title,
               msg: coverAction.confirmMsg,
               action: coverAction.handleAction,
-              data: {
-                listingSlug: slug,
-                image_id: currentImage.id
-              }
+              data: {...coverAction.data, imageId: currentImage.id}
             }))}
             className="icon-button fa fa-file-picture-o"
           >
-            <Tooltip placement="bottom" target="makeCoverPhoto" delay={0}>Make cover photo</Tooltip>
+            <Tooltip placement="bottom" target={coverAction.title} delay={0}>{coverAction.title}</Tooltip>
           </i>
         }
 
         {!!deleteAction.handleAction &&
           <i
-            id="deleteImage"
+            id={deleteAction.title}
             title={deleteAction.title}
             role="button"
             tabIndex="0"
@@ -56,30 +53,27 @@ const ImageActions = (props) => {
               title: deleteAction.title,
               msg: deleteAction.confirmMsg,
               action: deleteAction.handleAction,
-              data: {
-                listingSlug: slug,
-                image_id: currentImage.id
-              }
+              data: {...deleteAction.data, imageId: currentImage.id}
             }))}
             className="icon-button fa fa-trash image-delete"
           >
-            <Tooltip placement="bottom" target="deleteImage" delay={0}>{deleteAction.title}</Tooltip>
+            <Tooltip placement="bottom" target={deleteAction.title} delay={0}>{deleteAction.title}</Tooltip>
           </i>
         }
 
         {!!addAction.handleAction &&
           <S3Uploader
             onProgress={props.onImageUploadProgress}
-            onFinish={image => dispatch(addAction.handleAction(slug, image.key))}
-            signingUrlQueryParams={{ slug }}>
+            onFinish={addAction.handleAction}
+            signingUrlQueryParams={signingParams}>
 
             <i
-              id="addImage"
+              id={addAction.title}
               title={addAction.title}
               tabIndex="0"
               role="button"
               className="icon-button fa fa-plus-circle" />
-            <Tooltip placement="bottom" target="addImage" delay={0}>{addAction.title}</Tooltip>
+            <Tooltip placement="bottom" target={addAction.title} delay={0}>{addAction.title}</Tooltip>
 
           </S3Uploader>
         }
@@ -104,15 +98,14 @@ ImageActions.defaultProps = {
 class ImageManager extends React.Component {
 
   componentDidMount() {
-    const { dispatch } = this.props
-    dispatch({ type: 'SET_LISTING_CURRENT_IMAGE' })
+    const { onSetCurrentImage } = this.props
+    onSetCurrentImage()
   }
 
   handleSlideChange(index) {
-    const { dispatch, images } = this.props
+    const { images, onSetCurrentImage } = this.props
     const image = images[index]
-
-    dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: image })
+    onSetCurrentImage(image)
   }
 
   render() {
@@ -120,14 +113,15 @@ class ImageManager extends React.Component {
       images,
       dispatch,
       canEdit,
-      slug,
       isLoading,
       uploadProgress,
       currentImage,
       coverAction,
       deleteAction,
       addAction,
-      onImageUploadProgress
+      onImageUploadProgress,
+      signingParams,
+      styleOverrides
     } = this.props
 
     const hasSlides = images && images.length > 0
@@ -151,6 +145,8 @@ class ImageManager extends React.Component {
                       height: '300px'
                     }
 
+                    style = {...style, ...styleOverrides ? styleOverrides(url) : {}}
+
                     return (
                       <div
                         className="image-manager-image"
@@ -168,11 +164,11 @@ class ImageManager extends React.Component {
                 dispatch={dispatch}
                 onImageUploadProgress={onImageUploadProgress}
                 hasSlides={hasSlides}
-                slug={slug}
                 currentImage={currentImage}
                 coverAction={coverAction}
                 deleteAction={deleteAction}
                 addAction={addAction}
+                signingParams={signingParams}
               />
             }
           </div>
@@ -182,7 +178,7 @@ class ImageManager extends React.Component {
           <S3Uploader
             onProgress={onImageUploadProgress}
             onFinish={addAction.handleAdd}
-            signingUrlQueryParams={{ slug }}>
+            signingUrlQueryParams={signingParams}>
 
             <div className="image-manager text-center no-content uploadable">
               <div className="upload-wrapper">
@@ -209,13 +205,15 @@ class ImageManager extends React.Component {
 ImageManager.propTypes = {
   coverAction: PropTypes.object,
   deleteAction: PropTypes.object,
-  addAction: PropTypes.object
+  addAction: PropTypes.object,
+  styleOverrides: PropTypes.func
 }
 
 ImageManager.defaultProps = {
   coverAction: {},
   deleteAction: {},
-  addAction: {}
+  addAction: {},
+  styleOverrides: null
 }
 
 export default ImageManager

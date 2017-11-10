@@ -1,44 +1,66 @@
 import React from 'react'
-import ETSlider from '../Global/Slider'
+import ImageManager from '../Global/ImageManager'
+
+import {
+  addImageToMenu,
+  deleteImageFromMenu
+} from '../../actions/listing'
 
 const ListingMenu = props => {
-  const { dispatch, menu } = props
-
-
-  if (menu && menu.images && menu.images.length > 0) {
-    const images = menu.images
-
-    return (
-      <div className="mt-4">
-        <ETSlider
-          afterChange={() => {}}
-          slides={
-            images.map(image => {
-              const url = `${process.env.REACT_APP_S3_URL}/${image.key}`
-
-              let style = {
-                background: `url('${url}')`,
-                backgroundSize: 'cover',
-                height: '500px'
-              }
-
-              return (
-                <div
-                  className="menu-image"
-                  key={image.key}>
-                  <div style={style} />
-                </div>
-              )
-            })
-          }
-        />
-      </div>
-    )
-  }
+  const {
+    dispatch,
+    canEdit,
+    listingSlug,
+    currentImage,
+    menu
+  } = props
 
   return (
-    <div></div>
+    <div className="listing-menu mt-4">
+      <ImageManager
+        dispatch={dispatch}
+        onImageUploadProgress={progress => dispatch({ type: 'SET_MENU_IMAGE_UPLOAD_PROGRESS', data: progress })}
+        onSetCurrentImage={image => dispatch({ type: 'SET_LISTING_MENU_CURRENT_IMAGE', data: image})}
+        images={menu.images}
+        currentImage={currentImage}
+        isLoading={menu.isImageLoading}
+        uploadProgress={menu.uploadProgress}
+        canEdit={canEdit}
+        signingParams={{ slug: listingSlug }}
+        styleOverrides={url => {
+          return {
+            background: `url('${url}')`,
+            height: '500px'
+          }
+        }}
+        deleteAction={{
+          handleAction: deleteImageFromMenu,
+          title: 'Delete Menu Photo',
+          confirmMsg: 'Are you sure you want to delete this photo from the menu?',
+          data: {
+            listingSlug: listingSlug,
+            menuId: menu.id
+          }
+        }}
+        addAction={{
+          handleAction: image => dispatch(addImageToMenu({
+            listingSlug: listingSlug,
+            menuId: menu.id,
+            imageKey: image.key
+          })),
+          title: 'Add Menu Photo'
+        }}
+      />
+    </div>
   )
+}
+
+ListingMenu.propTypes = {
+
+}
+
+ListingMenu.defaultProps = {
+
 }
 
 export default ListingMenu
