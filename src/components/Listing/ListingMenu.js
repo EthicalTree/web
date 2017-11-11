@@ -25,8 +25,10 @@ const ListingMenu = props => {
         currentImage={currentImage}
         isLoading={menu.isImageLoading}
         uploadProgress={menu.uploadProgress}
+        addText="Click to add a photo of the menu"
+        emptyText="No menu has been added to this listing...yet!"
         canEdit={canEdit}
-        signingParams={{ slug: listingSlug }}
+        signingParams={{ slug: listingSlug, menuId: menu.id }}
         styleOverrides={url => {
           return {
             background: `url('${url}')`,

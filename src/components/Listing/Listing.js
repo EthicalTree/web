@@ -244,6 +244,8 @@ class Listing extends React.Component {
               currentImage={listing.currentImage}
               isLoading={listing.isImageLoading}
               uploadProgress={listing.uploadProgress}
+              addText="Add a photo"
+              emptyText="No photos added"
               canEdit={hasPermission('update', listing)}
               signingParams={{ slug: listing.slug }}
               coverAction={{

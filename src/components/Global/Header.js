@@ -76,7 +76,7 @@ const Header = (props) => {
                 <DropdownToggle nav caret>
                   <AccountIcon email={session.user.email} />
                 </DropdownToggle>
-                <DropdownMenu right className="mt-3">
+                <DropdownMenu right>
                   {session.user.admin &&
                     <DropdownItem onClick={e => { history.push('/admin/users') }}>
                       Admin

@@ -113,6 +113,8 @@ class ImageManager extends React.Component {
       images,
       dispatch,
       canEdit,
+      addText,
+      emptyText,
       isLoading,
       uploadProgress,
       currentImage,
@@ -177,14 +179,14 @@ class ImageManager extends React.Component {
         {!hasSlides && canEdit &&
           <S3Uploader
             onProgress={onImageUploadProgress}
-            onFinish={addAction.handleAdd}
+            onFinish={addAction.handleAction}
             signingUrlQueryParams={signingParams}>
 
             <div className="image-manager text-center no-content uploadable">
               <div className="upload-wrapper">
                 <i className="fa fa-camera-retro camera"></i>
                 <span className="add-picture-cta">
-                  Add a photo
+                  {addText}
                 </span>
               </div>
             </div>
@@ -193,8 +195,7 @@ class ImageManager extends React.Component {
 
         {!hasSlides && !canEdit &&
           <div className="image-manager text-center no-content">
-            <i className="fa fa-camera-retro camera"></i>
-            No photos added
+            {emptyText}
           </div>
         }
       </Loader>
