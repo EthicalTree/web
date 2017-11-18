@@ -3,7 +3,7 @@ import './DateTime.sass'
 
 import React from 'react'
 import TimePicker from 'rc-time-picker'
-import { Toggle }from './Toggle'
+import { Toggle }from '../Toggle/Toggle'
 import moment from 'moment'
 
 import {

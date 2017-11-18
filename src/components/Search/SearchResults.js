@@ -1,9 +1,8 @@
-/* global google */
 import './SearchResults.sass'
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { Marker } from 'react-google-maps'
+import Markers from '../Util/Map/Markers'
 import { Search } from '../Search'
 import querystring from 'querystring'
 
@@ -18,23 +17,39 @@ import {
 import Loader from '../Global/Loader'
 import Map from '../Global/Map'
 import { EthicalityBar, EthicalityIcon } from '../Ethicality/Ethicality'
-import { Paginator } from '../Util/Paginator'
+import { Paginator } from '../Util/Paginator/Paginator'
 
 import { performSearch, toggleSearchEthicalities } from '../../actions/search'
 import { gotoListing } from '../../actions/listing'
 
 class MapArea extends React.Component {
 
-  render() {
-    const { search } = this.props
-    let bounds = new google.maps.LatLngBounds()
+  addBounds = location => {
+    const { bounds } = this.state
+    bounds.extend(new window.google.maps.LatLng(location.lat, location.lng))
+  }
 
-    const markers = search.listings.map(listing => {
-      const l = listing.locations[0]
-      const { lat, lng } = l
-      bounds.extend(new google.maps.LatLng(lat, lng))
-      return <Marker key={l.id} position={l} />
-    })
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      bounds: new window.google.maps.LatLngBounds()
+    }
+  }
+
+  render() {
+    const { search, history, dispatch } = this.props
+    const { bounds } = this.state
+
+    const markers = (
+      <Markers
+        listings={search.listings}
+        addBounds={this.addBounds}
+        onMarkerClick={slug => dispatch(gotoListing(slug, history))}
+        onMarkerMouseOver={slug => dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: slug })}
+        onMarkerMouseOut={slug => dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: null })}
+      />
+    )
 
     return (
       <Col className="search-map-area" sm="4">
@@ -73,15 +88,16 @@ class Result extends React.Component {
   }
 
   render() {
-    const { listing, viewListing } = this.props
+    const { listing, viewListing, hovered } = this.props
     const { currentImage } = this.state
 
     const backgroundImage = `url(${process.env.REACT_APP_S3_URL}/${currentImage})`
     const extraStyle = currentImage ? { backgroundImage } : {}
+    const hoveredClass = hovered ? 'hovered' : ''
 
     return (
       <Col xs="12" sm="6" lg="4" className="pt-3 pb-1 pl-4 pr-4">
-        <Card className="search-result hoverable" onClick={viewListing}>
+        <Card className={`search-result hoverable ${hoveredClass}`} onClick={viewListing}>
           <div
             className="card-img"
             style={extraStyle}
@@ -159,6 +175,7 @@ const SearchResults = (props) => {
               <Result
                 key={result.slug}
                 listing={listing}
+                hovered={result.slug === search.hoveredResult}
                 viewListing={() => dispatch(gotoListing(result.slug, history))}
               />
             )
@@ -248,6 +265,8 @@ class SearchResultsPage extends React.Component {
               handleSearch={this.search.bind(this)}
             />
             <MapArea
+              history={history}
+              dispatch={dispatch}
               search={search}
             />
           </Row>

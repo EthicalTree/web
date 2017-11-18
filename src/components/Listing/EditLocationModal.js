@@ -82,12 +82,13 @@ class EditLocationModal extends React.Component {
 
   render() {
     const { listing } = this.props
-    let { location }= this.state
+    let { location } = this.state
 
     let marker
     let center
 
-    if (!location) {
+
+    if (Object.keys(location).length === 0) {
       location = listing.locations ? listing.locations[0] : null
     }
 

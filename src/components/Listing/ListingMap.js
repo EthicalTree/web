@@ -1,6 +1,7 @@
 import React from 'react'
 import { Marker } from 'react-google-maps'
 import Map from '../Global/Map'
+import { formatAddress } from '../../utils/address'
 
 const ListingMap = props => {
   const { locations, canEdit, dispatch } = props
@@ -14,7 +15,7 @@ const ListingMap = props => {
       if (status === 'OK') {
         dispatch({ type: 'SET_LISTING_LOCATION', data: [{
           ...locations[0],
-          address: results[0].formatted_address
+          address: formatAddress(results[0].address_components, 'simple')
         }]})
       }
     })
