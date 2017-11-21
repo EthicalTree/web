@@ -1,6 +1,7 @@
 const defaultSearch = {
   query: '',
   selectedEthicalities: [],
+  selectedResult: null,
   listings: [],
   currentPage: 0,
   hoveredResult: null
@@ -9,6 +10,8 @@ const defaultSearch = {
 const search = (state=defaultSearch, action) => {
 
   switch (action.type) {
+    case 'SET_SELECTED_SEARCH_RESULT':
+      return {...state, selectedResult: action.data}
     case 'SET_SEARCH_RESULT_HOVER':
       return {...state, hoveredResult: action.data}
     case 'SET_SEARCH_QUERY':

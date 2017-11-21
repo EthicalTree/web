@@ -142,7 +142,7 @@ class EditLocationModal extends React.Component {
             <Col className="edit-location-map">
               <Map
                 onClick={this.onMapClick.bind(this)}
-                markers={[marker]}
+                markers={marker}
                 center={center}
                 defaultOptions={{
                   zoomControl: true,

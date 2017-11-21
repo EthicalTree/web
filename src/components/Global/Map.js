@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { withGoogleMap, GoogleMap } from 'react-google-maps'
 
 const Map = withGoogleMap(props => {
-  let { center } = props
-  let zoom = 14
+  let { center, markers, overlay } = props
+  let zoom = 11
 
   if (!center) {
     center = { lat: 0, lng: 0 }
@@ -20,15 +21,18 @@ const Map = withGoogleMap(props => {
         ...props.defaultOptions,
         disableDefaultUI: true
       }}
-      center={center}>
-
-      {props.markers &&
-        props.markers
-      }
-
+      center={center}
+    >
+      {markers && markers}
+      {overlay && overlay}
     </GoogleMap>
   )
-
 })
+
+Map.propTypes = {
+  center: PropTypes.object,
+  markers: PropTypes.object,
+  overlay: PropTypes.object
+}
 
 export default Map

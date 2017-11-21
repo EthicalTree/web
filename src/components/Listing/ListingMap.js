@@ -37,7 +37,7 @@ const ListingMap = props => {
       <div className="listing-map-area">
         {hasLocations &&
           <Map
-            markers={[
+            markers={
               <Marker
                 key={`${locations[0].lat}+${locations[0].lng}`}
                 position={{
@@ -45,7 +45,7 @@ const ListingMap = props => {
                   lng: locations[0].lng
                 }}
               />
-            ]}
+            }
             defaultOptions={{
               scrollwheel: false
             }}

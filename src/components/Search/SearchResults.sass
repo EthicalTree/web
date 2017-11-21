@@ -18,6 +18,19 @@
       font-size: 18px
       font-weight: $font-normal
 
+  &.result-overlay
+    .card-block
+      border-top: 1px solid $color-border
+      padding: 16px 12px 12px
+
+      .card-title
+        margin-bottom: 0
+        font-size: 14px
+
+    .ethicality-icon svg
+      height: 16px
+      width: 16px
+
   &:hover, &.hovered
     opacity: 0.6
 
@@ -43,4 +56,26 @@
   @media (max-width: $screen-md-max)//{}
     .search-map
       visibility: hidden
+
+.result-overlay
+  position: relative
+  width: 200px
+  background-color: $color-white
+
+  &:hover
+    opacity: 1
+    cursor: default
+
+  &::after
+    content: '';
+    position: absolute;
+    left: 90px;
+    top: 100%;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid $color-white;
+    clear: both;
+
 

@@ -2,9 +2,10 @@ import './SearchResults.sass'
 
 import React from 'react'
 import { connect } from 'react-redux'
-import Markers from '../Util/Map/Markers'
 import { Search } from '../Search'
+import ResultsMap from './ResultsMap'
 import querystring from 'querystring'
+import { OverlayView } from 'react-google-maps'
 
 import {
   Row,
@@ -15,65 +16,11 @@ import {
 } from 'reactstrap'
 
 import Loader from '../Global/Loader'
-import Map from '../Global/Map'
 import { EthicalityBar, EthicalityIcon } from '../Ethicality/Ethicality'
 import { Paginator } from '../Util/Paginator/Paginator'
 
 import { performSearch, toggleSearchEthicalities } from '../../actions/search'
 import { gotoListing } from '../../actions/listing'
-
-class MapArea extends React.Component {
-
-  addBounds = location => {
-    const { bounds } = this.state
-    bounds.extend(new window.google.maps.LatLng(location.lat, location.lng))
-  }
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      bounds: new window.google.maps.LatLngBounds()
-    }
-  }
-
-  render() {
-    const { search, history, dispatch } = this.props
-    const { bounds } = this.state
-
-    const markers = (
-      <Markers
-        listings={search.listings}
-        addBounds={this.addBounds}
-        onMarkerClick={slug => dispatch(gotoListing(slug, history))}
-        onMarkerMouseOver={slug => dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: slug })}
-        onMarkerMouseOut={slug => dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: null })}
-      />
-    )
-
-    return (
-      <Col className="search-map-area" sm="4">
-        <div className="search-map">
-          <Map
-            onLoad={map => { map && map.fitBounds(bounds) }}
-            onClick={e => {}}
-            markers={markers}
-            defaultOptions={{
-              zoomControl: true,
-              draggableCursor: 'pointer'
-            }}
-            containerElement={
-              <div style={{ height: `100%` }} />
-            }
-            mapElement={
-              <div style={{ height: `100%` }} />
-            }/>
-        </div>
-      </Col>
-    )
-  }
-
-}
 
 class Result extends React.Component {
 
@@ -88,16 +35,16 @@ class Result extends React.Component {
   }
 
   render() {
-    const { listing, viewListing, hovered } = this.props
+    const { listing, viewListing, hovered, className } = this.props
     const { currentImage } = this.state
 
-    const backgroundImage = `url(${process.env.REACT_APP_S3_URL}/${currentImage})`
+    const backgroundImage = `url(${process.env.REACT_APP_S3_URL}/${currentImage.key})`
     const extraStyle = currentImage ? { backgroundImage } : {}
     const hoveredClass = hovered ? 'hovered' : ''
 
     return (
       <Col xs="12" sm="6" lg="4" className="pt-3 pb-1 pl-4 pr-4">
-        <Card className={`search-result hoverable ${hoveredClass}`} onClick={viewListing}>
+        <Card className={`search-result hoverable ${hoveredClass} ${className}`} onClick={viewListing}>
           <div
             className="card-img"
             style={extraStyle}
@@ -107,12 +54,12 @@ class Result extends React.Component {
           <CardBlock>
             <CardTitle className="d-flex justify-content-between flex-row-reverse">
               <span className="ethicalities">
-                {listing.ethicalities.map(iconKey => {
+                {listing.ethicalities.map(ethicality => {
                   return (
                     <EthicalityIcon
                       className="ml-2"
-                      ethicalityKey={iconKey}
-                      key={iconKey}
+                      ethicalityKey={ethicality.iconKey}
+                      key={ethicality.iconKey}
                     />
                   )
                 })}
@@ -128,6 +75,11 @@ class Result extends React.Component {
     )
   }
 
+}
+
+Result.defaultProps = {
+  className: '',
+  smallView: false
 }
 
 const SearchResults = (props) => {
@@ -164,22 +116,14 @@ const SearchResults = (props) => {
 
       <Row className="d-flex align-items-stretch">
         {hasListings &&
-          search.listings.map(result => {
-            const listing = {
-              title: result.title,
-              ethicalities: result.ethicalities.map(e => e.iconKey),
-              images: result.images.map(i => i.key)
-            }
-
-            return (
-              <Result
-                key={result.slug}
-                listing={listing}
-                hovered={result.slug === search.hoveredResult}
-                viewListing={() => dispatch(gotoListing(result.slug, history))}
-              />
-            )
-          })
+          search.listings.map(listing => (
+            <Result
+              key={listing.slug}
+              listing={listing}
+              hovered={listing.slug === search.hoveredResult}
+              viewListing={() => dispatch(gotoListing(listing.slug, history))}
+            />
+          ))})
         }
         {!hasListings &&
           <Col className="text-center pt-5">
@@ -249,8 +193,42 @@ class SearchResultsPage extends React.Component {
     history.push(`/s/${search.query}?${querystring.stringify(paramsObj)}`)
   }
 
+  getOverlay() {
+    const { dispatch, history } = this.props
+    const { selectedResult, listings } = this.props.search
+
+    if (selectedResult) {
+      const listing = listings.find(r => r.slug === selectedResult)
+      const location = listing.locations[0]
+
+      return (
+        <OverlayView
+          position={location}
+          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+          getPixelPositionOffset={width => ({x: -(width / 2), y: -270})}
+        >
+          <Result
+            className="result-overlay"
+            key={listing.slug}
+            listing={listing}
+            viewListing={() => dispatch(gotoListing(listing.slug, history))}
+            smallView={true}
+          />
+        </OverlayView>
+      )
+    }
+
+    return null
+  }
+
   render() {
-    const { search, app, dispatch, history } = this.props
+    const {
+      search,
+      app,
+      dispatch,
+      history,
+      selectedResult
+    } = this.props
 
     return (
       <Loader loading={search.isSearchLoading}>
@@ -264,10 +242,11 @@ class SearchResultsPage extends React.Component {
               handlePageChange={this.search.bind(this)}
               handleSearch={this.search.bind(this)}
             />
-            <MapArea
-              history={history}
+            <ResultsMap
+              selectedResult={selectedResult}
               dispatch={dispatch}
               search={search}
+              overlay={this.getOverlay()}
             />
           </Row>
 
