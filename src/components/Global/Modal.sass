@@ -9,6 +9,7 @@
 .app.modal-open
   filter: blur(1px)
 
+
 .et-modal
   height: auto
 
@@ -41,6 +42,23 @@
 
   @media (max-width: $screen-xs-max) // {}
     width: 100%
+
+  &.fullscreen-image-modal
+
+    .image-manager
+      @media (max-width: $screen-sm-max) // {}
+        max-height: 300px
+
+    .modal-close-wrapper
+      padding: 10px 40px
+      z-index: 4
+
+    .modal-close
+      opacity: 0.6
+      font-size: 30px
+
+      &:hover
+        opacity: 1
 
 .edit-description-modal
   textarea

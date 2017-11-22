@@ -248,6 +248,14 @@ class Listing extends React.Component {
               emptyText="No photos added"
               canEdit={hasPermission('update', listing)}
               signingParams={{ slug: listing.slug }}
+              fullScreenAction={{
+                handleAction: image => {
+                  dispatch({ type: 'SET_FULLSCREEN_MODAL_IMAGES', data: [...listing.images] })
+                  dispatch({ type: 'SET_FULLSCREEN_MODAL_CURRENT_IMAGE', data: image })
+                  dispatch({ type: 'OPEN_MODAL', data: 'fullscreen_image' })
+                },
+                title: 'Enlarge Photo',
+              }}
               coverAction={{
                 handleAction: makeImageCover,
                 title: 'Set Cover Photo',

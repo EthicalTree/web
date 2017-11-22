@@ -1,15 +1,16 @@
 import './Loader.sass'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import Spinner from 'react-spinkit'
 
 const Loader = (props) => {
 
-  const { loading, progress } = props
+  const { loading, progress, className } = props
 
   if (loading || progress >= 0) {
     return (
-      <div className="loading">
+      <div className={`loading ${className}`}>
         <div className="et-spinner-wrapper">
           <Spinner
             color="#526173"
@@ -35,10 +36,18 @@ const Loader = (props) => {
   }
 
   return (
-    <div>
+    <div className={`loader ${className}`}>
       {props.children}
     </div>
   )
+}
+
+Loader.propTypes = {
+  className: PropTypes.string
+}
+
+Loader.defaultProps = {
+  className: ''
 }
 
 export default Loader

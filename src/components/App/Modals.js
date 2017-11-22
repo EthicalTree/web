@@ -1,6 +1,7 @@
 import React from 'react'
 
 import GenericConfirmModal from '../Global/GenericConfirmModal'
+import FullScreenImageModal from '../Global/FullScreenImageModal'
 
 import {
   AddListingModal,
@@ -33,6 +34,7 @@ const Modals = (props) => {
       <EditEthicalitiesModal />
 
       <GenericConfirmModal />
+      <FullScreenImageModal />
       <ForgotPasswordModal />
     </div>
   )

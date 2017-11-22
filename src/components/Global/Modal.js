@@ -1,6 +1,7 @@
 import './Modal.sass'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import ReactModal from 'react-modal'
 
@@ -36,21 +37,30 @@ const baseStyles = {
   }
 }
 
-const TopBar = (props) => {
-  return (
-    <div className="top-bar text-left mb-4">
-      <h5 className="title">{props.title}</h5>
+const ModalCloser = props => {
+  const { onClose } = props
 
-      <div className="modal-close-wrapper">
-        <a href="" className="modal-close" onClick={props.onClose}>
-          <i className="fa fa-times"></i>
-        </a>
-      </div>
+  return (
+    <div className="modal-close-wrapper">
+      <a href="" className="modal-close" onClick={onClose}>
+        <i className="fa fa-times"></i>
+      </a>
     </div>
   )
 }
 
-const BottomBar = (props) => {
+const TopBar = props => {
+  const { onClose } = props
+
+  return (
+    <div className="top-bar text-left mb-4">
+      <h5 className="title">{props.title}</h5>
+      <ModalCloser onClose={onClose} />
+    </div>
+  )
+}
+
+const BottomBar = props => {
   if (props.onSave) {
     const saveLabel = props.saveLabel || 'Save'
 
@@ -75,9 +85,16 @@ const BottomBar = (props) => {
   return <div></div>
 }
 
-const Modal = (props) => {
+const Modal = props => {
 
-  let { style, modalName, modal, dispatch } = props
+  let {
+    style,
+    modalName,
+    modal,
+    dispatch,
+    noDecoration
+  } = props
+
   const isOpen = modal.openModal === modalName
 
   style = style || {}
@@ -113,28 +130,47 @@ const Modal = (props) => {
           style={newStyles}
           className={`et-modal ${props.className}`}
         >
-
-          <Loader loading={props.loading}>
-            <TopBar
-              onClose={onClose}
-              title={props.contentLabel}
-            />
-            <div className="p-3">
-              {isOpen &&
-                props.children
-              }
+          {noDecoration &&
+            <div style={{ height: '100%' }}>
+              <ModalCloser onClose={onClose} />
+              {props.children}
             </div>
+          }
 
-            <BottomBar
-              saveLabel={props.saveLabel}
-              onSave={props.onSave}
-              onClose={onClose}
-            />
-          </Loader>
+          {!noDecoration &&
+            <Loader loading={props.loading}>
+              <TopBar
+                onClose={onClose}
+                title={props.contentLabel}
+              />
+
+              <div className="p-3">
+                {isOpen &&
+                  props.children
+                }
+              </div>
+
+              <BottomBar
+                saveLabel={props.saveLabel}
+                onSave={props.onSave}
+                onClose={onClose}
+              />
+            </Loader>
+          }
         </ReactModal>
       }
     </div>
   )
+}
+
+Modal.propTypes = {
+  noDecoration: PropTypes.bool,
+  contentLabel: PropTypes.string
+}
+
+Modal.defaultProps = {
+  noDecoration: false,
+  contentLabel: ''
 }
 
 const select = (state) => {

@@ -123,7 +123,7 @@ const SearchResults = (props) => {
               hovered={listing.slug === search.hoveredResult}
               viewListing={() => dispatch(gotoListing(listing.slug, history))}
             />
-          ))})
+          ))
         }
         {!hasListings &&
           <Col className="text-center pt-5">

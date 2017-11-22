@@ -17,6 +17,7 @@ const ImageActions = (props) => {
     coverAction,
     deleteAction,
     addAction,
+    fullScreenAction,
     signingParams
   } = props
 
@@ -24,6 +25,22 @@ const ImageActions = (props) => {
     <div>
       <div className="actions">
         <div><div className="triangle"></div></div>
+
+        {!!fullScreenAction.handleAction &&
+          <i
+            id={fullScreenAction.title}
+            title={fullScreenAction.title}
+            role="button"
+            tabIndex="0"
+            onClick={e => {
+              e.preventDefault()
+              fullScreenAction.handleAction(currentImage)
+            }}
+            className="icon-button fa fa-search-plus"
+          >
+            <Tooltip placement="bottom" target={fullScreenAction.title} delay={0}>{fullScreenAction.title}</Tooltip>
+          </i>
+        }
 
         {!!coverAction.handleAction &&
           <i
@@ -86,13 +103,15 @@ const ImageActions = (props) => {
 ImageActions.propTypes = {
   coverAction: PropTypes.object,
   deleteAction: PropTypes.object,
-  addAction: PropTypes.object
+  addAction: PropTypes.object,
+  fullScreenAction: PropTypes.object
 }
 
 ImageActions.defaultProps = {
   coverAction: {},
   deleteAction: {},
-  addAction: {}
+  addAction: {},
+  fullScreenAction: {}
 }
 
 class ImageManager extends React.Component {
@@ -111,6 +130,7 @@ class ImageManager extends React.Component {
   render() {
     const {
       images,
+      className,
       dispatch,
       canEdit,
       addText,
@@ -121,15 +141,18 @@ class ImageManager extends React.Component {
       coverAction,
       deleteAction,
       addAction,
+      fullScreenAction,
       onImageUploadProgress,
       signingParams,
-      styleOverrides
+      styleOverrides,
+      renderWithImgTag
     } = this.props
 
     const hasSlides = images && images.length > 0
 
     return (
       <Loader
+        className={className}
         loading={isLoading}
         progress={uploadProgress}
       >
@@ -141,6 +164,14 @@ class ImageManager extends React.Component {
                 slides={
                   images.map(image => {
                     const url = `${process.env.REACT_APP_S3_URL}/${image.key}`
+
+                    if (renderWithImgTag) {
+                      return (
+                        <div>
+                          <img alt="Listing" style={styleOverrides(url)} src={url} />
+                        </div>
+                      )
+                    }
 
                     let style = {
                       background: `url('${url}') no-repeat center center`,
@@ -170,6 +201,7 @@ class ImageManager extends React.Component {
                 coverAction={coverAction}
                 deleteAction={deleteAction}
                 addAction={addAction}
+                fullScreenAction={fullScreenAction}
                 signingParams={signingParams}
               />
             }
@@ -204,17 +236,23 @@ class ImageManager extends React.Component {
 }
 
 ImageManager.propTypes = {
+  className: PropTypes.string,
   coverAction: PropTypes.object,
   deleteAction: PropTypes.object,
   addAction: PropTypes.object,
-  styleOverrides: PropTypes.func
+  fullScreenAction: PropTypes.object,
+  styleOverrides: PropTypes.func,
+  renderWithImgTag: PropTypes.bool
 }
 
 ImageManager.defaultProps = {
+  className: '',
   coverAction: {},
   deleteAction: {},
   addAction: {},
-  styleOverrides: null
+  fullScreenAction: {},
+  styleOverrides: null,
+  renderWithImgTag: false
 }
 
 export default ImageManager

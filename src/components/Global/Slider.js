@@ -36,6 +36,7 @@ const ETSlider = (props) => {
 
   return (
     <Slider
+      adaptiveHeight={true}
       afterChange={props.afterChange}
       nextArrow={<Next />}
       prevArrow={<Prev />}
