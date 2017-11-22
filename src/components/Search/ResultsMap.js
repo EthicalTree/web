@@ -41,7 +41,7 @@ class ResultsMap extends React.Component {
         listings={search.listings}
         addBounds={this.addBounds}
         onMarkerClick={slug => {
-          const newSlug = !!search.selectedResult ? null : slug
+          const newSlug = !!search.selectedResult && search.selectedResult === slug ? null : slug
           dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: newSlug })
           dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: newSlug })
         }}
@@ -63,7 +63,9 @@ class ResultsMap extends React.Component {
         <div className="search-map">
           <Map
             onLoad={onLoad}
-            onClick={e => {}}
+            onClick={() => {
+              setTimeout(() => dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: null }), 0)
+            }}
             onBoundsChanged={this.boundsChanged}
             markers={markers}
             overlay={overlay}

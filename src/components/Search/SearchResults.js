@@ -204,14 +204,19 @@ class SearchResultsPage extends React.Component {
       return (
         <OverlayView
           position={location}
+          onClick={e => { console.log('inside overlay') }}
           mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-          getPixelPositionOffset={width => ({x: -(width / 2), y: -270})}
+          getPixelPositionOffset={width => ({x: -(width / 2), y: -190})}
         >
           <Result
             className="result-overlay"
             key={listing.slug}
             listing={listing}
-            viewListing={() => dispatch(gotoListing(listing.slug, history))}
+            viewListing={() => {
+              dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: null })
+              dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: null })
+              dispatch(gotoListing(listing.slug, history))
+            }}
             smallView={true}
           />
         </OverlayView>
