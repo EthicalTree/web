@@ -13,6 +13,7 @@ import { setConfirm } from '../../actions/confirm'
 const ImageActions = (props) => {
   const {
     dispatch,
+    canEdit,
     currentImage,
     coverAction,
     deleteAction,
@@ -20,6 +21,17 @@ const ImageActions = (props) => {
     fullScreenAction,
     signingParams
   } = props
+
+  const hasActions = (
+    !!fullScreenAction.handleAction ||
+    !!coverAction.handleAction ||
+    !!deleteAction.handleAction ||
+    !!addAction.handleAction
+  )
+
+  if (!hasActions) {
+    return null
+  }
 
   return (
     <div>
@@ -42,58 +54,63 @@ const ImageActions = (props) => {
           </i>
         }
 
-        {!!coverAction.handleAction &&
-          <i
-            id={coverAction.title}
-            title={coverAction.title}
-            role="button"
-            tabIndex="0"
-            onClick={() => dispatch(setConfirm({
-              title: coverAction.title,
-              msg: coverAction.confirmMsg,
-              action: coverAction.handleAction,
-              data: {...coverAction.data, imageId: currentImage.id}
-            }))}
-            className="icon-button fa fa-file-picture-o"
-          >
-            <Tooltip placement="bottom" target={coverAction.title} delay={0}>{coverAction.title}</Tooltip>
-          </i>
+        {canEdit &&
+          <span>
+            {!!coverAction.handleAction &&
+              <i
+                id={coverAction.title}
+                title={coverAction.title}
+                role="button"
+                tabIndex="0"
+                onClick={() => dispatch(setConfirm({
+                  title: coverAction.title,
+                  msg: coverAction.confirmMsg,
+                  action: coverAction.handleAction,
+                  data: {...coverAction.data, imageId: currentImage.id}
+                }))}
+                className="icon-button fa fa-file-picture-o"
+              >
+                <Tooltip placement="bottom" target={coverAction.title} delay={0}>{coverAction.title}</Tooltip>
+              </i>
+            }
+
+            {!!deleteAction.handleAction &&
+              <i
+                id={deleteAction.title}
+                title={deleteAction.title}
+                role="button"
+                tabIndex="0"
+                onClick={() => dispatch(setConfirm({
+                  title: deleteAction.title,
+                  msg: deleteAction.confirmMsg,
+                  action: deleteAction.handleAction,
+                  data: {...deleteAction.data, imageId: currentImage.id}
+                }))}
+                className="icon-button fa fa-trash image-delete"
+              >
+                <Tooltip placement="bottom" target={deleteAction.title} delay={0}>{deleteAction.title}</Tooltip>
+              </i>
+            }
+
+            {!!addAction.handleAction &&
+              <S3Uploader
+                onProgress={props.onImageUploadProgress}
+                onFinish={addAction.handleAction}
+                signingUrlQueryParams={signingParams}>
+
+                <i
+                  id={addAction.title}
+                  title={addAction.title}
+                  tabIndex="0"
+                  role="button"
+                  className="icon-button fa fa-plus-circle" />
+                <Tooltip placement="bottom" target={addAction.title} delay={0}>{addAction.title}</Tooltip>
+
+              </S3Uploader>
+            }
+          </span>
         }
 
-        {!!deleteAction.handleAction &&
-          <i
-            id={deleteAction.title}
-            title={deleteAction.title}
-            role="button"
-            tabIndex="0"
-            onClick={() => dispatch(setConfirm({
-              title: deleteAction.title,
-              msg: deleteAction.confirmMsg,
-              action: deleteAction.handleAction,
-              data: {...deleteAction.data, imageId: currentImage.id}
-            }))}
-            className="icon-button fa fa-trash image-delete"
-          >
-            <Tooltip placement="bottom" target={deleteAction.title} delay={0}>{deleteAction.title}</Tooltip>
-          </i>
-        }
-
-        {!!addAction.handleAction &&
-          <S3Uploader
-            onProgress={props.onImageUploadProgress}
-            onFinish={addAction.handleAction}
-            signingUrlQueryParams={signingParams}>
-
-            <i
-              id={addAction.title}
-              title={addAction.title}
-              tabIndex="0"
-              role="button"
-              className="icon-button fa fa-plus-circle" />
-            <Tooltip placement="bottom" target={addAction.title} delay={0}>{addAction.title}</Tooltip>
-
-          </S3Uploader>
-        }
 
       </div>
     </div>
@@ -101,6 +118,7 @@ const ImageActions = (props) => {
 }
 
 ImageActions.propTypes = {
+  canEdit: PropTypes.bool,
   coverAction: PropTypes.object,
   deleteAction: PropTypes.object,
   addAction: PropTypes.object,
@@ -108,6 +126,7 @@ ImageActions.propTypes = {
 }
 
 ImageActions.defaultProps = {
+  canEdit: false,
   coverAction: {},
   deleteAction: {},
   addAction: {},
@@ -161,6 +180,7 @@ class ImageManager extends React.Component {
             {hasSlides &&
               <ETSlider
                 afterChange={this.handleSlideChange.bind(this)}
+                initialSlide={images.findIndex(i => (i.id === (currentImage ? currentImage.id : -1)))}
                 slides={
                   images.map(image => {
                     const url = `${process.env.REACT_APP_S3_URL}/${image.key}`
@@ -192,19 +212,18 @@ class ImageManager extends React.Component {
               />
             }
 
-            {canEdit &&
-              <ImageActions
-                dispatch={dispatch}
-                onImageUploadProgress={onImageUploadProgress}
-                hasSlides={hasSlides}
-                currentImage={currentImage}
-                coverAction={coverAction}
-                deleteAction={deleteAction}
-                addAction={addAction}
-                fullScreenAction={fullScreenAction}
-                signingParams={signingParams}
-              />
-            }
+            <ImageActions
+              dispatch={dispatch}
+              canEdit={canEdit}
+              onImageUploadProgress={onImageUploadProgress}
+              hasSlides={hasSlides}
+              currentImage={currentImage}
+              coverAction={coverAction}
+              deleteAction={deleteAction}
+              addAction={addAction}
+              fullScreenAction={fullScreenAction}
+              signingParams={signingParams}
+            />
           </div>
         }
 

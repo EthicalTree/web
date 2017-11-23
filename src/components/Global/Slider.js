@@ -1,6 +1,7 @@
 import './Slider.sass'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import Slider from 'react-slick'
 
 const Prev = (props) => {
@@ -32,7 +33,7 @@ const Next = (props) => {
 }
 
 const ETSlider = (props) => {
-  const { slides } = props
+  const { slides, initialSlide } = props
 
   return (
     <Slider
@@ -41,11 +42,20 @@ const ETSlider = (props) => {
       prevArrow={<Prev />}
       dots={false}
       infinite={true}
+      initialSlide={initialSlide >= 0 ? initialSlide : 0 }
       slidesToShow={1}
     >
       {slides}
     </Slider>
   )
+}
+
+ETSlider.propTypes = {
+  initialSlide: PropTypes.number
+}
+
+ETSlider.defaultProps = {
+  initialSlide: 0
 }
 
 export default ETSlider
