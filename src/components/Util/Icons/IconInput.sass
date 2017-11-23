@@ -1,0 +1,22 @@
+@import 'variables'
+
+.icon-input
+  position: relative
+
+  input
+    padding-left: 45px !important
+
+    &:focus + svg
+      fill: rgba($color-inverse, 0.7)
+
+  svg
+    transition: fill 0.2s ease
+    fill: $color-border
+    position: absolute
+    z-index: 9
+    margin: auto
+    left: 10px
+    top: 0
+    bottom: 0
+
+

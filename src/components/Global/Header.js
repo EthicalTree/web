@@ -51,7 +51,7 @@ const Header = (props) => {
         </Link>
 
         {hasSearch &&
-          <Col sm="6" lg="4" className="hidden-xs-down" >
+          <Col lg="7" className="hidden-md-down" >
             <Search />
           </Col>
         }

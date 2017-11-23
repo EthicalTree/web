@@ -2,7 +2,7 @@ import './Ethicality.sass'
 import uuid4 from 'uuid'
 
 import React from 'react'
-import icons from './EthicalityIcons'
+import icons from '../Util/Icons/AppIcons'
 
 import {
   UncontrolledTooltip as Tooltip

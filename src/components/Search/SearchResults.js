@@ -100,7 +100,7 @@ const SearchResults = (props) => {
   return (
     <Col xs="12" xl="8" className="search-results p-4">
       {hasSearch &&
-        <Col sm="6" lg="4" className="hidden-sm-up mb-3" >
+        <Col className="hidden-lg-up mb-3" >
           <Search />
         </Col>
       }

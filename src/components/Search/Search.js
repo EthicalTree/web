@@ -1,15 +1,19 @@
+import './Search.sass'
+
 import React from 'react'
 import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
 import { withRouter } from 'react-router-dom'
 
 import {
-  InputGroup,
-  InputGroupButton,
-  Button
+  Input,
+  Button,
+  Col,
+  Row
 } from 'reactstrap'
 
 import querystring from 'querystring'
+import IconInput from '../Util/Icons/IconInput'
 
 const Suggestion = (props) => {
   return (
@@ -17,31 +21,34 @@ const Suggestion = (props) => {
   )
 }
 
-const SearchInput = (props) => {
-  let inputProps = {...props}
-  delete inputProps.onSearch
-
+const LocationInput = props => {
   return (
-    <InputGroup>
-      <input {...inputProps} />
-      <InputGroupButton>
-        <Button color="danger" onClick={props.onSearch}>
-          Search
-        </Button>
-      </InputGroupButton>
-    </InputGroup>
+    <IconInput
+      className="location-input"
+      icon="road_sign"
+      inputProps={{
+        placeholder: 'Where?'
+      }}
+    />
   )
 }
-
 
 class Search extends React.Component {
 
   constructor(props) {
     super(props)
+
     this.state = {
       query: '',
       dirty: false
     }
+
+    this.autocomplete = new window.google.maps.places.AutocompleteService()
+  }
+
+  onLocationSearch(e) {
+    e.preventDefault()
+    console.log(e.target.value)
   }
 
   onChange(e, {newValue}) {
@@ -83,24 +90,42 @@ class Search extends React.Component {
     }
 
     return (
-      <div className="et-search">
-          <Autosuggest
-            suggestions={[]}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
-            getSuggestionValue={suggestion => suggestion.name}
-            renderSuggestion={Suggestion}
-            renderInputComponent={SearchInput}
-            inputProps={{
-              className: "form-control",
-              placeholder: 'What are you looking for?',
-              onChange: this.onChange.bind(this),
-              onSearch: this.search.bind(this),
-              onKeyDown: this.search.bind(this),
-              value: query
-            }}
-          />
-      </div>
+      <Col>
+        <Row noGutters className="et-search">
+          <Col xs="12" md="4" lg="3" className="mb-2">
+            <LocationInput />
+          </Col>
+
+          <Col xs="12" md="5" lg="7" className="mb-2">
+            <Autosuggest
+              suggestions={[]}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
+              getSuggestionValue={suggestion => suggestion.name}
+              renderSuggestion={Suggestion}
+              renderInputComponent={props => (<IconInput icon="search" inputProps={props} />)}
+              inputProps={{
+                className: "form-control",
+                placeholder: 'What are you looking for?',
+                onChange: this.onChange.bind(this),
+                onKeyDown: this.search.bind(this),
+                value: query
+              }}
+            />
+          </Col>
+
+          <Col xs="12" md="3" lg="2" className="mb-2">
+            <Button
+              color="danger"
+              className="full-height search-button"
+              block
+              onClick={this.search.bind(this)}
+            >
+              Search
+            </Button>
+          </Col>
+        </Row>
+      </Col>
     )
   }
 }

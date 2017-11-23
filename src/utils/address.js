@@ -6,17 +6,23 @@ class AddressException {
   }
 }
 
-export const formatAddress = (components, format='simple') => {
-  let addMap = {}
+export const mapAddressComponents = components => {
+  let addressMap = {}
 
   components.forEach(component => {
     component.types.forEach(type => {
-      addMap[type] = component['short_name']
+      addressMap[type] = component['short_name']
     })
   })
 
+  return addressMap
+}
+
+export const formatAddress = (components, format='simple') => {
+  const addressMap = mapAddressComponents(components)
+
   if (format === 'simple') {
-    return `${addMap['street_number']} ${addMap['route']}, ${addMap['locality']}`
+    return `${addressMap['street_number']} ${addressMap['route']}, ${addressMap['locality']}`
   }
 
   throw new AddressException(`${format} is not a valid format`)
