@@ -38,8 +38,7 @@ class Result extends React.Component {
     const { listing, viewListing, hovered, className } = this.props
     const { currentImage } = this.state
 
-    const backgroundImage = `url(${process.env.REACT_APP_S3_URL}/${currentImage.key})`
-    const extraStyle = currentImage ? { backgroundImage } : {}
+    const extraStyle = currentImage ? `url(${process.env.REACT_APP_S3_URL}/${currentImage.key})` : {}
     const hoveredClass = hovered ? 'hovered' : ''
 
     return (
