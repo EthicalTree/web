@@ -35,6 +35,14 @@ const ListingMenu = props => {
             height: '500px'
           }
         }}
+        fullScreenAction={{
+          handleAction: image => {
+            dispatch({ type: 'SET_FULLSCREEN_MODAL_IMAGES', data: [...menu.images] })
+            dispatch({ type: 'SET_FULLSCREEN_MODAL_CURRENT_IMAGE', data: image })
+            dispatch({ type: 'OPEN_MODAL', data: 'fullscreen_image' })
+          },
+          title: 'Enlarge Photo',
+        }}
         deleteAction={{
           handleAction: deleteImageFromMenu,
           title: 'Delete Menu Photo',

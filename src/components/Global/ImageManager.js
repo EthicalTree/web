@@ -167,7 +167,7 @@ class ImageManager extends React.Component {
 
                     if (renderWithImgTag) {
                       return (
-                        <div>
+                        <div key={image.key}>
                           <img alt="Listing" style={styleOverrides(url)} src={url} />
                         </div>
                       )
