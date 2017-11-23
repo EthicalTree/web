@@ -6,7 +6,6 @@ import Autosuggest from 'react-autosuggest'
 import { withRouter } from 'react-router-dom'
 
 import {
-  Input,
   Button,
   Col,
   Row
