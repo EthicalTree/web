@@ -26,7 +26,7 @@ const OperatingHours = (props) => {
       <div className="card-header">
         Operating Hours
       </div>
-      <div className="card-block pt-3">
+      <div className="card-body pt-3">
         {canEdit && hasHours &&
           <button
             onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_operating_hours' })}

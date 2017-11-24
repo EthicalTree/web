@@ -8,14 +8,14 @@
 $fa-font-path: "../../node_modules/font-awesome/fonts"
 
 // Custom Bootstrap
-$brand-primary: $color-inverse
-$brand-success: $color-success
-$brand-info: $color-info
-$brand-warning: $color-warning
-$brand-danger: $color-danger
-$brand-inverse: $color-inverse
+$primary: $color-inverse
+$success: $color-success
+$info: $color-info
+$warning: $color-warning
+$danger: $color-danger
+$inverse: $color-inverse
 
-$body-color: $color-inverse
+$color: $color-inverse
 
 $font-family-sans-serif: 'Lato', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default
 
@@ -25,9 +25,11 @@ $font-weight-bold: 700 !default
 $headings-font-family: inherit !default
 $headings-font-weight: 300 !default
 $headings-line-height: 1.1 !default
-$headings-color: inherit !default
+$headings-color: $color-inverse !default
 
-$enable-rounded: false
+$input-btn-focus-box-shadow: none
+
+$enable-rounded: true
 
 @import "../../node_modules/font-awesome/scss/font-awesome"
 @import "~bootstrap/scss/bootstrap.scss"

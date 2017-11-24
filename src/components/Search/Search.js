@@ -104,7 +104,7 @@ class Search extends React.Component {
               renderSuggestion={Suggestion}
               renderInputComponent={props => (<IconInput icon="search" inputProps={props} />)}
               inputProps={{
-                className: "form-control",
+                className: "category-input",
                 placeholder: 'What are you looking for?',
                 onChange: this.onChange.bind(this),
                 onKeyDown: this.search.bind(this),

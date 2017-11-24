@@ -11,7 +11,7 @@ import {
   Col,
   Card,
   CardHeader,
-  CardBlock,
+  CardBody,
   ButtonGroup,
   Button
 } from 'reactstrap'
@@ -93,7 +93,7 @@ export const DateSelector = (props) => {
                   />
                 </CardHeader>
 
-                <CardBlock>
+                <CardBody>
                   {selectedDay.enabled &&
                     <Row>
                       <Col xs="12" sm="5">
@@ -117,7 +117,7 @@ export const DateSelector = (props) => {
                   {!selectedDay.enabled &&
                     <p className="text-center">Hours have not yet been enabled</p>
                   }
-                </CardBlock>
+                </CardBody>
               </Card>
             }
 

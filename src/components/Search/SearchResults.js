@@ -11,7 +11,7 @@ import {
   Row,
   Col,
   Card,
-  CardBlock,
+  CardBody,
   CardTitle
 } from 'reactstrap'
 
@@ -50,9 +50,9 @@ class Result extends React.Component {
           >
 
           </div>
-          <CardBlock>
+          <CardBody>
             <CardTitle className="d-flex justify-content-between flex-row-reverse">
-              <span className="ethicalities">
+              <div className="ethicalities d-flex">
                 {listing.ethicalities.map(ethicality => {
                   return (
                     <EthicalityIcon
@@ -62,13 +62,13 @@ class Result extends React.Component {
                     />
                   )
                 })}
-              </span>
+              </div>
               <span className="text-truncate">
                 {listing.title}
               </span>
             </CardTitle>
 
-          </CardBlock>
+          </CardBody>
         </Card>
       </Col>
     )
@@ -100,7 +100,7 @@ const SearchResults = (props) => {
   return (
     <Col xs="12" xl="8" className="search-results p-4">
       {hasSearch &&
-        <Col className="hidden-lg-up mb-3" >
+        <Col className="d-lg-none d-xl-none mb-3" >
           <Search />
         </Col>
       }

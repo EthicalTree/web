@@ -1,20 +1,23 @@
 @import 'variables'
 
 .front-page
-  margin: 100px 0
+  margin: 35px 0
   padding-bottom: 100px
   background-position: center
   background-repeat: no-repeat
   background-size: cover
 
-  .headline
-    color: $color-inverse
+  @media (min-width: $screen-sm-min) // {}
+    margin: 100px 0
+
+    .et-search
+      margin-top: 75px
+
+      input
+        padding: 12px
 
   .et-search
-    margin-top: 75px
-
-    input
-      padding: 12px
+    margin-top: 35px
 
   .front-page-ethicalities
     width: 500px

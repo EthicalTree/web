@@ -2,6 +2,7 @@ import './ImageManager.sass'
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import uuid4 from 'uuid'
 
 import { UncontrolledTooltip as Tooltip } from 'reactstrap'
 import Loader from '../Global/Loader'
@@ -29,6 +30,12 @@ const ImageActions = (props) => {
     !!addAction.handleAction
   )
 
+  const uuid = uuid4()
+  const fullscreenId = `fullscreen-${uuid}`
+  const coverId = `cover-${uuid}`
+  const deleteId = `delete-${uuid}`
+  const addId = `add-${uuid}`
+
   if (!hasActions) {
     return null
   }
@@ -40,7 +47,7 @@ const ImageActions = (props) => {
 
         {!!fullScreenAction.handleAction &&
           <i
-            id={fullScreenAction.title}
+            id={fullscreenId}
             title={fullScreenAction.title}
             role="button"
             tabIndex="0"
@@ -50,7 +57,7 @@ const ImageActions = (props) => {
             }}
             className="icon-button fa fa-search-plus"
           >
-            <Tooltip placement="bottom" target={fullScreenAction.title} delay={0}>{fullScreenAction.title}</Tooltip>
+            <Tooltip placement="bottom" target={fullscreenId} delay={0}>{fullScreenAction.title}</Tooltip>
           </i>
         }
 
@@ -58,7 +65,7 @@ const ImageActions = (props) => {
           <span>
             {!!coverAction.handleAction &&
               <i
-                id={coverAction.title}
+                id={coverId}
                 title={coverAction.title}
                 role="button"
                 tabIndex="0"
@@ -70,13 +77,13 @@ const ImageActions = (props) => {
                 }))}
                 className="icon-button fa fa-file-picture-o"
               >
-                <Tooltip placement="bottom" target={coverAction.title} delay={0}>{coverAction.title}</Tooltip>
+                <Tooltip placement="bottom" target={coverId} delay={0}>{coverAction.title}</Tooltip>
               </i>
             }
 
             {!!deleteAction.handleAction &&
               <i
-                id={deleteAction.title}
+                id={deleteId}
                 title={deleteAction.title}
                 role="button"
                 tabIndex="0"
@@ -88,7 +95,7 @@ const ImageActions = (props) => {
                 }))}
                 className="icon-button fa fa-trash image-delete"
               >
-                <Tooltip placement="bottom" target={deleteAction.title} delay={0}>{deleteAction.title}</Tooltip>
+                <Tooltip placement="bottom" target={deleteId} delay={0}>{deleteAction.title}</Tooltip>
               </i>
             }
 
@@ -99,12 +106,12 @@ const ImageActions = (props) => {
                 signingUrlQueryParams={signingParams}>
 
                 <i
-                  id={addAction.title}
+                  id={addId}
                   title={addAction.title}
                   tabIndex="0"
                   role="button"
                   className="icon-button fa fa-plus-circle" />
-                <Tooltip placement="bottom" target={addAction.title} delay={0}>{addAction.title}</Tooltip>
+                <Tooltip placement="bottom" target={addId} delay={0}>{addAction.title}</Tooltip>
 
               </S3Uploader>
             }

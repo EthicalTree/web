@@ -1,10 +1,19 @@
 @import 'variables'
 
-.et-search
-  .location-input
-    input
-      margin-right: -1px
-      border-radius: 5px 0 0 5px
 
-  .search-button
-    border-radius: 0 5px 5px 0
+@media (min-width: $screen-md-min) // {}
+  .et-search
+
+    .location-input
+      margin-right: -1px
+
+      input
+        border-top-right-radius: 0
+        border-bottom-right-radius: 0
+
+    .category-input
+      border-radius: 0
+
+    .search-button
+      border-top-left-radius: 0
+      border-bottom-left-radius: 0

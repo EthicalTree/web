@@ -18,7 +18,7 @@ const EthicalityBar = (props) => {
   } = props
 
   return (
-    <div className={`${props.className} d-flex justify-content-between`}>
+    <div className={`${props.className} d-flex justify-content-around`}>
       {ethicalities.map(ethicality => {
         return (
           <span key={ethicality.slug} className="p-2">
@@ -54,6 +54,8 @@ const Ethicality = (props) => {
   const selectClass = selectable ? 'selectable' : ''
   const selectedClass = selected ? 'selected' : ''
   const uuid = showTooltip ? uuid4() : ''
+  const slugClass = slug ? slug : ''
+  const newClassName = className ? className : ''
 
   const clickWrapper = (e) => {
     e.preventDefault()
@@ -67,14 +69,13 @@ const Ethicality = (props) => {
     <div
       id={uuid}
       onClick={clickWrapper}
-      className={`ethicality-toggle text-center ${slug} ${selectClass} ${selectedClass} ${className}`}>
-      <div>
-        <EthicalityIcon
-          ethicalityKey={iconKey}
-          name={name}
-          uuid={uuid}
-        />
-      </div>
+      className={`ethicality-toggle text-center ${slugClass} ${selectClass} ${selectedClass} ${newClassName}`}
+    >
+      <EthicalityIcon
+        ethicalityKey={iconKey}
+        name={name}
+        uuid={uuid}
+      />
       {showLabel !== false &&
         <div className="name mt-2">
           {name}
@@ -85,14 +86,16 @@ const Ethicality = (props) => {
 }
 
 const EthicalityIcon = (props) => {
+  const { name, uuid, className } = props
   const Icon = icons[props.ethicalityKey]
-  const { name, uuid } = props
+  const id = !!uuid ? `id-${uuid}` : undefined
+  const newClassName = className ? className : ''
 
   return (
-    <div className="d-inline ethicality-icon">
-      <Icon className={`${props.className}`} />
+    <div id={id} className="ethicality-icon">
+      <Icon className={`${newClassName}`} />
       {uuid &&
-        <Tooltip placement="top" target={uuid} delay={0}>{name}</Tooltip>
+        <Tooltip placement="top" target={id} delay={0}>{name}</Tooltip>
       }
     </div>
   )

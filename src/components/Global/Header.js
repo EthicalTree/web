@@ -16,7 +16,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  NavDropdown,
+  Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
@@ -42,33 +42,38 @@ const Header = (props) => {
 
   return (
     <div className={fixedHeaderWrapper}>
-      <Navbar light toggleable className={fixedHeader}>
-        <NavbarToggler right onClick={e => { dispatch({ type: 'TOGGLE_HEADER_ACCESSIBLE' }) }} />
+      <Navbar light expand="md" className={fixedHeader}>
 
         <Link className="navbar-brand" to="/">
           <span className="sr-only">EthicalTree</span>
           <img className="ml-4 mr-2" src="/assets/images/logo/logo-full-128.png" alt="EthicalTree Logo" />
         </Link>
 
+        <NavbarToggler
+          onClick={e => { dispatch({ type: 'TOGGLE_HEADER_ACCESSIBLE' }) }}
+        />
+
         {hasSearch &&
-          <Col lg="7" className="hidden-md-down" >
+          <Col lg="7" xl="5" className="mt-3 d-none d-lg-block">
             <Search />
           </Col>
         }
 
         <Collapse isOpen={header.isOpen} navbar>
           {session.user &&
-            <Nav navbar className="right-nav ml-auto">
+            <Nav navbar className="ml-auto">
               <NavItem>
                 <Button
                   color="success"
-                  className="mr-3"
+                  block
+                  className="mt-3"
                   onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'add_listing' }) }}>
                   Add Listing
                 </Button>
               </NavItem>
 
-              <NavDropdown
+              <Dropdown
+                nav
                 className="account-dropdown"
                 isOpen={header.isAccountDropdownOpen}
                 toggle={() => dispatch({ type: 'TOGGLE_HEADER_ACCOUNT_DROPDOWN' })}
@@ -89,7 +94,7 @@ const Header = (props) => {
                     Logout
                   </DropdownItem>
                 </DropdownMenu>
-              </NavDropdown>
+              </Dropdown>
             </Nav>
           }
 

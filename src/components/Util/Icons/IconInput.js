@@ -2,7 +2,7 @@ import './IconInput.sass'
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Input, InputGroup } from 'reactstrap'
+import { Input } from 'reactstrap'
 import AppIcons from './AppIcons'
 
 const IconInput = props => {
@@ -10,10 +10,10 @@ const IconInput = props => {
   const Icon = AppIcons[icon]
 
   return (
-    <InputGroup className={`icon-input ${className}`}>
+    <div className={`icon-input ${className}`}>
       <Input {...inputProps} />
       <Icon />
-    </InputGroup>
+    </div>
   )
 }
 

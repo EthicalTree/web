@@ -41,7 +41,7 @@ const AsideInfo = (props) => {
 
   return (
     <aside className={className}>
-      <div className="hidden-sm-down">
+      <div className="d-none d-md-block">
         <EthicalityArea
           dispatch={dispatch}
           ethicalityChoices={listing.ethicalityChoices}
@@ -172,8 +172,7 @@ const ListingContent = (props) => {
 
   return (
     <div className="row listing-content">
-
-      <div className="col-12 hidden-md-up">
+      <div className="mobile-ethicalities col-12 d-md-none">
         <EthicalityArea
           dispatch={dispatch}
           ethicalityChoices={listing.ethicalityChoices}
