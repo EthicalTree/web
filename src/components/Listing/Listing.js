@@ -1,3 +1,5 @@
+import './Listing.sass'
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -27,7 +29,7 @@ import Loader from '../Global/Loader'
 import ImageManager from '../Global/ImageManager'
 import { hasPermission } from '../../utils/permissions'
 
-import './Listing.sass'
+import { setConfirm } from '../../actions/confirm'
 
 const TitleBar = (props) => {
   return (
@@ -247,6 +249,7 @@ class Listing extends React.Component {
               emptyText="No photos added"
               canEdit={hasPermission('update', listing)}
               signingParams={{ slug: listing.slug }}
+              locationKey="listing-images"
               fullScreenAction={{
                 handleAction: image => {
                   dispatch({ type: 'SET_FULLSCREEN_MODAL_IMAGES', data: [...listing.images] })
@@ -256,16 +259,22 @@ class Listing extends React.Component {
                 title: 'Enlarge Photo',
               }}
               coverAction={{
-                handleAction: makeImageCover,
-                title: 'Set Cover Photo',
-                confirmMsg: 'Are you sure you want to make this photo your cover photo?',
-                data: { listingSlug: listing.slug }
+                handleAction: image => dispatch(setConfirm({
+                  title: 'Set Cover Photo',
+                  msg: 'Are you sure you want to make this photo your cover photo?',
+                  action: makeImageCover,
+                  data: {listingSlug: listing.slug, imageId: image.id}
+                })),
+                title: 'Set Cover Photo'
               }}
               deleteAction={{
-                handleAction: deleteImageFromListing,
-                title: 'Delete Photo',
-                confirmMsg: 'Are you sure you want to delete this photo?',
-                data: { listingSlug: listing.slug }
+                handleAction: image => dispatch(setConfirm({
+                  title: 'Delete Photo',
+                  msg: 'Are you sure you want to delete this photo?',
+                  action: deleteImageFromListing,
+                  data: {listingSlug: listing.slug, imageId: image.id}
+                })),
+                title: 'Delete Photo'
               }}
               addAction={{
                 handleAction: image => dispatch(addImageToListing({

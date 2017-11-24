@@ -38,6 +38,7 @@ class FullScreenImageModal extends React.Component {
           images={modal.fullScreenImages}
           currentImage={modal.fullScreenCurrentImage}
           renderWithImgTag={true}
+          locationKey="fullscreen-image"
           styleOverrides={url => ({
             height: '100%',
             maxWidth: '100%',

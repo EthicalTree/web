@@ -6,6 +6,8 @@ import {
   deleteImageFromMenu
 } from '../../actions/listing'
 
+import { setConfirm } from '../../actions/confirm'
+
 const ListingMenu = props => {
   const {
     dispatch,
@@ -29,6 +31,7 @@ const ListingMenu = props => {
         emptyText="No menu has been added to this listing...yet!"
         canEdit={canEdit}
         signingParams={{ slug: listingSlug, menuId: menu.id }}
+        locationKey="listing-menu-images"
         styleOverrides={url => {
           return {
             background: `url('${url}')`,
@@ -44,13 +47,13 @@ const ListingMenu = props => {
           title: 'Enlarge Photo',
         }}
         deleteAction={{
-          handleAction: deleteImageFromMenu,
+          handleAction: image => dispatch(setConfirm({
+            title: 'Delete Menu Photo',
+            msg: 'Are you sure you want to delete this photo from the menu?',
+            action: deleteImageFromMenu,
+            data: {listingSlug: listingSlug, menuId: menu.id, imageId: image.id}
+          })),
           title: 'Delete Menu Photo',
-          confirmMsg: 'Are you sure you want to delete this photo from the menu?',
-          data: {
-            listingSlug: listingSlug,
-            menuId: menu.id
-          }
         }}
         addAction={{
           handleAction: image => dispatch(addImageToMenu({

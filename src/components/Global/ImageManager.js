@@ -2,25 +2,53 @@ import './ImageManager.sass'
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import uuid4 from 'uuid'
 
 import { UncontrolledTooltip as Tooltip } from 'reactstrap'
 import Loader from '../Global/Loader'
 import S3Uploader from '../Global/S3'
 import ETSlider from './Slider'
 
-import { setConfirm } from '../../actions/confirm'
+const Action = props => {
+  const { action, noClick, type, icon, currentImage, locationKey } = props
+
+  const id = `${type}-${locationKey}`
+  let onClick = () => {}
+
+  if (!action.handleAction) {
+    return null
+  }
+
+  if (!noClick) {
+    onClick = e => {
+      e.preventDefault()
+      action.handleAction(currentImage)
+    }
+  }
+
+  return (
+    <i
+      id={id}
+      title={action.title}
+      role="button"
+      tabIndex="0"
+      onClick={onClick}
+      className={`icon-button fa ${icon}`}
+    >
+      <Tooltip placement="bottom" target={id} delay={0}>{action.title}</Tooltip>
+    </i>
+  )
+}
 
 const ImageActions = (props) => {
   const {
-    dispatch,
     canEdit,
     currentImage,
     coverAction,
     deleteAction,
     addAction,
     fullScreenAction,
-    signingParams
+    signingParams,
+    locationKey
   } = props
 
   const hasActions = (
@@ -29,12 +57,6 @@ const ImageActions = (props) => {
     !!deleteAction.handleAction ||
     !!addAction.handleAction
   )
-
-  const uuid = uuid4()
-  const fullscreenId = `fullscreen-${uuid}`
-  const coverId = `cover-${uuid}`
-  const deleteId = `delete-${uuid}`
-  const addId = `add-${uuid}`
 
   if (!hasActions) {
     return null
@@ -45,76 +67,46 @@ const ImageActions = (props) => {
       <div className="actions">
         <div><div className="triangle"></div></div>
 
-        {!!fullScreenAction.handleAction &&
-          <i
-            id={fullscreenId}
-            title={fullScreenAction.title}
-            role="button"
-            tabIndex="0"
-            onClick={e => {
-              e.preventDefault()
-              fullScreenAction.handleAction(currentImage)
-            }}
-            className="icon-button fa fa-search-plus"
-          >
-            <Tooltip placement="bottom" target={fullscreenId} delay={0}>{fullScreenAction.title}</Tooltip>
-          </i>
-        }
+        <Action
+          type="fullscreen"
+          icon="fa-search-plus"
+          currentImage={currentImage}
+          action={fullScreenAction}
+          locationKey={locationKey}
+        />
 
         {canEdit &&
           <span>
-            {!!coverAction.handleAction &&
-              <i
-                id={coverId}
-                title={coverAction.title}
-                role="button"
-                tabIndex="0"
-                onClick={() => dispatch(setConfirm({
-                  title: coverAction.title,
-                  msg: coverAction.confirmMsg,
-                  action: coverAction.handleAction,
-                  data: {...coverAction.data, imageId: currentImage.id}
-                }))}
-                className="icon-button fa fa-file-picture-o"
-              >
-                <Tooltip placement="bottom" target={coverId} delay={0}>{coverAction.title}</Tooltip>
-              </i>
-            }
+            <Action
+              type="cover"
+              icon="fa-file-picture-o"
+              currentImage={currentImage}
+              action={coverAction}
+              locationKey={locationKey}
+            />
 
-            {!!deleteAction.handleAction &&
-              <i
-                id={deleteId}
-                title={deleteAction.title}
-                role="button"
-                tabIndex="0"
-                onClick={() => dispatch(setConfirm({
-                  title: deleteAction.title,
-                  msg: deleteAction.confirmMsg,
-                  action: deleteAction.handleAction,
-                  data: {...deleteAction.data, imageId: currentImage.id}
-                }))}
-                className="icon-button fa fa-trash image-delete"
-              >
-                <Tooltip placement="bottom" target={deleteId} delay={0}>{deleteAction.title}</Tooltip>
-              </i>
-            }
+            <Action
+              type="delete"
+              icon="fa-trash"
+              currentImage={currentImage}
+              action={deleteAction}
+              locationKey={locationKey}
+            />
 
-            {!!addAction.handleAction &&
-              <S3Uploader
-                onProgress={props.onImageUploadProgress}
-                onFinish={addAction.handleAction}
-                signingUrlQueryParams={signingParams}>
-
-                <i
-                  id={addId}
-                  title={addAction.title}
-                  tabIndex="0"
-                  role="button"
-                  className="icon-button fa fa-plus-circle" />
-                <Tooltip placement="bottom" target={addId} delay={0}>{addAction.title}</Tooltip>
-
-              </S3Uploader>
-            }
+            <S3Uploader
+              onProgress={props.onImageUploadProgress}
+              onFinish={addAction.handleAction}
+              signingUrlQueryParams={signingParams}
+            >
+              <Action
+                type="add"
+                icon="fa-plus-circle"
+                currentImage={currentImage}
+                action={addAction}
+                locationKey={locationKey}
+                noClick={true}
+              />
+            </S3Uploader>
           </span>
         }
 
