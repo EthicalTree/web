@@ -5,6 +5,7 @@ import { getCurrentUser } from '../../actions/session'
 import { authenticate } from '../../utils/api'
 
 import { logPageView } from '../RouteActions/GA'
+import { ScrollTop } from '../RouteActions/ScrollTop'
 import history from '../../utils/history'
 import { ConnectedRouter } from 'react-router-redux'
 
@@ -68,6 +69,7 @@ class App extends React.Component {
             {!session.userLoading &&
               <InnerApp {...this.props}>
                 <Route component={logPageView} />
+                <Route component={ScrollTop} />
 
                 <Header />
 
