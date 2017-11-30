@@ -14,40 +14,57 @@ import {
 import querystring from 'querystring'
 import IconInput from '../Util/Icons/IconInput'
 
-const Suggestion = (props) => {
+import { getCategories, getLocations } from '../../actions/search'
+
+const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
   return (
-    <div></div>
+    <span>{suggestion}</span>
   )
 }
 
+const CategorySuggestion = props => {
+
+}
+
 const LocationInput = props => {
+  const { onClick, isLocationFocused, value, ...inputProps } = props
+  let newValue = value
+
+  if (!newValue && !isLocationFocused) {
+    newValue = 'Near Me'
+  }
+
   return (
     <IconInput
       className="location-input"
-      icon="road_sign"
-      inputProps={{
-        placeholder: 'Where?'
-      }}
+      leftIcon="road_sign"
+      rightIcon="chevron_down"
+      onClick={onClick}
+      inputProps={{...inputProps, value: newValue}}
     />
   )
 }
 
 class Search extends React.Component {
 
+  onLocationSearch = e => {
+    e.preventDefault()
+    console.log(e.target.value)
+  }
+
   constructor(props) {
     super(props)
 
     this.state = {
       query: '',
-      dirty: false
+      dirty: false,
+      isLocationFocused: false
     }
-
-    this.autocomplete = new window.google.maps.places.AutocompleteService()
   }
 
-  onLocationSearch(e) {
+  onLocationClick(e) {
     e.preventDefault()
-    console.log(e.target.value)
+    this.locationInput.focus()
   }
 
   onChange(e, {newValue}) {
@@ -63,6 +80,7 @@ class Search extends React.Component {
 
     const paramsObj = {
       ethicalities: search.selectedEthicalities.join(','),
+      location: search.location,
       page: 0
     }
 
@@ -72,16 +90,10 @@ class Search extends React.Component {
     }
   }
 
-  onSuggestionsFetchRequested() {
-
-  }
-
-  onSuggestionsClearRequested() {
-
-  }
-
   render() {
-    const { search } = this.props
+    const { search, dispatch } = this.props
+
+    const { isLocationFocused } = this.state
     let { query, dirty } = this.state
 
     if (!dirty && search.query) {
@@ -92,17 +104,38 @@ class Search extends React.Component {
       <Col>
         <Row noGutters className="et-search">
           <Col xs="12" md="4" lg="3" className="mb-2">
-            <LocationInput />
+            <Autosuggest
+              suggestions={search.locationSuggestions}
+              onSuggestionsFetchRequested={value => dispatch(getLocations(value))}
+              onSuggestionsClearRequested={() => dispatch({ type: 'CLEAR_SEARCH_LOCATIONS' })}
+              getSuggestionValue={suggestion => suggestion}
+              renderSuggestion={LocationSuggestion}
+              renderInputComponent={LocationInput}
+              focusInputOnSuggestionClick={false}
+              inputProps={{
+                onClick: this.onLocationClick.bind(this),
+                isLocationFocused: isLocationFocused,
+                innerRef: locationInput => { this.locationInput = locationInput },
+                location: search.location,
+                value: search.location,
+                placeholder: 'Where?',
+                onFocus: () => { this.setState({ isLocationFocused: true }) },
+                onBlur: () => { this.setState({ isLocationFocused: false }) },
+                onChange: (e, value) => {
+                  dispatch({ type: 'SET_SEARCH_LOCATION', data: value.newValue })
+                }
+              }}
+            />
           </Col>
 
           <Col xs="12" md="5" lg="7" className="mb-2">
             <Autosuggest
-              suggestions={[]}
-              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested.bind(this)}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested.bind(this)}
-              getSuggestionValue={suggestion => suggestion.name}
-              renderSuggestion={Suggestion}
-              renderInputComponent={props => (<IconInput icon="search" inputProps={props} />)}
+              suggestions={search.categorySuggestions}
+              onSuggestionsFetchRequested={() => dispatch(getCategories())}
+              onSuggestionsClearRequested={() => dispatch({ type: 'CLEAR_SEARCH_CATEGORIES' })}
+              getSuggestionValue={suggestion => suggestion}
+              renderSuggestion={CategorySuggestion}
+              renderInputComponent={props => (<IconInput leftIcon="search" inputProps={props} />)}
               inputProps={{
                 className: "category-input",
                 placeholder: 'What are you looking for?',
@@ -132,7 +165,7 @@ class Search extends React.Component {
 const select = (state) => {
   return {
     search: state.search,
-    router: state.router
+    session: state.session
   }
 }
 

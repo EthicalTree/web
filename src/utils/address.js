@@ -1,4 +1,3 @@
-
 class AddressException {
   constructor(msg) {
     this.message = msg

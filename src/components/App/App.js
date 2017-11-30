@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Header, Footer } from '../Global'
-import { getCurrentUser } from '../../actions/session'
+import { getCurrentUser, getSessionInformation } from '../../actions/session'
 import { authenticate } from '../../utils/api'
 
 import { logPageView } from '../RouteActions/GA'
@@ -56,6 +56,8 @@ class App extends React.Component {
     } else {
       dispatch({ type: 'SET_USER_LOADING', data: false })
     }
+
+    dispatch(getSessionInformation())
   }
 
   render() {

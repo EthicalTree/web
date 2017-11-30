@@ -169,3 +169,12 @@ export const getCurrentUser = () => {
   }
 }
 
+export const getSessionInformation = () => {
+  return dispatch => {
+    api.get('/sessions')
+      .then(response => {
+        dispatch({ type: 'SET_SESSION_INFO', data: response.data })
+      })
+  }
+}
+

@@ -5,8 +5,9 @@
 
   input
     padding-left: 45px !important
+    padding-right: 45px !important
 
-    &:focus + svg
+    &:focus ~ svg
       fill: rgba($color-inverse, 0.7)
 
   svg
@@ -15,8 +16,13 @@
     position: absolute
     z-index: 9
     margin: auto
-    left: 10px
     top: 0
     bottom: 0
+
+  .first-icon
+    left: 10px
+
+  .last-icon
+    right: 10px
 
 

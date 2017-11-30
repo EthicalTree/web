@@ -7,6 +7,7 @@ import PiggyBankIcon from './RawIcons/PiggyBankIcon'
 // Utility Icons
 import SearchIcon from './RawIcons/SearchIcon'
 import RoadSignIcon from './RawIcons/RoadSignIcon'
+import ChevronDownIcon from './RawIcons/ChevronDownIcon'
 
 export default {
   leaf: LeafIcon,
@@ -14,5 +15,6 @@ export default {
   portrait_female: PortraitFemaleIcon,
   piggy_bank: PiggyBankIcon,
   search: SearchIcon,
-  road_sign: RoadSignIcon
+  road_sign: RoadSignIcon,
+  chevron_down: ChevronDownIcon
 }

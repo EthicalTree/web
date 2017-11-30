@@ -1,4 +1,5 @@
 import store from 'store'
+import { getLocation } from '../models/session'
 
 const defaultState = {
   userLoading: true,
@@ -8,6 +9,8 @@ const defaultState = {
 const session = (state=defaultState, action) => {
 
   switch (action.type) {
+    case 'SET_SESSION_INFO':
+      return {...state, location: getLocation(action.data)}
     case 'SET_LOGIN_INFO':
       return {...state, loginInfo: action.data}
     case 'SET_FORGOT_PASSWORD_LOADING':

@@ -6,19 +6,23 @@ import { Input } from 'reactstrap'
 import AppIcons from './AppIcons'
 
 const IconInput = props => {
-  const { icon, inputProps, className } = props
-  const Icon = AppIcons[icon]
+  const { leftIcon, rightIcon, inputProps, className, onClick } = props
+
+  const LeftIcon = AppIcons[leftIcon]
+  const RightIcon = AppIcons[rightIcon]
 
   return (
-    <div className={`icon-input ${className}`}>
+    <div tabIndex="-1" onClick={onClick} className={`icon-input ${className}`}>
       <Input {...inputProps} />
-      <Icon />
+      {leftIcon && <LeftIcon className="first-icon" />}
+      {rightIcon && <RightIcon className="last-icon" />}
     </div>
   )
 }
 
 IconInput.propTypes = {
-  icon: PropTypes.string,
+  leftIcon: PropTypes.string,
+  rightIcon: PropTypes.string,
   inputProps: PropTypes.object,
   className: PropTypes.string
 }
