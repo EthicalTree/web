@@ -64,7 +64,18 @@ class Search extends React.Component {
 
   onLocationClick(e) {
     e.preventDefault()
+    const { dispatch } = this.props
+    dispatch({ type: 'SET_SEARCH_LOCATION', data: '' })
+    dispatch(getLocations(''))
     this.locationInput.focus()
+  }
+
+  onLocationSelected(thing) {
+    this.categoryInput.focus()
+  }
+
+  shouldRenderLocationSelections(thing) {
+    return true
   }
 
   onChange(e, {newValue}) {
@@ -106,11 +117,13 @@ class Search extends React.Component {
           <Col xs="12" md="4" lg="3" className="mb-2">
             <Autosuggest
               suggestions={search.locationSuggestions}
-              onSuggestionsFetchRequested={value => dispatch(getLocations(value))}
+              onSuggestionsFetchRequested={({ value }) => dispatch(getLocations(value))}
               onSuggestionsClearRequested={() => dispatch({ type: 'CLEAR_SEARCH_LOCATIONS' })}
               getSuggestionValue={suggestion => suggestion}
+              onSuggestionSelected={this.onLocationSelected.bind(this)}
               renderSuggestion={LocationSuggestion}
               renderInputComponent={LocationInput}
+              shouldRenderSuggestions={this.shouldRenderLocationSelections.bind(this)}
               focusInputOnSuggestionClick={false}
               inputProps={{
                 onClick: this.onLocationClick.bind(this),
@@ -137,6 +150,7 @@ class Search extends React.Component {
               renderSuggestion={CategorySuggestion}
               renderInputComponent={props => (<IconInput leftIcon="search" inputProps={props} />)}
               inputProps={{
+                innerRef: categoryInput => { this.categoryInput = categoryInput },
                 className: "category-input",
                 placeholder: 'What are you looking for?',
                 onChange: this.onChange.bind(this),

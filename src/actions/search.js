@@ -1,11 +1,12 @@
 import querystring from 'querystring'
 import { api } from '../utils/api'
 
-export const performSearch = (query, ethicalities, page) => {
+export const performSearch = (query, ethicalities, location, page) => {
 
   const queryObj = {
     query,
     ethicalities: ethicalities.join(','),
+    location,
     page
   }
 

@@ -163,21 +163,23 @@ class SearchResultsPage extends React.Component {
 
     dispatch({ type: 'SET_SEARCH_QUERY', data: match.params.query })
     dispatch({ type: 'SET_SEARCH_PAGE', data: queryParams.page })
+    dispatch({ type: 'SET_SEARCH_LOCATION', data: queryParams.location })
     dispatch({ type: 'SET_SEARCH_ETHICALITIES', data: queryParams.ethicalities})
   }
 
   componentDidMount() {
     const queryParams = this.getQueryParams()
 
-    this.performSearch(queryParams.page, queryParams.ethicalities)
+    this.performSearch(queryParams.page, queryParams.ethicalities, queryParams.location)
   }
 
-  performSearch(newPage=0, ethicalities) {
+  performSearch(newPage=0, ethicalities, location) {
     const { match, dispatch, search } = this.props
     const query = search.query ? search.query : match.params.query || ''
     const selectedEthicalities = ethicalities ? ethicalities : search.selectedEthicalities
+    const searchLocation = location ? location : search.location
 
-    dispatch(performSearch(query, selectedEthicalities, newPage))
+    dispatch(performSearch(query, selectedEthicalities, searchLocation, newPage))
   }
 
   search(newPage=0, ethicalities) {
@@ -185,6 +187,7 @@ class SearchResultsPage extends React.Component {
 
     const paramsObj = {
       ethicalities: ethicalities.join(','),
+      location: search.location,
       page: newPage
     }
 
