@@ -1,0 +1,30 @@
+@import 'variables'
+
+.open-close
+  font-size: 14px
+
+  &.open
+    color: $color-success
+    svg
+      fill: $color-success
+
+  &.closed
+    color: $color-danger
+    svg
+      fill: $color-danger
+
+  &.opening_soon, &.closing_soon
+    color: darken($color-warning, 15%)
+    svg
+      fill: darken($color-warning, 15%)
+
+
+  .icon-label
+    padding-left: 5px
+    vertical-align: top
+
+  svg
+    width: 18px
+    height: 18px
+
+

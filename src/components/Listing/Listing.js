@@ -56,6 +56,7 @@ const AsideInfo = (props) => {
         dispatch={dispatch}
         hours={listing.operatingHours}
         canEdit={hasPermission('update', listing)}
+        status={listing.openStatus}
       />
     </aside>
   )

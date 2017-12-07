@@ -1,4 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
+import OpenClose from '../Util/DateTime/OpenClose'
 
 const DailyHours = (props) => {
   const { label, hours } = props.hours
@@ -18,7 +21,7 @@ const DailyHours = (props) => {
 }
 
 const OperatingHours = (props) => {
-  const { dispatch, hours, canEdit } = props
+  const { dispatch, hours, canEdit, status } = props
   const hasHours = hours && hours.length > 0
 
   return (
@@ -26,6 +29,11 @@ const OperatingHours = (props) => {
       <div className="card-header">
         Operating Hours
       </div>
+
+      <div className="mt-4">
+        <OpenClose status={status} />
+      </div>
+
       <div className="card-body pt-3">
         {canEdit && hasHours &&
           <button
@@ -60,6 +68,18 @@ const OperatingHours = (props) => {
       </div>
     </div>
   )
+}
+
+OperatingHours.propTypes = {
+  status: PropTypes.oneOf(['opening_soon', 'open', 'closing_soon', 'closed']),
+  hours: PropTypes.array,
+  canEdit: PropTypes.bool
+}
+
+OperatingHours.defaultProps = {
+  status: 'closed',
+  hours: [],
+  canEdit: false
 }
 
 export default OperatingHours

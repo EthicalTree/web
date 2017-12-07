@@ -9,6 +9,11 @@ import SearchIcon from './RawIcons/SearchIcon'
 import RoadSignIcon from './RawIcons/RoadSignIcon'
 import ChevronDownIcon from './RawIcons/ChevronDownIcon'
 
+// Date Time Icons
+import StopwatchIcon from './RawIcons/StopwatchIcon'
+import StopwatchCrossIcon from './RawIcons/StopwatchCrossIcon'
+import StopwatchRunningIcon from './RawIcons/StopwatchRunningIcon'
+
 export default {
   leaf: LeafIcon,
   carrot: CarrotIcon,
@@ -16,5 +21,8 @@ export default {
   piggy_bank: PiggyBankIcon,
   search: SearchIcon,
   road_sign: RoadSignIcon,
-  chevron_down: ChevronDownIcon
+  chevron_down: ChevronDownIcon,
+  stopwatch: StopwatchIcon,
+  stopwatch_cross: StopwatchCrossIcon,
+  stopwatch_running: StopwatchRunningIcon
 }

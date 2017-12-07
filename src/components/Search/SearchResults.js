@@ -4,6 +4,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Search } from '../Search'
 import ResultsMap from './ResultsMap'
+import OpenClose from '../Util/DateTime/OpenClose'
+
 import querystring from 'querystring'
 import { OverlayView } from 'react-google-maps'
 
@@ -48,7 +50,6 @@ class Result extends React.Component {
             className="card-img"
             style={extraStyle}
           >
-
           </div>
           <CardBody>
             <CardTitle className="d-flex justify-content-between flex-row-reverse">
@@ -68,6 +69,7 @@ class Result extends React.Component {
               </span>
             </CardTitle>
 
+            <OpenClose status={listing.openStatus} />
           </CardBody>
         </Card>
       </Col>
