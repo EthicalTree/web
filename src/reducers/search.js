@@ -7,12 +7,15 @@ const defaultSearch = {
   hoveredResult: null,
   location: '',
   locationSuggestions: [],
-  categorySuggestions: []
+  categorySuggestions: [],
+  resultMode: 'listing'
 }
 
 const search = (state=defaultSearch, action) => {
 
   switch (action.type) {
+    case 'TOGGLE_SEARCH_RESULTS_MODE':
+      return {...state, resultMode: state.resultMode === 'map' ? 'listing' : 'map'}
     case 'SET_SEARCH_LOCATION':
       return {...state, location: action.data}
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':

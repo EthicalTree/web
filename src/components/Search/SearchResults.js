@@ -4,6 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Search } from '../Search'
 import ResultsMap from './ResultsMap'
+import MapSwitcher from './MapSwitcher'
 import OpenClose from '../Util/DateTime/OpenClose'
 
 import querystring from 'querystring'
@@ -91,6 +92,7 @@ const SearchResults = (props) => {
 
   const hasSearch = history.location.pathname !== '/'
   const hasListings = search.listings && search.listings.length > 0
+  const mobileHidden = search.resultMode === 'map' ? 'd-none d-xl-block' : ''
 
   const onEthicalitySelect = slug => {
     const newSelectedEthicalities = toggleSearchEthicalities(selectedEthicalities, slug)
@@ -100,7 +102,7 @@ const SearchResults = (props) => {
   }
 
   return (
-    <Col xs="12" xl="8" className="search-results p-4">
+    <Col xs="12" xl="8" className={`search-results p-4 ${mobileHidden}`}>
       {hasSearch &&
         <Col className="d-lg-none d-xl-none mb-3" >
           <Search />
@@ -258,8 +260,8 @@ class SearchResultsPage extends React.Component {
               overlay={this.getOverlay()}
             />
           </Row>
-
         </Col>
+        <MapSwitcher mode={search.resultMode} />
       </Loader>
     )
   }

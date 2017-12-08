@@ -5,41 +5,26 @@ import { Col } from 'reactstrap'
 
 class ResultsMap extends React.Component {
 
-  addBounds = location => {
-    const { bounds } = this.state
-    bounds.extend(new window.google.maps.LatLng(location.lat, location.lng))
-  }
-
-  boundsChanged = () => {
-
-  }
-
   constructor(props) {
     super(props)
 
-    this.state = {
-      bounds: new window.google.maps.LatLngBounds()
-    }
-  }
-
-  shouldComponentUpdate(newProps, newState) {
-    const { search } = newProps
-    const oldSearch = this.props.search
-
-    const listingsChanged = search.listings.map(l => oldSearch.listings.find(ol => ol.slug === l.slug)).some(l => !l)
-    const resultChanged = search.selectedResult !== oldSearch.selectedResult
-    const zoomChanged = newState.zoom !== this.state.zoom
-    return resultChanged || zoomChanged || listingsChanged
+    this.state = {}
   }
 
   render() {
     const { search, dispatch, overlay } = this.props
-    const { bounds, zoom } = this.state
+    const { zoom } = this.state
+    const hiddenClass = search.resultMode === 'listing' ? 'd-none d-xl-block' : ''
+    let bounds = new window.google.maps.LatLngBounds()
+
+    search.listings.forEach(l => {
+      const location = l.locations[0]
+      bounds.extend(new window.google.maps.LatLng(location.lat, location.lng))
+    })
 
     const markers = (
       <Markers
         listings={search.listings}
-        addBounds={this.addBounds}
         onMarkerClick={slug => {
           const newSlug = !!search.selectedResult && search.selectedResult === slug ? null : slug
           dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: newSlug })
@@ -53,20 +38,19 @@ class ResultsMap extends React.Component {
     const onLoad = map => {
       if (map) {
         this.map = map
-
         map.fitBounds(bounds)
       }
     }
 
     return (
-      <Col className="search-map-area" sm="4">
+      <Col className={`search-map-area ${hiddenClass}`}>
         <div className="search-map">
           <Map
+            key={search.resultMode}
             onLoad={onLoad}
             onClick={() => {
               setTimeout(() => dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: null }), 0)
             }}
-            onBoundsChanged={this.boundsChanged}
             markers={markers}
             overlay={overlay}
             zoom={zoom}

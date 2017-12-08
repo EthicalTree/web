@@ -5,7 +5,6 @@ import Marker from './Marker'
 const Markers = props => {
   const {
     listings,
-    addBounds,
     onMarkerClick,
     onMarkerMouseOver,
     onMarkerMouseOut
@@ -15,10 +14,6 @@ const Markers = props => {
     <div>
       {listings.map(listing => {
         const location = listing.locations[0]
-
-        if (addBounds) {
-          addBounds(location)
-        }
 
         return (
           <Marker
