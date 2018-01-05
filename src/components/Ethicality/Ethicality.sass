@@ -10,13 +10,30 @@
 .ethicality-toggle
   display: inline-block
   opacity: 0.5
+  height: 100%
 
   svg
     width: 32px
     height: 32px
     fill: lighten($color-inverse, 20%)
 
+  &.ethicality-small
+    padding: 4px 8px
+    margin: 0 4px
+    display: flex
+    align-items: center
+    opacity: 0.5
+    border: 1px solid $color-border
+
+    .ethicality-icon
+      height: 18px
+
+    svg
+      width: 18px
+      height: 18px
+
   .name
+    margin-left: 6px
     font-weight: $font-light
 
   @media (max-width: $screen-xs-max)//{}
@@ -31,30 +48,23 @@
     transition: all 0.2s ease
 
     &:hover
-      color: darken($color-success, 5%)
-      border-color: $color-success
-      background-color: rgba($color-success, 0.01)
+      color: $color-inverse
+      border-color: $color-inverse
+      background-color: rgba($color-inverse, 0.01)
       opacity: 1
 
       svg
-        fill: darken($color-success, 5%)
-
-      &.bordered
-        box-shadow: 0 0 5px rgba($color-success, 0.67)
+        fill: $color-inverse
 
     &.bordered
       border: 1px solid $color-border
 
     &.selected
-      color: darken($color-primary, 10%)
-      border-color: $color-primary
-      background-color: rgba($color-primary, 0.01)
+      color: $color-white
+      border-color: lighten($color-inverse, 0%)
+      background-color: lighten($color-inverse, 0%)
       opacity: 1
 
       svg
-        fill: darken($color-primary, 10%)
-
-      &.bordered
-        box-shadow: 0 0 5px rgba($color-primary, 0.67)
-
+        fill: $color-white
 

@@ -110,8 +110,8 @@ const SearchResults = (props) => {
       }
       <EthicalityBar
         className="search-results-ethicalities"
-        showLabels={false}
-        showTooltips={true}
+        showLabels={true}
+        showTooltips={false}
         ethicalities={ethicalities}
         onEthicalitySelect={onEthicalitySelect}
         selectedEthicalities={selectedEthicalities}

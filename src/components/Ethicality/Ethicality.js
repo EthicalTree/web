@@ -14,21 +14,24 @@ const EthicalityBar = (props) => {
     selectedEthicalities,
     onEthicalitySelect,
     showLabels,
-    showTooltips
+    showTooltips,
+    showIcons
   } = props
 
   return (
-    <div className={`${props.className} d-flex justify-content-around`}>
+    <div className={`${props.className} d-flex justify-content-center`}>
       {ethicalities.map(ethicality => {
         return (
-          <span key={ethicality.slug} className="p-2">
+          <span key={ethicality.slug}>
             <Ethicality
+              className="ethicality-small"
               name={ethicality.name}
               slug={ethicality.slug}
               iconKey={ethicality.iconKey}
               selected={!!selectedEthicalities.find(e => e === ethicality.slug)}
               onSelect={onEthicalitySelect}
               showLabel={showLabels}
+              showIcon={showIcons}
               showTooltip={showTooltips}
             />
           </span>
@@ -47,7 +50,8 @@ const Ethicality = (props) => {
     className,
     selected,
     showLabel,
-    showTooltip
+    showTooltip,
+    showIcon
   } = props
 
   const selectable = !!onSelect
@@ -71,13 +75,15 @@ const Ethicality = (props) => {
       onClick={clickWrapper}
       className={`ethicality-toggle text-center ${slugClass} ${selectClass} ${selectedClass} ${newClassName}`}
     >
-      <EthicalityIcon
-        ethicalityKey={iconKey}
-        name={name}
-        uuid={uuid}
-      />
+      {showIcon !== false &&
+        <EthicalityIcon
+          ethicalityKey={iconKey}
+          name={name}
+          uuid={uuid}
+        />
+      }
       {showLabel !== false &&
-        <div className="name mt-2">
+        <div className="name">
           {name}
         </div>
       }
@@ -92,12 +98,12 @@ const EthicalityIcon = (props) => {
   const newClassName = className ? className : ''
 
   return (
-    <div id={id} className="ethicality-icon">
+    <span id={id} className="ethicality-icon">
       <Icon className={`${newClassName}`} />
       {uuid &&
         <Tooltip placement="top" target={id} delay={0}>{name}</Tooltip>
       }
-    </div>
+    </span>
   )
 }
 
