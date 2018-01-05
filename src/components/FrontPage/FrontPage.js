@@ -8,15 +8,10 @@ import {
   Col
 } from 'reactstrap'
 
-import { EthicalityBar } from '../Ethicality/Ethicality'
-import { Search } from '../Search'
-import { toggleSearchEthicalities } from '../../actions/search'
+import { Search, SearchTagsBar } from '../Search'
 
 const FrontPage = (props) => {
-  const { app, search, dispatch } = props
-
-  const ethicalities = app.ethicalities || []
-  const selectedEthicalities = search.selectedEthicalities || []
+  const { search, dispatch } = props
 
   return (
     <div
@@ -24,8 +19,8 @@ const FrontPage = (props) => {
       }}
       className="front-page">
 
-      <Container className="text-center">
-        <Col className="headline" xs="12">
+      <Container>
+        <Col className="headline text-center" xs="12">
           <h1>Find local places that <span className="text-info">care</span> about what you care about.</h1>
         </Col>
 
@@ -34,16 +29,10 @@ const FrontPage = (props) => {
         </Col>
 
         <Col xs="12">
-          <EthicalityBar
-            className="front-page-ethicalities"
-            ethicalities={ethicalities}
-            onEthicalitySelect={slug => {
-              dispatch({
-                type: 'SET_SEARCH_ETHICALITIES',
-                data: toggleSearchEthicalities(selectedEthicalities, slug)
-              })
-            }}
-            selectedEthicalities={selectedEthicalities}
+          <SearchTagsBar
+            className="d-lg-none"
+            tags={search.selectedTags}
+            handleTagRemove={tag => dispatch({ type: 'REMOVE_TAG_FROM_SEARCH', data: tag })}
           />
         </Col>
       </Container>
@@ -53,7 +42,6 @@ const FrontPage = (props) => {
 
 const select = (state) => {
   return {
-    app: state.app,
     search: state.search
   }
 }

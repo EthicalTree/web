@@ -40,6 +40,7 @@ html
   min-height: 100%
 
 body
+  color: $color-inverse
   width: 100%
   margin: 0
   margin-bottom: 200px
@@ -60,11 +61,12 @@ body
     font-weight: $font-light
 
   .form-control
-    font-weight: $font-light
-    font-family: $font-family-1
+    input
+      font-weight: $font-light
+      font-family: $font-family-1
 
-    &::placeholder, &::-webkit-input-placeholder
-      opacity: 0.3
+      &::placeholder, &::-webkit-input-placeholder
+        opacity: 0.3
 
   .btn
     color: $color-white

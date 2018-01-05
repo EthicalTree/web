@@ -1,28 +1,43 @@
 @import 'variables'
 
 .icon-input
-  position: relative
+  display: flex
+  align-items: center
 
   input
-    padding-left: 45px !important
-    padding-right: 45px !important
+    flex: auto
+    outline: none
+    border: none
 
     &:focus ~ svg
-      fill: rgba($color-inverse, 0.7)
+
+  .input-area
+    display: flex
+    flex-wrap: wrap
+    align-items: center
 
   svg
     transition: fill 0.2s ease
     fill: $color-border
-    position: absolute
-    z-index: 9
-    margin: auto
-    top: 0
-    bottom: 0
+
+  .tags
+    margin-left: 8px
 
   .first-icon
     left: 10px
 
   .last-icon
     right: 10px
+
+  &.is-focused
+    border-color: rgba($color-inverse, 0.7)
+
+    svg
+      fill: rgba($color-inverse, 0.7)
+
+  @media (max-width: $screen-md-max)//{}
+    .tags
+      display: none
+
 
 

@@ -1,0 +1,37 @@
+@import 'variables'
+
+.search-tag
+  font-size: 16px
+  padding-right: 20px
+  font-weight: $font-light
+  color: rgba($color-inverse, 0.6)
+  white-space: nowrap
+
+  svg
+    fill: rgba($color-inverse, 0.6)
+
+  &:hover, &:focus
+    cursor: pointer
+    color: rgba($color-inverse, 0.8)
+
+    label
+      cursor: pointer
+
+    svg
+      fill: rgba($color-inverse, 0.8)
+
+    .remove-icon
+      svg
+        fill: $color-info
+
+  .remove-icon
+    position: relative
+
+    svg
+      position: absolute
+      top: 3px
+      left: 4px
+      height: 16px
+      width: 16px
+      fill: rgba($color-inverse, 0.2)
+

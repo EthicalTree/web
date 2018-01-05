@@ -1,13 +1,14 @@
 const defaultSearch = {
   query: '',
   selectedEthicalities: [],
+  selectedTags: [],
   selectedResult: null,
   listings: [],
   currentPage: 0,
   hoveredResult: null,
   location: '',
   locationSuggestions: [],
-  categorySuggestions: [],
+  searchSuggestions: [],
   resultMode: 'listing'
 }
 
@@ -16,10 +17,18 @@ const search = (state=defaultSearch, action) => {
   switch (action.type) {
     case 'TOGGLE_SEARCH_RESULTS_MODE':
       return {...state, resultMode: state.resultMode === 'map' ? 'listing' : 'map'}
+    case 'ADD_TAG_TO_SEARCH':
+      const tag = action.data
+      const selectedTags = state.selectedTags.filter(t => !(t.type === tag.type && t.id === tag.id))
+      return {...state, selectedTags: [...selectedTags, tag]}
+    case 'REMOVE_TAG_FROM_SEARCH':
+      return {...state, selectedTags: state.selectedTags.filter(t => (t.name !== action.data))}
     case 'SET_SEARCH_LOCATION':
       return {...state, location: action.data}
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':
       return {...state, locationSuggestions: action.data}
+    case 'SET_SEARCH_SUGGESTIONS':
+      return {...state, searchSuggestions: action.data}
     case 'SET_DEFAULT_SEARCH_LOCATION':
       return {...state, location: !state.location ? action.data : state.location}
     case 'SET_SELECTED_SEARCH_RESULT':

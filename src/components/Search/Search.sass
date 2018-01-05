@@ -2,23 +2,40 @@
 
 .et-search
   .location-input
+    height: 100%
+
     svg:last-child
       transform: scale(0.5)
+
+  .location-input-container
+    .react-autosuggest__suggestions-container--open
+      right: -1px
+
+  .tag-input-container
+    ul
+      display: flex
+      flex-direction: row
+      flex-wrap: wrap
+      justify-content: left
+
+      li
+        border-radius: 5px
+        border: 1px solid rgba($color-inverse, 0.5)
+        margin: 5px
 
 @media (min-width: $screen-md-min) // {}
   .et-search
 
     .location-input
       margin-right: -1px
-
-      input
-        border-top-right-radius: 0
-        border-bottom-right-radius: 0
+      border-top-right-radius: 0
+      border-bottom-right-radius: 0
+      border-right: 0
 
       &:hover
         cursor: pointer
 
-    .category-input
+    .tag-input
       border-radius: 0
 
     .search-button
@@ -26,32 +43,40 @@
       border-bottom-left-radius: 0
 
 .react-autosuggest__container
+  height: 100%
   position: relative
 
   .react-autosuggest__suggestions-container--open
     position: absolute
     border: 1px solid $color-border-primary
     border-top: none
-    right: -1px
     width: 100%
     z-index: 20
     border-bottom-left-radius: 5px
     border-bottom-right-radius: 5px
     background-color: $color-white
 
+  .react-autosuggest__section-title
+    padding: 5px 5px 0 20px
+    border-bottom: 1px solid $color-border
+    background-color: rgba($color-inverse, 0.94)
+    color: $color-white
 
   .react-autosuggest__suggestions-list
     list-style: none
-    padding: 0
-    margin: 5px 0
+    margin: 0
+    padding: 10px
 
     .react-autosuggest__suggestion
-      padding: 5px 20px
+      padding: 4px 10px
       color: rgba($color-inverse, 0.9)
       font-weight: $font-light
       text-align: left
 
       &:hover
+        cursor: pointer
+
+      label:hover
         cursor: pointer
 
       &.react-autosuggest__suggestion--highlighted

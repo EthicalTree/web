@@ -38,9 +38,7 @@ export const toggleSearchEthicalities = (ethicalities, slug) => {
 }
 
 export const getLocations = query => {
-  const queryObj = {
-    query
-  }
+  const queryObj = { query }
 
   return dispatch => {
     api.get(`/v1/locations?${querystring.stringify(queryObj)}`)
@@ -50,8 +48,13 @@ export const getLocations = query => {
   }
 }
 
-export const getCategories = query => {
-  return dispatch => {
+export const getSearchSuggestions = (query, exclude) => {
+  const queryObj = { query, exclude }
 
+  return dispatch => {
+    api.post(`/v1/search_suggestions`, queryObj)
+      .then(results => {
+        dispatch({ type: 'SET_SEARCH_SUGGESTIONS', data: results.data })
+      })
   }
 }

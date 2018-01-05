@@ -8,6 +8,7 @@ import PiggyBankIcon from './RawIcons/PiggyBankIcon'
 import SearchIcon from './RawIcons/SearchIcon'
 import RoadSignIcon from './RawIcons/RoadSignIcon'
 import ChevronDownIcon from './RawIcons/ChevronDownIcon'
+import CrossIcon from './RawIcons/CrossIcon'
 
 // Date Time Icons
 import StopwatchIcon from './RawIcons/StopwatchIcon'
@@ -24,5 +25,6 @@ export default {
   chevron_down: ChevronDownIcon,
   stopwatch: StopwatchIcon,
   stopwatch_cross: StopwatchCrossIcon,
-  stopwatch_running: StopwatchRunningIcon
+  stopwatch_running: StopwatchRunningIcon,
+  cross: CrossIcon
 }

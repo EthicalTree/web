@@ -1,5 +1,6 @@
 const defaultState = {
-  isAppLoading: false
+  isAppLoading: false,
+  ethicalities: []
 }
 
 const app = (state=defaultState, action) => {

@@ -2,33 +2,62 @@ import './IconInput.sass'
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Input } from 'reactstrap'
 import AppIcons from './AppIcons'
+import InputTag from '../Tag/InputTag'
 
-const IconInput = props => {
-  const { leftIcon, rightIcon, inputProps, className, onClick } = props
+class IconInput extends React.Component {
+  render() {
+    const {
+      leftIcon,
+      rightIcon,
+      className,
+      onClick,
+      tags,
+      handleTagRemove
+    } = this.props
 
-  const LeftIcon = AppIcons[leftIcon]
-  const RightIcon = AppIcons[rightIcon]
+    let { inputProps } = this.props
+    const { innerRef } = inputProps
+    delete inputProps['innerRef']
 
-  return (
-    <div tabIndex="-1" onClick={onClick} className={`icon-input ${className}`}>
-      <Input {...inputProps} />
-      {leftIcon && <LeftIcon className="first-icon" />}
-      {rightIcon && <RightIcon className="last-icon" />}
-    </div>
-  )
+    const LeftIcon = AppIcons[leftIcon]
+    const RightIcon = AppIcons[rightIcon]
+
+    return (
+      <div tabIndex="0" onClick={onClick} className={`icon-input form-control ${className}`}>
+        {leftIcon && <LeftIcon className="first-icon" />}
+        <span className="input-area">
+          {tags.length > 0 &&
+            <span className="tags">
+              {tags.map(tag => (
+                <InputTag
+                  key={tag.name}
+                  {...tag}
+                  handleRemove={handleTagRemove}
+                />
+              ))}
+            </span>
+          }
+          <input tabIndex="-1" {...inputProps} ref={innerRef} />
+        </span>
+        {rightIcon && <RightIcon className="last-icon" />}
+      </div>
+    )
+  }
 }
 
 IconInput.propTypes = {
   leftIcon: PropTypes.string,
   rightIcon: PropTypes.string,
   inputProps: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  tags: PropTypes.array,
+  handleTagRemove: PropTypes.func
 }
 
 IconInput.defaultProps = {
-  className: ''
+  className: '',
+  tags: []
 }
 
 export default IconInput

@@ -1,6 +1,7 @@
 import './Search.sass'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
 import { withRouter } from 'react-router-dom'
@@ -13,8 +14,9 @@ import {
 
 import querystring from 'querystring'
 import IconInput from '../Util/Icons/IconInput'
+import IconLabel from '../Util/Icons/IconLabel'
 
-import { getCategories, getLocations } from '../../actions/search'
+import { getSearchSuggestions, getLocations } from '../../actions/search'
 
 const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
   return (
@@ -22,8 +24,19 @@ const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
   )
 }
 
-const CategorySuggestion = props => {
+const SearchSuggestion = (suggestion, {query, isHighlighted}) => {
+  const { name, iconKey } = suggestion
 
+  return (
+    <IconLabel leftIcon={iconKey} text={name} />
+  )
+}
+
+const SearchAutosuggestTitle = props => {
+  const { title } = props
+  return (
+    <label>{title}</label>
+  )
 }
 
 const LocationInput = props => {
@@ -47,11 +60,6 @@ const LocationInput = props => {
 
 class Search extends React.Component {
 
-  onLocationSearch = e => {
-    e.preventDefault()
-    console.log(e.target.value)
-  }
-
   constructor(props) {
     super(props)
 
@@ -62,27 +70,53 @@ class Search extends React.Component {
     }
   }
 
-  onLocationClick(e) {
-    e.preventDefault()
+  fetchLocationSuggestions({value, reason}) {
     const { dispatch } = this.props
+
+    if (value && reason === 'input-focused') {
+      return
+    }
+
+    dispatch(getLocations(value))
+  }
+
+  onLocationFocus() {
+    const { dispatch } = this.props
+    this.setState({ isLocationFocused: true })
     dispatch({ type: 'SET_SEARCH_LOCATION', data: '' })
     dispatch(getLocations(''))
-    this.locationInput.focus()
   }
 
   onLocationSelected(thing) {
-    this.categoryInput.focus()
+    this.tagInput.focus()
   }
 
-  shouldRenderLocationSelections(thing) {
-    return true
+  fetchSearchSuggestions({value, reason}) {
+    const { dispatch, search } = this.props
+
+    if (value && reason === 'input-focused') {
+      return
+    }
+
+    dispatch(getSearchSuggestions(value, search.selectedTags))
   }
 
-  onChange(e, {newValue}) {
+  onSearchFocus() {
+    const { dispatch } = this.props
+    this.setState({ query: '' })
+    dispatch(getSearchSuggestions(''))
+  }
+
+  onSearchChange(e, {newValue}) {
     this.setState({
       dirty: true,
       query: newValue
     })
+  }
+
+  onSearchTagSelected(e, {suggestion}) {
+    const { dispatch } = this.props
+    dispatch({ type: 'ADD_TAG_TO_SEARCH', data: suggestion })
   }
 
   search(e) {
@@ -102,7 +136,7 @@ class Search extends React.Component {
   }
 
   render() {
-    const { search, dispatch } = this.props
+    const { search, dispatch, showTags } = this.props
 
     const { isLocationFocused } = this.state
     let { query, dirty } = this.state
@@ -111,28 +145,33 @@ class Search extends React.Component {
       query = search.query
     }
 
+    const tags = showTags && search.selectedTags.map(tag => ({
+      name: tag.name
+    }))
+
     return (
       <Col>
-        <Row noGutters className="et-search">
-          <Col xs="12" md="4" lg="3" className="mb-2">
+        <Row noGutters className={`et-search`}>
+          <Col xs="12" md="4" lg="3" className="mb-2 location-input-container">
             <Autosuggest
               suggestions={search.locationSuggestions}
-              onSuggestionsFetchRequested={({ value }) => dispatch(getLocations(value))}
+              onSuggestionsFetchRequested={this.fetchLocationSuggestions.bind(this)}
               onSuggestionsClearRequested={() => dispatch({ type: 'CLEAR_SEARCH_LOCATIONS' })}
               getSuggestionValue={suggestion => suggestion}
               onSuggestionSelected={this.onLocationSelected.bind(this)}
               renderSuggestion={LocationSuggestion}
               renderInputComponent={LocationInput}
-              shouldRenderSuggestions={this.shouldRenderLocationSelections.bind(this)}
+              onSuggestionHighlighted={() => {}}
+              shouldRenderSuggestions={() => true}
               focusInputOnSuggestionClick={false}
               inputProps={{
-                onClick: this.onLocationClick.bind(this),
+                onClick: () => this.locationInput.focus(),
                 isLocationFocused: isLocationFocused,
                 innerRef: locationInput => { this.locationInput = locationInput },
                 location: search.location,
                 value: search.location,
                 placeholder: 'Where?',
-                onFocus: () => { this.setState({ isLocationFocused: true }) },
+                onFocus: this.onLocationFocus.bind(this),
                 onBlur: () => { this.setState({ isLocationFocused: false }) },
                 onChange: (e, value) => {
                   dispatch({ type: 'SET_SEARCH_LOCATION', data: value.newValue })
@@ -141,20 +180,37 @@ class Search extends React.Component {
             />
           </Col>
 
-          <Col xs="12" md="5" lg="7" className="mb-2">
+          <Col xs="12" md="5" lg="7" className="mb-2 tag-input-container">
             <Autosuggest
-              suggestions={search.categorySuggestions}
-              onSuggestionsFetchRequested={() => dispatch(getCategories())}
+              suggestions={search.searchSuggestions}
+              onSuggestionSelected={this.onSearchTagSelected.bind(this)}
+              onSuggestionsFetchRequested={this.fetchSearchSuggestions.bind(this)}
               onSuggestionsClearRequested={() => dispatch({ type: 'CLEAR_SEARCH_CATEGORIES' })}
-              getSuggestionValue={suggestion => suggestion}
-              renderSuggestion={CategorySuggestion}
-              renderInputComponent={props => (<IconInput leftIcon="search" inputProps={props} />)}
+              getSectionSuggestions={section => section.suggestions}
+              getSuggestionValue={suggestion => query}
+              renderSuggestion={SearchSuggestion}
+              focusInputOnSuggestionClick={false}
+              multiSection={true}
+              shouldRenderSuggestions={() => true}
+              renderSectionTitle={SearchAutosuggestTitle}
+              renderInputComponent={props => (
+                <IconInput
+                  className="tag-input"
+                  leftIcon="search"
+                  tags={tags}
+                  handleTagRemove={name => {
+                    dispatch({ type: 'REMOVE_TAG_FROM_SEARCH', data: name })
+                    this.tagInput.focus()
+                  }}
+                  inputProps={props}
+                />
+              )}
               inputProps={{
-                innerRef: categoryInput => { this.categoryInput = categoryInput },
-                className: "category-input",
-                placeholder: 'What are you looking for?',
-                onChange: this.onChange.bind(this),
-                onKeyDown: this.search.bind(this),
+                onClick: () => this.tagInput.focus(),
+                innerRef: tagInput => { this.tagInput = tagInput },
+                placeholder: 'Vegetarian, Fair Trade, etc.',
+                onFocus: this.onSearchFocus.bind(this),
+                onChange: this.onSearchChange.bind(this),
                 value: query
               }}
             />
