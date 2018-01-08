@@ -37,6 +37,7 @@ const FrontPage = (props) => {
           <EthicalityBar
             className="front-page-ethicalities"
             ethicalities={ethicalities}
+            showIcons={false}
             onEthicalitySelect={slug => {
               dispatch({
                 type: 'SET_SEARCH_ETHICALITIES',

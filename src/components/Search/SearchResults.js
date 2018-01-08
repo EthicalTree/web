@@ -112,6 +112,7 @@ const SearchResults = (props) => {
         className="search-results-ethicalities"
         showLabels={true}
         showTooltips={false}
+        showIcons={false}
         ethicalities={ethicalities}
         onEthicalitySelect={onEthicalitySelect}
         selectedEthicalities={selectedEthicalities}
