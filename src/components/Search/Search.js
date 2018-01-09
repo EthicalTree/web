@@ -15,6 +15,7 @@ import querystring from 'querystring'
 import IconInput from '../Util/Icons/IconInput'
 
 import { getCategories, getLocations } from '../../actions/search'
+import { getSavedSearchLocation } from '../../utils/address'
 
 const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
   return (
@@ -31,7 +32,7 @@ const LocationInput = props => {
   let newValue = value
 
   if (!newValue && !isLocationFocused) {
-    newValue = 'Near Me'
+    newValue = getSavedSearchLocation()
   }
 
   return (
@@ -91,7 +92,7 @@ class Search extends React.Component {
 
     const paramsObj = {
       ethicalities: search.selectedEthicalities.join(','),
-      location: search.location,
+      location: search.location || getSavedSearchLocation(),
       page: 0
     }
 

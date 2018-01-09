@@ -1,5 +1,6 @@
 import querystring from 'querystring'
 import { api } from '../utils/api'
+import { setSavedSearchLocation } from '../utils/address'
 
 export const performSearch = (query, ethicalities, location, page) => {
 
@@ -9,6 +10,8 @@ export const performSearch = (query, ethicalities, location, page) => {
     location,
     page
   }
+
+  setSavedSearchLocation(location)
 
   return dispatch => {
     dispatch({ type: 'SET_SEARCH_LOADING', data: true })

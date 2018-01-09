@@ -1,3 +1,5 @@
+import store from 'store'
+
 class AddressException {
   constructor(msg) {
     this.message = msg
@@ -25,4 +27,19 @@ export const formatAddress = (components, format='simple') => {
   }
 
   throw new AddressException(`${format} is not a valid format`)
+}
+
+export const getSavedSearchLocation = () => {
+  let location = store.get('ETHICALTREE_SEARCH_LOCATION')
+
+  if (!location) {
+    location = 'Ottawa, ON'
+    setSavedSearchLocation(location)
+  }
+
+  return location
+}
+
+export const setSavedSearchLocation = location => {
+  store.set('ETHICALTREE_SEARCH_LOCATION', location)
 }
