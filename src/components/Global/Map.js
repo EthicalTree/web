@@ -18,8 +18,8 @@ const Map = withGoogleMap(props => {
       ref={props.onLoad}
       zoom={props.zoom || zoom}
       defaultOptions={{
+        disableDefaultUI: true,
         ...props.defaultOptions,
-        disableDefaultUI: true
       }}
       center={center}
     >

@@ -8,11 +8,15 @@ import PiggyBankIcon from './RawIcons/PiggyBankIcon'
 import SearchIcon from './RawIcons/SearchIcon'
 import RoadSignIcon from './RawIcons/RoadSignIcon'
 import ChevronDownIcon from './RawIcons/ChevronDownIcon'
+import CircleExtractIcon from './RawIcons/CircleExtractIcon'
 
 // Date Time Icons
 import StopwatchIcon from './RawIcons/StopwatchIcon'
 import StopwatchCrossIcon from './RawIcons/StopwatchCrossIcon'
 import StopwatchRunningIcon from './RawIcons/StopwatchRunningIcon'
+
+// Map Icons
+import Map2Icon from './RawIcons/Map2Icon'
 
 export default {
   leaf: LeafIcon,
@@ -24,5 +28,7 @@ export default {
   chevron_down: ChevronDownIcon,
   stopwatch: StopwatchIcon,
   stopwatch_cross: StopwatchCrossIcon,
-  stopwatch_running: StopwatchRunningIcon
+  stopwatch_running: StopwatchRunningIcon,
+  map: Map2Icon,
+  extract: CircleExtractIcon
 }

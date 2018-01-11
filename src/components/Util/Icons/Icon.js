@@ -1,3 +1,5 @@
+import './Icon.sass'
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import icons from './AppIcons'

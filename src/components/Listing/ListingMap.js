@@ -1,7 +1,8 @@
 import React from 'react'
 import { Marker } from 'react-google-maps'
+import Icon from '../Util/Icons/Icon'
 import Map from '../Global/Map'
-import { formatAddress } from '../../utils/address'
+import { formatAddress, formatGetDirectionsUrl } from '../../utils/address'
 
 const ListingMap = props => {
   const { locations, canEdit, dispatch } = props
@@ -32,11 +33,23 @@ const ListingMap = props => {
         }
       </h3>
       {hasLocations &&
-        <p>{locations[0].address}</p>
+        <p>
+            {locations[0].address}
+            <a
+              href={formatGetDirectionsUrl(locations[0].address)}
+              rel="noopener noreferrer"
+              target="_blank"
+              className="pl-3"
+            >
+              Get Directions
+              <Icon iconKey="extract" />
+            </a>
+        </p>
       }
       <div className="listing-map-area">
         {hasLocations &&
           <Map
+            zoom={16}
             markers={
               <Marker
                 key={`${locations[0].lat}+${locations[0].lng}`}
@@ -47,7 +60,8 @@ const ListingMap = props => {
               />
             }
             defaultOptions={{
-              scrollwheel: false
+              scrollwheel: false,
+              disableDefaultUI: false
             }}
             center={{
               lat: locations[0].lat,
