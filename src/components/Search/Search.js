@@ -115,7 +115,7 @@ class Search extends React.Component {
     return (
       <Col>
         <Row noGutters className="et-search">
-          <Col xs="12" md="4" lg="3" className="mb-2">
+          <Col xs="12" md="5" lg="4" className="mb-2">
             <Autosuggest
               suggestions={search.locationSuggestions}
               onSuggestionsFetchRequested={({ value }) => dispatch(getLocations(value))}
@@ -142,7 +142,7 @@ class Search extends React.Component {
             />
           </Col>
 
-          <Col xs="12" md="5" lg="7" className="mb-2">
+          <Col xs="12" md="5" lg="6" className="mb-2">
             <Autosuggest
               suggestions={search.categorySuggestions}
               onSuggestionsFetchRequested={() => dispatch(getCategories())}
