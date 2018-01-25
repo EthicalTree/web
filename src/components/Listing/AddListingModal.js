@@ -35,7 +35,7 @@ class AddListingModal extends React.Component {
   }
 
   render() {
-    const { listing } = this.props
+    const { listing, modal } = this.props
 
     return (
       <Modal
@@ -48,7 +48,7 @@ class AddListingModal extends React.Component {
       >
 
         <Container>
-          {listing.addListingErrors &&
+          {modal.errors &&
             <Row>
               <Col>
                 <Alert color="danger">
@@ -82,7 +82,8 @@ class AddListingModal extends React.Component {
 
 const select = (state) => {
   return {
-    listing: state.listing
+    listing: state.listing,
+    modal: state.modal
   }
 }
 

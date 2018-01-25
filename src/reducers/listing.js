@@ -6,24 +6,18 @@ const defaultState = {
 const listing = (state=defaultState, action) => {
 
   switch (action.type) {
-    case 'SET_ADD_LISTING_LOADING':
-      return {...state, isAddingListingLoading: action.data}
-    case 'SET_ADD_LISTING_ERROR':
-      return {...state, addListingErrors: action.data}
-    case 'SET_GET_LISTING_LOADING':
-      return {...state, isListingLoading: action.data}
     case 'SET_LISTING':
       return {...state,...action.data}
+    case 'SET_ADD_LISTING_LOADING':
+      return {...state, isAddingListingLoading: action.data}
+    case 'SET_GET_LISTING_LOADING':
+      return {...state, isListingLoading: action.data}
     case 'SET_EDIT_LISTING_ETHICALITIES_LOADING':
       return {...state, isEditingListingEthicalitiesLoading: action.data}
-    case 'SET_EDIT_ETHICALITIES_ERROR':
-      return {...state, editEthicalitiesErrors: action.data}
     case 'SET_LISTING_ETHICALITIES':
       return {...state, ethicalities: action.data}
     case 'SET_EDIT_DESCRIPTION_LOADING':
       return {...state, isEditingDescriptionLoading: action.data}
-    case 'SET_EDIT_DESCRIPTION_ERROR':
-      return {...state, editDescriptionErrors: action.data}
     case 'SET_IMAGE_UPLOAD_PROGRESS':
       return {...state, uploadProgress: action.data}
     case 'SET_MENU_IMAGE_UPLOAD_PROGRESS':
@@ -40,8 +34,6 @@ const listing = (state=defaultState, action) => {
       return {...state, isEditingOperatingHoursLoading: action.data}
     case 'SET_LISTING_OPERATING_HOURS':
       return {...state, operatingHours: action.data}
-    case 'SET_EDIT_LOCATION_ERROR':
-      return {...state, editLocationErrors: action.data}
     case 'SET_LISTING_LOCATION':
       return {...state, locations: action.data}
     case 'CHANGE_LISTING_INFO_TAB':

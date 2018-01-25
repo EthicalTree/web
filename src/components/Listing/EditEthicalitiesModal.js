@@ -64,7 +64,7 @@ class EditEthicalitiesModal extends React.Component {
   }
 
   render() {
-    const { listing, app } = this.props
+    const { listing, app, modal } = this.props
     const ethicalities = app.ethicalities || []
 
     return (
@@ -77,11 +77,11 @@ class EditEthicalitiesModal extends React.Component {
       >
 
         <Container>
-          {listing.editEthicalitiesErrors &&
+          {modal.errors &&
             <Row>
               <Col>
                 <Alert color="danger">
-                  {listing.editEthicalitiesErrors}
+                  {modal.errors}
                 </Alert>
               </Col>
             </Row>
@@ -120,7 +120,8 @@ class EditEthicalitiesModal extends React.Component {
 const select = (state) => {
   return {
     listing: state.listing,
-    app: state.app
+    app: state.app,
+    modal: state.modal
   }
 }
 

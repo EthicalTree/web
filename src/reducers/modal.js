@@ -6,10 +6,16 @@ const modal = (state={}, action) => {
       return {...state, fullScreenImages: action.data}
     case 'SET_FULLSCREEN_MODAL_CURRENT_IMAGE':
       return {...state, fullScreenCurrentImage: action.data}
+    case 'SET_MODAL_ERRORS':
+      return {...state, errors: action.data}
     case 'OPEN_MODAL':
       return {...state, openModal: action.data}
     case 'CLOSE_MODAL':
-      return {...state, openModal: null}
+      return {
+        ...state,
+        openModal: null,
+        errors: null
+      }
     default:
       return state
   }

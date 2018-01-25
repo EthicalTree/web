@@ -28,7 +28,7 @@ export const addListing = (data, history) => {
     api.post('/v1/listings', { listing: data })
       .then(response => {
         if (response.data.errors) {
-          dispatch({ type: 'SET_ADD_LISTING_ERROR', data: response.data.errors })
+          dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
         }
         else {
           dispatch({ type: 'SET_LISTING', data: response.data })
@@ -65,7 +65,7 @@ export const editEthicalities = (listingSlug, ethicalities) => {
     api.post(`/v1/listings/${listingSlug}/listing_ethicalities`, { ethicalities })
       .then(response => {
         if (response.data.errors) {
-          dispatch({ type: 'SET_EDIT_ETHICALITIES_ERROR', data: response.data.errors })
+          dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
         }
         else {
           dispatch({ type: 'SET_LISTING_ETHICALITIES', data: response.data.ethicalities })
@@ -86,7 +86,7 @@ export const editDescription = (data) => {
     api.put(`/v1/listings/${data.slug}`, { listing: data })
       .then(response => {
         if (response.data.errors) {
-          dispatch({ type: 'SET_EDIT_DESCRIPTION_ERROR', data: response.data.errors })
+          dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
         }
         else {
           dispatch({ type: 'SET_LISTING', data: response.data })
@@ -115,7 +115,7 @@ export const editLocation = (listingSlug, data) => {
       })
       .catch(error => {
         if (error.response.status === 400) {
-          dispatch({ type: 'SET_EDIT_LOCATION_ERROR', data: "You must select a location on the map" })
+          dispatch({ type: 'SET_MODAL_ERRORS', data: "You must select a location on the map" })
         }
       })
       .then(() => {

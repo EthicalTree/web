@@ -81,7 +81,7 @@ class EditLocationModal extends React.Component {
   }
 
   render() {
-    const { listing } = this.props
+    const { listing, modal } = this.props
     let { location } = this.state
 
     let marker
@@ -108,11 +108,11 @@ class EditLocationModal extends React.Component {
       >
 
         <Container>
-          {listing.editLocationErrors &&
+          {modal.errors &&
             <Row>
               <Col>
                 <Alert color="danger">
-                  {listing.editLocationErrors}
+                  {modal.errors}
                 </Alert>
               </Col>
             </Row>
@@ -165,7 +165,8 @@ class EditLocationModal extends React.Component {
 
 const select = (state) => {
   return {
-    listing: state.listing
+    listing: state.listing,
+    modal: state.modal
   }
 }
 

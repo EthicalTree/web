@@ -36,7 +36,7 @@ class EditDescriptionModal extends React.Component {
   }
 
   render() {
-    const { listing } = this.props
+    const { listing, modal } = this.props
 
     return (
       <Modal
@@ -48,11 +48,11 @@ class EditDescriptionModal extends React.Component {
       >
 
         <Container>
-          {listing.editDescriptionErrors &&
+          {modal.errors &&
             <Row>
               <Col>
                 <Alert color="danger">
-                  {listing.editDescriptionErrors}
+                  {modal.errors}
                 </Alert>
               </Col>
             </Row>
@@ -94,7 +94,8 @@ class EditDescriptionModal extends React.Component {
 
 const select = (state) => {
   return {
-    listing: state.listing
+    listing: state.listing,
+    modal: state.modal
   }
 }
 
