@@ -10,7 +10,8 @@ import {
   NavItem,
   NavLink,
   TabContent,
-  TabPane
+  TabPane,
+  Col
 } from 'reactstrap'
 
 import {
@@ -25,11 +26,13 @@ import OperatingHours from './OperatingHours'
 import ListingMap from './ListingMap'
 import ListingMenu from './ListingMenu'
 
+import { EthicalityBar } from '../Ethicality/Ethicality'
 import Loader from '../Global/Loader'
 import ImageManager from '../Global/ImageManager'
 import { hasPermission } from '../../utils/permissions'
 
 import { setConfirm } from '../../actions/confirm'
+import { toggleSearchEthicalities } from '../../actions/search'
 
 const TitleBar = (props) => {
   return (
@@ -223,7 +226,10 @@ class Listing extends React.Component {
   }
 
   render() {
-    const { listing, dispatch } = this.props
+    const { listing, app, search, dispatch } = this.props
+
+    const ethicalities = app.ethicalities
+    const selectedEthicalities = search.selectedEthicalities
 
     if (!listing.id && !listing.isListingLoading) {
       return (
@@ -236,6 +242,22 @@ class Listing extends React.Component {
 
     return (
       <Loader loading={listing.isListingLoading}>
+        <Col className="ethicality-bar pt-2 pb-2">
+          <EthicalityBar
+            className=""
+            showLabels={true}
+            showTooltips={false}
+            showIcons={false}
+            ethicalities={ethicalities}
+            onEthicalitySelect={slug => {
+              dispatch({
+                type: 'SET_SEARCH_ETHICALITIES',
+                data: toggleSearchEthicalities(selectedEthicalities, slug)
+              })
+            }}
+            selectedEthicalities={selectedEthicalities}
+          />
+        </Col>
         <Container>
           <div className="listing-detail">
             <ImageManager
@@ -306,7 +328,9 @@ class Listing extends React.Component {
 
 const select = (state) => {
   return {
-    listing: state.listing
+    listing: state.listing,
+    app: state.app,
+    search: state.search
   }
 }
 

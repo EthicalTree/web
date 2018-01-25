@@ -7,9 +7,14 @@
   svg
     fill: $color-inverse
 
+.ethicality-bar
+  background-color: $color-gray-14
+  border-bottom: 1px solid $color-border
+
 .ethicality-toggle
   display: inline-block
-  opacity: 0.5
+  background-color: $color-white
+  opacity: 1
   height: 100%
 
   svg
@@ -18,11 +23,10 @@
     fill: lighten($color-inverse, 20%)
 
   &.ethicality-small
-    padding: 4px 8px
+    padding: 8px 12px
     margin: 0 4px
     display: flex
     align-items: center
-    opacity: 0.5
     border: 1px solid $color-border
 
     .ethicality-icon

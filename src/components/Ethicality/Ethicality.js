@@ -19,7 +19,7 @@ const EthicalityBar = (props) => {
   } = props
 
   return (
-    <div className={`${props.className} d-flex justify-content-center`}>
+    <div className={`${props.className} d-flex`}>
       {ethicalities.map(ethicality => {
         return (
           <span key={ethicality.slug}>

@@ -87,8 +87,8 @@ Result.defaultProps = {
 const SearchResults = (props) => {
   const { app, search, dispatch, history, handleSearch } = props
 
-  const ethicalities = app.ethicalities || []
-  const selectedEthicalities = search.selectedEthicalities || []
+  const ethicalities = app.ethicalities
+  const selectedEthicalities = search.selectedEthicalities
 
   const hasSearch = history.location.pathname !== '/'
   const hasListings = search.listings && search.listings.length > 0
@@ -109,7 +109,7 @@ const SearchResults = (props) => {
         </Col>
       }
       <EthicalityBar
-        className="search-results-ethicalities"
+        className="search-results-ethicalities justify-content-center"
         showLabels={true}
         showTooltips={false}
         showIcons={false}
