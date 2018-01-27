@@ -247,7 +247,7 @@ class Listing extends React.Component {
             className=""
             showLabels={true}
             showTooltips={false}
-            showIcons={false}
+            showIcons={true}
             ethicalities={ethicalities}
             onEthicalitySelect={slug => {
               dispatch({

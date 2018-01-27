@@ -7,6 +7,8 @@ import { Link, withRouter } from 'react-router-dom'
 import AccountIcon from '../Session/AccountIcon'
 import { Search } from '../Search'
 
+import etLogo from './images/et-logo.svg'
+
 import {
   Button,
   Navbar,
@@ -46,7 +48,7 @@ const Header = (props) => {
 
         <Link className="navbar-brand" to="/">
           <span className="sr-only">EthicalTree</span>
-          <img className="ml-4 mr-2" src="/assets/images/logo/logo-full-128.png" alt="EthicalTree Logo" />
+          <img className="ml-4 mr-2" src={etLogo} alt="EthicalTree Logo" />
         </Link>
 
         <NavbarToggler
