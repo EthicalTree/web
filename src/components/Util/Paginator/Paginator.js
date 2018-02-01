@@ -1,4 +1,4 @@
-import './Paginator.sass'
+import './Paginator.css'
 
 import React from 'react'
 import ReactPaginate from 'react-paginate';

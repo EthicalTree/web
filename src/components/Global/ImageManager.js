@@ -1,4 +1,4 @@
-import './ImageManager.sass'
+import './ImageManager.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'

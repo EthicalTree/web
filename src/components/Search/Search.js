@@ -1,4 +1,4 @@
-import './Search.sass'
+import './Search.css'
 
 import React from 'react'
 import { connect } from 'react-redux'

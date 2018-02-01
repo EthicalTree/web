@@ -1,4 +1,4 @@
-import './Listing.sass'
+import './Listing.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'

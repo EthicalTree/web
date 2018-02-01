@@ -1,5 +1,5 @@
 import 'react-toggle/style.css'
-import './Toggle.sass'
+import './Toggle.css'
 
 import React from 'react'
 import ReactToggle from 'react-toggle'

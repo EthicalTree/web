@@ -1,4 +1,4 @@
-import './FrontPage.sass'
+import './FrontPage.css'
 
 import React from 'react'
 import { connect } from 'react-redux'

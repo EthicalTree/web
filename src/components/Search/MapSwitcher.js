@@ -1,4 +1,4 @@
-import './MapSwitcher.sass'
+import './MapSwitcher.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'

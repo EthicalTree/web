@@ -1,4 +1,4 @@
-import './Footer.sass'
+import './Footer.css'
 
 import React from 'react'
 import { connect } from 'react-redux'

@@ -1,4 +1,4 @@
-import './Loader.sass'
+import './Loader.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'

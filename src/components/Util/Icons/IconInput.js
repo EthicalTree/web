@@ -1,4 +1,4 @@
-import './IconInput.sass'
+import './IconInput.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'

@@ -1,5 +1,6 @@
 const defaultState = {
-  users: []
+  users: [],
+  tags: []
 }
 
 const admin = (state=defaultState, action) => {
@@ -15,10 +16,14 @@ const admin = (state=defaultState, action) => {
         ...state,
         users: [...state.users.filter(u => u.id !== action.data.id), user]
       }
-    case 'SET_ADMIN_LOADING':
-      return {...state, isAdminLoading: action.data}
+    case 'SET_USER_ADMIN_LOADING':
+      return {...state, isUserAdminLoading: action.data}
+    case 'SET_TAG_ADMIN_LOADING':
+      return {...state, isTagAdminLoading: action.data}
     case 'SET_ADMIN_USERS':
       return {...state, users: action.data}
+    case 'SET_ADMIN_TAGS':
+      return {...state, tags: action.data}
     default:
       return state
   }

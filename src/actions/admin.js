@@ -3,7 +3,7 @@ import { success } from '../utils/notifications'
 
 export const getUsers = () => {
   return dispatch => {
-    dispatch({ type: 'SET_ADMIN_LOADING', data: true })
+    dispatch({ type: 'SET_USER_ADMIN_LOADING', data: true })
 
     api.get(`/v1/admin/users`)
       .then(users => {
@@ -13,7 +13,24 @@ export const getUsers = () => {
       })
       .catch(() => {})
       .then(() => {
-        dispatch({ type: 'SET_ADMIN_LOADING', data: false })
+        dispatch({ type: 'SET_USER_ADMIN_LOADING', data: false })
+      })
+  }
+}
+
+export const getTags = () => {
+  return dispatch => {
+    dispatch({ type: 'SET_TAG_ADMIN_LOADING', data: true })
+
+    api.get(`/v1/admin/tags`)
+      .then(tags => {
+        if (tags.data) {
+          dispatch({ type: 'SET_ADMIN_TAGS', data: tags.data })
+        }
+      })
+      .catch(() => {})
+      .then(() => {
+        dispatch({ type: 'SET_TAG_ADMIN_LOADING', data: false })
       })
   }
 }

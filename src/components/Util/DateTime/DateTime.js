@@ -1,5 +1,5 @@
 import 'rc-time-picker/assets/index.css'
-import './DateTime.sass'
+import './DateTime.css'
 
 import React from 'react'
 import TimePicker from 'rc-time-picker'

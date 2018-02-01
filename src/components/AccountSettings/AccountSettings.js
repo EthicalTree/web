@@ -1,4 +1,4 @@
-import './AccountSettings.sass'
+import './AccountSettings.css'
 
 import React from 'react'
 import { connect } from 'react-redux'

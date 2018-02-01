@@ -1,4 +1,4 @@
-import './PasswordStrength.sass'
+import './PasswordStrength.css'
 
 import React from 'react'
 import PasswordStrength from '@fnando/password_strength'

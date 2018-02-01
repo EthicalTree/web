@@ -1,4 +1,4 @@
-import './Ethicality.sass'
+import './Ethicality.css'
 import uuid4 from 'uuid'
 
 import React from 'react'

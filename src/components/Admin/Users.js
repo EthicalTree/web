@@ -33,8 +33,7 @@ class Users extends React.Component {
     const users = admin.users.sort((u1, u2) => u1.id - u2.id)
 
     return (
-      <Loader loading={admin.isAdminLoading}>
-        <h2>Users</h2>
+      <Loader loading={admin.isUserAdminLoading}>
         <Table responsive>
           <thead>
             <tr>

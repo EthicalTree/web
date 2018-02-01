@@ -2,7 +2,7 @@ import React from 'react'
 import store from 'store'
 import ReactS3Uploader from 'react-s3-uploader'
 
-import './S3.sass'
+import './S3.css'
 
 const S3Uploader = (props) => {
   return (

@@ -128,8 +128,9 @@ class EditLocationModal extends React.Component {
                     onKeyUp={ this.onAddressChange.bind(this) }
                     name="locationAddress"
                     id="locationAddress"
-                    placeholder="eg. Ricky's Rockin Restaurant"/>
-                  <InputGroupButton>
+                    placeholder="eg. Ricky's Rockin Restaurant"
+                  />
+                  <InputGroupButton addonType="append">
                     <Button color="default" onClick={this.onAddressChange.bind(this)}>
                       Find
                     </Button>

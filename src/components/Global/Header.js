@@ -1,4 +1,4 @@
-import './Header.sass'
+import './Header.css'
 
 import React from 'react'
 import { connect } from 'react-redux'
