@@ -34,7 +34,7 @@ class Users extends React.Component {
 
     return (
       <Loader loading={admin.isUserAdminLoading}>
-        <Table responsive>
+        <Table bordered responsive>
           <thead>
             <tr>
               <th>Email</th>

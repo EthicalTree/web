@@ -23,7 +23,7 @@ class Tags extends React.Component {
 
     return (
       <Loader loading={admin.isTagAdminLoading}>
-        <Table responsive>
+        <Table bordered responsive>
           <thead>
             <tr>
               <th>Tag</th>

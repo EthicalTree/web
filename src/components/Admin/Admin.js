@@ -1,6 +1,7 @@
 import './Admin.css'
 
 import React from 'react'
+import cn from 'classnames'
 import { connect } from 'react-redux'
 import Users from './Users'
 import Tags from './Tags'
@@ -19,30 +20,35 @@ import { isAdmin } from '../../utils/permissions'
 class Admin extends React.Component {
   render() {
     const { location } =  this.props
+    const { pathname } = location
 
     if (!isAdmin()) {
       return <Redirect to='/' />
     }
 
-    console.log(location)
-
     return (
       <Container className="mt-5 admin">
-        <h3>Admin</h3>
-        <br />
-
-
         <Nav pills>
           <NavItem>
-            <Link className="nav-link" to="/admin/users">Users</Link>
+            <Link
+              className={cn('nav-link', { active: pathname === '/admin/users' })}
+              to="/admin/users"
+            >
+              Users
+            </Link>
           </NavItem>
           <NavItem>
-            <Link className="nav-link" to="/admin/tabs">Tabs</Link>
+            <Link
+              className={cn('nav-link', { active: pathname === '/admin/tags' })}
+              to="/admin/tags"
+            >
+              Tags
+            </Link>
           </NavItem>
         </Nav>
         <TabContent>
           <TabPane>
-            <div className="p-2">
+            <div className="pt-4">
               <Route path="/admin/users" exact={true} component={Users} />
               <Route path="/admin/tags" exact={true} component={Tags} />
             </div>
