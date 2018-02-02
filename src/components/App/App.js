@@ -14,7 +14,7 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import Modals from './Modals'
+import Modals from '../../containers/Modals'
 import FrontPage from '../FrontPage/FrontPage'
 import AccountSettings from '../AccountSettings/AccountSettings'
 import { ForgotPasswordPage }from '../Session'

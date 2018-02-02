@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal } from '../Global'
-import PasswordStrength from '../Util/PasswordStrength'
+import { Modal } from './Modal'
 
 import {
   Form,
@@ -15,26 +14,32 @@ import {
   Alert
 } from 'reactstrap'
 
-import { signup } from '../../actions/session'
+import { login } from '../../actions/session'
 
-class SignupModal extends React.Component {
+class LoginModal extends React.Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
       email: '',
-      password: '',
-      confirmPassword: ''
+      password: ''
     }
-
   }
 
   submit(e) {
     const { dispatch } = this.props
+    e.preventDefault();
+
+    dispatch(login(this.state))
+    this.setState({ password: '' })
+  }
+
+  openForgotPassword(e) {
+    const { dispatch } = this.props
     e.preventDefault()
 
-    dispatch(signup(this.state))
+    dispatch({ type: 'OPEN_MODAL', data: 'forgot_password' })
   }
 
   render() {
@@ -42,20 +47,28 @@ class SignupModal extends React.Component {
 
     return (
       <Modal
-        className="signup-modal small-modal"
-        loading={session.signupLoading}
-        contentLabel="Signup"
-        modalName="signup"
+        className="login-modal small-modal"
+        loading={session.loginLoading}
+        contentLabel="Login"
+        modalName="login"
       >
 
         <Container>
-          {session.signupErrors &&
+          {session.loginError &&
             <Row>
               <Col>
                 <Alert color="danger">
-                  { session.signupErrors.map(err => {
-                    return <span>{err}<br/></span>
-                  })}
+                  {session.loginError}
+                </Alert>
+              </Col>
+            </Row>
+          }
+
+          {session.loginInfo &&
+            <Row>
+              <Col>
+                <Alert color="success">
+                  {session.loginInfo}
                 </Alert>
               </Col>
             </Row>
@@ -65,54 +78,45 @@ class SignupModal extends React.Component {
             <Col>
               <Form method="post" onSubmit={this.submit.bind(this)}>
                 <FormGroup>
-                  <Label for="signupEmail">Email Address</Label>
+                  <Label for="loginEmail">Email Address</Label>
                   <Input
                     autoFocus
                     value={this.state.email}
                     onChange={e => { this.setState({ email: e.target.value }) }}
                     type="email"
                     name="email"
-                    id="signupEmail"
+                    id="loginEmail"
                     placeholder="Enter email..."/>
                 </FormGroup>
 
                 <FormGroup>
-                  <Label for="signupPassword">Password</Label>
+                  <Label for="loginPassword">Password</Label>
                   <Input
                     value={this.state.password}
                     onChange={e => { this.setState({ password: e.target.value }) }}
                     type="password"
                     name="password"
-                    id="signupPassword"
-                    placeholder="Enter password..."
-                  />
+                    id="loginPassword"
+                    placeholder="Enter password..." />
                 </FormGroup>
-
-                <FormGroup>
-                  <Label for="signupPasswordConfirm">Confirm Password</Label>
-                  <Input
-                    value={this.state.confirmPassword}
-                    onChange={e => { this.setState({ confirmPassword: e.target.value }) }}
-                    type="password"
-                    name="confirmPassword"
-                    id="signupConfirmPassword"
-                    placeholder="Enter password again..." />
-                </FormGroup>
-
-                <PasswordStrength
-                  email={this.state.email}
-                  password={this.state.password}
-                />
 
                 <FormGroup className="mt-4">
                   <Button block color="primary" role="button" type="submit">
-                    Sign me up!
+                    Login
                   </Button>
                 </FormGroup>
+
+                <div className="text-center mb-3">
+                  <a
+                    href=""
+                    onClick={this.openForgotPassword.bind(this)}
+                  >
+                    Forgot your password?
+                  </a>
+                </div>
               </Form>
             </Col>
           </Row>
-
         </Container>
       </Modal>
     )
@@ -120,11 +124,10 @@ class SignupModal extends React.Component {
 
 }
 
-
 const select = (state) => {
   return {
     session: state.session
   }
 }
 
-export default connect(select)(SignupModal)
+export default connect(select)(LoginModal)

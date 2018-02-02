@@ -12,14 +12,15 @@ import {
   Nav,
   NavItem,
   TabContent,
-  TabPane
+  TabPane,
+  Button
 } from 'reactstrap'
 
 import { isAdmin } from '../../utils/permissions'
 
 class Admin extends React.Component {
   render() {
-    const { location } =  this.props
+    const { location, dispatch } =  this.props
     const { pathname } = location
 
     if (!isAdmin()) {
@@ -28,24 +29,36 @@ class Admin extends React.Component {
 
     return (
       <Container className="mt-5 admin">
-        <Nav pills>
-          <NavItem>
-            <Link
-              className={cn('nav-link', { active: pathname === '/admin/users' })}
-              to="/admin/users"
+        <div className="admin-header">
+          <Nav pills>
+            <NavItem>
+              <Link
+                className={cn('nav-link', { active: pathname === '/admin/users' })}
+                to="/admin/users"
+              >
+                Users
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link
+                className={cn('nav-link', { active: pathname === '/admin/tags' })}
+                to="/admin/tags"
+              >
+                Tags
+              </Link>
+            </NavItem>
+          </Nav>
+
+          {pathname === '/admin/tags' &&
+            <Button
+              color="default"
+              onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'add_tag' })}
             >
-              Users
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link
-              className={cn('nav-link', { active: pathname === '/admin/tags' })}
-              to="/admin/tags"
-            >
-              Tags
-            </Link>
-          </NavItem>
-        </Nav>
+              + New Tag
+            </Button>
+          }
+
+        </div>
         <TabContent>
           <TabPane>
             <div className="pt-4">

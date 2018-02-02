@@ -35,12 +35,44 @@ export const getTags = () => {
   }
 }
 
-export const toggleAdmin = (userData) => {
+export const toggleAdmin = userData => {
   return dispatch => {
     api.put(`/v1/admin/users/${userData.id}`, {user: userData})
       .then(() => {
         dispatch({ type: 'UPDATE_ADMIN_USER', data: userData })
         success('User successfully saved.')
+      })
+      .catch(() => {})
+  }
+}
+
+export const setTagUseType = (tagId, useType) => {
+  return dispatch => {
+    api.put(`/v1/admin/tags/${tagId}`, {useType})
+      .then(() => {
+        dispatch({ type: 'UPDATE_ADMIN_TAG', data: { tagId, useType } })
+        success('Tag successfully updated')
+      })
+      .catch(() => {})
+  }
+}
+
+export const addTag = ({ hashtag, useType }) => {
+  const tag = { hashtag, useType }
+
+  return dispatch => {
+    dispatch({ type: 'SET_MODAL_LOADING', data: true })
+
+    api.post(`/v1/admin/tags`, { tag })
+      .then(response => {
+        if (response.data.errors) {
+          dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
+        }
+        else {
+          dispatch({ type: 'CLOSE_MODAL' })
+          success('Tag created')
+          dispatch(getTags())
+        }
       })
       .catch(() => {})
   }

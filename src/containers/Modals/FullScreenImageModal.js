@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ImageManager from '../Global/ImageManager'
-import { Modal } from '../Global'
+import ImageManager from '../../components/Global/ImageManager'
+import { Modal } from './Modal'
 
 class FullScreenImageModal extends React.Component {
   render() {

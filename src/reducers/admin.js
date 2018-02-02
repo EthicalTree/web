@@ -16,6 +16,9 @@ const admin = (state=defaultState, action) => {
         ...state,
         users: [...state.users.filter(u => u.id !== action.data.id), user]
       }
+
+    case 'UPDATE_ADMIN_TAG':
+      return state
     case 'SET_USER_ADMIN_LOADING':
       return {...state, isUserAdminLoading: action.data}
     case 'SET_TAG_ADMIN_LOADING':

@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Marker } from 'react-google-maps'
 
-import { Modal } from '../Global'
-import Map from '../Global/Map'
+import { Modal } from './Modal'
+import Map from '../../components/Global/Map'
 
 import {
   FormGroup,

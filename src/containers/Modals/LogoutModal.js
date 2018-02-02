@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import { logout } from '../../actions/session'
-import { ConfirmModal } from '../Global/Modal'
+import { ConfirmModal } from './Modal'
 
 const LogoutModal = (props) => {
   const { dispatch, history } = props

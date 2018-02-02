@@ -12,9 +12,9 @@ import {
   Button,
 } from 'reactstrap'
 
-import Loader from './Loader'
+import Loader from '../../../components/Global/Loader'
 
-import { closeModal } from '../../actions/modal'
+import { closeModal } from '../../../actions/modal'
 
 const baseStyles = {
   content: {
@@ -129,6 +129,7 @@ const Modal = props => {
           {...props}
           style={newStyles}
           className={`et-modal ${props.className}`}
+          appElement={document.getElementById('root')}
         >
           {noDecoration &&
             <div style={{ height: '100%' }}>

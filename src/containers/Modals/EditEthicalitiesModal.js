@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal } from '../Global'
+import { Modal } from './Modal'
 
 import {
   Container,
@@ -9,7 +9,7 @@ import {
   Alert
 } from 'reactstrap'
 
-import { Ethicality } from '../Ethicality/Ethicality'
+import { Ethicality } from '../../components/Ethicality'
 
 import { getEthicalities, editEthicalities } from '../../actions/listing'
 

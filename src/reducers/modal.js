@@ -1,5 +1,8 @@
+const defaultState = {
+  isLoading: false
+}
 
-const modal = (state={}, action) => {
+const modal = (state=defaultState, action) => {
 
   switch (action.type) {
     case 'SET_FULLSCREEN_MODAL_IMAGES':
@@ -8,13 +11,16 @@ const modal = (state={}, action) => {
       return {...state, fullScreenCurrentImage: action.data}
     case 'SET_MODAL_ERRORS':
       return {...state, errors: action.data}
+    case 'SET_MODAL_LOADING':
+      return {...state, isLoading: action.data}
     case 'OPEN_MODAL':
       return {...state, openModal: action.data}
     case 'CLOSE_MODAL':
       return {
         ...state,
         openModal: null,
-        errors: null
+        errors: null,
+        isLoading: false
       }
     default:
       return state

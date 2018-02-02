@@ -7,9 +7,17 @@ import {
   Input
 } from 'reactstrap'
 
-import { getTags } from '../../actions/admin'
+import { getTags, setTagUseType } from '../../actions/admin'
 
 class Tags extends React.Component {
+
+  handleUseTypeChange = id => {
+    const { dispatch } = this.props
+
+    return event => {
+      dispatch(setTagUseType(id, event.target.value))
+    }
+  }
 
   componentDidMount() {
     const { dispatch } = this.props
@@ -35,7 +43,12 @@ class Tags extends React.Component {
               <tr key={t.id}>
                 <td>{`#${t.hashtag}`}</td>
                 <td>
-                  <Input type="select" name="use_type">
+                  <Input
+                    type="select"
+                    name="use_type"
+                    onChange={this.handleUseTypeChange(t.id)}
+                    defaultValue={t.useType}
+                  >
                     <option>category</option>
                     <option>admin</option>
                   </Input>
