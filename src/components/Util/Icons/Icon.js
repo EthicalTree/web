@@ -13,11 +13,13 @@ const Icon = props => {
   }
 
   return (
-    <span className={`et-icon ${className}`}>
-      <InnerIcon />
-      {label &&
-        <span className="icon-label">{label}</span>
-      }
+    <span className="et-icon-container">
+      <span className={`et-icon ${className}`}>
+        <InnerIcon />
+        {label &&
+          <span className="icon-label">{label}</span>
+        }
+      </span>
     </span>
   )
 }

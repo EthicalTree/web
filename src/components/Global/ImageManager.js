@@ -167,6 +167,14 @@ class ImageManager extends React.Component {
     } = this.props
 
     const hasSlides = images && images.length > 0
+    let displayImages
+
+    if (images.length === 1) {
+      displayImages = [...images, ...images]
+    }
+    else {
+      displayImages = images
+    }
 
     return (
       <Loader
@@ -181,12 +189,13 @@ class ImageManager extends React.Component {
                 afterChange={this.handleSlideChange.bind(this)}
                 initialSlide={images.findIndex(i => (i.id === (currentImage ? currentImage.id : -1)))}
                 slides={
-                  images.map(image => {
+                  displayImages.map((image, i) => {
                     const url = `${process.env.REACT_APP_S3_URL}/${image.key}`
+                    const key = `${image.key}-${i}`
 
                     if (renderWithImgTag) {
                       return (
-                        <div key={image.key}>
+                        <div key={key}>
                           <img alt="Listing" style={styleOverrides(url)} src={url} />
                         </div>
                       )
@@ -202,7 +211,7 @@ class ImageManager extends React.Component {
                     return (
                       <div
                         className="image-manager-image"
-                        key={image.key}>
+                        key={key}>
                         <div style={style} />
                       </div>
                     )
@@ -270,7 +279,8 @@ ImageManager.defaultProps = {
   addAction: {},
   fullScreenAction: {},
   styleOverrides: null,
-  renderWithImgTag: false
+  renderWithImgTag: false,
+  images: []
 }
 
 export default ImageManager

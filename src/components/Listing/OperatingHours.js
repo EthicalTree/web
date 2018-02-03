@@ -54,7 +54,7 @@ const OperatingHours = (props) => {
         }
 
         {!hasHours &&
-          <div className="daily-hours no-content">
+          <div className="daily-hours">
             <p>No operating hours set!</p>
             {canEdit &&
               <button

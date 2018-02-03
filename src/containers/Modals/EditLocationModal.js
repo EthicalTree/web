@@ -10,7 +10,7 @@ import {
   Label,
   Input,
   InputGroup,
-  InputGroupButton,
+  InputGroupAddon,
   Button,
   Container,
   Row,
@@ -130,11 +130,11 @@ class EditLocationModal extends React.Component {
                     id="locationAddress"
                     placeholder="eg. Ricky's Rockin Restaurant"
                   />
-                  <InputGroupButton addonType="append">
+                  <InputGroupAddon addonType="append">
                     <Button color="default" onClick={this.onAddressChange.bind(this)}>
                       Find
                     </Button>
-                  </InputGroupButton>
+                  </InputGroupAddon>
                 </InputGroup>
               </FormGroup>
             </Col>

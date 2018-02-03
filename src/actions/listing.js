@@ -1,4 +1,5 @@
 import { api } from '../utils/api'
+import { error } from '../utils/notifications'
 
 export const getListing = (slug) => {
   return dispatch => {
@@ -39,6 +40,36 @@ export const addListing = (data, history) => {
       .catch(() => {})
       .then(() => {
         dispatch({ type: 'SET_ADD_LISTING_LOADING', data: false })
+      })
+  }
+}
+
+export const addTagToListing = (listingSlug, hashtag) => {
+  const tag = { hashtag, useType: 'admin' }
+
+  return dispatch => {
+    api.post(`/v1/listings/${listingSlug}/tags`, { tag })
+      .then(newTag => {
+        dispatch({ type: 'ADD_TAG_TO_LISTING', data: newTag.data.tag})
+      })
+      .catch(err => {
+        if (err.response.status === 409) {
+          error("Listing already contains that tag")
+        }
+      })
+  }
+}
+
+export const removeTagFromListing = (listingSlug, id) => {
+  return dispatch => {
+    api.delete(`/v1/listings/${listingSlug}/tags/${id}`)
+      .then(() => {
+        dispatch({ type: 'REMOVE_TAG_FROM_LISTING', data: id })
+      })
+      .catch(err => {
+        if (err.response.status === 404) {
+          error("Could not find tag to remove")
+        }
       })
   }
 }

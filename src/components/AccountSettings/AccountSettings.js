@@ -94,9 +94,9 @@ class AccountSettings extends React.Component {
                   />
                 </FormGroup>
                 <FormGroup className="mt-4">
-                  <Label for="firstName">Last Name</Label>
+                  <Label for="lastName">Last Name</Label>
                   <Input
-                    id="firstName"
+                    id="lastName"
                     placeholder="ex. Smith"
                     value={account.lastName || ''}
                     onChange={e => dispatch({ type: 'SET_ACCOUNT_LAST_NAME', data: e.target.value })}

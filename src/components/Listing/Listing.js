@@ -18,7 +18,9 @@ import {
   addImageToListing,
   deleteImageFromListing,
   getListing,
-  makeImageCover
+  makeImageCover,
+  addTagToListing,
+  removeTagFromListing
 } from '../../actions/listing'
 
 import EthicalityArea from './EthicalityArea'
@@ -27,9 +29,11 @@ import ListingMap from './ListingMap'
 import ListingMenu from './ListingMenu'
 
 import { EthicalityBar } from '../Ethicality/Ethicality'
+import { TagBar } from './TagBar'
 import Loader from '../Global/Loader'
 import ImageManager from '../Global/ImageManager'
-import { hasPermission } from '../../utils/permissions'
+
+import { hasPermission, isAdmin } from '../../utils/permissions'
 
 import { setConfirm } from '../../actions/confirm'
 import { toggleSearchEthicalities } from '../../actions/search'
@@ -205,6 +209,16 @@ const ListingContent = (props) => {
 
 class Listing extends React.Component {
 
+  onTagAdd = value => {
+    const { dispatch, listing } = this.props
+    dispatch(addTagToListing(listing.slug, value))
+  }
+
+  onTagRemove = id => {
+    const { dispatch, listing } = this.props
+    dispatch(removeTagFromListing(listing.slug, id))
+  }
+
   componentDidMount() {
     const { dispatch, match } = this.props
 
@@ -308,9 +322,15 @@ class Listing extends React.Component {
               }}
             />
 
-            <TitleBar
-              title={listing.title}
-            />
+            <TitleBar />
+
+            {isAdmin() &&
+              <TagBar
+                tags={listing.tags}
+                onTagAdd={this.onTagAdd}
+                onTagRemove={this.onTagRemove}
+              />
+            }
 
             <ListingContent
               dispatch={dispatch}

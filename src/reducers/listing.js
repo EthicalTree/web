@@ -1,57 +1,62 @@
 const defaultState = {
   listingInfoTab: 'location',
-  menus: [{}]
+  menus: [{}],
+  tags: []
 }
 
-const listing = (state=defaultState, action) => {
+const listing = (state=defaultState, {type, data}) => {
 
-  switch (action.type) {
+  switch (type) {
     case 'SET_LISTING':
-      return {...state,...action.data}
+      return {...state,...data}
     case 'SET_ADD_LISTING_LOADING':
-      return {...state, isAddingListingLoading: action.data}
+      return {...state, isAddingListingLoading: data}
     case 'SET_GET_LISTING_LOADING':
-      return {...state, isListingLoading: action.data}
+      return {...state, isListingLoading: data}
     case 'SET_EDIT_LISTING_ETHICALITIES_LOADING':
-      return {...state, isEditingListingEthicalitiesLoading: action.data}
+      return {...state, isEditingListingEthicalitiesLoading: data}
     case 'SET_LISTING_ETHICALITIES':
-      return {...state, ethicalities: action.data}
+      return {...state, ethicalities: data}
     case 'SET_EDIT_DESCRIPTION_LOADING':
-      return {...state, isEditingDescriptionLoading: action.data}
+      return {...state, isEditingDescriptionLoading: data}
     case 'SET_IMAGE_UPLOAD_PROGRESS':
-      return {...state, uploadProgress: action.data}
+      return {...state, uploadProgress: data}
     case 'SET_MENU_IMAGE_UPLOAD_PROGRESS':
-      return {...state, menus: [{...state.menus[0], uploadProgress: action.data}]}
+      return {...state, menus: [{...state.menus[0], uploadProgress: data}]}
     case 'SET_IMAGE_LOADING':
-      return {...state, isImageLoading: action.data}
+      return {...state, isImageLoading: data}
     case 'SET_MENU_IMAGE_LOADING':
-      return {...state, menus: [{...state.menus[0], isImageLoading: action.data}]}
+      return {...state, menus: [{...state.menus[0], isImageLoading: data}]}
     case 'SET_LISTING_IMAGES':
-      return {...state, images: action.data}
+      return {...state, images: data}
     case 'SET_LISTING_MENU_IMAGES':
-      return {...state, menus: [{...state.menus[0], images: action.data}]}
+      return {...state, menus: [{...state.menus[0], images: data}]}
     case 'SET_EDITING_OPERATING_HOURS_LOADING':
-      return {...state, isEditingOperatingHoursLoading: action.data}
+      return {...state, isEditingOperatingHoursLoading: data}
     case 'SET_LISTING_OPERATING_HOURS':
-      return {...state, operatingHours: action.data}
+      return {...state, operatingHours: data}
     case 'SET_LISTING_LOCATION':
-      return {...state, locations: action.data}
+      return {...state, locations: data}
     case 'CHANGE_LISTING_INFO_TAB':
-      return {...state, listingInfoTab: action.data}
+      return {...state, listingInfoTab: data}
+    case 'ADD_TAG_TO_LISTING':
+      return {...state, tags: [...state.tags, data]}
+    case 'REMOVE_TAG_FROM_LISTING':
+      return {...state, tags: [...state.tags.filter(t => (t.id !== data))]}
     case 'SET_LISTING_MENU_CURRENT_IMAGE':
       const menu = state.menus[0] || {}
 
-      if (!action.data && menu.images && menu.images.length > 0) {
+      if (!data && menu.images && menu.images.length > 0) {
         return {...state, currentMenuImage: menu.images[0]}
       }
 
-      return {...state, currentMenuImage: action.data}
+      return {...state, currentMenuImage: data}
     case 'SET_LISTING_CURRENT_IMAGE':
-      if (!action.data && state.images && state.images.length > 0) {
+      if (!data && state.images && state.images.length > 0) {
         return {...state, currentImage: state.images[0]}
       }
 
-      return {...state, currentImage: action.data}
+      return {...state, currentImage: data}
     default:
       return state
   }

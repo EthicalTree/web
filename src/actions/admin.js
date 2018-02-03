@@ -78,4 +78,14 @@ export const addTag = ({ hashtag, useType }) => {
   }
 }
 
+export const deleteTag = id => {
+  return dispatch => {
+    api.delete(`/v1/admin/tags/${id}`)
+      .then(() => {
+        success('Tag deleted')
+        dispatch(getTags())
+      })
+      .catch(() => {})
+  }
+}
 

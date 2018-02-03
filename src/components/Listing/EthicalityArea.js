@@ -38,11 +38,8 @@ const EthicalityArea = (props) => {
       <CardBody
         className="ethicalities d-flex justify-content-center d-md-block"
       >
-        {canEdit &&
-          <AddEthicalityButton
-            dispatch={dispatch}
-            hasEthicalities={hasEthicalities}
-          />
+        {!hasEthicalities &&
+          <p>No ethicalities set!</p>
         }
 
         {hasEthicalities && ethicalities.map(ethicality => {
@@ -57,11 +54,13 @@ const EthicalityArea = (props) => {
           )
         })}
 
-        {!hasEthicalities &&
-          <div className="no-content">
-            <p>No ethicalities set!</p>
-          </div>
+        {canEdit &&
+          <AddEthicalityButton
+            dispatch={dispatch}
+            hasEthicalities={hasEthicalities}
+          />
         }
+
       </CardBody>
     </Card>
   )

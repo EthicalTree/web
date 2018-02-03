@@ -11,6 +11,8 @@ import SearchIcon from './RawIcons/SearchIcon'
 import RoadSignIcon from './RawIcons/RoadSignIcon'
 import ChevronDownIcon from './RawIcons/ChevronDownIcon'
 import CircleExtractIcon from './RawIcons/CircleExtractIcon'
+import TrashIcon from './RawIcons/TrashIcon'
+import CrossIcon from './RawIcons/CrossIcon'
 
 // Date Time Icons
 import StopwatchIcon from './RawIcons/StopwatchIcon'
@@ -31,6 +33,9 @@ export default {
   search: SearchIcon,
   road_sign: RoadSignIcon,
   chevron_down: ChevronDownIcon,
+  trash: TrashIcon,
+  cross: CrossIcon,
+
   stopwatch: StopwatchIcon,
   stopwatch_cross: StopwatchCrossIcon,
   stopwatch_running: StopwatchRunningIcon,
