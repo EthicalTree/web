@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import AccountIcon from '../Session/AccountIcon'
 import { Search } from '../Search'
+import { Banner } from '../Banner'
 
 import etLogo from './images/et-logo.svg'
 
@@ -44,6 +45,19 @@ const Header = (props) => {
 
   return (
     <div className={fixedHeaderWrapper}>
+      <Banner>
+        Please take a moment to give us your feedback on our beta
+        &nbsp;
+        <a
+          href="https://ethicaltree.wufoo.com/forms/m11y0bsz0si3gkw/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          here
+        </a>
+        . Your feedback is super important to us!
+      </Banner>
+
       <Navbar light expand="md" className={fixedHeader}>
 
         <Link className="navbar-brand" to="/">

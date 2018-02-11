@@ -161,7 +161,7 @@ class Search extends React.Component {
             />
           </Col>
 
-          <Col xs="12" md="3" lg="2" className="mb-2">
+          <Col xs="12" md="2" lg="2" className="mb-2">
             <Button
               color="danger"
               className="full-height search-button"

@@ -76,6 +76,8 @@ class App extends React.Component {
                   <Route component={logPageView} />
                   <Route component={ScrollTop} />
 
+
+
                   <Header />
 
                   <Route path="/" exact={true} component={FrontPage} />
