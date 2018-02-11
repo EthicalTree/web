@@ -30,11 +30,14 @@
 
   .modal-close-wrapper
     position: absolute
-    right: 18px
-    top: 10px
+    right: $space-1
+    top: $space-3
 
     .modal-close
-      color: $color-white
+      svg
+        width: 16px
+        height: 16px
+        fill: $color-white
 
       &:hover
         text-decoration: none
@@ -49,12 +52,15 @@
         max-height: 300px
 
     .modal-close-wrapper
-      padding: 10px 15px
+      padding: $space-3 $space-4
       z-index: 4
 
     .modal-close
       opacity: 0.6
-      font-size: 30px
+
+      svg
+        width: 36px
+        height: 36px
 
       &:hover
         opacity: 1

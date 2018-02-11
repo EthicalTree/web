@@ -93,7 +93,7 @@ class EditEthicalitiesModal extends React.Component {
             </Col>
           </Row>
 
-          <Row className="pl-4 pr-4">
+          <div className="pl-4 pr-4 d-flex flex-wrap justify-content-center">
             {ethicalities.map(ethicality => {
               return (
                 <Col key={ethicality.slug} xs="6" className="p-2">
@@ -108,7 +108,7 @@ class EditEthicalitiesModal extends React.Component {
                 </Col>
               )
             })}
-          </Row>
+          </div>
 
         </Container>
       </Modal>

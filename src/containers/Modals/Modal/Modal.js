@@ -13,6 +13,7 @@ import {
 } from 'reactstrap'
 
 import Loader from '../../../components/Global/Loader'
+import { Icon } from '../../../components/Util/Icons'
 
 import { closeModal } from '../../../actions/modal'
 
@@ -43,7 +44,7 @@ const ModalCloser = props => {
   return (
     <div className="modal-close-wrapper">
       <a href="" className="modal-close" onClick={onClose}>
-        <i className="fa fa-times"></i>
+        <Icon iconKey="cross" />
       </a>
     </div>
   )
