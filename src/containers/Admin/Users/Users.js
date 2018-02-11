@@ -1,19 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Loader from '../Global/Loader'
 
 import {
   Table
 } from 'reactstrap'
 
-import { getUsers, toggleAdmin } from '../../actions/admin'
+import Loader from '../../../components/Global/Loader'
+import { Paginator } from '../../../components/Paginator'
 
-class Users extends React.Component {
+import { getUsers, toggleAdmin } from '../../../actions/admin'
+
+export class Users extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props
 
-    dispatch(getUsers())
+    dispatch(getUsers({ page: 1 }))
   }
 
   toggleAdmin(user_id, e) {
@@ -29,11 +31,11 @@ class Users extends React.Component {
   }
 
   render() {
-    const { admin } = this.props
+    const { dispatch, admin } = this.props
     const users = admin.users.sort((u1, u2) => u1.id - u2.id)
 
     return (
-      <Loader loading={admin.isUserAdminLoading}>
+      <Loader loading={admin.isAdminLoading}>
         <Table bordered responsive>
           <thead>
             <tr>
@@ -56,6 +58,13 @@ class Users extends React.Component {
             ))}
           </tbody>
         </Table>
+        <div className="text-center">
+          <Paginator
+            pageCount={admin.totalPages}
+            currentPage={admin.currentPage}
+            onPageChange={data => dispatch(getUsers({ page: data.selected }))}
+          />
+        </div>
       </Loader>
     )
   }

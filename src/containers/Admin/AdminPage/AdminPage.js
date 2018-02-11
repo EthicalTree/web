@@ -1,10 +1,11 @@
-import './Admin.css'
+import './AdminPage.css'
 
 import React from 'react'
 import cn from 'classnames'
 import { connect } from 'react-redux'
-import Users from './Users'
-import Tags from './Tags'
+import { Users } from '../Users'
+import { Tags } from '../Tags'
+import { Listings } from '../Listings'
 
 import { Route, withRouter, Redirect, Link } from 'react-router-dom'
 import {
@@ -16,9 +17,9 @@ import {
   Button
 } from 'reactstrap'
 
-import { isAdmin } from '../../utils/permissions'
+import { isAdmin } from '../../../utils/permissions'
 
-class Admin extends React.Component {
+export class AdminPage extends React.Component {
   render() {
     const { location, dispatch } =  this.props
     const { pathname } = location
@@ -37,6 +38,14 @@ class Admin extends React.Component {
                 to="/admin/users"
               >
                 Users
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link
+                className={cn('nav-link', { active: pathname === '/admin/listings' })}
+                to="/admin/listings"
+              >
+                Listings
               </Link>
             </NavItem>
             <NavItem>
@@ -63,6 +72,7 @@ class Admin extends React.Component {
           <TabPane>
             <div className="pt-4">
               <Route path="/admin/users" exact={true} component={Users} />
+              <Route path="/admin/listings" exact={true} component={Listings} />
               <Route path="/admin/tags" exact={true} component={Tags} />
             </div>
           </TabPane>
@@ -78,4 +88,4 @@ const select = (state) => {
   }
 }
 
-export default withRouter(connect(select)(Admin))
+export default withRouter(connect(select)(AdminPage))

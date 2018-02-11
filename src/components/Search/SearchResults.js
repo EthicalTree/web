@@ -20,7 +20,7 @@ import {
 
 import Loader from '../Global/Loader'
 import { EthicalityBar, EthicalityIcon } from '../Ethicality/Ethicality'
-import { Paginator } from '../Util/Paginator/Paginator'
+import { Paginator } from '../Paginator'
 
 import { performSearch, toggleSearchEthicalities } from '../../actions/search'
 import { gotoListing } from '../../actions/listing'

@@ -21,9 +21,9 @@ import { logPageView } from '../../components/RouteActions/GA'
 import { DevTools } from '../../components/DevTools';
 
 import AccountSettings from '../../components/AccountSettings/AccountSettings'
-import FrontPage from '../../components/FrontPage/FrontPage'
-import Admin from '../../components/Admin/Admin'
-import Modals from '../../containers/Modals'
+import FrontPage from '../FrontPage'
+import { AdminPage } from '../Admin'
+import Modals from '../Modals'
 
 class _InnerApp extends React.Component {
   constructor(props) {
@@ -87,7 +87,7 @@ class App extends React.Component {
 
                   <Route path="/account" exact={true} component={AccountSettings} />
 
-                  <Route path="/admin" component={Admin} />
+                  <Route path="/admin" component={AdminPage} />
 
                   <Footer />
                   <Modals />

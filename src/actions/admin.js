@@ -1,36 +1,54 @@
+import querystring from 'querystring'
 import { api } from '../utils/api'
 import { success } from '../utils/notifications'
 
-export const getUsers = () => {
+export const getUsers = queryObj => {
   return dispatch => {
-    dispatch({ type: 'SET_USER_ADMIN_LOADING', data: true })
+    dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 
-    api.get(`/v1/admin/users`)
-      .then(users => {
-        if (users.data) {
-          dispatch({ type: 'SET_ADMIN_USERS', data: users.data })
-        }
+    api.get(`/v1/admin/users?${querystring.stringify(queryObj)}`)
+      .then(({ data }) => {
+        const { users, currentPage, totalPages } = data
+        dispatch({ type: 'SET_ADMIN_USERS', data: users })
+        dispatch({ type: 'SET_ADMIN_PAGINATION', data: { currentPage, totalPages }})
       })
       .catch(() => {})
       .then(() => {
-        dispatch({ type: 'SET_USER_ADMIN_LOADING', data: false })
+        dispatch({ type: 'SET_ADMIN_LOADING', data: false })
       })
   }
 }
 
-export const getTags = () => {
+export const getTags = queryObj => {
   return dispatch => {
-    dispatch({ type: 'SET_TAG_ADMIN_LOADING', data: true })
+    dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 
-    api.get(`/v1/admin/tags`)
-      .then(tags => {
-        if (tags.data) {
-          dispatch({ type: 'SET_ADMIN_TAGS', data: tags.data })
-        }
+    api.get(`/v1/admin/tags?${querystring.stringify(queryObj)}`)
+      .then(({ data }) => {
+        const { tags, currentPage, totalPages } = data
+        dispatch({ type: 'SET_ADMIN_TAGS', data: tags })
+        dispatch({ type: 'SET_ADMIN_PAGINATION', data: { currentPage, totalPages }})
       })
       .catch(() => {})
       .then(() => {
-        dispatch({ type: 'SET_TAG_ADMIN_LOADING', data: false })
+        dispatch({ type: 'SET_ADMIN_LOADING', data: false })
+      })
+  }
+}
+
+export const getListings = queryObj => {
+  return dispatch => {
+    dispatch({ type: 'SET_ADMIN_LOADING', data: true })
+
+    api.get(`/v1/admin/listings?${querystring.stringify(queryObj)}`)
+      .then(({ data }) => {
+        const { listings, currentPage, totalPages } = data
+        dispatch({ type: 'SET_ADMIN_LISTINGS', data: listings })
+        dispatch({ type: 'SET_ADMIN_PAGINATION', data: { currentPage, totalPages } })
+      })
+      .catch(() => {})
+      .then(() => {
+        dispatch({ type: 'SET_ADMIN_LOADING', data: false })
       })
   }
 }
@@ -41,6 +59,17 @@ export const toggleAdmin = userData => {
       .then(() => {
         dispatch({ type: 'UPDATE_ADMIN_USER', data: userData })
         success('User successfully saved.')
+      })
+      .catch(() => {})
+  }
+}
+
+export const setListingVisibility = (listingId, visibility) => {
+  return dispatch => {
+    api.put(`/v1/admin/listings/${listingId}`, {visibility})
+      .then(() => {
+        dispatch({ type: 'UPDATE_ADMIN_LISTING', data: { listingId, visibility } })
+        success('Listing successfully updated')
       })
       .catch(() => {})
   }

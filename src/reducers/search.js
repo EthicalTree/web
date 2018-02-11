@@ -3,7 +3,7 @@ const defaultSearch = {
   selectedEthicalities: [],
   selectedResult: null,
   listings: [],
-  currentPage: 0,
+  currentPage: 1,
   hoveredResult: null,
   location: '',
   locationSuggestions: [],

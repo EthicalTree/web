@@ -1,32 +1,43 @@
 const defaultState = {
   users: [],
-  tags: []
+  tags: [],
+  listings: [],
+  currentPage: 1,
+  totalPages: 1
 }
 
-const admin = (state=defaultState, action) => {
+const admin = (state=defaultState, {type, data}) => {
 
-  switch (action.type) {
+  switch (type) {
     case 'UPDATE_ADMIN_USER':
       const user = {
-        ...state.users.find(u => u.id === action.data.id),
-        ...action.data
+        ...state.users.find(u => u.id === data.id),
+        ...data
       }
 
       return {
         ...state,
-        users: [...state.users.filter(u => u.id !== action.data.id), user]
+        users: [...state.users.filter(u => u.id !== data.id), user]
       }
 
     case 'UPDATE_ADMIN_TAG':
       return state
-    case 'SET_USER_ADMIN_LOADING':
-      return {...state, isUserAdminLoading: action.data}
-    case 'SET_TAG_ADMIN_LOADING':
-      return {...state, isTagAdminLoading: action.data}
+    case 'UPDATE_ADMIN_LISTING':
+      return state
+    case 'SET_ADMIN_LOADING':
+      return {...state, isAdminLoading: data}
     case 'SET_ADMIN_USERS':
-      return {...state, users: action.data}
+      return {...state, users: data}
     case 'SET_ADMIN_TAGS':
-      return {...state, tags: action.data}
+      return {...state, tags: data}
+    case 'SET_ADMIN_LISTINGS':
+      return {...state, listings: data}
+    case 'SET_ADMIN_PAGINATION':
+      return {
+        ...state,
+        currentPage: data.currentPage,
+        totalPages: data.totalPages
+      }
     default:
       return state
   }

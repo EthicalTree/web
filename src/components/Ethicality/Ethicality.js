@@ -8,7 +8,7 @@ import {
   UncontrolledTooltip as Tooltip
 } from 'reactstrap'
 
-const EthicalityBar = (props) => {
+export const EthicalityBar = (props) => {
   const {
     ethicalities,
     selectedEthicalities,
@@ -41,7 +41,7 @@ const EthicalityBar = (props) => {
   )
 }
 
-const Ethicality = (props) => {
+export const Ethicality = (props) => {
   const {
     onSelect,
     slug,
@@ -91,7 +91,7 @@ const Ethicality = (props) => {
   )
 }
 
-const EthicalityIcon = (props) => {
+export const EthicalityIcon = (props) => {
   const { name, uuid, className } = props
   const Icon = icons[props.ethicalityKey]
   const id = !!uuid ? `id-${uuid}` : undefined
@@ -107,8 +107,3 @@ const EthicalityIcon = (props) => {
   )
 }
 
-export {
-  Ethicality,
-  EthicalityBar,
-  EthicalityIcon
-}

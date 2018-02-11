@@ -8,11 +8,11 @@ import {
   Col
 } from 'reactstrap'
 
-import { EthicalityBar } from '../Ethicality/Ethicality'
-import { Search } from '../Search'
+import { EthicalityBar } from '../../components/Ethicality'
+import { Search } from '../../components/Search'
 import { toggleSearchEthicalities } from '../../actions/search'
 
-const FrontPage = (props) => {
+export const FrontPage = (props) => {
   const { app, search, dispatch } = props
 
   const ethicalities = app.ethicalities || []

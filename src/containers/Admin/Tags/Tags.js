@@ -1,18 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Loader from '../Global/Loader'
 
 import {
   Table,
   Input
 } from 'reactstrap'
 
-import { Icon } from '../Util/Icons'
+import { Icon } from '../../../components/Util/Icons'
+import { Paginator } from '../../../components/Paginator'
+import Loader from '../../../components/Global/Loader'
 
-import { setConfirm } from '../../actions/confirm'
-import { getTags, setTagUseType, deleteTag } from '../../actions/admin'
+import { setConfirm } from '../../../actions/confirm'
+import { getTags, setTagUseType, deleteTag } from '../../../actions/admin'
 
-class Tags extends React.Component {
+export class Tags extends React.Component {
 
   handleDelete = id => {
     const { dispatch } = this.props
@@ -39,15 +40,15 @@ class Tags extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
 
-    dispatch(getTags())
+    dispatch(getTags({ page: 1 }))
   }
 
   render() {
-    const { admin } = this.props
+    const { dispatch, admin } = this.props
     const tags = admin.tags.sort((t1, t2) => t1.hashtag - t2.hashtag)
 
     return (
-      <Loader loading={admin.isTagAdminLoading}>
+      <Loader loading={admin.isAdminLoading}>
         <Table bordered responsive>
           <thead>
             <tr>
@@ -87,6 +88,13 @@ class Tags extends React.Component {
             ))}
           </tbody>
         </Table>
+        <div className="text-center">
+          <Paginator
+            pageCount={admin.totalPages}
+            currentPage={admin.currentPage}
+            onPageChange={data => dispatch(getTags({ page: data.selected }))}
+          />
+        </div>
       </Loader>
     )
   }

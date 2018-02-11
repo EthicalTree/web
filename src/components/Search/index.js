@@ -1,7 +1,3 @@
-import Search from './Search'
-import SearchResults from './SearchResults'
+export {default as Search} from './Search'
+export {default as SearchResults} from './SearchResults'
 
-export {
-  Search,
-  SearchResults
-}

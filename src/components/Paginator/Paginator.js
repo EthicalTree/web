@@ -18,8 +18,8 @@ export const Paginator = (props) => {
       previousLabel={previous}
       nextLabel={next}
       pageCount={pageCount}
-      forcePage={currentPage}
-      onPageChange={onPageChange}
+      forcePage={currentPage - 1}
+      onPageChange={data => onPageChange({ selected: data.selected + 1 })}
       marginPagesDisplayed={2}
       pageRangeDisplayed={5}
       breakClassName="et-paginator-break"
@@ -29,3 +29,5 @@ export const Paginator = (props) => {
     />
   )
 }
+
+export default Paginator
