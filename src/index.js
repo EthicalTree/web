@@ -1,10 +1,12 @@
+import './index.css'
+
 import React from 'react'
 import { render } from 'react-dom'
 import reduxStore from './store/store'
-import Root from './root/Root'
+import App from './containers/App'
 
 render(
-  <Root store={reduxStore}/>,
+  <App store={reduxStore} />,
   document.getElementById('root')
 );
 

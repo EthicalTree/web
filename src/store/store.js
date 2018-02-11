@@ -1,8 +1,18 @@
-import configureStoreDev from './configureStore.dev'
-import configureStoreProd from './configureStore.prod'
+import { createStore, applyMiddleware, compose } from 'redux'
+import rootReducer from '../reducers'
+import { DevTools } from '../components/DevTools'
+import reduxMiddlewares from '../utils/reduxMiddlewares'
 
-const configureStore = process.env.NODE_ENV === 'production' ? configureStoreProd : configureStoreDev
-const reduxStore = configureStore({})
+let enhancer
 
-export default reduxStore
+if (process.env.NODE_ENV === 'development') {
+  enhancer = compose(
+    applyMiddleware(...reduxMiddlewares),
+    DevTools.instrument(),
+  )
+} else {
+  enhancer = applyMiddleware(...reduxMiddlewares)
+}
+
+export default createStore(rootReducer, {}, enhancer)
 
