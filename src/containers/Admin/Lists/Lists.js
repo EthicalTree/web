@@ -16,6 +16,7 @@ const ListTable = props => {
     handleAddList,
     handleDelete,
     handlePageChange,
+    handleMove,
     toggleHidden
   } = props
 
@@ -58,7 +59,7 @@ const ListTable = props => {
                   onChange={() => toggleHidden(l)}
                 />
               </td>
-              <td>
+              <td className="d-flex">
                 <a
                   href=""
                   title="Delete List"
@@ -66,6 +67,24 @@ const ListTable = props => {
                   onClick={handleDelete(l.id)}
                 >
                   <Icon iconKey="trash" />
+                </a>
+
+                <a
+                  href=""
+                  title="Move up"
+                  className="move-up"
+                  onClick={handleMove(l, l.order - 1)}
+                >
+                  <Icon iconKey="arrow_up" />
+                </a>
+
+                <a
+                  href=""
+                  title="Move down"
+                  className="move-down"
+                  onClick={handleMove(l, l.order + 1)}
+                >
+                  <Icon iconKey="arrow_down" />
                 </a>
               </td>
             </tr>
@@ -99,6 +118,18 @@ export class Lists extends React.Component {
     }
   }
 
+  handleMove = (list, order) => {
+    const { dispatch } = this.props
+
+    return event => {
+      event.preventDefault()
+      dispatch(updateList({
+        id: list.id,
+        order
+      }))
+    }
+  }
+
   toggleHidden = list => {
     const { dispatch } = this.props
     dispatch(updateList({
@@ -127,6 +158,7 @@ export class Lists extends React.Component {
           dispatch({ type: 'OPEN_MODAL', data: 'add_list' })
         }}
         handleDelete={this.handleDelete}
+        handleMove={this.handleMove}
         handlePageChange={data => dispatch(getLists({
           page: data.selected,
           location: 'front_page'

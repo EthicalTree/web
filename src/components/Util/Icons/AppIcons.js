@@ -9,10 +9,12 @@ import FlowerIcon from './RawIcons/FlowerIcon'
 // Utility Icons
 import SearchIcon from './RawIcons/SearchIcon'
 import RoadSignIcon from './RawIcons/RoadSignIcon'
-import ChevronDownIcon from './RawIcons/ChevronDownIcon'
 import CircleExtractIcon from './RawIcons/CircleExtractIcon'
 import TrashIcon from './RawIcons/TrashIcon'
 import CrossIcon from './RawIcons/CrossIcon'
+import ChevronDownIcon from './RawIcons/ChevronDownIcon'
+import ArrowUpIcon from './RawIcons/ArrowUpIcon'
+import ArrowDownIcon from './RawIcons/ArrowDownIcon'
 
 // Date Time Icons
 import StopwatchIcon from './RawIcons/StopwatchIcon'
@@ -32,9 +34,11 @@ export default {
 
   search: SearchIcon,
   road_sign: RoadSignIcon,
-  chevron_down: ChevronDownIcon,
   trash: TrashIcon,
   cross: CrossIcon,
+  chevron_down: ChevronDownIcon,
+  arrow_up: ArrowUpIcon,
+  arrow_down: ArrowDownIcon,
 
   stopwatch: StopwatchIcon,
   stopwatch_cross: StopwatchCrossIcon,
