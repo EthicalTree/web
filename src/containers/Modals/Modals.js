@@ -16,6 +16,7 @@ import VerifyEmailModal from './VerifyEmailModal'
 import ForgotPasswordModal from './ForgotPasswordModal'
 
 import { NewTagModal } from './Admin'
+import { NewListModal } from './Admin'
 
 const Modals = (props) => {
   return (
@@ -36,6 +37,7 @@ const Modals = (props) => {
       <ForgotPasswordModal />
 
       <NewTagModal />
+      <NewListModal />
     </div>
   )
 }

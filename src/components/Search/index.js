@@ -1,3 +1,5 @@
-export {default as Search} from './Search'
-export {default as SearchResults} from './SearchResults'
+export {Search} from './Search'
+export {SearchResults} from './SearchResults'
+export {ResultsMap} from './ResultsMap'
+export {MapSwitcher} from './MapSwitcher'
 

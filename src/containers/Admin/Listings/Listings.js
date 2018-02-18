@@ -6,7 +6,7 @@ import {
   Table
 } from 'reactstrap'
 
-import Loader from '../../../components/Global/Loader'
+import { Loader } from '../../../components/Loader'
 import { Paginator } from '../../../components/Paginator'
 
 import { getListings, setListingVisibility } from '../../../actions/admin'

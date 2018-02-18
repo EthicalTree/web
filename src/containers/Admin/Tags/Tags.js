@@ -8,7 +8,7 @@ import {
 
 import { Icon } from '../../../components/Util/Icons'
 import { Paginator } from '../../../components/Paginator'
-import Loader from '../../../components/Global/Loader'
+import { Loader } from '../../../components/Loader'
 
 import { setConfirm } from '../../../actions/confirm'
 import { getTags, setTagUseType, deleteTag } from '../../../actions/admin'

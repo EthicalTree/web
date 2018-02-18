@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { UncontrolledTooltip as Tooltip } from 'reactstrap'
-import Loader from '../Global/Loader'
+import { Loader } from '../Loader'
 import S3Uploader from '../Global/S3'
 import ETSlider from './Slider'
 

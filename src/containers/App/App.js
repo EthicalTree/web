@@ -11,7 +11,7 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import Loader from '../../components/Global/Loader'
+import { Loader } from '../../components/Loader'
 import { Header, Footer } from '../../components/Global'
 import { ForgotPasswordPage }from '../../components/Session'
 import { SearchResults } from '../../components/Search'

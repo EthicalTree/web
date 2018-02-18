@@ -1,9 +1,10 @@
 import React from 'react'
-import Map from '../Global/Map'
-import Markers from '../Util/Map/Markers'
 import { Col } from 'reactstrap'
 
-class ResultsMap extends React.Component {
+import Map from '../../Global/Map'
+import Markers from '../../Util/Map/Markers'
+
+export class ResultsMap extends React.Component {
 
   constructor(props) {
     super(props)

@@ -74,20 +74,6 @@ export const removeTagFromListing = (listingSlug, id) => {
   }
 }
 
-export const getEthicalities = () => {
-  return dispatch => {
-    dispatch({ type: 'SET_GET_ETHICALITIES_LOADING', data: true })
-
-    api.get('/v1/ethicalities')
-      .then(ethicalities => {
-        dispatch({ type: 'SET_ETHICALITIES', data: ethicalities.data })
-      })
-      .catch(() => {})
-      .then(() => {
-        dispatch({ type: 'SET_GET_ETHICALITIES_LOADING', data: false })
-      })
-  }
-}
 
 export const editEthicalities = (listingSlug, ethicalities) => {
   return dispatch => {

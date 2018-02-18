@@ -30,7 +30,7 @@ import ListingMenu from './ListingMenu'
 
 import { EthicalityBar } from '../Ethicality/Ethicality'
 import { TagBar } from './TagBar'
-import Loader from '../Global/Loader'
+import { Loader } from '../Loader'
 import ImageManager from '../Global/ImageManager'
 
 import { hasPermission, isAdmin } from '../../utils/permissions'

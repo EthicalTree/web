@@ -14,7 +14,7 @@ import {
 
 import { addTag } from '../../../../actions/admin'
 
-class AddListingModal extends React.Component {
+class NewTagModal extends React.Component {
 
   constructor(props) {
     super(props)
@@ -56,26 +56,24 @@ class AddListingModal extends React.Component {
             </Row>
           }
 
-          <Row>
-            <Col>
-              <Form onSubmit={this.submit.bind(this)}>
-                <Label for="tag">Hashtag</Label>
-                <Input
-                  autoFocus
-                  value={this.state.hashtag}
-                  onChange={e => { this.setState({ hashtag: e.target.value }) }}
-                  type="text"
-                  name="tag"
-                  id="tag"
-                  placeholder="#restaurant"
-                />
-              </Form>
-            </Col>
-          </Row>
+          <Form onSubmit={this.submit.bind(this)}>
+            <Row>
+              <Col>
+                  <Label for="tag">Hashtag</Label>
+                  <Input
+                    autoFocus
+                    value={this.state.hashtag}
+                    onChange={e => { this.setState({ hashtag: e.target.value }) }}
+                    type="text"
+                    name="tag"
+                    id="tag"
+                    placeholder="#restaurant"
+                  />
+              </Col>
+            </Row>
 
-          <Row className="mt-3">
-            <Col>
-              <Form onSubmit={this.submit.bind(this)}>
+            <Row className="mt-3">
+              <Col>
                 <Label for="tag">Use Type</Label>
                 <Input
                   onChange={e => { this.setState({ useType: e.target.value }) }}
@@ -86,9 +84,9 @@ class AddListingModal extends React.Component {
                   <option>category</option>
                   <option>admin</option>
                 </Input>
-              </Form>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+          </Form>
         </Container>
       </Modal>
     )
@@ -101,4 +99,4 @@ const select = (state) => ({
   modal: state.modal
 })
 
-export default connect(select)(AddListingModal)
+export default connect(select)(NewTagModal)

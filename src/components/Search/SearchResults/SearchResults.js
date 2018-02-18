@@ -3,9 +3,9 @@ import './SearchResults.css'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Search } from '../Search'
-import ResultsMap from './ResultsMap'
-import MapSwitcher from './MapSwitcher'
-import OpenClose from '../Util/DateTime/OpenClose'
+import { ResultsMap } from '../ResultsMap'
+import { Result } from '../Result'
+import { MapSwitcher } from '../MapSwitcher'
 
 import querystring from 'querystring'
 import { OverlayView } from 'react-google-maps'
@@ -13,76 +13,14 @@ import { OverlayView } from 'react-google-maps'
 import {
   Row,
   Col,
-  Card,
-  CardBody,
-  CardTitle
 } from 'reactstrap'
 
-import Loader from '../Global/Loader'
-import { EthicalityBar, EthicalityIcon } from '../Ethicality/Ethicality'
-import { Paginator } from '../Paginator'
+import { Loader } from '../../Loader'
+import { EthicalityBar } from '../../Ethicality/Ethicality'
+import { Paginator } from '../../Paginator'
 
-import { performSearch, toggleSearchEthicalities } from '../../actions/search'
-import { gotoListing } from '../../actions/listing'
-
-class Result extends React.Component {
-
-  constructor(props) {
-    super(props)
-
-    const { listing } = props
-
-    this.state = {
-      currentImage: listing.images[0]
-    }
-  }
-
-  render() {
-    const { listing, viewListing, hovered, className } = this.props
-    const { currentImage } = this.state
-
-    const extraStyle = currentImage ? { backgroundImage: `url(${process.env.REACT_APP_S3_URL}/${currentImage.key})` }  : {}
-    const hoveredClass = hovered ? 'hovered' : ''
-
-    return (
-      <Col xs="12" sm="6" lg="4" className="pt-3 pb-1 pl-4 pr-4">
-        <Card className={`search-result hoverable ${hoveredClass} ${className}`} onClick={viewListing}>
-          <div
-            className="card-img"
-            style={extraStyle}
-          >
-          </div>
-          <CardBody>
-            <CardTitle className="d-flex justify-content-between flex-row-reverse">
-              <div className="ethicalities d-flex">
-                {listing.ethicalities.map(ethicality => {
-                  return (
-                    <EthicalityIcon
-                      className="ml-2"
-                      ethicalityKey={ethicality.iconKey}
-                      key={ethicality.iconKey}
-                    />
-                  )
-                })}
-              </div>
-              <span className="text-truncate">
-                {listing.title}
-              </span>
-            </CardTitle>
-
-            <OpenClose status={listing.openStatus} />
-          </CardBody>
-        </Card>
-      </Col>
-    )
-  }
-
-}
-
-Result.defaultProps = {
-  className: '',
-  smallView: false
-}
+import { performSearch, toggleSearchEthicalities } from '../../../actions/search'
+import { gotoListing } from '../../../actions/listing'
 
 const SearchResults = (props) => {
   const { app, search, dispatch, history, handleSearch } = props
@@ -121,12 +59,14 @@ const SearchResults = (props) => {
       <Row className="d-flex align-items-stretch">
         {hasListings &&
           search.listings.map(listing => (
-            <Result
-              key={listing.slug}
-              listing={listing}
-              hovered={listing.slug === search.hoveredResult}
-              viewListing={() => dispatch(gotoListing(listing.slug, history))}
-            />
+            <Col xs="12" sm="6" lg="4" className="pt-3 pb-1 pl-4 pr-4">
+              <Result
+                key={listing.slug}
+                listing={listing}
+                hovered={listing.slug === search.hoveredResult}
+                viewListing={() => dispatch(gotoListing(listing.slug, history))}
+              />
+            </Col>
           ))
         }
         {!hasListings &&

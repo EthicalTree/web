@@ -53,6 +53,22 @@ export const getListings = queryObj => {
   }
 }
 
+export const getLists = queryObj => {
+  return dispatch => {
+    dispatch({ type: 'SET_ADMIN_LOADING', data: true })
+
+    api.get(`/v1/admin/curated_lists?${querystring.stringify(queryObj)}`)
+      .then(({ data }) => {
+        const { curatedLists } = data
+        dispatch({ type: 'SET_ADMIN_LISTS', data: curatedLists })
+      })
+      .catch(() => {})
+      .then(() => {
+        dispatch({ type: 'SET_ADMIN_LOADING', data: false })
+      })
+  }
+}
+
 export const toggleAdmin = userData => {
   return dispatch => {
     api.put(`/v1/admin/users/${userData.id}`, {user: userData})
@@ -68,7 +84,6 @@ export const setListingVisibility = (listingId, visibility) => {
   return dispatch => {
     api.put(`/v1/admin/listings/${listingId}`, {visibility})
       .then(() => {
-        dispatch({ type: 'UPDATE_ADMIN_LISTING', data: { listingId, visibility } })
         success('Listing successfully updated')
       })
       .catch(() => {})
@@ -79,10 +94,38 @@ export const setTagUseType = (tagId, useType) => {
   return dispatch => {
     api.put(`/v1/admin/tags/${tagId}`, {useType})
       .then(() => {
-        dispatch({ type: 'UPDATE_ADMIN_TAG', data: { tagId, useType } })
         success('Tag successfully updated')
       })
       .catch(() => {})
+  }
+}
+
+export const updateList = listData => {
+  return dispatch => {
+    api.put(`/v1/admin/curated_lists/${listData.id}`, { curatedList: listData })
+      .then(list => {
+        dispatch(getLists({ page: 1, location: 'front_page' }))
+        success('List was successfully updated')
+      })
+      .catch(() => {})
+  }
+}
+
+export const addList = ({ name, description, hashtag, location }) => {
+  const list = { name, description, hashtag, location }
+
+  return dispatch => {
+    api.post(`/v1/admin/curated_lists`, { curatedList: list })
+      .then(({ data }) => {
+        if (data.errors) {
+          dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
+        }
+        else {
+          dispatch({ type: 'CLOSE_MODAL' })
+          success('List created')
+          dispatch(getLists({ page: 1, location }))
+        }
+      })
   }
 }
 
@@ -102,6 +145,17 @@ export const addTag = ({ hashtag, useType }) => {
           success('Tag created')
           dispatch(getTags())
         }
+      })
+      .catch(() => {})
+  }
+}
+
+export const deleteList = id => {
+  return dispatch => {
+    api.delete(`/v1/admin/curated_lists/${id}`)
+      .then(() => {
+        success('List deleted')
+        dispatch(getLists({ page: 1, location: 'front_page' }))
       })
       .catch(() => {})
   }

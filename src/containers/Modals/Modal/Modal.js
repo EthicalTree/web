@@ -12,7 +12,7 @@ import {
   Button,
 } from 'reactstrap'
 
-import Loader from '../../../components/Global/Loader'
+import { Loader } from '../../../components/Loader'
 import { Icon } from '../../../components/Util/Icons'
 
 import { closeModal } from '../../../actions/modal'

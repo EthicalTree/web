@@ -4,8 +4,9 @@ import React from 'react'
 import cn from 'classnames'
 import { connect } from 'react-redux'
 import { Users } from '../Users'
-import { Tags } from '../Tags'
 import { Listings } from '../Listings'
+import { Tags } from '../Tags'
+import { Lists } from '../Lists'
 
 import { Route, withRouter, Redirect, Link } from 'react-router-dom'
 import {
@@ -56,6 +57,14 @@ export class AdminPage extends React.Component {
                 Tags
               </Link>
             </NavItem>
+            <NavItem>
+              <Link
+                className={cn('nav-link', { active: pathname === '/admin/lists' })}
+                to="/admin/lists"
+              >
+                Lists
+              </Link>
+            </NavItem>
           </Nav>
 
           {pathname === '/admin/tags' &&
@@ -74,6 +83,7 @@ export class AdminPage extends React.Component {
               <Route path="/admin/users" exact={true} component={Users} />
               <Route path="/admin/listings" exact={true} component={Listings} />
               <Route path="/admin/tags" exact={true} component={Tags} />
+              <Route path="/admin/lists" exact={true} component={Lists} />
             </div>
           </TabPane>
         </TabContent>

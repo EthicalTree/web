@@ -11,7 +11,7 @@ import {
 
 import { Ethicality } from '../../components/Ethicality'
 
-import { getEthicalities, editEthicalities } from '../../actions/listing'
+import { editEthicalities } from '../../actions/listing'
 
 class EditEthicalitiesModal extends React.Component {
 
@@ -21,12 +21,6 @@ class EditEthicalitiesModal extends React.Component {
     this.state = {
       selectedEthicalities: []
     }
-  }
-
-  componentDidMount() {
-    const { dispatch } = this.props
-
-    dispatch(getEthicalities())
   }
 
   componentWillReceiveProps(props) {

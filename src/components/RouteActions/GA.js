@@ -1,10 +1,15 @@
 import ReactGA from 'react-ga'
 
-ReactGA.initialize(process.env.REACT_APP_GA_CODE)
+if (process.env.NODE_ENV === 'production') {
+  ReactGA.initialize(process.env.REACT_APP_GA_CODE)
+}
 
 const logPageView = () => {
-  ReactGA.set({ page: window.location.pathname + window.location.search  })
-  ReactGA.pageview(window.location.pathname + window.location.search)
+  if (process.env.NODE_ENV === 'production') {
+    ReactGA.set({ page: window.location.pathname + window.location.search  })
+    ReactGA.pageview(window.location.pathname + window.location.search)
+  }
+
   return null
 }
 

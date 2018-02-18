@@ -1,19 +1,26 @@
 const defaultState = {
   isAppLoading: false,
-  ethicalities: []
+  areEthicalitiesLoading: false,
+  areCuratedListsLoading: false,
+  ethicalities: [],
+  curatedLists: [],
 }
 
-const app = (state=defaultState, action) => {
+const app = (state=defaultState, { type, data }) => {
 
-  switch (action.type) {
+  switch (type) {
     case 'NAVIGATE':
       return {...state, navToggle: !!state.navToggle}
     case 'SET_LOADING':
-      return {...state, isAppLoading: action.data}
+      return {...state, isAppLoading: data}
     case 'SET_GET_ETHICALITIES_LOADING':
-      return {...state, isGettingEthicalities: action.data}
+      return {...state, areEthicalitiesLoading: data}
+    case 'SET_CURATED_LISTS_LOADING':
+      return {...state, areCuratedListsLoading: data}
     case 'SET_ETHICALITIES':
-      return {...state, ethicalities: action.data}
+      return {...state, ethicalities: data}
+    case 'SET_CURATED_LISTS':
+      return {...state, curatedLists: data}
     default:
       return state
   }

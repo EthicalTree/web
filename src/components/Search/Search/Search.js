@@ -12,10 +12,10 @@ import {
 } from 'reactstrap'
 
 import querystring from 'querystring'
-import IconInput from '../Util/Icons/IconInput'
+import IconInput from '../../Util/Icons/IconInput'
 
-import { getCategories, getLocations } from '../../actions/search'
-import { getSavedSearchLocation } from '../../utils/address'
+import { getCategories, getLocations } from '../../../actions/search'
+import { getSavedSearchLocation } from '../../../utils/address'
 
 const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
   return (

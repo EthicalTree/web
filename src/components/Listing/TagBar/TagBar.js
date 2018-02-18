@@ -97,7 +97,7 @@ export class TagBar extends React.Component {
 TagBar.propTypes = {
   onTagAdd: PropTypes.func.isRequired,
   onTagRemove: PropTypes.func.isRequired,
-  tags: PropTypes.arrayOf(tagProp)
+  tags: PropTypes.arrayOf(PropTypes.shape(tagProp))
 }
 
 TagBar.defaultProps = {

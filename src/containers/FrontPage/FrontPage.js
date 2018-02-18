@@ -10,52 +10,79 @@ import {
 
 import { EthicalityBar } from '../../components/Ethicality'
 import { Search } from '../../components/Search'
+import { CuratedList } from '../../components/CuratedList'
+import { Loader } from '../../components/Loader'
+
 import { toggleSearchEthicalities } from '../../actions/search'
+import { getEthicalities, getCuratedLists } from '../../actions/app'
 
-export const FrontPage = (props) => {
-  const { app, search, dispatch } = props
+export class FrontPage extends React.Component {
 
-  const ethicalities = app.ethicalities || []
-  const selectedEthicalities = search.selectedEthicalities || []
+  componentWillMount() {
+    const { dispatch } = this.props
 
-  return (
-    <div
-      style={{
-      }}
-      className="front-page">
+    dispatch(getEthicalities())
+    dispatch(getCuratedLists())
+  }
 
-      <Container className="text-center">
-        <Col className="headline" xs="12">
-          <h1>Find local places that <span className="text-info">care</span> about what you care about.</h1>
-        </Col>
+  render() {
+    const {
+      app,
+      search,
+      dispatch
+    } = this.props
 
-        <Col xs="12">
-          <Search />
-        </Col>
+    const ethicalities = app.ethicalities || []
+    const selectedEthicalities = search.selectedEthicalities || []
 
-        <Col xs="12">
-          <EthicalityBar
-            className="front-page-ethicalities justify-content-center"
-            ethicalities={ethicalities}
-            showIcons={true}
-            onEthicalitySelect={slug => {
-              dispatch({
-                type: 'SET_SEARCH_ETHICALITIES',
-                data: toggleSearchEthicalities(selectedEthicalities, slug)
-              })
-            }}
-            selectedEthicalities={selectedEthicalities}
-          />
-        </Col>
-      </Container>
-    </div>
-  )
+    return (
+      <div className="front-page">
+        <Container className="text-center">
+          <Col className="headline" xs="12">
+            <h1>Find local places that <span className="text-info">care</span> about what you care about.</h1>
+          </Col>
+
+          <Col xs="12">
+            <Search />
+          </Col>
+
+          <Col xs="12">
+            <EthicalityBar
+              className="front-page-ethicalities justify-content-center"
+              ethicalities={ethicalities}
+              showIcons={true}
+              onEthicalitySelect={slug => {
+                dispatch({
+                  type: 'SET_SEARCH_ETHICALITIES',
+                  data: toggleSearchEthicalities(selectedEthicalities, slug)
+                })
+              }}
+              selectedEthicalities={selectedEthicalities}
+            />
+          </Col>
+        </Container>
+
+        <Loader loading={app.areCuratedListsLoading}>
+          {app.curatedLists.map(cl => {
+            return (
+              <CuratedList
+                key={cl.id}
+                {...cl}
+                location="front_page"
+              />
+            )
+          })}
+        </Loader>
+      </div>
+    )
+  }
 }
 
 const select = (state) => {
   return {
     app: state.app,
-    search: state.search
+    search: state.search,
+    curatedLists: state.curatedLists
   }
 }
 
