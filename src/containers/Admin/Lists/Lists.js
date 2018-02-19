@@ -59,33 +59,35 @@ const ListTable = props => {
                   onChange={() => toggleHidden(l)}
                 />
               </td>
-              <td className="d-flex">
-                <a
-                  href=""
-                  title="Delete List"
-                  className="delete-list"
-                  onClick={handleDelete(l.id)}
-                >
-                  <Icon iconKey="trash" />
-                </a>
+              <td>
+                <div className="d-flex">
+                  <a
+                    href=""
+                    title="Delete List"
+                    className="delete-list"
+                    onClick={handleDelete(l.id)}
+                  >
+                    <Icon iconKey="trash" />
+                  </a>
 
-                <a
-                  href=""
-                  title="Move up"
-                  className="move-up"
-                  onClick={handleMove(l, l.order - 1)}
-                >
-                  <Icon iconKey="arrow_up" />
-                </a>
+                  <a
+                    href=""
+                    title="Move up"
+                    className="move-up"
+                    onClick={handleMove(l, l.order - 1)}
+                  >
+                    <Icon iconKey="arrow_up" />
+                  </a>
 
-                <a
-                  href=""
-                  title="Move down"
-                  className="move-down"
-                  onClick={handleMove(l, l.order + 1)}
-                >
-                  <Icon iconKey="arrow_down" />
-                </a>
+                  <a
+                    href=""
+                    title="Move down"
+                    className="move-down"
+                    onClick={handleMove(l, l.order + 1)}
+                  >
+                    <Icon iconKey="arrow_down" />
+                  </a>
+                </div>
               </td>
             </tr>
           ))}
