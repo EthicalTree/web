@@ -2,7 +2,6 @@
 import LeafIcon from './RawIcons/LeafIcon'
 import CarrotIcon from './RawIcons/CarrotIcon'
 import PortraitFemaleIcon from './RawIcons/PortraitFemaleIcon'
-import PiggyBankIcon from './RawIcons/PiggyBankIcon'
 import Tag2Icon from './RawIcons/Tag2Icon'
 import FlowerIcon from './RawIcons/FlowerIcon'
 
