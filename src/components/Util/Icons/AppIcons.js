@@ -1,9 +1,9 @@
 // Ethicality Icons
 import LeafIcon from './RawIcons/LeafIcon'
-import CarrotIcon from './RawIcons/CarrotIcon'
-import PortraitFemaleIcon from './RawIcons/PortraitFemaleIcon'
-import Tag2Icon from './RawIcons/Tag2Icon'
-import FlowerIcon from './RawIcons/FlowerIcon'
+import VeganIcon from './RawIcons/VeganIcon'
+import BriefcaseIcon from './RawIcons/BriefcaseIcon'
+import BalanceIcon from './RawIcons/BalanceIcon'
+import BasketIcon from './RawIcons/BasketIcon'
 
 // Utility Icons
 import SearchIcon from './RawIcons/SearchIcon'
@@ -25,10 +25,10 @@ import Map2Icon from './RawIcons/Map2Icon'
 
 export default {
   vegetarian: LeafIcon,
-  vegan: CarrotIcon,
-  woman_owned: PortraitFemaleIcon,
-  fair_trade: Tag2Icon,
-  organic: FlowerIcon,
+  vegan: VeganIcon,
+  woman_owned: BriefcaseIcon,
+  fair_trade: BalanceIcon,
+  organic: BasketIcon,
 
   search: SearchIcon,
   road_sign: RoadSignIcon,
