@@ -1,5 +1,8 @@
+import './Result.css'
+
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 import {
   Card,
@@ -25,42 +28,44 @@ export class Result extends React.Component {
   }
 
   render() {
-    const { listing, viewListing, hovered, className } = this.props
+    const { listing, hovered, className } = this.props
     const { currentImage } = this.state
 
     const extraStyle = currentImage ? { backgroundImage: `url(${process.env.REACT_APP_S3_URL}/${currentImage.key})` }  : {}
     const hoveredClass = hovered ? 'hovered' : ''
 
     return (
-      <Card className={`search-result hoverable ${hoveredClass} ${className}`} onClick={viewListing}>
-        <div
-          className="card-img"
-          style={extraStyle}
-        >
-        </div>
-        <CardBody>
-          <CardTitle className="d-flex justify-content-between flex-row-reverse">
-            <div className="ethicalities d-flex">
-              {listing.ethicalities.map(ethicality => {
-                return (
-                  <EthicalityIcon
-                    className="ml-2"
-                    ethicalityKey={ethicality.iconKey}
-                    key={ethicality.iconKey}
-                  />
-                )
-              })}
-            </div>
-            <span className="text-truncate">
-              {listing.title}
-            </span>
-          </CardTitle>
+      <Link to={`/listings/${listing.slug}`} className="listing-result">
+        <Card className={`hoverable ${hoveredClass} ${className}`}>
+          <div
+            className="card-img"
+            style={extraStyle}
+          >
+          </div>
+          <CardBody>
+            <CardTitle className="d-flex justify-content-between flex-row-reverse">
+              <div className="ethicalities d-flex">
+                {listing.ethicalities.map(ethicality => {
+                  return (
+                    <EthicalityIcon
+                      className="ml-2"
+                      ethicalityKey={ethicality.iconKey}
+                      key={ethicality.iconKey}
+                    />
+                  )
+                })}
+              </div>
+              <span className="text-truncate">
+                {listing.title}
+              </span>
+            </CardTitle>
 
-          {listing.openStatus &&
-            <OpenClose status={listing.openStatus} />
-          }
-        </CardBody>
-      </Card>
+            {listing.openStatus &&
+              <OpenClose status={listing.openStatus} />
+            }
+          </CardBody>
+        </Card>
+      </Link>
     )
   }
 

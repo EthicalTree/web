@@ -1,3 +1,55 @@
 @import 'variables.sass'
 
-.search-result
+.listing-result
+  display: block
+
+  .card
+    border: none
+    margin-bottom: 6px
+
+    &.result-overlay
+      border-radius: 10px
+
+      .card-img
+        padding-bottom: 35%
+        border-radius: 10px 10px 0 0
+
+      .card-body
+        border-top: 1px solid $color-border
+        padding: 16px 12px 12px
+
+        .card-title
+          margin-bottom: 0
+          font-size: 14px
+
+    .card-img
+      position: relative
+      width: 100%
+      padding-bottom: 65%
+      background-repeat: no-repeat
+      background-size: cover
+      background-color: $color-gray-6
+
+    .card-body
+      position: relative
+      padding: 16px 0
+
+      .card-title
+        font-size: 18px
+        font-weight: $font-normal
+        margin-bottom: 0
+
+    .ethicalities
+      height: 30px
+
+    .ethicality-icon svg
+      height: 18px
+      width: 18px
+
+    &:hover, &.hovered
+      opacity: 0.6
+
+      .card-title
+        text-decoration: none
+
+

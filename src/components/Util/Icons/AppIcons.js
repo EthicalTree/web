@@ -25,12 +25,11 @@ import StopwatchRunningIcon from './RawIcons/StopwatchRunningIcon'
 import Map2Icon from './RawIcons/Map2Icon'
 
 export default {
-  leaf: LeafIcon,
-  carrot: CarrotIcon,
-  portrait_female: PortraitFemaleIcon,
-  piggy_bank: PiggyBankIcon,
-  tag2: Tag2Icon,
-  flower: FlowerIcon,
+  vegetarian: LeafIcon,
+  vegan: CarrotIcon,
+  woman_owned: PortraitFemaleIcon,
+  fair_trade: Tag2Icon,
+  organic: FlowerIcon,
 
   search: SearchIcon,
   road_sign: RoadSignIcon,

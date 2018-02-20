@@ -1,6 +1,5 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
-import { getCurrentUser, getSessionInformation } from '../../actions/session'
 import { authenticate } from '../../utils/api'
 
 import history from '../../utils/history'
@@ -24,6 +23,9 @@ import AccountSettings from '../../components/AccountSettings/AccountSettings'
 import FrontPage from '../FrontPage'
 import { AdminPage } from '../Admin'
 import Modals from '../Modals'
+
+import { getCurrentUser, getSessionInformation } from '../../actions/session'
+import { getEthicalities } from '../../actions/app'
 
 class _InnerApp extends React.Component {
   constructor(props) {
@@ -60,6 +62,7 @@ class App extends React.Component {
     }
 
     dispatch(getSessionInformation())
+    dispatch(getEthicalities())
   }
 
   render() {

@@ -20,7 +20,6 @@ import { EthicalityBar } from '../../Ethicality/Ethicality'
 import { Paginator } from '../../Paginator'
 
 import { performSearch, toggleSearchEthicalities } from '../../../actions/search'
-import { gotoListing } from '../../../actions/listing'
 
 const SearchResults = (props) => {
   const { app, search, dispatch, history, handleSearch } = props
@@ -59,12 +58,10 @@ const SearchResults = (props) => {
       <Row className="d-flex align-items-stretch">
         {hasListings &&
           search.listings.map(listing => (
-            <Col xs="12" sm="6" lg="4" className="pt-3 pb-1 pl-4 pr-4">
+            <Col key={listing.slug} xs="12" sm="6" lg="4" className="pt-3 pb-1 pl-4 pr-4">
               <Result
-                key={listing.slug}
                 listing={listing}
                 hovered={listing.slug === search.hoveredResult}
-                viewListing={() => dispatch(gotoListing(listing.slug, history))}
               />
             </Col>
           ))
@@ -141,7 +138,6 @@ class SearchResultsPage extends React.Component {
   }
 
   getOverlay() {
-    const { dispatch, history } = this.props
     const { selectedResult, listings } = this.props.search
 
     if (selectedResult) {
@@ -159,11 +155,6 @@ class SearchResultsPage extends React.Component {
             className="result-overlay"
             key={listing.slug}
             listing={listing}
-            viewListing={() => {
-              dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: null })
-              dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: null })
-              dispatch(gotoListing(listing.slug, history))
-            }}
             smallView={true}
           />
         </OverlayView>

@@ -14,14 +14,12 @@ import { CuratedList } from '../../components/CuratedList'
 import { Loader } from '../../components/Loader'
 
 import { toggleSearchEthicalities } from '../../actions/search'
-import { getEthicalities, getCuratedLists } from '../../actions/app'
+import { getCuratedLists } from '../../actions/app'
 
 export class FrontPage extends React.Component {
 
   componentWillMount() {
     const { dispatch } = this.props
-
-    dispatch(getEthicalities())
     dispatch(getCuratedLists())
   }
 
