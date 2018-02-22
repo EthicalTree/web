@@ -229,14 +229,14 @@ class Listing extends React.Component {
     const { dispatch } = this.props
 
     e.preventDefault()
-    dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_description' })
+    dispatch({ type: 'OPEN_MODAL', data: 'edit-description' })
   }
 
   onClickLocationEdit(e) {
     const { dispatch } = this.props
 
     e.preventDefault()
-    dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_location' })
+    dispatch({ type: 'OPEN_MODAL', data: 'edit-location' })
   }
 
   render() {
@@ -291,7 +291,7 @@ class Listing extends React.Component {
                 handleAction: image => {
                   dispatch({ type: 'SET_FULLSCREEN_MODAL_IMAGES', data: [...listing.images] })
                   dispatch({ type: 'SET_FULLSCREEN_MODAL_CURRENT_IMAGE', data: image })
-                  dispatch({ type: 'OPEN_MODAL', data: 'fullscreen_image' })
+                  dispatch({ type: 'OPEN_MODAL', data: 'fullscreen-image' })
                 },
                 title: 'Enlarge Photo',
               }}

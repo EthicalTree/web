@@ -43,7 +43,7 @@ class AddListingModal extends React.Component {
         loading={listing.isAddingListingLoading}
         contentLabel="Add New Listing"
         onSave={this.submit.bind(this)}
-        modalName="add_listing"
+        modalName="add-listing"
         saveLabel="Create"
       >
 

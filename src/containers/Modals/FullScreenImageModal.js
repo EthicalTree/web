@@ -10,7 +10,7 @@ class FullScreenImageModal extends React.Component {
     return (
       <Modal
         className="fullscreen-image-modal"
-        modalName="fullscreen_image"
+        modalName="fullscreen-image"
         noDecoration={true}
         style={{
           content: {

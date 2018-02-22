@@ -12,7 +12,7 @@ const AddEthicalityButton = props => {
         block
         size="sm"
         color="default"
-        onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_ethicalities' })}>
+        onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit-ethicalities' })}>
         Edit
       </Button>
     )
@@ -22,7 +22,7 @@ const AddEthicalityButton = props => {
     <Button
       block
       color="default"
-      onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_ethicalities' })}
+      onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit-ethicalities' })}
     >
       Add
     </Button>

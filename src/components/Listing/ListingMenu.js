@@ -42,7 +42,7 @@ const ListingMenu = props => {
           handleAction: image => {
             dispatch({ type: 'SET_FULLSCREEN_MODAL_IMAGES', data: [...menu.images] })
             dispatch({ type: 'SET_FULLSCREEN_MODAL_CURRENT_IMAGE', data: image })
-            dispatch({ type: 'OPEN_MODAL', data: 'fullscreen_image' })
+            dispatch({ type: 'OPEN_MODAL', data: 'fullscreen-image' })
           },
           title: 'Enlarge Photo',
         }}

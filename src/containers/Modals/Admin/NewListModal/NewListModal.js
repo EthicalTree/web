@@ -12,39 +12,40 @@ import {
   Alert
 } from 'reactstrap'
 
-import { addList } from '../../../../actions/admin'
+import { addList, editList } from '../../../../actions/admin'
 
 class NewListModal extends React.Component {
 
-  constructor(props) {
-    super(props)
+  submit(e) {
+    e.preventDefault()
+    const { dispatch, admin } = this.props
 
-    this.state = {
-      name: '',
-      description: '',
-      hashtag: '',
-      location: 'front_page',
+    if (admin.listBeingEdited.id) {
+      dispatch(editList(admin.listBeingEdited))
+    }
+    else {
+      dispatch(addList(admin.listBeingEdited))
     }
   }
 
-  submit(e) {
-    e.preventDefault()
+  handleChange(obj) {
     const { dispatch } = this.props
-
-    dispatch(addList(this.state))
+    dispatch({ type: 'UPDATE_ADMIN_EDIT_LIST', data: obj })
   }
 
   render() {
-    const { modal } = this.props
+    const { modal, admin } = this.props
+    const { name, hashtag, description } = admin.listBeingEdited
+    const isUpdate = !!admin.listBeingEdited.id
 
     return (
       <Modal
         className="add-list-modal medium-modal"
         loading={modal.isLoading}
-        contentLabel="Add New List"
+        contentLabel={isUpdate ? 'Edit List' : 'Add New List'}
         onSave={this.submit.bind(this)}
-        modalName="add_list"
-        saveLabel="Create"
+        modalName="new-list"
+        saveLabel={isUpdate ? 'Save' : 'Create'}
       >
 
         <Container>
@@ -64,8 +65,8 @@ class NewListModal extends React.Component {
                 <Label for="name">Name</Label>
                 <Input
                   autoFocus
-                  value={this.state.name}
-                  onChange={e => { this.setState({ name: e.target.value }) }}
+                  value={name || ''}
+                  onChange={e => this.handleChange({ name: e.target.value }) }
                   type="text"
                   name="name"
                   id="name"
@@ -75,9 +76,10 @@ class NewListModal extends React.Component {
               <Col size={6}>
                 <Label for="description">Hashtag</Label>
                 <Input
-                  onChange={e => { this.setState({ hashtag: e.target.value }) }}
+                  onChange={e => { this.handleChange({ hashtag: e.target.value }) }}
                   type="text"
                   name="hashtag"
+                  value={hashtag || ''}
                   id="hashtag"
                   placeholder="Enter a tag"
                 />
@@ -88,8 +90,9 @@ class NewListModal extends React.Component {
               <Col>
                 <Label for="description">Description</Label>
                 <Input
-                  onChange={e => { this.setState({ description: e.target.value }) }}
+                  onChange={e => { this.handleChange({ description: e.target.value }) }}
                   type="textarea"
+                  value={description || ''}
                   name="description"
                   id="description"
                 />

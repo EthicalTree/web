@@ -83,7 +83,7 @@ const Header = (props) => {
                   color="success"
                   block
                   className="mt-3"
-                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'add_listing' }) }}>
+                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'add-listing' }) }}>
                   Add Listing
                 </Button>
               </NavItem>

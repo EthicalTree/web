@@ -39,7 +39,7 @@ class LoginModal extends React.Component {
     const { dispatch } = this.props
     e.preventDefault()
 
-    dispatch({ type: 'OPEN_MODAL', data: 'forgot_password' })
+    dispatch({ type: 'OPEN_MODAL', data: 'forgot-password' })
   }
 
   render() {

@@ -37,7 +37,7 @@ const OperatingHours = (props) => {
       <div className="card-body pt-3">
         {canEdit && hasHours &&
           <button
-            onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_operating_hours' })}
+            onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit-operating-hours' })}
             className="btn btn-sm btn-default btn-block">
             Edit
           </button>
@@ -58,7 +58,7 @@ const OperatingHours = (props) => {
             <p>No operating hours set!</p>
             {canEdit &&
               <button
-                onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit_listing_operating_hours' })}
+                onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit-operating-hours' })}
                 className="btn btn-default btn-block">
                 Add
               </button>

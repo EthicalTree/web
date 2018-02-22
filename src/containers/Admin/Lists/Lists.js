@@ -13,23 +13,24 @@ import { getLists, updateList, deleteList } from '../../../actions/admin'
 const ListTable = props => {
   const {
     admin,
-    handleAddList,
+    handleAdd,
+    handleEdit,
     handleDelete,
     handlePageChange,
     handleMove,
     toggleHidden
   } = props
 
-  const lists = admin.lists.frontPage
+  const lists = admin.lists
 
   return (
     <Loader loading={admin.isAdminLoading}>
       <h4 className="mt-3 mb-3 d-flex justify-content-between">
-        Front Page
+        Tag lists
 
         <Button
           color="default"
-          onClick={handleAddList}
+          onClick={handleAdd}
         >
           + New List
         </Button>
@@ -47,7 +48,7 @@ const ListTable = props => {
           </tr>
         </thead>
         <tbody>
-          {lists.data.map(l => (
+          {lists.map(l => (
             <tr key={l.id}>
               <td>{l.name}</td>
               <td>{l.description}</td>
@@ -68,6 +69,15 @@ const ListTable = props => {
                     onClick={handleDelete(l.id)}
                   >
                     <Icon iconKey="trash" />
+                  </a>
+
+                  <a
+                    href=""
+                    title="Edit List"
+                    className="edit-list"
+                    onClick={handleEdit(l)}
+                  >
+                    <Icon iconKey="pencil" />
                   </a>
 
                   <a
@@ -95,8 +105,8 @@ const ListTable = props => {
       </Table>
       <div className="text-center">
         <Paginator
-          pageCount={lists.totalPages}
-          currentPage={lists.currentPage}
+          pageCount={admin.totalPages}
+          currentPage={admin.currentPage}
           onPageChange={handlePageChange}
         />
       </div>
@@ -105,6 +115,13 @@ const ListTable = props => {
 }
 
 export class Lists extends React.Component {
+
+  handleAdd = () => {
+    const { dispatch } = this.props
+
+    dispatch({ type: 'SET_ADMIN_EDIT_LIST', data: {} })
+    dispatch({ type: 'OPEN_MODAL', data: 'new-list' })
+  }
 
   handleDelete = id => {
     const { dispatch } = this.props
@@ -117,6 +134,16 @@ export class Lists extends React.Component {
         action: deleteList,
         data: id
       }))
+    }
+  }
+
+  handleEdit = list => {
+    const { dispatch } = this.props
+
+    return event => {
+      event.preventDefault()
+      dispatch({ type: 'SET_ADMIN_EDIT_LIST', data: {...list, hashtag: list.tag.hashtag} })
+      dispatch({ type: 'OPEN_MODAL', data: 'new-list' })
     }
   }
 
@@ -146,7 +173,7 @@ export class Lists extends React.Component {
 
   refreshLists() {
     const { dispatch } = this.props
-    dispatch(getLists({ page: 1, location: 'front_page' }))
+    dispatch(getLists())
   }
 
   render() {
@@ -156,15 +183,11 @@ export class Lists extends React.Component {
       <ListTable
         admin={admin}
         toggleHidden={this.toggleHidden}
-        handleAddList={() => {
-          dispatch({ type: 'OPEN_MODAL', data: 'add_list' })
-        }}
+        handleAdd={this.handleAdd}
+        handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
         handleMove={this.handleMove}
-        handlePageChange={data => dispatch(getLists({
-          page: data.selected,
-          location: 'front_page'
-        }))}
+        handlePageChange={data => dispatch(getLists({ page: data.selected }))}
       />
     )
   }

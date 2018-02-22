@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import GenericConfirmModal from './GenericConfirmModal'
 import FullScreenImageModal from './FullScreenImageModal'
@@ -18,28 +19,40 @@ import ForgotPasswordModal from './ForgotPasswordModal'
 import { NewTagModal } from './Admin'
 import { NewListModal } from './Admin'
 
-const Modals = (props) => {
-  return (
-    <div className="modals">
-      <LoginModal />
-      <LogoutModal />
-      <SignupModal />
-      <VerifyEmailModal />
-
-      <AddListingModal />
-      <EditDescriptionModal />
-      <EditLocationModal />
-      <EditOperatingHoursModal />
-      <EditEthicalitiesModal />
-
-      <GenericConfirmModal />
-      <FullScreenImageModal />
-      <ForgotPasswordModal />
-
-      <NewTagModal />
-      <NewListModal />
-    </div>
-  )
+const modals = {
+  'login': LoginModal,
+  'logout': LogoutModal,
+  'signup': SignupModal,
+  'verify-email': VerifyEmailModal,
+  'add-listing': AddListingModal,
+  'edit-description': EditDescriptionModal,
+  'edit-location': EditLocationModal,
+  'edit-operating-hours': EditOperatingHoursModal,
+  'edit-ethicalities': EditEthicalitiesModal,
+  'confirm': GenericConfirmModal,
+  'fullscreen-image': FullScreenImageModal,
+  'forgot-password': ForgotPasswordModal,
+  'new-tag': NewTagModal,
+  'new-list': NewListModal
 }
 
-export default Modals
+const Modals = props => {
+  const { modal } = props
+  const OpenModal = modals[modal.openModal]
+
+  if (OpenModal) {
+    return (
+      <div className="modals">
+        <OpenModal />
+      </div>
+    )
+  }
+
+  return null
+}
+
+const select = state => ({
+  modal: state.modal
+})
+
+export default connect(select)(Modals)

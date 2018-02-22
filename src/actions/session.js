@@ -120,7 +120,7 @@ export const signup = data => {
         }
         else {
           dispatch({ type: 'SIGNUP' })
-          dispatch({ type: 'OPEN_MODAL', data: 'verifying_email' })
+          dispatch({ type: 'OPEN_MODAL', data: 'verify-email' })
         }
       })
       .then(() => {

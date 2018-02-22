@@ -2,16 +2,10 @@ const defaultState = {
   users: [],
   tags: [],
   listings: [],
-  lists: {
-    frontPage: {
-      data: [],
-      currentPage: 1,
-      totalPages: 1,
-      isLoading: false
-    }
-  },
+  lists: [],
   currentPage: 1,
-  totalPages: 1
+  totalPages: 1,
+  listBeingEdited: {}
 }
 
 const admin = (state=defaultState, {type, data}) => {
@@ -38,6 +32,10 @@ const admin = (state=defaultState, {type, data}) => {
       return {...state, listings: data}
     case 'SET_ADMIN_LISTS':
       return {...state, lists: data}
+    case 'SET_ADMIN_EDIT_LIST':
+      return {...state, listBeingEdited: data}
+    case 'UPDATE_ADMIN_EDIT_LIST':
+      return {...state, listBeingEdited: {...state.listBeingEdited, ...data}}
     case 'SET_ADMIN_PAGINATION':
       return {
         ...state,

@@ -70,7 +70,7 @@ export class AdminPage extends React.Component {
           {pathname === '/admin/tags' &&
             <Button
               color="default"
-              onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'add_tag' })}
+              onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'new-tag' })}
             >
               + New Tag
             </Button>

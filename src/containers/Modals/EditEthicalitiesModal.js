@@ -67,7 +67,7 @@ class EditEthicalitiesModal extends React.Component {
         loading={listing.isEditingListingEthicalitiesLoading}
         contentLabel="Edit Listing Ethicalities"
         onSave={this.submit.bind(this)}
-        modalName="edit_listing_ethicalities"
+        modalName="edit-ethicalities"
       >
 
         <Container>

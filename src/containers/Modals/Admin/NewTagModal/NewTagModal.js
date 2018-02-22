@@ -41,7 +41,7 @@ class NewTagModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Add New Tag"
         onSave={this.submit.bind(this)}
-        modalName="add_tag"
+        modalName="new-tag"
         saveLabel="Create"
       >
 

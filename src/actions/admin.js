@@ -59,8 +59,9 @@ export const getLists = queryObj => {
 
     api.get(`/v1/admin/curated_lists?${querystring.stringify(queryObj)}`)
       .then(({ data }) => {
-        const { curatedLists } = data
+        const { curatedLists, currentPage, totalPages } = data
         dispatch({ type: 'SET_ADMIN_LISTS', data: curatedLists })
+        dispatch({ type: 'SET_ADMIN_PAGINATION', data: { currentPage, totalPages } })
       })
       .catch(() => {})
       .then(() => {
@@ -104,7 +105,7 @@ export const updateList = listData => {
   return dispatch => {
     api.put(`/v1/admin/curated_lists/${listData.id}`, { curatedList: listData })
       .then(list => {
-        dispatch(getLists({ page: 1, location: 'front_page' }))
+        dispatch(getLists())
         success('List was successfully updated')
       })
       .catch(() => {})
@@ -123,7 +124,25 @@ export const addList = ({ name, description, hashtag, location }) => {
         else {
           dispatch({ type: 'CLOSE_MODAL' })
           success('List created')
-          dispatch(getLists({ page: 1, location }))
+          dispatch(getLists())
+        }
+      })
+  }
+}
+
+export const editList = ({ id, name, description, hashtag, location }) => {
+  const list = { name, description, hashtag, location }
+
+  return dispatch => {
+    api.put(`/v1/admin/curated_lists/${id}`, { curatedList: list })
+      .then(({ data }) => {
+        if (data.errors) {
+          dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
+        }
+        else {
+          dispatch({ type: 'CLOSE_MODAL' })
+          success('List updated')
+          dispatch(getLists())
         }
       })
   }
@@ -155,7 +174,7 @@ export const deleteList = id => {
     api.delete(`/v1/admin/curated_lists/${id}`)
       .then(() => {
         success('List deleted')
-        dispatch(getLists({ page: 1, location: 'front_page' }))
+        dispatch(getLists())
       })
       .catch(() => {})
   }

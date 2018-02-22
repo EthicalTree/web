@@ -10,6 +10,7 @@ import SearchIcon from './RawIcons/SearchIcon'
 import RoadSignIcon from './RawIcons/RoadSignIcon'
 import CircleExtractIcon from './RawIcons/CircleExtractIcon'
 import TrashIcon from './RawIcons/TrashIcon'
+import Pencil3Icon from './RawIcons/Pencil3Icon'
 import CrossIcon from './RawIcons/CrossIcon'
 import ChevronDownIcon from './RawIcons/ChevronDownIcon'
 import ArrowUpIcon from './RawIcons/ArrowUpIcon'
@@ -33,6 +34,7 @@ export default {
   search: SearchIcon,
   road_sign: RoadSignIcon,
   trash: TrashIcon,
+  pencil: Pencil3Icon,
   cross: CrossIcon,
   chevron_down: ChevronDownIcon,
   arrow_up: ArrowUpIcon,

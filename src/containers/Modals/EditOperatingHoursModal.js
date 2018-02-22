@@ -108,7 +108,7 @@ class EditOperatingHoursModal extends React.Component {
         className="edit-operating-hours-modal medium-modal"
         loading={listing.isEditingOperatingHoursLoading}
         contentLabel="Edit Hours"
-        modalName="edit_listing_operating_hours"
+        modalName="edit-operating-hours"
         onSave={this.submit.bind(this)}
       >
 

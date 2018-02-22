@@ -44,7 +44,7 @@ class EditDescriptionModal extends React.Component {
         loading={listing.isEditingDescriptionLoading}
         contentLabel="Edit Decription"
         onSave={this.submit.bind(this)}
-        modalName="edit_listing_description"
+        modalName="edit-description"
       >
 
         <Container>

@@ -104,7 +104,7 @@ class EditLocationModal extends React.Component {
         loading={listing.isEditingLocationLoading}
         contentLabel="Edit Location"
         onSave={this.submit.bind(this)}
-        modalName="edit_listing_location"
+        modalName="edit-location"
       >
 
         <Container>

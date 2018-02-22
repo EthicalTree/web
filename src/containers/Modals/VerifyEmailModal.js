@@ -41,7 +41,7 @@ class VerifyEmailModal extends React.Component {
         className="verify-email small-modal"
         loading={session.verifyEmailLoading}
         contentLabel="Verify Email"
-        modalName="verifying_email"
+        modalName="verify-email"
       >
 
         <Container>
