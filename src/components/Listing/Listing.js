@@ -242,6 +242,10 @@ class Listing extends React.Component {
   render() {
     const { listing, app, search, dispatch } = this.props
 
+    if (listing.title) {
+      document.title = `EthicalTree · ${listing.title}`
+    }
+
     const ethicalities = app.ethicalities
     const selectedEthicalities = search.selectedEthicalities
 

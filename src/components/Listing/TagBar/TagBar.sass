@@ -3,6 +3,7 @@
 .tagbar
   display: flex
   justify-content: space-between
+  align-items: center
   background: $color-gray-14
   padding: $space-3
   border-bottom: 1px solid $color-gray-10
@@ -10,20 +11,26 @@
   & > *:last-child
     max-width: 250px
 
+  .tag-input
+    width: 500px
+
   .tags
     display: flex
     align-items: center
     flex-wrap: wrap
 
     .tag
+      display: flex
       font-weight: $font-light
       color: $color-gray-4
-      padding-left: $space-2
+      padding: $space-2
       margin: $space-1 $space-1
       border: 1px solid $color-gray-7
       border-radius: $space-2
 
       .et-icon
+        margin-left: $space-1
+
         svg
           width: 12px
           height: 12px

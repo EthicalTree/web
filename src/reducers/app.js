@@ -4,6 +4,7 @@ const defaultState = {
   areCuratedListsLoading: false,
   ethicalities: [],
   curatedLists: [],
+  plans: [],
 }
 
 const app = (state=defaultState, { type, data }) => {
@@ -19,6 +20,8 @@ const app = (state=defaultState, { type, data }) => {
       return {...state, areCuratedListsLoading: data}
     case 'SET_ETHICALITIES':
       return {...state, ethicalities: data}
+    case 'SET_PLANS':
+      return {...state, plans: data}
     case 'SET_CURATED_LISTS':
       return {...state, curatedLists: data}
     default:

@@ -3,7 +3,7 @@ import './TagBar.css'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { keyPressed } from '../../../utils/a11y'
-import { Icon } from '../../Util/Icons'
+import { Icon } from '../../Icon'
 
 import {
   Button,
@@ -20,9 +20,11 @@ export const Tag = props => {
   return (
     <span className="tag">
       {`#${tag}`}
-      <a href="" onClick={handleTagRemove}>
-        <Icon iconKey="cross"></Icon>
-      </a>
+      <Icon
+        iconKey="cross"
+        clickable
+        onClick={handleTagRemove}
+      ></Icon>
     </span>
   )
 }
@@ -72,22 +74,24 @@ export class TagBar extends React.Component {
           })}
         </div>
 
-        <InputGroup>
-          <Input
-            onKeyPress={keyPressed('Enter', this.handleTagAdd)}
-            onChange={e => this.setState({ currentTag: e.target.value })}
-            name="addTag"
-            id="addTag"
-            placeholder="#hipandcoolplaces"
-            value={currentTag}
-          />
+        <div className="tag-input">
+          <InputGroup>
+            <Input
+              onKeyPress={keyPressed('Enter', this.handleTagAdd)}
+              onChange={e => this.setState({ currentTag: e.target.value })}
+              name="addTag"
+              id="addTag"
+              placeholder="#hipandcoolplaces"
+              value={currentTag}
+            />
 
-          <InputGroupAddon addonType="append">
-            <Button color="default" onClick={this.handleTagAdd}>
-              Add
-            </Button>
-          </InputGroupAddon>
-        </InputGroup>
+            <InputGroupAddon addonType="append">
+              <Button color="default" onClick={this.handleTagAdd}>
+                Add
+              </Button>
+            </InputGroupAddon>
+          </InputGroup>
+        </div>
       </div>
     )
   }

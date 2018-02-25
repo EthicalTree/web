@@ -18,9 +18,16 @@ import {
   Button
 } from 'reactstrap'
 
+import { getPlans } from '../../../actions/plan'
 import { isAdmin } from '../../../utils/permissions'
 
 export class AdminPage extends React.Component {
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch(getPlans())
+  }
+
   render() {
     const { location, dispatch } =  this.props
     const { pathname } = location

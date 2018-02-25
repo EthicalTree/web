@@ -45,6 +45,10 @@ class AccountSettings extends React.Component {
     }))
   }
 
+  componentDidMount() {
+    document.title = `EthicalTree · Account Settings`
+  }
+
   render() {
     const { dispatch, session, account } = this.props
 

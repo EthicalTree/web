@@ -13,7 +13,7 @@ import {
 } from 'reactstrap'
 
 import { Loader } from '../../../components/Loader'
-import { Icon } from '../../../components/Util/Icons'
+import { Icon } from '../../../components/Icon'
 
 import { closeModal } from '../../../actions/modal'
 

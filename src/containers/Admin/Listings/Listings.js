@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import numeral from 'numeral'
 
-import {
-  Input,
-  Table
-} from 'reactstrap'
+import { Table } from 'reactstrap'
 
+import { Icon } from '../../../components/Icon'
 import { Loader } from '../../../components/Loader'
 import { Paginator } from '../../../components/Paginator'
 
@@ -17,6 +16,7 @@ export class Listings extends React.Component {
     const { dispatch } = this.props
 
     dispatch(getListings({ page: 1 }))
+    document.title = "EthicalTree · Listing Admin"
   }
 
   handleVisibilityChange = id => {
@@ -27,17 +27,37 @@ export class Listings extends React.Component {
     }
   }
 
+  handleEdit = listing => {
+    const { dispatch } = this.props
+
+    dispatch({ type: 'UPDATE_MODAL_DATA', data: {
+      id: listing.id,
+      planType: listing.plan ? listing.plan.planType : '',
+      price: listing.plan ? parseFloat(listing.plan.price) || '' : '',
+      visibility: listing.visibility
+    }})
+
+    dispatch({ type: 'OPEN_MODAL', data: 'admin-edit-listing' })
+  }
+
   render() {
     const { dispatch, admin } = this.props
 
     return (
       <Loader loading={admin.isAdminLoading}>
+        <h4 className="mt-3 mb-3 d-flex justify-content-between">
+          Listings
+        </h4>
+
         <Table bordered responsive>
           <thead>
             <tr>
               <th className="no-stretch">ID</th>
               <th>Title</th>
+              <th className="no-stretch">Plan Type</th>
+              <th className="no-stretch">Custom Price</th>
               <th className="visibility-col">Visibility</th>
+              <th className="no-stretch">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -45,16 +65,19 @@ export class Listings extends React.Component {
               <tr key={l.id}>
                 <td>{l.id}</td>
                 <td>{l.title}</td>
+                <td>{l.plan ? l.plan.type.name : ''}</td>
+                <td>{l.plan && l.plan.price > 0 ? `$${numeral(l.plan.price).format('0.00')}` : ''}</td>
+                <td>{l.visibility === 'published' ? 'Visible' : 'Hidden'}</td>
                 <td>
-                  <Input
-                    type="select"
-                    name="visibility"
-                    onChange={this.handleVisibilityChange(l.id)}
-                    defaultValue={l.visibility}
-                  >
-                    <option value="published">Visible (Published)</option>
-                    <option value="unpublished">Hidden (Un-Published)</option>
-                  </Input>
+                  <div className="d-flex justify-content-center">
+                    <Icon
+                      className="edit-listing"
+                      title="Edit Listing"
+                      iconKey="pencil"
+                      clickable
+                      onClick={() => this.handleEdit(l)}
+                    />
+                  </div>
                 </td>
               </tr>
             ))}

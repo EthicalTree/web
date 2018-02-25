@@ -16,8 +16,11 @@ import SignupModal from './SignupModal'
 import VerifyEmailModal from './VerifyEmailModal'
 import ForgotPasswordModal from './ForgotPasswordModal'
 
-import { NewTagModal } from './Admin'
-import { NewListModal } from './Admin'
+import {
+  NewTagModal,
+  NewListModal,
+  EditListingModal as EditAdminListingModal
+} from './Admin'
 
 const modals = {
   'login': LoginModal,
@@ -33,7 +36,8 @@ const modals = {
   'fullscreen-image': FullScreenImageModal,
   'forgot-password': ForgotPasswordModal,
   'new-tag': NewTagModal,
-  'new-list': NewListModal
+  'new-list': NewListModal,
+  'admin-edit-listing': EditAdminListingModal
 }
 
 const Modals = props => {

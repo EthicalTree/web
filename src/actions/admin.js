@@ -112,6 +112,16 @@ export const updateList = listData => {
   }
 }
 
+export const updateListing = listingData => {
+  return dispatch => {
+    api.put(`/v1/admin/listings/${listingData.id}`, { listing: listingData })
+      .then(() => {
+        dispatch(getListings({ page: 1 }))
+      })
+      .catch(() => {})
+  }
+}
+
 export const addList = ({ name, description, hashtag, location }) => {
   const list = { name, description, hashtag, location }
 

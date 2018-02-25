@@ -2,7 +2,7 @@ import './OpenClose.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import Icon from '../Icons/Icon'
+import { Icon } from '../../Icon'
 
 const OpenClose = props => {
   const { status } = props

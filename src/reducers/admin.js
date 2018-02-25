@@ -5,7 +5,8 @@ const defaultState = {
   lists: [],
   currentPage: 1,
   totalPages: 1,
-  listBeingEdited: {}
+  listBeingEdited: {},
+  listingBeingEdited: {}
 }
 
 const admin = (state=defaultState, {type, data}) => {
@@ -34,8 +35,6 @@ const admin = (state=defaultState, {type, data}) => {
       return {...state, lists: data}
     case 'SET_ADMIN_EDIT_LIST':
       return {...state, listBeingEdited: data}
-    case 'UPDATE_ADMIN_EDIT_LIST':
-      return {...state, listBeingEdited: {...state.listBeingEdited, ...data}}
     case 'SET_ADMIN_PAGINATION':
       return {
         ...state,

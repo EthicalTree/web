@@ -6,7 +6,7 @@ import {
   Input
 } from 'reactstrap'
 
-import { Icon } from '../../../components/Util/Icons'
+import { Icon } from '../../../components/Icon'
 import { Paginator } from '../../../components/Paginator'
 import { Loader } from '../../../components/Loader'
 
@@ -41,6 +41,7 @@ export class Tags extends React.Component {
     const { dispatch } = this.props
 
     dispatch(getTags({ page: 1 }))
+    document.title = "EthicalTree · Tag Admin"
   }
 
   render() {
@@ -75,14 +76,13 @@ export class Tags extends React.Component {
                   </Input>
                 </td>
                 <td>
-                  <a
-                    href=""
+                  <Icon
+                    iconKey="trash"
                     title="Delete Tag"
                     className="delete-tag"
+                    clickable
                     onClick={this.handleDelete(t.id)}
-                  >
-                    <Icon iconKey="trash" />
-                  </a>
+                  />
                 </td>
               </tr>
             ))}

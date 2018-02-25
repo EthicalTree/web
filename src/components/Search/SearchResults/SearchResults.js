@@ -113,6 +113,9 @@ class SearchResultsPage extends React.Component {
     const queryParams = this.getQueryParams()
 
     this.performSearch(queryParams.page, queryParams.ethicalities, queryParams.location)
+
+    const titleLocation = queryParams.location || 'Search'
+    document.title = `EthicalTree · ${titleLocation}`
   }
 
   performSearch(newPage=0, ethicalities, location) {

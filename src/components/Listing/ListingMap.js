@@ -1,6 +1,6 @@
 import React from 'react'
 import { Marker } from 'react-google-maps'
-import Icon from '../Util/Icons/Icon'
+import { Icon } from '../Icon'
 import Map from '../Global/Map'
 import { formatAddress, formatGetDirectionsUrl } from '../../utils/address'
 

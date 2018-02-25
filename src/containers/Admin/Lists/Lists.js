@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { Button, Table } from 'reactstrap'
 
-import { Icon } from '../../../components/Util/Icons'
+import { Icon } from '../../../components/Icon'
 import { Paginator } from '../../../components/Paginator'
 import { Loader } from '../../../components/Loader'
 
@@ -62,41 +62,38 @@ const ListTable = props => {
               </td>
               <td>
                 <div className="d-flex">
-                  <a
-                    href=""
+
+                  <Icon
+                    iconKey="trash"
                     title="Delete List"
                     className="delete-list"
+                    clickable
                     onClick={handleDelete(l.id)}
-                  >
-                    <Icon iconKey="trash" />
-                  </a>
+                  />
 
-                  <a
-                    href=""
+                  <Icon
+                    iconKey="pencil"
                     title="Edit List"
                     className="edit-list"
+                    clickable
                     onClick={handleEdit(l)}
-                  >
-                    <Icon iconKey="pencil" />
-                  </a>
+                  />
 
-                  <a
-                    href=""
+                  <Icon
+                    iconKey="arrow_up"
                     title="Move up"
                     className="move-up"
+                    clickable
                     onClick={handleMove(l, l.order - 1)}
-                  >
-                    <Icon iconKey="arrow_up" />
-                  </a>
+                  />
 
-                  <a
-                    href=""
+                  <Icon
+                    iconKey="arrow_down"
                     title="Move down"
                     className="move-down"
+                    clickable
                     onClick={handleMove(l, l.order + 1)}
-                  >
-                    <Icon iconKey="arrow_down" />
-                  </a>
+                  />
                 </div>
               </td>
             </tr>
@@ -142,7 +139,7 @@ export class Lists extends React.Component {
 
     return event => {
       event.preventDefault()
-      dispatch({ type: 'SET_ADMIN_EDIT_LIST', data: {...list, hashtag: list.tag.hashtag} })
+      dispatch({ type: 'UPDATE_MODAL_DATA', data: {...list, hashtag: list.tag.hashtag} })
       dispatch({ type: 'OPEN_MODAL', data: 'new-list' })
     }
   }
@@ -169,6 +166,7 @@ export class Lists extends React.Component {
 
   componentDidMount() {
     this.refreshLists()
+    document.title = "EthicalTree · Lists Admin"
   }
 
   refreshLists() {

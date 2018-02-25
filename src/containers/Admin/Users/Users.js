@@ -16,6 +16,7 @@ export class Users extends React.Component {
     const { dispatch } = this.props
 
     dispatch(getUsers({ page: 1 }))
+    document.title = "EthicalTree · User Admin"
   }
 
   toggleAdmin(user_id, e) {
@@ -40,7 +41,7 @@ export class Users extends React.Component {
           <thead>
             <tr>
               <th>Email</th>
-              <th>Admin</th>
+              <th className="no-stretch">Admin</th>
             </tr>
           </thead>
           <tbody>

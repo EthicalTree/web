@@ -18,9 +18,11 @@ import { getCuratedLists } from '../../actions/app'
 
 export class FrontPage extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
     const { dispatch } = this.props
     dispatch(getCuratedLists())
+
+    document.title = 'EthicalTree'
   }
 
   render() {

@@ -99,13 +99,19 @@ const Header = (props) => {
                 </DropdownToggle>
                 <DropdownMenu right>
                   {session.user.admin &&
-                    <DropdownItem onClick={e => { history.push('/admin/users') }}>
-                      Admin
-                    </DropdownItem>
+                    <Link to="/admin/users">
+                      <DropdownItem>
+                        Admin
+                      </DropdownItem>
+                    </Link>
                   }
-                  <DropdownItem onClick={e => { history.push('/account') }}>
-                    Account Settings
-                  </DropdownItem>
+
+                  <Link to="/account">
+                    <DropdownItem>
+                      Account Settings
+                    </DropdownItem>
+                  </Link>
+
                   <DropdownItem onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'logout' }) }}>
                     Logout
                   </DropdownItem>

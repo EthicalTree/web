@@ -12,7 +12,7 @@ import {
 } from 'reactstrap'
 
 import querystring from 'querystring'
-import IconInput from '../../Util/Icons/IconInput'
+import { IconInput } from '../../Icon'
 
 import { getCategories, getLocations } from '../../../actions/search'
 import { getSavedSearchLocation } from '../../../utils/address'

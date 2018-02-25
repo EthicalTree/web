@@ -15,3 +15,11 @@ export const keyPressed = (key, func) => {
   }
 }
 
+export const blurClick = func => {
+  return event => {
+    if (event.currentTarget) {
+      event.currentTarget.blur()
+      func(event)
+    }
+  }
+}

@@ -18,25 +18,25 @@ class NewListModal extends React.Component {
 
   submit(e) {
     e.preventDefault()
-    const { dispatch, admin } = this.props
+    const { dispatch, modal } = this.props
 
-    if (admin.listBeingEdited.id) {
-      dispatch(editList(admin.listBeingEdited))
+    if (modal.modalData.id) {
+      dispatch(editList(modal.modalData))
     }
     else {
-      dispatch(addList(admin.listBeingEdited))
+      dispatch(addList(modal.modalData))
     }
   }
 
   handleChange(obj) {
     const { dispatch } = this.props
-    dispatch({ type: 'UPDATE_ADMIN_EDIT_LIST', data: obj })
+    dispatch({ type: 'UPDATE_MODAL_DATA', data: obj })
   }
 
   render() {
-    const { modal, admin } = this.props
-    const { name, hashtag, description } = admin.listBeingEdited
-    const isUpdate = !!admin.listBeingEdited.id
+    const { modal } = this.props
+    const { name, hashtag, description } = modal.modalData
+    const isUpdate = !!modal.modalData.id
 
     return (
       <Modal
