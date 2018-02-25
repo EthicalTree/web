@@ -29,6 +29,7 @@ import ListingMap from './ListingMap'
 import ListingMenu from './ListingMenu'
 
 import { EthicalityBar } from '../Ethicality/Ethicality'
+import { Featured } from './Featured'
 import { TagBar } from './TagBar'
 import { Loader } from '../Loader'
 import ImageManager from '../Global/ImageManager'
@@ -167,6 +168,8 @@ const ListingInfo = (props) => {
       </TabContent>
 
       <div className="clearfix"></div>
+
+      <Featured featuredListings={listing.featuredListings} />
     </div>
   )
 }

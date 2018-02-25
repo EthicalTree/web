@@ -55,22 +55,45 @@ const SearchResults = (props) => {
         selectedEthicalities={selectedEthicalities}
       />
 
-      <Row className="d-flex align-items-stretch">
-        {hasListings &&
-          search.listings.map(listing => (
-            <Col key={listing.slug} xs="12" sm="6" lg="4" className="pt-3 pb-1 pl-4 pr-4">
-              <Result
-                listing={listing}
-                hovered={listing.slug === search.hoveredResult}
-              />
-            </Col>
-          ))
-        }
-        {!hasListings &&
-          <Col className="text-center pt-5">
-            No listings found!
-          </Col>
-        }
+      <Row className="mt-2 no-gutters">
+        <Col xs="12" lg="9">
+          <div className="search-listings">
+            <h5 className="p-3">Search Results</h5>
+            <div className="d-flex flex-wrap align-items-stretch">
+              {hasListings &&
+                search.listings.map(listing => (
+                  <Col key={listing.slug} xs="12" sm="6" lg="4">
+                    <Result
+                      listing={listing}
+                      hovered={listing.slug === search.hoveredResult}
+                    />
+                  </Col>
+                ))
+              }
+              {!hasListings &&
+                <Col className="text-center pt-5">
+                  No listings found!
+                </Col>
+              }
+            </div>
+          </div>
+        </Col>
+
+        <Col xs="12" lg="3">
+          <div className="featured-listings">
+            <h5 className="featured-listings-header">Featured</h5>
+            <div className="d-flex flex-wrap flex-direction-column">
+              {search.featured.map(listing => (
+                <Col key={listing.slug} xs="12" sm="6" lg="12">
+                  <Result
+                    listing={listing}
+                    hovered={listing.slug === search.hoveredResult}
+                  />
+                </Col>
+              ))}
+            </div>
+          </div>
+        </Col>
       </Row>
 
       {hasListings &&

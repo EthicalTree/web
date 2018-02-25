@@ -1,14 +1,15 @@
 const defaultState = {
   listingInfoTab: 'location',
   menus: [{}],
-  tags: []
+  tags: [],
+  featuredListings: []
 }
 
 const listing = (state=defaultState, {type, data}) => {
 
   switch (type) {
     case 'SET_LISTING':
-      return {...state,...data}
+      return {...state, ...data}
     case 'SET_ADD_LISTING_LOADING':
       return {...state, isAddingListingLoading: data}
     case 'SET_GET_LISTING_LOADING':

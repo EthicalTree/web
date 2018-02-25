@@ -17,8 +17,8 @@ export const performSearch = (query, ethicalities, location, page) => {
     dispatch({ type: 'SET_SEARCH_LOADING', data: true })
 
     api.get(`/v1/search?${querystring.stringify(queryObj)}`)
-      .then(results => {
-        dispatch({ type: 'SET_SEARCH_RESULTS', data: results.data })
+      .then(({ data }) => {
+        dispatch({ type: 'SET_SEARCH_RESULTS', data })
       })
       .catch(() => {})
       .then(() => {

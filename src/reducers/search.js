@@ -3,6 +3,7 @@ const defaultSearch = {
   selectedEthicalities: [],
   selectedResult: null,
   listings: [],
+  featured: [],
   currentPage: 1,
   hoveredResult: null,
   location: '',
@@ -31,11 +32,12 @@ const search = (state=defaultSearch, action) => {
     case 'SET_SEARCH_LOADING':
       return {...state, isSearchLoading: action.data}
     case 'SET_SEARCH_RESULTS':
-      const { listings, pageCount, currentPage } = action.data
+      const { listings, featured, pageCount, currentPage } = action.data
 
       return {
         ...state,
         listings,
+        featured,
         pageCount: parseInt(pageCount, 10),
         currentPage: parseInt(currentPage, 10)
       }
