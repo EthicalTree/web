@@ -1,8 +1,13 @@
+const safeFunc = (event, func) => {
+  if (func) {
+    func(event)
+  }
+}
 
 export const a11yClick = func => {
   return event => {
     if (event.key === 'Enter' || !event.key) {
-      func(event)
+      safeFunc(event, func)
     }
   }
 }
@@ -10,7 +15,7 @@ export const a11yClick = func => {
 export const keyPressed = (key, func) => {
   return event => {
     if (event.key === key) {
-      func(event)
+      safeFunc(event, func)
     }
   }
 }
@@ -19,7 +24,7 @@ export const blurClick = func => {
   return event => {
     if (event.currentTarget) {
       event.currentTarget.blur()
-      func(event)
+      safeFunc(event, func)
     }
   }
 }

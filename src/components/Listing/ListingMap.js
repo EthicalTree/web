@@ -33,17 +33,17 @@ const ListingMap = props => {
         }
       </h3>
       {hasLocations &&
-        <p>
-            {locations[0].address}
-            <a
-              href={formatGetDirectionsUrl(locations[0].address)}
-              rel="noopener noreferrer"
-              target="_blank"
-              className="pl-3"
-            >
-              Get Directions
-              <Icon iconKey="extract" />
-            </a>
+        <p className="address-area">
+          {locations[0].address}
+          <a
+            href={formatGetDirectionsUrl(locations[0].address)}
+            rel="noopener noreferrer"
+            target="_blank"
+            className="pl-3"
+          >
+            Get Directions
+            <Icon iconKey="extract" />
+          </a>
         </p>
       }
       <div className="listing-map-area">

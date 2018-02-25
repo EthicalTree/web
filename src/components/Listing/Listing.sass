@@ -73,6 +73,10 @@
     .operating-hours
       text-align: center
 
+      .open-close
+        display: flex
+        justify-content: center
+
       @media (min-width: $screen-sm-min) //{}
         margin: 4rem 0
 
@@ -109,6 +113,15 @@
 
     @media (max-width: $screen-xs-max) //{}
       padding: 0.5em
+
+  .listing-map
+    .address-area
+      display: flex
+      justify-content: space-between
+
+      .et-icon
+        padding: 0 $space-2
+        display: inline-block
 
 
   .listing-info
