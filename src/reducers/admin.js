@@ -6,7 +6,9 @@ const defaultState = {
   currentPage: 1,
   totalPages: 1,
   listBeingEdited: {},
-  listingBeingEdited: {}
+  listingBeingEdited: {},
+  query: '',
+  filter: ''
 }
 
 const admin = (state=defaultState, {type, data}) => {
@@ -22,7 +24,10 @@ const admin = (state=defaultState, {type, data}) => {
         ...state,
         users: [...state.users.filter(u => u.id !== data.id), user]
       }
-
+    case 'SET_ADMIN_FILTER':
+      return {...state, filter: data}
+    case 'SET_ADMIN_SEARCH_QUERY':
+      return {...state, query: data}
     case 'SET_ADMIN_LOADING':
       return {...state, isAdminLoading: data}
     case 'SET_ADMIN_USERS':

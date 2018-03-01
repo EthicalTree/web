@@ -9,13 +9,13 @@ import { Tags } from '../Tags'
 import { Lists } from '../Lists'
 
 import { Route, withRouter, Redirect, Link } from 'react-router-dom'
+
 import {
   Container,
   Nav,
   NavItem,
   TabContent,
-  TabPane,
-  Button
+  TabPane
 } from 'reactstrap'
 
 import { getPlans } from '../../../actions/plan'
@@ -29,7 +29,7 @@ export class AdminPage extends React.Component {
   }
 
   render() {
-    const { location, dispatch } =  this.props
+    const { location } =  this.props
     const { pathname } = location
 
     if (!isAdmin()) {
@@ -73,16 +73,6 @@ export class AdminPage extends React.Component {
               </Link>
             </NavItem>
           </Nav>
-
-          {pathname === '/admin/tags' &&
-            <Button
-              color="default"
-              onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'new-tag' })}
-            >
-              + New Tag
-            </Button>
-          }
-
         </div>
         <TabContent>
           <TabPane>

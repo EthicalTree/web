@@ -2,20 +2,24 @@ import React from 'react'
 import { connect } from 'react-redux'
 import numeral from 'numeral'
 
-import { Table } from 'reactstrap'
+import { Button, Table } from 'reactstrap'
+
+import { Search } from '../Search'
 
 import { Icon } from '../../../components/Icon'
 import { Loader } from '../../../components/Loader'
 import { Paginator } from '../../../components/Paginator'
 
 import { getListings, setListingVisibility } from '../../../actions/admin'
+import { blurClick } from '../../../utils/a11y'
 
 export class Listings extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props
 
-    dispatch(getListings({ page: 1 }))
+    dispatch({ type: 'SET_ADMIN_SEARCH_QUERY', data: '' })
+    dispatch(getListings({ page: 1, query: '' }))
     document.title = "EthicalTree · Listing Admin"
   }
 
@@ -40,6 +44,18 @@ export class Listings extends React.Component {
     dispatch({ type: 'OPEN_MODAL', data: 'admin-edit-listing' })
   }
 
+  getListings(newData={}) {
+    const { dispatch, admin } = this.props
+
+    const currentData = {
+      page: 1,
+      query: admin.query,
+      filter: admin.filter
+    }
+
+    dispatch(getListings({...currentData, ...newData}))
+  }
+
   render() {
     const { dispatch, admin } = this.props
 
@@ -47,6 +63,21 @@ export class Listings extends React.Component {
       <Loader loading={admin.isAdminLoading}>
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
           Listings
+
+          <div className="d-flex">
+            <Button
+              outline={!admin.filter}
+              className="mr-4"
+              onClick={blurClick(() => {
+                dispatch({type: 'SET_ADMIN_FILTER', data: admin.filter ? '' : 'plans'})
+                this.getListings({ filter: admin.filter ? '' : 'plans' })
+              })}
+            >
+              Plans
+            </Button>
+
+            <Search handleSearch={() => this.getListings()}/>
+          </div>
         </h4>
 
         <Table bordered responsive>

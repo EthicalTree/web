@@ -2,9 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import {
-  Table,
-  Input
+  Button,
+  Input,
+  Table
 } from 'reactstrap'
+
+import { Search } from '../Search'
 
 import { Icon } from '../../../components/Icon'
 import { Paginator } from '../../../components/Paginator'
@@ -40,7 +43,8 @@ export class Tags extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
 
-    dispatch(getTags({ page: 1 }))
+    dispatch({ type: 'SET_ADMIN_SEARCH_QUERY', data: '' })
+    dispatch(getTags({ page: 1, query: '' }))
     document.title = "EthicalTree · Tag Admin"
   }
 
@@ -50,6 +54,25 @@ export class Tags extends React.Component {
 
     return (
       <Loader loading={admin.isAdminLoading}>
+
+        <h4 className="mt-3 mb-3 d-flex justify-content-between">
+          Tags
+
+          <div className="d-flex">
+            <Button
+              className="mr-4"
+              color="default"
+              onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'new-tag' })}
+            >
+              + New Tag
+            </Button>
+
+            <Search
+              handleSearch={() => dispatch(getTags({ page: 1, query: admin.query }))}
+            />
+          </div>
+        </h4>
+
         <Table bordered responsive>
           <thead>
             <tr>
@@ -60,32 +83,34 @@ export class Tags extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {tags.map(t => (
-              <tr key={t.id}>
-                <td>{`#${t.hashtag}`}</td>
-                <td className="text-center">{t.listingCount}</td>
-                <td>
-                  <Input
-                    type="select"
-                    name="use_type"
-                    onChange={this.handleUseTypeChange(t.id)}
-                    defaultValue={t.useType}
-                  >
-                    <option>category</option>
-                    <option>admin</option>
-                  </Input>
-                </td>
-                <td>
-                  <Icon
-                    iconKey="trash"
-                    title="Delete Tag"
-                    className="delete-tag"
-                    clickable
-                    onClick={this.handleDelete(t.id)}
-                  />
-                </td>
-              </tr>
-            ))}
+            {tags.map(t => {
+              return (
+                <tr key={`${t.id}-${t.hashtag}`}>
+                  <td>{`#${t.hashtag}`}</td>
+                  <td className="text-center">{t.listingCount}</td>
+                  <td>
+                    <Input
+                      type="select"
+                      name="use_type"
+                      onChange={this.handleUseTypeChange(t.id)}
+                      defaultValue={t.useType}
+                    >
+                      <option>category</option>
+                      <option>admin</option>
+                    </Input>
+                  </td>
+                  <td>
+                    <Icon
+                      iconKey="trash"
+                      title="Delete Tag"
+                      className="delete-tag"
+                      clickable
+                      onClick={this.handleDelete(t.id)}
+                    />
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </Table>
         <div className="text-center">

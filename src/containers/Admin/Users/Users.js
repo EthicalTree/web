@@ -5,6 +5,8 @@ import {
   Table
 } from 'reactstrap'
 
+import { Search } from '../Search'
+
 import { Loader } from '../../../components/Loader'
 import { Paginator } from '../../../components/Paginator'
 
@@ -15,7 +17,8 @@ export class Users extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
 
-    dispatch(getUsers({ page: 1 }))
+    dispatch({ type: 'SET_ADMIN_SEARCH_QUERY', data: '' })
+    dispatch(getUsers({ page: 1, query: '' }))
     document.title = "EthicalTree · User Admin"
   }
 
@@ -37,6 +40,13 @@ export class Users extends React.Component {
 
     return (
       <Loader loading={admin.isAdminLoading}>
+        <h4 className="mt-3 mb-3 d-flex justify-content-between">
+          Users
+
+          <Search
+            handleSearch={() => dispatch(getUsers({ page: 1, query: admin.query }))}
+          />
+        </h4>
         <Table bordered responsive>
           <thead>
             <tr>

@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 import { Button, Table } from 'reactstrap'
 
+import { Search } from '../Search'
+
 import { Icon } from '../../../components/Icon'
 import { Paginator } from '../../../components/Paginator'
 import { Loader } from '../../../components/Loader'
@@ -12,6 +14,7 @@ import { getLists, updateList, deleteList } from '../../../actions/admin'
 
 const ListTable = props => {
   const {
+    dispatch,
     admin,
     handleAdd,
     handleEdit,
@@ -28,12 +31,18 @@ const ListTable = props => {
       <h4 className="mt-3 mb-3 d-flex justify-content-between">
         Tag lists
 
-        <Button
-          color="default"
-          onClick={handleAdd}
-        >
-          + New List
-        </Button>
+        <div className="d-flex">
+          <Button
+            className="mr-4"
+            color="default"
+            onClick={handleAdd}
+          >
+            + New List
+          </Button>
+          <Search
+            handleSearch={() => dispatch(getLists({ page: 1, query: admin.query }))}
+          />
+        </div>
       </h4>
 
 
@@ -165,13 +174,14 @@ export class Lists extends React.Component {
   }
 
   componentDidMount() {
-    this.refreshLists()
     document.title = "EthicalTree · Lists Admin"
+    this.refreshLists()
   }
 
   refreshLists() {
     const { dispatch } = this.props
-    dispatch(getLists())
+    dispatch({ type: 'SET_ADMIN_SEARCH_QUERY', data: '' })
+    dispatch(getLists({ page: 1, query: '' }))
   }
 
   render() {
@@ -179,6 +189,7 @@ export class Lists extends React.Component {
 
     return (
       <ListTable
+        dispatch={dispatch}
         admin={admin}
         toggleHidden={this.toggleHidden}
         handleAdd={this.handleAdd}
