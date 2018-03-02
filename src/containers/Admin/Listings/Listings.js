@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import numeral from 'numeral'
 
 import { Button, Table } from 'reactstrap'
@@ -95,7 +96,11 @@ export class Listings extends React.Component {
             {admin.listings.map(l => (
               <tr key={l.id}>
                 <td>{l.id}</td>
-                <td>{l.title}</td>
+                <td>
+                  <Link to={`/listings/${l.slug}`} target="_blank">
+                    {l.title}
+                  </Link>
+                </td>
                 <td>{l.plan ? l.plan.type.name : ''}</td>
                 <td>{l.plan && l.plan.price > 0 ? `$${numeral(l.plan.price).format('0.00')}` : ''}</td>
                 <td>{l.visibility === 'published' ? 'Visible' : 'Hidden'}</td>

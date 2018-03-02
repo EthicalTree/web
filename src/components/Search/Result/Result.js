@@ -41,6 +41,12 @@ export class Result extends React.Component {
             className="card-img"
             style={extraStyle}
           >
+            {listing.plan &&
+              <span className="featured-badge">
+                Featured
+                <span className="triangle" />
+              </span>
+            }
           </div>
           <CardBody>
             <CardTitle className="d-flex justify-content-between flex-row-reverse">

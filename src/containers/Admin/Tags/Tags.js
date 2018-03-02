@@ -50,7 +50,7 @@ export class Tags extends React.Component {
 
   render() {
     const { dispatch, admin } = this.props
-    const tags = admin.tags.sort((t1, t2) => t1.hashtag - t2.hashtag)
+    const tags = admin.tags
 
     return (
       <Loader loading={admin.isAdminLoading}>
