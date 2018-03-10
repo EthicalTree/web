@@ -62,7 +62,10 @@ export class FrontPage extends React.Component {
           </Col>
         </Container>
 
-        <Loader loading={app.areCuratedListsLoading}>
+        <Loader
+          loading={app.areCuratedListsLoading}
+          className="curated-lists"
+        >
           {app.curatedLists.map(cl => {
             return (
               <CuratedList
