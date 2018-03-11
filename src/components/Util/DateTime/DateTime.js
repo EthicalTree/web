@@ -1,10 +1,7 @@
-import 'rc-time-picker/assets/index.css'
 import './DateTime.css'
 
 import React from 'react'
-import TimePicker from 'rc-time-picker'
-import { Toggle }from '../Toggle/Toggle'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 import {
   Row,
@@ -13,31 +10,14 @@ import {
   CardHeader,
   CardBody,
   ButtonGroup,
-  Button
+  Button,
+  Input
 } from 'reactstrap'
 
-export const TimePicker12Hour = (props) => {
-  let { value } = props
+import { Icon } from '../../Icon'
 
-  if (value) {
-    value = moment(value, 'HH:mm A')
-  }
-
-  return (
-    <TimePicker
-      className="et-timepicker"
-      showSecond={false}
-      format="h:mm a"
-      use12Hours
-      allowEmpty={false}
-      {...props}
-      value={value}
-    />
-  )
-}
-
-export const DateSelector = (props) => {
-  const { setDay, selectedDay, days } = props
+export const DateSelector = props => {
+  const { setDay, selectedDay, days, addMoreHours, setTime } = props
 
   const Day = (p) => {
     let enabledClass
@@ -48,7 +28,7 @@ export const DateSelector = (props) => {
 
     if (days) {
       const day = days[p.day]
-      enabledClass = day && day.enabled ? 'enabled' : ''
+      enabledClass = day.hours.length > 0 ? 'enabled' : ''
     }
 
     return (
@@ -87,36 +67,59 @@ export const DateSelector = (props) => {
               <Card className="ml-3 mr-3 mt-3">
                 <CardHeader className="card-header pl-3 pt-2">
                   {selectedDay.label}
-                  <Toggle
-                    checked={selectedDay.enabled || false}
-                    onChange={enabled => props.updateDay(selectedDay.day, {enabled})}
-                  />
                 </CardHeader>
 
                 <CardBody>
-                  {selectedDay.enabled &&
-                    <Row>
-                      <Col xs="12" sm="5">
-                        <TimePicker12Hour
-                          value={props.selectedDay.openStr}
-                          onChange={time => props.setTime('openStr', time)}
+                  {selectedDay.hours.map((h, i)=> {
+                    return (
+                      <div
+                        key={`${i}`}
+                        className="d-flex justify-content-between mb-2"
+                      >
+                        <Input
+                          bsSize="sm"
+                          type="time"
+                          value={moment(h.openStr, 'hh:mm a').format('HH:mm')}
+                          onChange={e => {
+                            h.openStr = moment(e.target.value, 'HH:mm').format('hh:mm a')
+                            setTime(selectedDay.hours)
+                          }}
                         />
-                      </Col>
-                      <Col xs="12" sm="2" className="text-center">
-                        to
-                      </Col>
-                      <Col xs="12" sm="5">
-                        <TimePicker12Hour
-                          value={props.selectedDay.closeStr}
-                          onChange={time => props.setTime('closeStr', time)}
+                        <span className="p-2">to</span>
+                        <Input
+                          bsSize="sm"
+                          type="time"
+                          value={moment(h.closeStr, 'hh:mm a').format('HH:mm')}
+                          onChange={e => {
+                            h.closeStr = moment(e.target.value, 'HH:mm').format('hh:mm a')
+                            setTime(selectedDay.hours)
+                          }}
                         />
-                      </Col>
-                    </Row>
-                  }
+                        <Icon
+                          iconKey="cross"
+                          className="m-2"
+                          clickable
+                          onClick={() => {
+                            let newHours = [...selectedDay.hours]
+                            newHours.splice(i, 1)
+                            setTime(newHours)
+                          }}
+                        />
+                      </div>
+                    )
+                  })}
 
-                  {!selectedDay.enabled &&
-                    <p className="text-center">Hours have not yet been enabled</p>
-                  }
+                  <div className="text-center">
+                    <a
+                      href=""
+                      onClick={e => {
+                        e.preventDefault()
+                        addMoreHours()
+                      }}
+                    >
+                      + Add hours
+                    </a>
+                  </div>
                 </CardBody>
               </Card>
             }

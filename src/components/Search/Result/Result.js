@@ -14,6 +14,7 @@ import { EthicalityIcon } from '../../Ethicality/Ethicality'
 import OpenClose from '../../Util/DateTime/OpenClose'
 
 import { listingProps } from '../../../utils/types'
+import { localizedDates } from '../../../models/hours'
 
 export class Result extends React.Component {
 
@@ -66,9 +67,7 @@ export class Result extends React.Component {
               </span>
             </CardTitle>
 
-            {listing.openStatus &&
-              <OpenClose status={listing.openStatus} />
-            }
+            <OpenClose hours={localizedDates(listing.operatingHours)} />
           </CardBody>
         </Card>
       </Link>

@@ -1,3 +1,4 @@
+import moment from 'moment-timezone'
 import { api } from '../utils/api'
 import { error } from '../utils/notifications'
 
@@ -6,8 +7,8 @@ export const getListing = (slug) => {
     dispatch({ type: 'SET_GET_LISTING_LOADING', data: true })
 
     api.get(`/v1/listings/${slug}`)
-      .then(listing => {
-        dispatch({ type: 'SET_LISTING', data: listing.data })
+      .then(({ data }) => {
+        dispatch({ type: 'SET_LISTING', data })
       })
       .catch(() => {})
       .then(() => {
@@ -240,15 +241,26 @@ export const makeImageCover = data => {
 }
 
 export const saveOperatingHours = (listingSlug, operatingHours) => {
+  const utcHours = {}
+
+  Object.keys(operatingHours).forEach(day => {
+    utcHours[day] = {...operatingHours[day], hours: operatingHours[day].hours.map(h => {
+      return {
+        openStr: moment(h.openStr, 'hh:mm a').utc().format('hh:mm a'),
+        closeStr: moment(h.closeStr, 'hh:mm a').utc().format('hh:mm a')
+      }
+    })}
+  })
+
   return dispatch => {
     dispatch({ type: 'SET_EDITING_OPERATING_HOURS_LOADING', data: true })
 
-    api.post(`/v1/listings/${listingSlug}/operating_hours`, operatingHours)
+    api.post(`/v1/listings/${listingSlug}/operating_hours`, utcHours)
       .then(response => {
         const operatingHours = response.data.operatingHours
 
         if (operatingHours) {
-          dispatch({ type: 'SET_LISTING_OPERATING_HOURS', data: operatingHours})
+          dispatch(getListing(listingSlug))
           dispatch({ type: 'CLOSE_MODAL' })
         }
       })

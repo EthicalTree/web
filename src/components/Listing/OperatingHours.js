@@ -1,28 +1,52 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import groupBy from 'lodash/groupBy'
 
 import OpenClose from '../Util/DateTime/OpenClose'
+import { localizedDates } from '../../models/hours'
 
-const DailyHours = (props) => {
-  const { label, hours } = props.hours
+const DAY_LABELS = {
+  'sunday': 'Sunday',
+  'monday': 'Monday',
+  'tuesday': 'Tuesday',
+  'wednesday': 'Wednesday',
+  'thursday': 'Thursday',
+  'friday': 'Friday',
+  'saturday': 'Saturday'
+}
+
+const DailyHours = props => {
+  const { hours, label } = props
 
   return (
-    <div className="daily-hours pt-2 pb-2">
+    <div className="daily-hours mt-4">
       <p className="day">{label}</p>
-      <p className="hours">
-        {hours ||
+
+      {hours.map((h, i) => {
+        return (
+          <p key={`${i}`} className="hours">
+            {h.hours}
+          </p>
+        )
+      })}
+
+      {hours.length <= 0 &&
+        <p className="hours">
           <span className="closed">
             CLOSED
           </span>
-        }
-      </p>
+        </p>
+      }
     </div>
   )
 }
 
 const OperatingHours = (props) => {
-  const { dispatch, hours, canEdit, status } = props
+  const { dispatch, hours, canEdit } = props
   const hasHours = hours && hours.length > 0
+
+  const localHours = localizedDates(hours)
+  const groupedHours = groupBy(localHours, h => h.day)
 
   return (
     <div className="card operating-hours">
@@ -31,7 +55,7 @@ const OperatingHours = (props) => {
       </div>
 
       <div className="mt-4">
-        <OpenClose status={status} />
+        <OpenClose hours={localHours} />
       </div>
 
       <div className="card-body pt-3">
@@ -45,9 +69,13 @@ const OperatingHours = (props) => {
 
         {hasHours &&
           <div>
-            {hours.map(hours => {
+            {Object.keys(DAY_LABELS).map(day => {
               return (
-                <DailyHours key={hours.day} hours={hours} />
+                <DailyHours
+                  key={day}
+                  hours={groupedHours[day] || []}
+                  label={DAY_LABELS[day]}
+                />
               )
             })}
           </div>

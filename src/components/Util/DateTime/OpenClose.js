@@ -4,9 +4,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Icon } from '../../Icon'
 
+import { getOpenCloseStatus } from '../../../utils/datetime'
+
 const OpenClose = props => {
-  const { status } = props
+  const { hours } = props
   let icon
+
+  const status = getOpenCloseStatus(hours)
 
   if (status === 'open')
     icon = <Icon iconKey="stopwatch" label="Open Now" />
@@ -25,7 +29,11 @@ const OpenClose = props => {
 }
 
 OpenClose.propTypes = {
-  status: PropTypes.oneOf(['open', 'closed', 'closing_soon', 'opening_soon']).isRequired
+  hours: PropTypes.array
+}
+
+OpenClose.defaultProps = {
+  hours: []
 }
 
 export default OpenClose
