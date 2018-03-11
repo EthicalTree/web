@@ -227,6 +227,14 @@ class Listing extends React.Component {
     dispatch(getListing(match.params.slug))
   }
 
+  componentWillReceiveProps(newProps) {
+    const { match, dispatch } = this.props
+
+    if (newProps.match.params.slug !== match.params.slug) {
+      dispatch(getListing(newProps.match.params.slug))
+    }
+  }
+
   onClickDescriptionEdit(e) {
     const { dispatch } = this.props
 
@@ -261,7 +269,7 @@ class Listing extends React.Component {
     }
 
     return (
-      <Loader loading={listing.isListingLoading}>
+      <Loader key={listing.slug} loading={listing.isListingLoading}>
         <Col className="ethicality-bar pt-2 pb-2">
           <EthicalityBar
             className=""
