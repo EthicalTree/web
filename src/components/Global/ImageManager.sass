@@ -12,16 +12,25 @@
     position: absolute
     top: 0
     right: 0
-    padding: 0.5em 1.2em
+    padding: $space-2
+    padding-right: $space-4
     background-color: $color-white
     color: $color-inverse
     opacity: 0.2
     z-index: 2
     border-bottom: 2px solid $color-inverse
 
-    .icon-button
-      font-size: 1.6em
-      margin: 0 0.4em
+    .tooltip-container
+      & > *
+        display: inline-block
+
+    .et-icon
+      display: inline-block
+      padding: $space-1 $space-2
+
+      svg
+        width: 22px
+        height: 22px
 
     .triangle
       position: absolute
@@ -29,18 +38,19 @@
       height: 0
       top: 0
       left: -25px
-      border-top: 44px solid $color-white
+      border-top: 52px solid $color-white
       border-left: 25px solid transparent
 
-  .icon-button, .icon-button-overlay
-    font-size: 2em
-
+  .icon-button-overlay
+    svg
+      width: 30px
+      height: 30px
 
   @media (max-width: $screen-sm-max)//{}
     .icon-button-overlay, .actions
       opacity: 1
 
-  &:hover, &:focus
+  &:hover, &:focus-within
     outline: none
 
     .icon-button-overlay, .actions
@@ -55,8 +65,9 @@
     border: 1px solid rgba(255, 255, 255, 0)
 
     .camera
-      font-size: 2.5em
-      margin-bottom: 10px
+      svg
+        width: 34px
+        height: 34px
 
   &.uploadable:hover
     border: 1px dashed $color-border

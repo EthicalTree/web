@@ -12,9 +12,17 @@ import CircleExtractIcon from './RawIcons/CircleExtractIcon'
 import TrashIcon from './RawIcons/TrashIcon'
 import Pencil3Icon from './RawIcons/Pencil3Icon'
 import CrossIcon from './RawIcons/CrossIcon'
-import ChevronDownIcon from './RawIcons/ChevronDownIcon'
+import PlusIcon from './RawIcons/PlusIcon'
+
 import ArrowUpIcon from './RawIcons/ArrowUpIcon'
 import ArrowDownIcon from './RawIcons/ArrowDownIcon'
+import ChevronLeftIcon from './RawIcons/ChevronLeftIcon'
+import ChevronRightIcon from './RawIcons/ChevronRightIcon'
+import ChevronDownIcon from './RawIcons/ChevronDownIcon'
+
+import ZoomInIcon from './RawIcons/ZoomInIcon'
+import CoverPhotoIcon from './RawIcons/Picture2Icon'
+import CameraIcon from './RawIcons/Camera3Icon'
 
 // Date Time Icons
 import StopwatchIcon from './RawIcons/StopwatchIcon'
@@ -36,9 +44,18 @@ export default {
   trash: TrashIcon,
   pencil: Pencil3Icon,
   cross: CrossIcon,
+
+  chevron_left: ChevronLeftIcon,
+  chevron_right: ChevronRightIcon,
   chevron_down: ChevronDownIcon,
+
   arrow_up: ArrowUpIcon,
   arrow_down: ArrowDownIcon,
+
+  zoom_in: ZoomInIcon,
+  cover_photo: CoverPhotoIcon,
+  plus: PlusIcon,
+  camera: CameraIcon,
 
   stopwatch: StopwatchIcon,
   stopwatch_cross: StopwatchCrossIcon,

@@ -91,7 +91,7 @@ const Bio = (props) => {
             href={website}
             rel="noopener noreferrer"
             target="_blank"
-            className="website-link"
+            className="external-link"
           >
             Website
             <Icon iconKey="extract" />

@@ -18,10 +18,12 @@
   .slider-next, .slider-prev
     position: absolute
     top: 0
-    color: rgba($color-white, 0.7)
     z-index: 2
     width: 50px
     height: 100%
+
+    svg
+      fill: rgba($color-white, 0.7)
 
     .slider-navigation
       display: flex
@@ -30,14 +32,13 @@
       height: 100%
       width: 100%
 
-      i
-        width: 100%
-
       &:hover
+        cursor: pointer
         background-color: rgba($color-inverse, 0.3)
 
         .icon-button-overlay
-          color: rgba($color-white, 0.9)
+          svg
+            fill: rgba($color-white, 0.9)
 
   &:hover
     .slider-navigation

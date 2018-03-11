@@ -6,12 +6,15 @@ import PropTypes from 'prop-types'
 import { UncontrolledTooltip as Tooltip } from 'reactstrap'
 import { Loader } from '../Loader'
 import { S3Uploader } from '../S3Uploader'
+import { Icon } from '../Icon'
+
 import ETSlider from './Slider'
 
 const Action = props => {
-  const { action, noClick, type, icon, currentImage, locationKey } = props
+  const { action, noClick, type, icon, currentImage } = props
 
-  const id = `${type}-${locationKey}`
+  const id = `${type}`
+  const tooltipId = `${id}_tooltip`
   let onClick = () => {}
 
   if (!action.handleAction) {
@@ -26,16 +29,25 @@ const Action = props => {
   }
 
   return (
-    <i
-      id={id}
-      title={action.title}
-      role="button"
-      tabIndex="0"
-      onClick={onClick}
-      className={`icon-button fa ${icon}`}
-    >
-      <Tooltip placement="bottom" target={id} delay={0}>{action.title}</Tooltip>
-    </i>
+    <span>
+      <Icon
+        id={id}
+        clickable
+        onClick={onClick}
+        iconKey={icon}
+      />
+
+      <span id={tooltipId} className="tooltip-container">
+        <Tooltip
+          placement="bottom"
+          target={id}
+          container={tooltipId}
+          delay={0}
+        >
+          {action.title}
+        </Tooltip>
+      </span>
+    </span>
   )
 }
 
@@ -48,7 +60,6 @@ const ImageActions = (props) => {
     addAction,
     fullScreenAction,
     signingParams,
-    locationKey
   } = props
 
   const hasActions = (
@@ -69,28 +80,25 @@ const ImageActions = (props) => {
 
         <Action
           type="fullscreen"
-          icon="fa-search-plus"
+          icon="zoom_in"
           currentImage={currentImage}
           action={fullScreenAction}
-          locationKey={locationKey}
         />
 
         {canEdit &&
-          <span>
+          <React.Fragment>
             <Action
               type="cover"
-              icon="fa-file-picture-o"
+              icon="cover_photo"
               currentImage={currentImage}
               action={coverAction}
-              locationKey={locationKey}
             />
 
             <Action
               type="delete"
-              icon="fa-trash"
+              icon="trash"
               currentImage={currentImage}
               action={deleteAction}
-              locationKey={locationKey}
             />
 
             <S3Uploader
@@ -101,17 +109,14 @@ const ImageActions = (props) => {
             >
               <Action
                 type="add"
-                icon="fa-plus-circle"
+                icon="plus"
                 currentImage={currentImage}
                 action={addAction}
-                locationKey={locationKey}
                 noClick={true}
               />
             </S3Uploader>
-          </span>
+          </React.Fragment>
         }
-
-
       </div>
     </div>
   )
@@ -244,7 +249,7 @@ class ImageManager extends React.Component {
 
             <div className="image-manager text-center no-content uploadable">
               <div className="upload-wrapper">
-                <i className="fa fa-camera-retro camera"></i>
+                <Icon iconKey="camera" className="camera" />
                 <span className="add-picture-cta">
                   {addText}
                 </span>

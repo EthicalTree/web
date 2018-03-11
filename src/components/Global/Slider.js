@@ -4,6 +4,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Slider from 'react-slick'
 
+import { Icon } from '../Icon'
+
 const Prev = (props) => {
   return (
     <div
@@ -12,7 +14,7 @@ const Prev = (props) => {
       className="slider-prev"
     >
       <div className="slider-navigation">
-        <i className="icon-button-overlay fa fa-chevron-left" />
+        <Icon iconKey="chevron_left" className="icon-button-overlay" />
       </div>
     </div>
   )
@@ -26,7 +28,7 @@ const Next = (props) => {
       className="slider-next"
     >
       <div className="slider-navigation">
-        <i className="icon-button-overlay fa fa-chevron-right" />
+        <Icon iconKey="chevron_right" className="icon-button-overlay" />
       </div>
     </div>
   )

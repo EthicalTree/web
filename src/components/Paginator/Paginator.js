@@ -2,6 +2,7 @@ import './Paginator.css'
 
 import React from 'react'
 import ReactPaginate from 'react-paginate';
+import { Icon } from '../Icon'
 
 export const Paginator = (props) => {
   const {
@@ -10,8 +11,8 @@ export const Paginator = (props) => {
     onPageChange
   } = props
 
-  const previous = <i className="fa fa-chevron-left"></i>
-  const next = <i className="fa fa-chevron-right"></i>
+  const previous = <Icon iconKey="chevron_left" />
+  const next = <Icon iconKey="chevron_right" />
 
   return (
     <ReactPaginate

@@ -4,7 +4,9 @@
   border: 1px solid $color-border
   border-top: none
 
-  a
+  .external-link
+    text-decoration: underline
+    display: flex
     font-weight: $font-light
 
     .et-icon
@@ -42,9 +44,6 @@
       display: flex
       justify-content: space-between
       align-items: center
-
-      .website-link
-        text-decoration: underline
 
     .no-content
       min-height: 150px
@@ -134,11 +133,7 @@
       justify-content: space-between
       align-items: center
 
-      a
-        text-decoration: underline
-
   .listing-info
-
     h3
       font-size: 2.5rem
       margin: 1.5rem 0
