@@ -6,9 +6,6 @@ const header = (state={}, action) => {
       return {...state, isAccountDropdownOpen: !state.isAccountDropdownOpen}
     case 'TOGGLE_HEADER_ACCESSIBLE':
       return {...state, isOpen: !state.isOpen}
-    case 'ROUTE_HAS_CHANGED':
-      // Toggle a rerender
-      return {...state}
     default:
       return state
   }

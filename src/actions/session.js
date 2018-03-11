@@ -1,4 +1,5 @@
 import { api, authenticate, deauthenticate } from '../utils/api'
+import { trackPageView } from '../utils/ga'
 
 export const login = data => {
   return dispatch => {
@@ -162,6 +163,8 @@ export const getCurrentUser = () => {
         dispatch({ type: 'SET_CURRENT_USER', data: user })
         dispatch({ type: 'SET_ACCOUNT_FIRST_NAME', data: user.firstName })
         dispatch({ type: 'SET_ACCOUNT_LAST_NAME', data: user.lastName })
+
+        trackPageView({ user })
       })
       .then(() => {
         dispatch({ type: 'SET_USER_LOADING', data: false })
