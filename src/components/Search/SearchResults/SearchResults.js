@@ -173,9 +173,12 @@ class SearchResultsPage extends React.Component {
       return (
         <OverlayView
           position={location}
-          onClick={e => { console.log('inside overlay') }}
           mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-          getPixelPositionOffset={width => ({x: -(width / 2), y: -190})}
+          getPixelPositionOffset={(width, height) => {
+            return {
+              x: -(width / 2),
+              y: -(height + 45)}
+          }}
         >
           <Result
             className="result-overlay"

@@ -8,8 +8,27 @@
     margin-bottom: 6px
     background: transparent
 
+    &:hover, &.hovered
+      opacity: 0.6
+
+    .card-body
+      position: relative
+      padding: 16px 0
+
+    .result-title
+      display: flex
+      justify-content: space-between
+      flex-direction: row
+      font-size: 0.85rem
+      font-weight: $font-normal
+      margin-bottom: 0
+
     &.result-overlay
+      background: $color-white
       border-radius: 10px
+
+      &:hover, &.hovered
+        opacity: 1
 
       .card-img
         padding-bottom: 35%
@@ -17,11 +36,20 @@
 
       .card-body
         border-top: 1px solid $color-border
-        padding: 16px 12px 12px
+        padding: $space-4 $space-3 $space-3
 
-        .card-title
-          margin-bottom: 0
-          font-size: 14px
+      .result-title
+        flex-direction: column
+        margin-bottom: 0
+        font-size: 0.8rem
+
+      .ethicality-icon
+        svg
+          height: 14px
+          width: 14px
+
+      .featured-badge
+        display: none
 
     .card-img
       position: relative
@@ -49,29 +77,13 @@
           border-top: 40px solid rgba($color-danger, 0.8)
           border-left: 50px solid transparent
 
-
-
-    .card-body
-      position: relative
-      padding: 16px 0
-
-      .card-title
-        font-size: 18px
-        font-weight: $font-normal
-        margin-bottom: 0
-
     .ethicalities
-      height: 30px
+      & > *
+        margin: 0 $space-1
 
     .ethicality-icon svg
-      height: 18px
-      width: 18px
+      height: 16px
+      width: 16px
       margin: 0
-
-    &:hover, &.hovered
-      opacity: 0.6
-
-      .card-title
-        text-decoration: none
 
 

@@ -50,21 +50,23 @@ export class Result extends React.Component {
             }
           </div>
           <CardBody>
-            <CardTitle className="d-flex justify-content-between flex-row-reverse">
-              <div className="ethicalities d-flex">
+            <CardTitle className="result-title">
+              <span
+                className="text-truncate mb-2"
+              >
+                {listing.title}
+              </span>
+
+              <div className="ethicalities mb-2 d-flex">
                 {listing.ethicalities.map(ethicality => {
                   return (
                     <EthicalityIcon
-                      className="ml-2"
                       ethicalityKey={ethicality.iconKey}
                       key={ethicality.iconKey}
                     />
                   )
                 })}
               </div>
-              <span className="text-truncate">
-                {listing.title}
-              </span>
             </CardTitle>
 
             <OpenClose hours={localizedDates(listing.operatingHours)} />
