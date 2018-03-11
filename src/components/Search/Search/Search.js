@@ -98,7 +98,7 @@ class Search extends React.Component {
 
     if ((e.key && e.key === 'Enter') || !e.key) {
       dispatch({ type: 'SET_SEARCH_QUERY', data: query })
-      history.push(`/s/${query}?${querystring.stringify(paramsObj)}`)
+      history.push(`/s/${encodeURIComponent(query)}?${querystring.stringify(paramsObj)}`)
     }
   }
 
