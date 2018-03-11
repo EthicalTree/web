@@ -41,12 +41,12 @@ class InnerApp extends React.Component {
   }
 
   render() {
-    const { app, modal, session } = this.props
+    const { app, modal } = this.props
     const modalOpenClass = !!modal.openModal ? 'modal-open' : ''
 
     return (
       <div className={`app ${modalOpenClass}`}>
-        <Loader loading={session.userLoading || app.isAppLoading}>
+        <Loader loading={app.isAppLoading}>
           <Header />
 
           <Switch>

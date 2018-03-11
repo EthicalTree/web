@@ -1,7 +1,7 @@
 import React from 'react'
 import { Marker } from 'react-google-maps'
 import { Icon } from '../Icon'
-import Map from '../Global/Map'
+import { Map } from '../Maps/Map'
 import { formatAddress, formatGetDirectionsUrl } from '../../utils/address'
 
 const ListingMap = props => {
@@ -49,15 +49,6 @@ const ListingMap = props => {
         {hasLocations &&
           <Map
             zoom={16}
-            markers={
-              <Marker
-                key={`${locations[0].lat}+${locations[0].lng}`}
-                position={{
-                  lat: locations[0].lat,
-                  lng: locations[0].lng
-                }}
-              />
-            }
             defaultOptions={{
               scrollwheel: false,
               disableDefaultUI: false
@@ -72,7 +63,15 @@ const ListingMap = props => {
             mapElement={
               <div style={{ height: `100%` }} />
             }
-          />
+          >
+            <Marker
+              key={`${locations[0].lat}+${locations[0].lng}`}
+              position={{
+                lat: locations[0].lat,
+                lng: locations[0].lng
+              }}
+            />
+          </Map>
         }
 
         {!hasLocations &&

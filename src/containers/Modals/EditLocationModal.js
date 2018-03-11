@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Marker } from 'react-google-maps'
 
 import { Modal } from './Modal'
-import Map from '../../components/Global/Map'
+import { Map } from '../../components/Maps/Map'
 
 import {
   FormGroup,
@@ -143,8 +143,8 @@ class EditLocationModal extends React.Component {
             <Col className="edit-location-map">
               <Map
                 onClick={this.onMapClick.bind(this)}
-                markers={marker}
                 center={center}
+                zoom={16}
                 defaultOptions={{
                   zoomControl: true,
                   draggableCursor: 'pointer'
@@ -154,7 +154,10 @@ class EditLocationModal extends React.Component {
                 }
                 mapElement={
                   <div style={{ height: `100%` }} />
-                }/>
+                }
+              >
+                {marker}
+              </Map>
             </Col>
           </Row>
         </Container>

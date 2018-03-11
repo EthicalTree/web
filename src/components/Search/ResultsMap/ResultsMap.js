@@ -1,19 +1,34 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import { Col } from 'reactstrap'
 
-import Map from '../../Global/Map'
-import Markers from '../../Util/Map/Markers'
+import { Map } from '../../Maps/Map'
+import { Markers } from '../../Maps/Markers'
 
 export class ResultsMap extends React.Component {
 
   constructor(props) {
     super(props)
-
     this.state = {}
   }
 
+  shouldComponentUpdate(newProps) {
+    const searchChanged = newProps.location.search !== this.props.location.search
+    const selectionChanged = newProps.search.selectedResult !== this.props.search.selectedResult
+
+    return searchChanged || selectionChanged
+  }
+
   render() {
-    const { search, dispatch, overlay } = this.props
+    const {
+      handleMarkerClick,
+      handleMarkerMouseOver,
+      handleMarkerMouseOut,
+      handleMapClick,
+      overlay,
+      search,
+    } = this.props
+
     const { zoom } = this.state
     const hiddenClass = search.resultMode === 'listing' ? 'd-none d-xl-block' : ''
     let bounds = new window.google.maps.LatLngBounds()
@@ -26,20 +41,20 @@ export class ResultsMap extends React.Component {
     const markers = (
       <Markers
         listings={search.listings}
-        onMarkerClick={slug => {
-          const newSlug = !!search.selectedResult && search.selectedResult === slug ? null : slug
-          dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: newSlug })
-          dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: newSlug })
-        }}
-        onMarkerMouseOver={slug => dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: slug })}
-        onMarkerMouseOut={slug => dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: search.selectedResult })}
+        onMarkerClick={handleMarkerClick}
+        onMarkerMouseOver={handleMarkerMouseOver}
+        onMarkerMouseOut={handleMarkerMouseOut}
       />
     )
 
     const onLoad = map => {
       if (map) {
         this.map = map
-        map.fitBounds(bounds)
+
+        if (!this.hasBeenFit) {
+          map.fitBounds(bounds)
+          this.hasBeenFit = true
+        }
       }
     }
 
@@ -49,11 +64,7 @@ export class ResultsMap extends React.Component {
           <Map
             key={search.resultMode}
             onLoad={onLoad}
-            onClick={() => {
-              setTimeout(() => dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: null }), 0)
-            }}
-            markers={markers}
-            overlay={overlay}
+            onClick={handleMapClick}
             zoom={zoom}
             defaultOptions={{
               zoomControl: true,
@@ -64,11 +75,15 @@ export class ResultsMap extends React.Component {
             }
             mapElement={
               <div style={{ height: `100%` }} />
-            }/>
+            }
+          >
+            {markers}
+            {overlay}
+          </Map>
         </div>
       </Col>
     )
   }
 }
 
-export default ResultsMap
+export default withRouter(ResultsMap)

@@ -18,6 +18,7 @@ import {
 import { Loader } from '../../Loader'
 import { EthicalityBar } from '../../Ethicality/Ethicality'
 import { Paginator } from '../../Paginator'
+import { CustomOverlayView } from '../../Maps/CustomOverlayView'
 
 import { performSearch, toggleSearchEthicalities } from '../../../actions/search'
 
@@ -136,8 +137,8 @@ class SearchResultsPage extends React.Component {
     const queryParams = this.getQueryParams()
 
     this.performSearch(queryParams.page, queryParams.ethicalities, queryParams.location)
-
     const titleLocation = queryParams.location || 'Search'
+
     document.title = `EthicalTree · ${titleLocation}`
   }
 
@@ -171,7 +172,7 @@ class SearchResultsPage extends React.Component {
       const location = listing.locations[0]
 
       return (
-        <OverlayView
+        <CustomOverlayView
           position={location}
           mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
           getPixelPositionOffset={(width, height) => {
@@ -186,7 +187,7 @@ class SearchResultsPage extends React.Component {
             listing={listing}
             smallView={true}
           />
-        </OverlayView>
+        </CustomOverlayView>
       )
     }
 
@@ -216,7 +217,18 @@ class SearchResultsPage extends React.Component {
             />
             <ResultsMap
               selectedResult={selectedResult}
-              dispatch={dispatch}
+              handleMarkerClick={slug => {
+                const newSlug = !!search.selectedResult && search.selectedResult === slug ? null : slug
+                dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: newSlug })
+                dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: newSlug })
+              }}
+              handleMarkerMouseOver={slug => dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: slug })}
+              handleMarkerMouseOut={slug => dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: search.selectedResult })}
+              handleMapClick={() => {
+                setTimeout(() => {
+                  dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: null })
+                }, 0)
+              }}
               search={search}
               overlay={this.getOverlay()}
             />
