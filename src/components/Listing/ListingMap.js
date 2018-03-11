@@ -24,17 +24,16 @@ const ListingMap = props => {
 
   return (
     <div className="listing-map">
-      <h3>
-        How to get here
-        {canEdit && hasLocations &&
-          <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickLocationEdit}>
-            Edit
-          </a>
-        }
-      </h3>
-      {hasLocations &&
-        <p className="address-area">
-          {locations[0].address}
+      <div className="location-title">
+        <h3>
+          How to get here
+          {canEdit && hasLocations &&
+            <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickLocationEdit}>
+              Edit
+            </a>
+          }
+        </h3>
+        {hasLocations &&
           <a
             href={formatGetDirectionsUrl(locations[0].address)}
             rel="noopener noreferrer"
@@ -43,8 +42,15 @@ const ListingMap = props => {
             Get Directions
             <Icon iconKey="extract" />
           </a>
+        }
+      </div>
+
+      {hasLocations &&
+        <p className="address-area">
+          {locations[0].address}
         </p>
       }
+
       <div className="listing-map-area">
         {hasLocations &&
           <Map
