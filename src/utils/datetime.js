@@ -7,6 +7,11 @@ export const getOpenCloseStatus = hours => {
   const result = todaysHours.map(h => {
     const openTime = moment(h.openStr, 'hh:mm a')
     const closeTime = moment(h.closeStr, 'hh:mm a')
+
+    if (closeTime < openTime) {
+      closeTime.add(1, 'day')
+    }
+
     const openingSoonTime = moment(openTime).add(-30, 'minutes')
     const closingSoonTime = moment(closeTime).add(-30, 'minutes')
 
