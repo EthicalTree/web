@@ -39,7 +39,6 @@ const ListingMap = props => {
             href={formatGetDirectionsUrl(locations[0].address)}
             rel="noopener noreferrer"
             target="_blank"
-            className="pl-3"
           >
             Get Directions
             <Icon iconKey="extract" />

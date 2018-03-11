@@ -30,6 +30,7 @@ import ListingMenu from './ListingMenu'
 
 import { EthicalityBar } from '../Ethicality/Ethicality'
 import { Featured } from './Featured'
+import { Icon } from '../Icon'
 import { TagBar } from './TagBar'
 import { Loader } from '../Loader'
 import ImageManager from '../Global/ImageManager'
@@ -70,19 +71,33 @@ const AsideInfo = (props) => {
 }
 
 const Bio = (props) => {
-  const { bio, canEdit } = props
+  const { bio, canEdit, title, website } = props
 
   return (
     <div className="bio mb-5">
-      <h3>
-        {props.title}
+      <div className="listing-title">
+        <h3>
+          {title}
 
-        {canEdit && bio &&
-          <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickDescriptionEdit}>
-            Edit
+          {canEdit && bio &&
+            <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickDescriptionEdit}>
+              Edit
+            </a>
+          }
+        </h3>
+
+        {website &&
+          <a
+            href={website}
+            rel="noopener noreferrer"
+            target="_blank"
+            className="website-link"
+          >
+            Website
+            <Icon iconKey="extract" />
           </a>
         }
-      </h3>
+      </div>
 
       {bio &&
         <p>{bio}</p>
@@ -125,6 +140,7 @@ const ListingInfo = (props) => {
         title={listing.title}
         bio={listing.bio}
         canEdit={hasPermission('update', listing)}
+        website={listing.website}
       />
 
       <Nav tabs>

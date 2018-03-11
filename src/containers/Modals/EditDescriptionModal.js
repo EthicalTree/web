@@ -17,10 +17,12 @@ class EditDescriptionModal extends React.Component {
 
   constructor(props) {
     super(props)
+    const { listing } = props
 
     this.state = {
-      title: props.listing.title,
-      bio: ''
+      title: listing.title,
+      bio: listing.bio,
+      website: listing.website
     }
   }
 
@@ -40,9 +42,9 @@ class EditDescriptionModal extends React.Component {
 
     return (
       <Modal
-        className="edit-description-modal medium-modal"
+        className="edit-description-modal large-modal"
         loading={listing.isEditingDescriptionLoading}
-        contentLabel="Edit Decription"
+        contentLabel="Edit Listing"
         onSave={this.submit.bind(this)}
         modalName="edit-description"
       >
@@ -59,7 +61,7 @@ class EditDescriptionModal extends React.Component {
           }
 
           <Row>
-            <Col>
+            <Col className="mb-4" xs={12} md={6}>
               <Label for="listingTitle">Title</Label>
               <Input
                 defaultValue={this.state.title || listing.title}
@@ -69,11 +71,22 @@ class EditDescriptionModal extends React.Component {
                 id="listingTitle"
               />
             </Col>
+
+            <Col className="mb-4" xs={12} md={6}>
+              <Label for="listingWebsite">Website</Label>
+              <Input
+                defaultValue={this.state.website || listing.website}
+                onChange={e => {this.setState({ website: e.target.value })}}
+                type="text"
+                name="listingWebsite"
+                id="listingWebsite"
+              />
+            </Col>
           </Row>
 
-          <Row className="mt-3">
+          <Row>
             <Col>
-              <Label for="listingDescription">Listing Description</Label>
+              <Label for="listingDescription">Description</Label>
               <Input
                 autoFocus
                 defaultValue={this.state.bio || listing.bio}
@@ -85,6 +98,7 @@ class EditDescriptionModal extends React.Component {
               />
             </Col>
           </Row>
+
         </Container>
       </Modal>
     )
