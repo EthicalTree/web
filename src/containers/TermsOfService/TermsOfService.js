@@ -3,7 +3,6 @@ import './TermsOfService.css'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Container } from 'reactstrap'
-import { Icon } from '../../components/Icon'
 
 export const TermsOfService = props => {
   return (
