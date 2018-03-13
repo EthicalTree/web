@@ -16,6 +16,8 @@ import { DevTools } from '../../components/DevTools';
 
 import FrontPage from '../FrontPage'
 import { AdminPage } from '../Admin'
+import { ContactUs } from '../ContactUs'
+import { TermsOfService } from '../TermsOfService'
 import Modals from '../Modals'
 
 import { getCurrentUser, getSessionInformation } from '../../actions/session'
@@ -51,12 +53,14 @@ class InnerApp extends React.Component {
 
           <main>
             <Switch>
-              <Route path="/" exact={true} component={FrontPage} />
-              <Route path="/forgot_password/:token" component={ForgotPasswordPage} />
-              <Route path="/listings/:slug" component={Listing} />
-              <Route path="/s/:query?" component={SearchResults} />
+              <Route exact path="/" component={FrontPage} />
+              <Route exact path="/forgot_password/:token" component={ForgotPasswordPage} />
+              <Route exact path="/listings/:slug" component={Listing} />
+              <Route exact path="/s/:query?" component={SearchResults} />
+              <Route exact path="/account" component={AccountSettings} />
 
-              <Route path="/account" exact={true} component={AccountSettings} />
+              <Route exact path="/contact-us" component={ContactUs} />
+              <Route exact path="/terms-of-service" component={TermsOfService} />
 
               <Route path="/admin" component={AdminPage} />
             </Switch>

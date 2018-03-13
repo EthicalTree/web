@@ -23,6 +23,8 @@ import ChevronDownIcon from './RawIcons/ChevronDownIcon'
 import ZoomInIcon from './RawIcons/ZoomInIcon'
 import CoverPhotoIcon from './RawIcons/Picture2Icon'
 import CameraIcon from './RawIcons/Camera3Icon'
+import EnvelopeIcon from './RawIcons/EnvelopeIcon'
+import TelephoneIcon from './RawIcons/TelephoneIcon'
 
 // Date Time Icons
 import StopwatchIcon from './RawIcons/StopwatchIcon'
@@ -56,6 +58,8 @@ export default {
   cover_photo: CoverPhotoIcon,
   plus: PlusIcon,
   camera: CameraIcon,
+  email: EnvelopeIcon,
+  phone: TelephoneIcon,
 
   stopwatch: StopwatchIcon,
   stopwatch_cross: StopwatchCrossIcon,
