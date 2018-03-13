@@ -35,10 +35,12 @@ html
   min-height: 100%
   overflow-x: hidden
 
+html, body, #root, .app
+  height: 100%
+
 body
   width: 100%
   margin: 0
-  margin-bottom: 200px
   color: $color-inverse
 
   a
@@ -48,6 +50,9 @@ body
   p
     font-weight: $font-light
     font-family: $font-family-2
+
+  main
+    min-height: 100%
 
   .container
     @media (max-width: $screen-xs-max)//{}

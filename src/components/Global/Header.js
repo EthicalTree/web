@@ -35,7 +35,7 @@ export const hasFixedHeader = () => {
   ).length
 }
 
-const Header = (props) => {
+const Header = props => {
   const { dispatch, session, header, history } = props
 
   const isFixed = hasFixedHeader()
@@ -44,7 +44,7 @@ const Header = (props) => {
   const fixedHeaderWrapper = isFixed ? 'fixed-header-wrapper' : ''
 
   return (
-    <div className={fixedHeaderWrapper}>
+    <header className={fixedHeaderWrapper}>
       <Banner>
         Please take a moment to give us your feedback on our beta
         &nbsp;
@@ -141,7 +141,7 @@ const Header = (props) => {
           }
         </Collapse>
       </Navbar>
-    </div>
+    </header>
   )
 }
 

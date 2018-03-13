@@ -1,10 +1,33 @@
 @import "variables.sass"
 
 footer
-  position: absolute
-  bottom: 0
+  font-weight: $font-light
+  color: $color-white
+  padding: $space-5 0
+  padding-bottom: $space-7
   width: 100%
   z-index: 1
-
-  height: 200px
   background-color: $color-inverse
+
+  .container
+    display: flex
+    flex-direction: column-reverse
+    align-items: center
+
+    & > *
+      margin: $space-2 0
+
+    a
+      color: $color-white
+      margin: 0 $space-2
+
+
+  @media (min-width: $screen-xl-min) // {}
+    padding-bottom: $space-5
+
+    &.has-fixed-header
+      width: 67%
+
+    .container
+      flex-direction: row
+      justify-content: space-between

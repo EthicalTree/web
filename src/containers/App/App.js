@@ -49,16 +49,18 @@ class InnerApp extends React.Component {
         <Loader loading={app.isAppLoading}>
           <Header />
 
-          <Switch>
-            <Route path="/" exact={true} component={FrontPage} />
-            <Route path="/forgot_password/:token" component={ForgotPasswordPage} />
-            <Route path="/listings/:slug" component={Listing} />
-            <Route path="/s/:query?" component={SearchResults} />
+          <main>
+            <Switch>
+              <Route path="/" exact={true} component={FrontPage} />
+              <Route path="/forgot_password/:token" component={ForgotPasswordPage} />
+              <Route path="/listings/:slug" component={Listing} />
+              <Route path="/s/:query?" component={SearchResults} />
 
-            <Route path="/account" exact={true} component={AccountSettings} />
+              <Route path="/account" exact={true} component={AccountSettings} />
 
-            <Route path="/admin" component={AdminPage} />
-          </Switch>
+              <Route path="/admin" component={AdminPage} />
+            </Switch>
+          </main>
 
           <Footer />
           <Modals />
