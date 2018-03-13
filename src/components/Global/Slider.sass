@@ -32,13 +32,14 @@
       height: 100%
       width: 100%
 
-      &:hover
-        cursor: pointer
-        background-color: rgba($color-inverse, 0.3)
+    &:hover, &:focus
+      cursor: pointer
+      background-color: rgba($color-inverse, 0.3)
+      outline: none
 
-        .icon-button-overlay
-          svg
-            fill: rgba($color-white, 0.9)
+      .icon-button-overlay
+        svg
+          fill: rgba($color-white, 0.9)
 
   &:hover
     .slider-navigation

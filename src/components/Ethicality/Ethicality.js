@@ -2,11 +2,14 @@ import './Ethicality.css'
 import uuid4 from 'uuid'
 
 import React from 'react'
+import classnames from 'classnames'
 import icons from '../Icon/AppIcons'
 
 import {
   UncontrolledTooltip as Tooltip
 } from 'reactstrap'
+
+import { a11yClick } from '../../utils/a11y'
 
 export const EthicalityBar = (props) => {
   const {
@@ -55,11 +58,16 @@ export const Ethicality = (props) => {
   } = props
 
   const selectable = !!onSelect
-  const selectClass = selectable ? 'selectable' : ''
-  const selectedClass = selected ? 'selected' : ''
   const uuid = showTooltip ? uuid4() : ''
-  const slugClass = slug ? slug : ''
-  const newClassName = className ? className : ''
+
+  const classNames = classnames(
+    'ethicality-toggle',
+    'text-center',
+    className,
+    slug,
+    { selectable },
+    { selected },
+  )
 
   const clickWrapper = (e) => {
     e.preventDefault()
@@ -72,8 +80,10 @@ export const Ethicality = (props) => {
   return (
     <div
       id={uuid}
+      className={classNames}
       onClick={clickWrapper}
-      className={`ethicality-toggle text-center ${slugClass} ${selectClass} ${selectedClass} ${newClassName}`}
+      onKeyPress={a11yClick(clickWrapper)}
+      tabIndex={selectable ? '0' : '-1'}
     >
       {showIcon !== false &&
         <EthicalityIcon

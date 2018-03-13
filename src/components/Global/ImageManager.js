@@ -190,6 +190,19 @@ class ImageManager extends React.Component {
       >
         {hasSlides &&
           <div className="image-manager text-center">
+            <ImageActions
+              dispatch={dispatch}
+              canEdit={canEdit}
+              onImageUploadProgress={onImageUploadProgress}
+              hasSlides={hasSlides}
+              currentImage={currentImage}
+              coverAction={coverAction}
+              deleteAction={deleteAction}
+              addAction={addAction}
+              fullScreenAction={fullScreenAction}
+              signingParams={signingParams}
+            />
+
             {hasSlides &&
               <ETSlider
                 afterChange={this.handleSlideChange.bind(this)}
@@ -225,19 +238,6 @@ class ImageManager extends React.Component {
                 }
               />
             }
-
-            <ImageActions
-              dispatch={dispatch}
-              canEdit={canEdit}
-              onImageUploadProgress={onImageUploadProgress}
-              hasSlides={hasSlides}
-              currentImage={currentImage}
-              coverAction={coverAction}
-              deleteAction={deleteAction}
-              addAction={addAction}
-              fullScreenAction={fullScreenAction}
-              signingParams={signingParams}
-            />
           </div>
         }
 

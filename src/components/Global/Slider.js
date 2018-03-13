@@ -6,12 +6,16 @@ import Slider from 'react-slick'
 
 import { Icon } from '../Icon'
 
+import { a11yClick } from '../../utils/a11y'
+
 const Prev = (props) => {
   return (
     <div
       role="button"
       onClick={props.onClick}
+      onKeyPress={a11yClick(props.onClick)}
       className="slider-prev"
+      tabIndex="0"
     >
       <div className="slider-navigation">
         <Icon iconKey="chevron_left" className="icon-button-overlay" />
@@ -25,7 +29,9 @@ const Next = (props) => {
     <div
       role="button"
       onClick={props.onClick}
+      onKeyPress={a11yClick(props.onClick)}
       className="slider-next"
+      tabIndex="0"
     >
       <div className="slider-navigation">
         <Icon iconKey="chevron_right" className="icon-button-overlay" />

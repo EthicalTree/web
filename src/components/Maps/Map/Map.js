@@ -20,6 +20,11 @@ export class Map extends React.Component {
         zoom={zoom}
         defaultOptions={{
           disableDefaultUI: true,
+          styles: [{
+            featureType: 'poi',
+            elementType: 'labels',
+            stylers: [{ visibility: 'off' }]
+          }],
           ...defaultOptions,
         }}
         defaultCenter={center}

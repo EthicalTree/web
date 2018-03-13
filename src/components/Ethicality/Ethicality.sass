@@ -51,11 +51,12 @@
     border-radius: 5px
     transition: all 0.2s ease
 
-    &:hover
+    &:hover, &:focus
       color: $color-inverse
       border-color: $color-inverse
       background-color: rgba($color-inverse, 0.01)
       opacity: 1
+      outline: none
 
       svg
         fill: $color-inverse
