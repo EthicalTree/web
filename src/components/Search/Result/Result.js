@@ -14,6 +14,7 @@ import { EthicalityIcon } from '../../Ethicality/Ethicality'
 import OpenClose from '../../Util/DateTime/OpenClose'
 
 import { listingProps } from '../../../utils/types'
+import { s3Url } from '../../../utils/s3'
 import { localizedDates } from '../../../models/hours'
 
 export class Result extends React.Component {
@@ -32,7 +33,7 @@ export class Result extends React.Component {
     const { listing, hovered, className } = this.props
     const { currentImage } = this.state
 
-    const extraStyle = currentImage ? { backgroundImage: `url(${process.env.REACT_APP_S3_URL}/${currentImage.key})` }  : {}
+    const extraStyle = currentImage ? { backgroundImage: `url(${s3Url('ethicaltree', currentImage.key)})` }  : {}
     const hoveredClass = hovered ? 'hovered' : ''
 
     return (

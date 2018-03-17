@@ -10,6 +10,8 @@ import { Icon } from '../Icon'
 
 import ETSlider from './Slider'
 
+import { s3Url } from '../../utils/s3'
+
 const Action = props => {
   const { action, noClick, type, icon, currentImage } = props
 
@@ -209,7 +211,7 @@ class ImageManager extends React.Component {
                 initialSlide={images.findIndex(i => (i.id === (currentImage ? currentImage.id : -1)))}
                 slides={
                   displayImages.map((image, i) => {
-                    const url = `${process.env.REACT_APP_S3_URL}/${image.key}`
+                    const url = s3Url('ethicaltree', image.key)
                     const key = `${image.key}-${i}`
 
                     if (renderWithImgTag) {
