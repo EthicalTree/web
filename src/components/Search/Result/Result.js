@@ -33,7 +33,7 @@ export class Result extends React.Component {
     const { listing, hovered, className } = this.props
     const { currentImage } = this.state
 
-    const extraStyle = currentImage ? { backgroundImage: `url(${s3Url('ethicaltree', currentImage.key)})` }  : {}
+    const extraStyle = currentImage ? { backgroundImage: `url(${s3Url('thumbnail', currentImage.key)})` }  : {}
     const hoveredClass = hovered ? 'hovered' : ''
 
     return (
