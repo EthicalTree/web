@@ -10,16 +10,10 @@ const listing = (state=defaultState, {type, data}) => {
   switch (type) {
     case 'SET_LISTING':
       return {...state, ...data}
-    case 'SET_ADD_LISTING_LOADING':
-      return {...state, isAddingListingLoading: data}
     case 'SET_GET_LISTING_LOADING':
       return {...state, isListingLoading: data}
-    case 'SET_EDIT_LISTING_ETHICALITIES_LOADING':
-      return {...state, isEditingListingEthicalitiesLoading: data}
     case 'SET_LISTING_ETHICALITIES':
       return {...state, ethicalities: data}
-    case 'SET_EDIT_DESCRIPTION_LOADING':
-      return {...state, isEditingDescriptionLoading: data}
     case 'SET_IMAGE_UPLOAD_PROGRESS':
       return {...state, uploadProgress: data}
     case 'SET_MENU_IMAGE_UPLOAD_PROGRESS':
@@ -32,8 +26,6 @@ const listing = (state=defaultState, {type, data}) => {
       return {...state, images: data}
     case 'SET_LISTING_MENU_IMAGES':
       return {...state, menus: [{...state.menus[0], images: data}]}
-    case 'SET_EDITING_OPERATING_HOURS_LOADING':
-      return {...state, isEditingOperatingHoursLoading: data}
     case 'SET_LISTING_OPERATING_HOURS':
       return {...state, operatingHours: data}
     case 'SET_LISTING_LOCATION':

@@ -87,7 +87,7 @@ class EditOperatingHoursModal extends React.Component {
   }
 
   render() {
-    const { listing } = this.props
+    const { listing, modal } = this.props
     let { selectedDay } = this.state
 
     selectedDay = selectedDay && {
@@ -98,7 +98,7 @@ class EditOperatingHoursModal extends React.Component {
     return (
       <Modal
         className="edit-operating-hours-modal medium-modal"
-        loading={listing.isEditingOperatingHoursLoading}
+        loading={modal.isLoading}
         contentLabel="Edit Hours"
         modalName="edit-operating-hours"
         onSave={this.submit.bind(this)}
@@ -131,7 +131,8 @@ class EditOperatingHoursModal extends React.Component {
 
 const select = (state) => {
   return {
-    listing: state.listing
+    listing: state.listing,
+    modal: state.modal
   }
 }
 

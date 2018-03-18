@@ -38,12 +38,12 @@ class SignupModal extends React.Component {
   }
 
   render() {
-    const { session } = this.props
+    const { session, modal } = this.props
 
     return (
       <Modal
         className="signup-modal small-modal"
-        loading={session.signupLoading}
+        loading={modal.isLoading}
         contentLabel="Signup"
         modalName="signup"
       >
@@ -123,6 +123,7 @@ class SignupModal extends React.Component {
 
 const select = (state) => {
   return {
+    modal: state.modal,
     session: state.session
   }
 }

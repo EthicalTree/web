@@ -1,9 +1,10 @@
+import history from '../utils/history'
 import { api, authenticate, deauthenticate } from '../utils/api'
 import { trackPageView } from '../utils/ga'
 
 export const login = data => {
   return dispatch => {
-    dispatch({ type: 'SET_LOGIN_LOADING', data: true })
+    dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
     api.post('/login', { auth: data })
       .then(response => {
@@ -23,12 +24,12 @@ export const login = data => {
         dispatch({ type: 'SET_LOGIN_ERROR' })
       })
       .then(() => {
-        dispatch({ type: 'SET_LOGIN_LOADING', data: false })
+        dispatch({ type: 'SET_MODAL_LOADING', data: false })
       })
   }
 }
 
-export const logout = (history) => {
+export const logout = () => {
   return dispatch => {
     deauthenticate()
     dispatch({ type: 'SET_USER_LOADING', data: true })
@@ -43,7 +44,7 @@ export const logout = (history) => {
 
 export const sendForgotPasswordRequest = email => {
   return dispatch => {
-    dispatch({ type: 'SET_FORGOT_PASSWORD_LOADING', data: true })
+    dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
     api.post('/forgot_password', { email })
       .then(response => {
@@ -56,7 +57,7 @@ export const sendForgotPasswordRequest = email => {
         }
       })
       .then(() => {
-        dispatch({ type: 'SET_FORGOT_PASSWORD_LOADING', data: false })
+        dispatch({ type: 'SET_MODAL_LOADING', data: false })
       })
   }
 }
@@ -104,7 +105,7 @@ export const changePassword = (data, token, history) => {
 
 export const signup = data => {
   return dispatch => {
-    dispatch({ type: 'SET_SIGNUP_LOADING', data: true })
+    dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
     const user = {
       user: {
@@ -125,7 +126,7 @@ export const signup = data => {
         }
       })
       .then(() => {
-        dispatch({ type: 'SET_SIGNUP_LOADING', data: false })
+        dispatch({ type: 'SET_MODAL_LOADING', data: false })
       })
 
   }

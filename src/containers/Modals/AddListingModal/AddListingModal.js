@@ -35,12 +35,12 @@ class AddListingModal extends React.Component {
   }
 
   render() {
-    const { listing, modal } = this.props
+    const { modal } = this.props
 
     return (
       <Modal
         className="add-description-modal small-modal"
-        loading={listing.isAddingListingLoading}
+        loading={modal.isLoading}
         contentLabel="Add New Listing"
         onSave={this.submit.bind(this)}
         modalName="add-listing"

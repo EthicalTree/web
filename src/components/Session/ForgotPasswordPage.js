@@ -40,7 +40,7 @@ class ForgotPasswordPage extends React.Component {
   }
 
   render() {
-    const { session } = this.props
+    const { session, modal } = this.props
 
     if (session.forgotPasswordEmail === '') {
       return (
@@ -51,7 +51,7 @@ class ForgotPasswordPage extends React.Component {
     }
 
     return (
-      <Loader loading={session.isChangePasswordLoading}>
+      <Loader loading={modal.isLoading}>
         <Container className="mt-5 reset-password-container">
           {session.changePasswordError &&
             <Row>
@@ -119,6 +119,7 @@ class ForgotPasswordPage extends React.Component {
 
 const select = (state) => {
   return {
+    modal: state.modal,
     session: state.session
   }
 }

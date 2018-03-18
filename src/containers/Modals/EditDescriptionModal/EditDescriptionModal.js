@@ -43,7 +43,7 @@ class EditDescriptionModal extends React.Component {
     return (
       <Modal
         className="edit-description-modal large-modal"
-        loading={listing.isEditingDescriptionLoading}
+        loading={modal.isLoading}
         contentLabel="Edit Listing"
         onSave={this.submit.bind(this)}
         modalName="edit-description"

@@ -13,12 +13,6 @@ const session = (state=defaultState, action) => {
       return {...state, location: getLocation(action.data)}
     case 'SET_LOGIN_INFO':
       return {...state, loginInfo: action.data}
-    case 'SET_FORGOT_PASSWORD_LOADING':
-      return {...state, forgotPasswordLoading: action.data}
-    case 'SET_LOGIN_LOADING':
-      return {...state, loginLoading: action.data}
-    case 'SET_SIGNUP_LOADING':
-      return {...state, signupLoading: action.data}
     case 'SET_VERIFY_EMAIL_LOADING':
       return {...state, verifyEmailLoading: action.data}
     case 'SET_CHANGE_PASSWORD_ERROR':

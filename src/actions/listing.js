@@ -25,7 +25,7 @@ export const gotoListing = (slug, history) => {
 
 export const addListing = (data, history) => {
   return dispatch => {
-    dispatch({ type: 'SET_ADD_LISTING_LOADING', data: true })
+    dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
     api.post('/v1/listings', { listing: data })
       .then(response => {
@@ -40,7 +40,7 @@ export const addListing = (data, history) => {
       })
       .catch(() => {})
       .then(() => {
-        dispatch({ type: 'SET_ADD_LISTING_LOADING', data: false })
+        dispatch({ type: 'SET_MODAL_LOADING', data: false })
       })
   }
 }
@@ -78,7 +78,7 @@ export const removeTagFromListing = (listingSlug, id) => {
 
 export const editEthicalities = (listingSlug, ethicalities) => {
   return dispatch => {
-    dispatch({ type: 'SET_EDIT_LISTING_ETHICALITIES_LOADING', data: true })
+    dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
     api.post(`/v1/listings/${listingSlug}/listing_ethicalities`, { ethicalities })
       .then(response => {
@@ -92,14 +92,14 @@ export const editEthicalities = (listingSlug, ethicalities) => {
       })
       .catch(() => {})
       .then(() => {
-        dispatch({ type: 'SET_EDIT_LISTING_ETHICALITIES_LOADING', data: false })
+        dispatch({ type: 'SET_MODAL_LOADING', data: false })
       })
   }
 }
 
 export const editDescription = (data) => {
   return dispatch => {
-    dispatch({ type: 'SET_EDIT_DESCRIPTION_LOADING', data: true })
+    dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
     api.put(`/v1/listings/${data.slug}`, { listing: data })
       .then(response => {
@@ -113,7 +113,7 @@ export const editDescription = (data) => {
       })
       .catch(() => {})
       .then(() => {
-        dispatch({ type: 'SET_EDIT_DESCRIPTION_LOADING', data: false })
+        dispatch({ type: 'SET_MODAL_LOADING', data: false })
       })
   }
 }
@@ -122,6 +122,8 @@ export const editLocation = (listingSlug, data) => {
   const { location } = data
 
   return dispatch => {
+    dispatch({ type: 'SET_MODAL_LOADING', data: true })
+
     api.post(`/v1/listings/${listingSlug}/locations`, { location })
       .then(response => {
         if (response.data.errors) {
@@ -137,7 +139,7 @@ export const editLocation = (listingSlug, data) => {
         }
       })
       .then(() => {
-        dispatch({ type: 'SET_EDIT_LOCATION_LOADING', data: false })
+        dispatch({ type: 'SET_MODAL_LOADING', data: false })
       })
 
   }
@@ -253,7 +255,7 @@ export const saveOperatingHours = (listingSlug, operatingHours) => {
   })
 
   return dispatch => {
-    dispatch({ type: 'SET_EDITING_OPERATING_HOURS_LOADING', data: true })
+    dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
     api.post(`/v1/listings/${listingSlug}/operating_hours`, utcHours)
       .then(response => {
@@ -266,7 +268,7 @@ export const saveOperatingHours = (listingSlug, operatingHours) => {
       })
       .catch(() => {})
       .then(() => {
-        dispatch({ type: 'SET_EDITING_OPERATING_HOURS_LOADING', data: false })
+        dispatch({ type: 'SET_MODAL_LOADING', data: false })
       })
 
   }

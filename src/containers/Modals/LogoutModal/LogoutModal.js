@@ -1,19 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 
 import { ConfirmModal } from '../Modal'
 import { logout } from '../../../actions/session'
 
 const LogoutModal = (props) => {
-  const { dispatch, history } = props
+  const { dispatch } = props
 
   return (
     <ConfirmModal
       className="logout-modal small-modal"
       contentLabel="Logout"
-      loading={props.session.logoutLoading}
-      onConfirm={e => { dispatch(logout(history)) }}
+      loading={false}
+      onConfirm={e => { dispatch(logout()) }}
       modalName="logout"
       msg="Are you sure you want to log out?"
     >
@@ -22,10 +21,6 @@ const LogoutModal = (props) => {
   )
 }
 
-const select = (state) => {
-  return {
-    session: state.session
-  }
-}
+const select = (state) => ({})
 
-export default withRouter(connect(select)(LogoutModal))
+export default connect(select)(LogoutModal)
