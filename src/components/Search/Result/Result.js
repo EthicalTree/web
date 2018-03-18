@@ -11,7 +11,7 @@ import {
 } from 'reactstrap'
 
 import { EthicalityIcon } from '../../Ethicality/Ethicality'
-import OpenClose from '../../Util/DateTime/OpenClose'
+import { OpenClose } from '../../OpenClose'
 
 import { listingProps } from '../../../utils/types'
 import { s3Url } from '../../../utils/s3'

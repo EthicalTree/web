@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import { Loader } from '../Loader'
-import PasswordStrength from '../Util/PasswordStrength'
+import { PasswordStrength } from '../PasswordStrength'
 import { isLoggedIn } from '../../utils/permissions'
 
 import {

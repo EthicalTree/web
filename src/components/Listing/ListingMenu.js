@@ -1,5 +1,5 @@
 import React from 'react'
-import ImageManager from '../Global/ImageManager'
+import { ImageManager } from '../ImageManager'
 
 import {
   addImageToMenu,

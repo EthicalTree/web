@@ -7,8 +7,7 @@ import { UncontrolledTooltip as Tooltip } from 'reactstrap'
 import { Loader } from '../Loader'
 import { S3Uploader } from '../S3Uploader'
 import { Icon } from '../Icon'
-
-import ETSlider from './Slider'
+import { Slider as ETSlider } from '../Slider'
 
 import { s3Url } from '../../utils/s3'
 

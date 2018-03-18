@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from './Modal'
-import PasswordStrength from '../../components/Util/PasswordStrength'
+import { PasswordStrength } from '../../components/PasswordStrength'
 
 import {
   Form,

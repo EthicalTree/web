@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import { Container } from 'reactstrap'
 
-import { hasFixedHeader } from './Header'
+import { hasFixedHeader } from '../Header'
 
 class Footer extends React.PureComponent {
   render() {

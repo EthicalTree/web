@@ -14,7 +14,7 @@ import {
 
 import { changePassword, checkForgotPassword } from '../../actions/session'
 import { Loader } from '../Loader'
-import PasswordStrength from '../Util/PasswordStrength'
+import { PasswordStrength } from '../PasswordStrength'
 
 class ForgotPasswordPage extends React.Component {
 

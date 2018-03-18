@@ -33,7 +33,7 @@ import { Featured } from './Featured'
 import { Icon } from '../Icon'
 import { TagBar } from './TagBar'
 import { Loader } from '../Loader'
-import ImageManager from '../Global/ImageManager'
+import { ImageManager } from '../ImageManager'
 
 import { hasPermission, isAdmin } from '../../utils/permissions'
 

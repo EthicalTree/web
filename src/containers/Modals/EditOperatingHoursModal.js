@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { Modal } from './Modal'
-import { DateSelector } from '../../components/Util/DateTime/DateTime'
+import { DateSelector } from '../../components/DateTime'
 
 import {
   Container,

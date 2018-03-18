@@ -14,7 +14,7 @@ import {
   Input
 } from 'reactstrap'
 
-import { Icon } from '../../Icon'
+import { Icon } from '../Icon'
 
 export const DateSelector = props => {
   const { setDay, selectedDay, days, addMoreHours, setTime } = props

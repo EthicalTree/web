@@ -2,9 +2,9 @@ import './OpenClose.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Icon } from '../../Icon'
+import { Icon } from '../Icon'
 
-import { getOpenCloseStatus } from '../../../utils/datetime'
+import { getOpenCloseStatus } from '../../utils/datetime'
 
 const OpenClose = props => {
   const { hours } = props
