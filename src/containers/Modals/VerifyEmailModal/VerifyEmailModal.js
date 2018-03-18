@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal } from './Modal'
+import { Modal } from '../Modal'
 
 import {
   Form,
@@ -14,7 +14,7 @@ import {
   Alert
 } from 'reactstrap'
 
-import { verifyEmail } from '../../actions/session'
+import { verifyEmail } from '../../../actions/session'
 
 class VerifyEmailModal extends React.Component {
 

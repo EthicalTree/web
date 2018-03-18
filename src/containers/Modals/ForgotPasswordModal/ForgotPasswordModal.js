@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal } from './Modal'
+import { Modal } from '../Modal'
 
 import {
   Form,
@@ -13,7 +13,7 @@ import {
   Alert
 } from 'reactstrap'
 
-import { sendForgotPasswordRequest } from '../../actions/session'
+import { sendForgotPasswordRequest } from '../../../actions/session'
 
 class ForgotPasswordModal extends React.Component {
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal } from './Modal'
-import { PasswordStrength } from '../../components/PasswordStrength'
+import { Modal } from '../Modal'
+import { PasswordStrength } from '../../../components/PasswordStrength'
 
 import {
   Form,
@@ -15,7 +15,7 @@ import {
   Alert
 } from 'reactstrap'
 
-import { signup } from '../../actions/session'
+import { signup } from '../../../actions/session'
 
 class SignupModal extends React.Component {
 

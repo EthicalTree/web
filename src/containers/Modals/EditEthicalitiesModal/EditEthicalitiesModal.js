@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal } from './Modal'
+import { Modal } from '../Modal'
 
 import {
   Container,
@@ -9,9 +9,9 @@ import {
   Alert
 } from 'reactstrap'
 
-import { Ethicality } from '../../components/Ethicality'
+import { Ethicality } from '../../../components/Ethicality'
 
-import { editEthicalities } from '../../actions/listing'
+import { editEthicalities } from '../../../actions/listing'
 
 class EditEthicalitiesModal extends React.Component {
 

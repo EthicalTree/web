@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { ConfirmModal } from './Modal'
-import { confirmProxy } from '../../actions/confirm'
+import { ConfirmModal } from '../Modal'
+import { confirmProxy } from '../../../actions/confirm'
 
 const GenericConfirmModal = props => {
   const { dispatch, confirm } = props

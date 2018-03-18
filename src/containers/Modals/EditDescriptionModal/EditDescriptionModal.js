@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal } from './Modal'
+import { Modal } from '../Modal'
 
 import {
   Label,
@@ -11,7 +11,7 @@ import {
   Alert
 } from 'reactstrap'
 
-import { editDescription } from '../../actions/listing'
+import { editDescription } from '../../../actions/listing'
 
 class EditDescriptionModal extends React.Component {
 

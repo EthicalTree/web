@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Marker } from 'react-google-maps'
 
-import { Modal } from './Modal'
-import { Map } from '../../components/Maps/Map'
+import { Modal } from '../Modal'
+import { Map } from '../../../components/Maps/Map'
 
 import {
   FormGroup,
@@ -18,7 +18,7 @@ import {
   Alert
 } from 'reactstrap'
 
-import { editLocation } from '../../actions/listing'
+import { editLocation } from '../../../actions/listing'
 
 const google = window.google
 

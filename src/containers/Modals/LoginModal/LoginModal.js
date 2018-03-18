@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal } from './Modal'
+import { Modal } from '../Modal'
 
 import {
   Form,
@@ -14,7 +14,7 @@ import {
   Alert
 } from 'reactstrap'
 
-import { login } from '../../actions/session'
+import { login } from '../../../actions/session'
 
 class LoginModal extends React.Component {
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { Modal } from './Modal'
-import { DateSelector } from '../../components/DateTime'
+import { Modal } from '../Modal'
+import { DateSelector } from '../../../components/DateTime'
 
 import {
   Container,
@@ -11,8 +11,8 @@ import {
   Alert
 } from 'reactstrap'
 
-import { saveOperatingHours } from '../../actions/listing'
-import { localizedDates } from '../../models/hours'
+import { saveOperatingHours } from '../../../actions/listing'
+import { localizedDates } from '../../../models/hours'
 
 class EditOperatingHoursModal extends React.Component {
 

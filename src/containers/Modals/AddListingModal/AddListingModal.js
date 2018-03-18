@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Modal } from './Modal'
+import { Modal } from '../Modal'
 
 import {
   Form,
@@ -13,7 +13,7 @@ import {
   Alert
 } from 'reactstrap'
 
-import { addListing } from '../../actions/listing'
+import { addListing } from '../../../actions/listing'
 
 class AddListingModal extends React.Component {
 
