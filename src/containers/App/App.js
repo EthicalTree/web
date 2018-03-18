@@ -28,6 +28,10 @@ import history from '../../utils/history'
 import { authenticate } from '../../utils/api'
 
 class InnerApp extends React.Component {
+  handleSkip = () => {
+    this.main.focus()
+  }
+
   componentWillMount() {
     const { dispatch, session } = this.props
 
@@ -50,9 +54,14 @@ class InnerApp extends React.Component {
     return (
       <div className={`app ${modalOpenClass}`}>
         <Loader loading={app.isAppLoading}>
-          <Header />
+          <Header
+            handleSkip={this.handleSkip}
+          />
 
-          <main>
+          <main
+            ref={main => this.main = main}
+            tabIndex="-1"
+          >
             <Switch>
               <Route exact path="/" component={FrontPage} />
               <Route exact path="/forgot_password/:token" component={ForgotPasswordPage} />

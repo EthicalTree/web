@@ -7,8 +7,10 @@ import { Link, withRouter } from 'react-router-dom'
 import AccountIcon from '../Session/AccountIcon'
 import { Search } from '../Search'
 import { Banner } from '../Banner'
+import { SkipLink } from '../SkipLink'
 
 import etLogo from './images/et-logo.svg'
+import history from '../../utils/history'
 
 import {
   Button,
@@ -36,7 +38,12 @@ export const hasFixedHeader = () => {
 }
 
 const Header = props => {
-  const { dispatch, session, header, history } = props
+  const {
+    dispatch,
+    handleSkip,
+    header,
+    session,
+  } = props
 
   const isFixed = hasFixedHeader()
   const hasSearch = history.location.pathname !== '/'
@@ -59,6 +66,9 @@ const Header = props => {
       </Banner>
 
       <Navbar light expand="md" className={fixedHeader}>
+        <SkipLink
+          handleSkip={handleSkip}
+        />
 
         <Link className="navbar-brand" to="/">
           <span className="sr-only">EthicalTree</span>
