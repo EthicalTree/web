@@ -12,10 +12,8 @@ import {
   InputGroup,
   InputGroupAddon,
   Button,
-  Container,
   Row,
   Col,
-  Alert
 } from 'reactstrap'
 
 import { editLocation } from '../../../actions/listing'
@@ -106,61 +104,48 @@ class EditLocationModal extends React.Component {
         onSave={this.submit.bind(this)}
         modalName="edit-location"
       >
-
-        <Container>
-          {modal.errors &&
-            <Row>
-              <Col>
-                <Alert color="danger">
-                  {modal.errors}
-                </Alert>
-              </Col>
-            </Row>
-          }
-
-          <Row>
-            <Col>
-              <FormGroup>
-                <Label for="locationAddress">Address</Label>
-                <InputGroup>
-                  <Input
-                    autoFocus
-                    onKeyUp={ this.onAddressChange.bind(this) }
-                    name="locationAddress"
-                    id="locationAddress"
-                    placeholder="eg. Ricky's Rockin Restaurant"
-                  />
-                  <InputGroupAddon addonType="append">
-                    <Button color="default" onClick={this.onAddressChange.bind(this)}>
-                      Find
-                    </Button>
-                  </InputGroupAddon>
-                </InputGroup>
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col className="edit-location-map">
-              <Map
-                onClick={this.onMapClick.bind(this)}
-                center={center}
-                zoom={16}
-                defaultOptions={{
-                  zoomControl: true,
-                  draggableCursor: 'pointer'
-                }}
-                containerElement={
-                  <div style={{ height: `100%` }} />
-                }
-                mapElement={
-                  <div style={{ height: `100%` }} />
-                }
-              >
-                {marker}
-              </Map>
-            </Col>
-          </Row>
-        </Container>
+        <Row>
+          <Col>
+            <FormGroup>
+              <Label for="locationAddress">Address</Label>
+              <InputGroup>
+                <Input
+                  autoFocus
+                  onKeyUp={ this.onAddressChange.bind(this) }
+                  name="locationAddress"
+                  id="locationAddress"
+                  placeholder="eg. Ricky's Rockin Restaurant"
+                />
+                <InputGroupAddon addonType="append">
+                  <Button color="default" onClick={this.onAddressChange.bind(this)}>
+                    Find
+                  </Button>
+                </InputGroupAddon>
+              </InputGroup>
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="edit-location-map">
+            <Map
+              onClick={this.onMapClick.bind(this)}
+              center={center}
+              zoom={16}
+              defaultOptions={{
+                zoomControl: true,
+                draggableCursor: 'pointer'
+              }}
+              containerElement={
+                <div style={{ height: `100%` }} />
+              }
+              mapElement={
+                <div style={{ height: `100%` }} />
+              }
+            >
+              {marker}
+            </Map>
+          </Col>
+        </Row>
       </Modal>
     )
   }

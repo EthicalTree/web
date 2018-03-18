@@ -9,7 +9,7 @@ export const login = data => {
     api.post('/login', { auth: data })
       .then(response => {
         if (!response.data.jwt) {
-          dispatch({ type: 'SET_LOGIN_ERROR' })
+          dispatch({ type: 'SET_MODAL_ERRORS', data: ["Invalid email/password"] })
         }
         else {
           const jwt = response.data.jwt
@@ -21,7 +21,7 @@ export const login = data => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_LOGIN_ERROR' })
+        dispatch({ type: 'SET_MODAL_ERRORS', data: ["Invalid email/password"] })
       })
       .then(() => {
         dispatch({ type: 'SET_MODAL_LOADING', data: false })
@@ -118,7 +118,7 @@ export const signup = data => {
     api.post('/signup', user)
       .then(response => {
         if (response.data.errors) {
-          dispatch({ type: 'SET_SIGNUP_ERROR', data: response.data.errors })
+          dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
         }
         else {
           dispatch({ type: 'SIGNUP' })
@@ -139,11 +139,12 @@ export const verifyEmail = data => {
     api.post('/confirm_email', { token: data.token })
       .then(response => {
         if (response.data.errors) {
-          dispatch({ type: 'SET_VERIFY_EMAIL_ERROR', data: response.data.errors })
+          dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
         }
         else {
           dispatch({ type: 'VERIFY_EMAIL' })
           dispatch({ type: 'OPEN_MODAL', data: 'login' })
+          dispatch({ type: 'SET_MODAL_ERRORS', data: null })
           dispatch({ type: 'SET_LOGIN_INFO', data: "Great, you're verified! Feel free to login whenever, and thanks for registering :)"})
         }
       })

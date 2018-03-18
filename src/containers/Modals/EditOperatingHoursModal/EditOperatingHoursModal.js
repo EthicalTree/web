@@ -4,13 +4,6 @@ import { connect } from 'react-redux'
 import { Modal } from '../Modal'
 import { DateSelector } from '../../../components/DateTime'
 
-import {
-  Container,
-  Row,
-  Col,
-  Alert
-} from 'reactstrap'
-
 import { saveOperatingHours } from '../../../actions/listing'
 import { localizedDates } from '../../../models/hours'
 
@@ -87,7 +80,7 @@ class EditOperatingHoursModal extends React.Component {
   }
 
   render() {
-    const { listing, modal } = this.props
+    const { modal } = this.props
     let { selectedDay } = this.state
 
     selectedDay = selectedDay && {
@@ -103,26 +96,13 @@ class EditOperatingHoursModal extends React.Component {
         modalName="edit-operating-hours"
         onSave={this.submit.bind(this)}
       >
-
-        <Container>
-          {listing.editOperatingHoursErrors &&
-            <Row>
-              <Col>
-                <Alert color="danger">
-                  {listing.editOperatingHoursErrors}
-                </Alert>
-              </Col>
-            </Row>
-          }
-
-          <DateSelector
-            selectedDay={selectedDay}
-            days={this.state.operatingHours}
-            addMoreHours={this.addMoreHours.bind(this)}
-            setTime={this.setTime.bind(this)}
-            setDay={this.setDay.bind(this)}
-          />
-        </Container>
+        <DateSelector
+          selectedDay={selectedDay}
+          days={this.state.operatingHours}
+          addMoreHours={this.addMoreHours.bind(this)}
+          setTime={this.setTime.bind(this)}
+          setDay={this.setDay.bind(this)}
+        />
       </Modal>
     )
   }

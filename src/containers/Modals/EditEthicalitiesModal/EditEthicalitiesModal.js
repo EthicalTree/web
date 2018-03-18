@@ -3,10 +3,8 @@ import { connect } from 'react-redux'
 import { Modal } from '../Modal'
 
 import {
-  Container,
   Row,
   Col,
-  Alert
 } from 'reactstrap'
 
 import { Ethicality } from '../../../components/Ethicality'
@@ -69,42 +67,28 @@ class EditEthicalitiesModal extends React.Component {
         onSave={this.submit.bind(this)}
         modalName="edit-ethicalities"
       >
+        <Row className="text-center mb-2">
+          <Col>
+            <p>Select all that apply</p>
+          </Col>
+        </Row>
 
-        <Container>
-          {modal.errors &&
-            <Row>
-              <Col>
-                <Alert color="danger">
-                  {modal.errors}
-                </Alert>
+        <div className="pl-4 pr-4 d-flex flex-wrap justify-content-center">
+          {ethicalities.map(ethicality => {
+            return (
+              <Col key={ethicality.slug} xs="6" className="p-2">
+                <Ethicality
+                  className="p-3 bordered"
+                  name={ethicality.name}
+                  slug={ethicality.slug}
+                  iconKey={ethicality.iconKey}
+                  selected={!!this.state.selectedEthicalities.find(e => e.slug === ethicality.slug)}
+                  onSelect={this.selectEthicality.bind(this)}
+                />
               </Col>
-            </Row>
-          }
-
-          <Row className="text-center mb-2">
-            <Col>
-              <p>Select all that apply</p>
-            </Col>
-          </Row>
-
-          <div className="pl-4 pr-4 d-flex flex-wrap justify-content-center">
-            {ethicalities.map(ethicality => {
-              return (
-                <Col key={ethicality.slug} xs="6" className="p-2">
-                  <Ethicality
-                    className="p-3 bordered"
-                    name={ethicality.name}
-                    slug={ethicality.slug}
-                    iconKey={ethicality.iconKey}
-                    selected={!!this.state.selectedEthicalities.find(e => e.slug === ethicality.slug)}
-                    onSelect={this.selectEthicality.bind(this)}
-                  />
-                </Col>
-              )
-            })}
-          </div>
-
-        </Container>
+            )
+          })}
+        </div>
       </Modal>
     )
   }

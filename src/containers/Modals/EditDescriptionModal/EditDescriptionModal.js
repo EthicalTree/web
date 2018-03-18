@@ -5,10 +5,8 @@ import { Modal } from '../Modal'
 import {
   Label,
   Input,
-  Container,
   Row,
   Col,
-  Alert
 } from 'reactstrap'
 
 import { editDescription } from '../../../actions/listing'
@@ -48,58 +46,44 @@ class EditDescriptionModal extends React.Component {
         onSave={this.submit.bind(this)}
         modalName="edit-description"
       >
+        <Row>
+          <Col className="mb-4" xs={12} md={6}>
+            <Label for="listingTitle">Title</Label>
+            <Input
+              defaultValue={this.state.title || listing.title}
+              onChange={e => {this.setState({ title: e.target.value })}}
+              type="text"
+              name="listingTitle"
+              id="listingTitle"
+            />
+          </Col>
 
-        <Container>
-          {modal.errors &&
-            <Row>
-              <Col>
-                <Alert color="danger">
-                  {modal.errors}
-                </Alert>
-              </Col>
-            </Row>
-          }
+          <Col className="mb-4" xs={12} md={6}>
+            <Label for="listingWebsite">Website</Label>
+            <Input
+              defaultValue={this.state.website || listing.website}
+              onChange={e => {this.setState({ website: e.target.value })}}
+              type="text"
+              name="listingWebsite"
+              id="listingWebsite"
+            />
+          </Col>
+        </Row>
 
-          <Row>
-            <Col className="mb-4" xs={12} md={6}>
-              <Label for="listingTitle">Title</Label>
-              <Input
-                defaultValue={this.state.title || listing.title}
-                onChange={e => {this.setState({ title: e.target.value })}}
-                type="text"
-                name="listingTitle"
-                id="listingTitle"
-              />
-            </Col>
-
-            <Col className="mb-4" xs={12} md={6}>
-              <Label for="listingWebsite">Website</Label>
-              <Input
-                defaultValue={this.state.website || listing.website}
-                onChange={e => {this.setState({ website: e.target.value })}}
-                type="text"
-                name="listingWebsite"
-                id="listingWebsite"
-              />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <Label for="listingDescription">Description</Label>
-              <Input
-                autoFocus
-                defaultValue={this.state.bio || listing.bio}
-                onChange={e => { this.setState({ bio: e.target.value })}}
-                type="textarea"
-                name="listingDescription"
-                id="listingDescription"
-                placeholder="Tell the world what makes you special!"
-              />
-            </Col>
-          </Row>
-
-        </Container>
+        <Row>
+          <Col>
+            <Label for="listingDescription">Description</Label>
+            <Input
+              autoFocus
+              defaultValue={this.state.bio || listing.bio}
+              onChange={e => { this.setState({ bio: e.target.value })}}
+              type="textarea"
+              name="listingDescription"
+              id="listingDescription"
+              placeholder="Tell the world what makes you special!"
+            />
+          </Col>
+        </Row>
       </Modal>
     )
   }

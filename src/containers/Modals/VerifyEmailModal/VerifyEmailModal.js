@@ -8,10 +8,8 @@ import {
   Label,
   Input,
   Button,
-  Container,
   Row,
   Col,
-  Alert
 } from 'reactstrap'
 
 import { verifyEmail } from '../../../actions/session'
@@ -43,53 +41,37 @@ class VerifyEmailModal extends React.Component {
         contentLabel="Verify Email"
         modalName="verify-email"
       >
+        <Row>
+          <Col>
+            <p>
+              Almost there! We sent a 6 digit token to your email address.
+              Enter that token here to verify your account!
+            </p>
+          </Col>
+        </Row>
 
-        <Container>
-          {session.verifyEmailErrors &&
-            <Row>
-              <Col>
-                <Alert color="danger">
-                  { session.verifyEmailErrors.map(err => {
-                    return <span>{err}<br/></span>
-                  })}
-                </Alert>
-              </Col>
-            </Row>
-          }
+        <Row>
+          <Col>
+            <Form method="post" onSubmit={this.submit.bind(this)}>
+              <FormGroup>
+                <Label for="verifyEmailToken">Token</Label>
+                <Input
+                  value={this.state.token}
+                  onChange={e => { this.setState({ token: e.target.value }) }}
+                  type="text"
+                  name="verifyEmailToken"
+                  id="verifyEmailToken"
+                  placeholder="- - - - - -" />
+              </FormGroup>
 
-          <Row>
-            <Col>
-              <p>
-                Almost there! We sent a 6 digit token to your email address.
-                Enter that token here to verify your account!
-              </p>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <Form method="post" onSubmit={this.submit.bind(this)}>
-                <FormGroup>
-                  <Label for="verifyEmailToken">Token</Label>
-                  <Input
-                    value={this.state.token}
-                    onChange={e => { this.setState({ token: e.target.value }) }}
-                    type="text"
-                    name="verifyEmailToken"
-                    id="verifyEmailToken"
-                    placeholder="- - - - - -" />
-                </FormGroup>
-
-                <FormGroup className="mt-4">
-                  <Button block color="primary" role="button" type="submit">
-                    Verify me, baby!
-                  </Button>
-                </FormGroup>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
-
+              <FormGroup className="mt-4">
+                <Button block color="primary" role="button" type="submit">
+                  Verify me, baby!
+                </Button>
+              </FormGroup>
+            </Form>
+          </Col>
+        </Row>
       </Modal>
     )
   }

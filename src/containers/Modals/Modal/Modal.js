@@ -6,10 +6,11 @@ import { connect } from 'react-redux'
 import ReactModal from 'react-modal'
 
 import {
-  Container,
-  Row,
-  Col,
+  Alert,
   Button,
+  Container,
+  Col,
+  Row
 } from 'reactstrap'
 
 import { Loader } from '../../../components/Loader'
@@ -87,13 +88,13 @@ const BottomBar = props => {
 }
 
 const Modal = props => {
-
   let {
-    style,
+    children,
+    dispatch,
     modalName,
     modal,
-    dispatch,
-    noDecoration
+    noDecoration,
+    style
   } = props
 
   const isOpen = modal.openModal === modalName
@@ -148,7 +149,19 @@ const Modal = props => {
 
               <div className="p-3">
                 {isOpen &&
-                  props.children
+                  <Container>
+                    {modal.errors &&
+                      <Row>
+                        <Col>
+                          <Alert color="danger">
+                            {modal.errors}
+                          </Alert>
+                        </Col>
+                      </Row>
+                    }
+
+                    {children}
+                  </Container>
                 }
               </div>
 

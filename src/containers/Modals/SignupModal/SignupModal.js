@@ -9,10 +9,8 @@ import {
   Label,
   Input,
   Button,
-  Container,
   Row,
   Col,
-  Alert
 } from 'reactstrap'
 
 import { signup } from '../../../actions/session'
@@ -38,7 +36,7 @@ class SignupModal extends React.Component {
   }
 
   render() {
-    const { session, modal } = this.props
+    const { modal } = this.props
 
     return (
       <Modal
@@ -47,73 +45,57 @@ class SignupModal extends React.Component {
         contentLabel="Signup"
         modalName="signup"
       >
+        <Row>
+          <Col>
+            <Form method="post" onSubmit={this.submit.bind(this)}>
+              <FormGroup>
+                <Label for="signupEmail">Email Address</Label>
+                <Input
+                  autoFocus
+                  value={this.state.email}
+                  onChange={e => { this.setState({ email: e.target.value }) }}
+                  type="email"
+                  name="email"
+                  id="signupEmail"
+                  placeholder="Enter email..."/>
+              </FormGroup>
 
-        <Container>
-          {session.signupErrors &&
-            <Row>
-              <Col>
-                <Alert color="danger">
-                  { session.signupErrors.map(err => {
-                    return <span>{err}<br/></span>
-                  })}
-                </Alert>
-              </Col>
-            </Row>
-          }
-
-          <Row>
-            <Col>
-              <Form method="post" onSubmit={this.submit.bind(this)}>
-                <FormGroup>
-                  <Label for="signupEmail">Email Address</Label>
-                  <Input
-                    autoFocus
-                    value={this.state.email}
-                    onChange={e => { this.setState({ email: e.target.value }) }}
-                    type="email"
-                    name="email"
-                    id="signupEmail"
-                    placeholder="Enter email..."/>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="signupPassword">Password</Label>
-                  <Input
-                    value={this.state.password}
-                    onChange={e => { this.setState({ password: e.target.value }) }}
-                    type="password"
-                    name="password"
-                    id="signupPassword"
-                    placeholder="Enter password..."
-                  />
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="signupPasswordConfirm">Confirm Password</Label>
-                  <Input
-                    value={this.state.confirmPassword}
-                    onChange={e => { this.setState({ confirmPassword: e.target.value }) }}
-                    type="password"
-                    name="confirmPassword"
-                    id="signupConfirmPassword"
-                    placeholder="Enter password again..." />
-                </FormGroup>
-
-                <PasswordStrength
-                  email={this.state.email}
-                  password={this.state.password}
+              <FormGroup>
+                <Label for="signupPassword">Password</Label>
+                <Input
+                  value={this.state.password}
+                  onChange={e => { this.setState({ password: e.target.value }) }}
+                  type="password"
+                  name="password"
+                  id="signupPassword"
+                  placeholder="Enter password..."
                 />
+              </FormGroup>
 
-                <FormGroup className="mt-4">
-                  <Button block color="primary" role="button" type="submit">
-                    Sign me up!
-                  </Button>
-                </FormGroup>
-              </Form>
-            </Col>
-          </Row>
+              <FormGroup>
+                <Label for="signupPasswordConfirm">Confirm Password</Label>
+                <Input
+                  value={this.state.confirmPassword}
+                  onChange={e => { this.setState({ confirmPassword: e.target.value }) }}
+                  type="password"
+                  name="confirmPassword"
+                  id="signupConfirmPassword"
+                  placeholder="Enter password again..." />
+              </FormGroup>
 
-        </Container>
+              <PasswordStrength
+                email={this.state.email}
+                password={this.state.password}
+              />
+
+              <FormGroup className="mt-4">
+                <Button block color="primary" role="button" type="submit">
+                  Sign me up!
+                </Button>
+              </FormGroup>
+            </Form>
+          </Col>
+        </Row>
       </Modal>
     )
   }

@@ -23,12 +23,6 @@ const session = (state=defaultState, action) => {
       return {...state, forgotPasswordEmail: action.data}
     case 'SET_CHANGE_PASSWORD_LOADING':
       return {...state, isChangePasswordLoading: action.data}
-    case 'SET_LOGIN_ERROR':
-      return {...state, loginError: "Invalid email/password"}
-    case 'SET_SIGNUP_ERROR':
-      return {...state, signupErrors: action.data}
-    case 'SET_VERIFY_EMAIL_ERROR':
-      return {...state, verifyEmailErrors: action.data}
     case 'LOGIN':
       return {
         ...state,
@@ -47,8 +41,7 @@ const session = (state=defaultState, action) => {
     case 'SIGNUP':
       return {
         ...state,
-        isSigningUp: false,
-        signupErrors: null
+        isSigningUp: false
       }
     case 'VERIFY_EMAIL':
       return {

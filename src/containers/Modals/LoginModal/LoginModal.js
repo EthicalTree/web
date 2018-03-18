@@ -8,7 +8,6 @@ import {
   Label,
   Input,
   Button,
-  Container,
   Row,
   Col,
   Alert
@@ -52,72 +51,59 @@ class LoginModal extends React.Component {
         contentLabel="Login"
         modalName="login"
       >
-
-        <Container>
-          {session.loginError &&
-            <Row>
-              <Col>
-                <Alert color="danger">
-                  {session.loginError}
-                </Alert>
-              </Col>
-            </Row>
-          }
-
-          {session.loginInfo &&
-            <Row>
-              <Col>
-                <Alert color="success">
-                  {session.loginInfo}
-                </Alert>
-              </Col>
-            </Row>
-          }
-
+        {session.loginInfo &&
           <Row>
             <Col>
-              <Form method="post" onSubmit={this.submit.bind(this)}>
-                <FormGroup>
-                  <Label for="loginEmail">Email Address</Label>
-                  <Input
-                    autoFocus
-                    value={this.state.email}
-                    onChange={e => { this.setState({ email: e.target.value }) }}
-                    type="email"
-                    name="email"
-                    id="loginEmail"
-                    placeholder="Enter email..."/>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="loginPassword">Password</Label>
-                  <Input
-                    value={this.state.password}
-                    onChange={e => { this.setState({ password: e.target.value }) }}
-                    type="password"
-                    name="password"
-                    id="loginPassword"
-                    placeholder="Enter password..." />
-                </FormGroup>
-
-                <FormGroup className="mt-4">
-                  <Button block color="primary" role="button" type="submit">
-                    Login
-                  </Button>
-                </FormGroup>
-
-                <div className="text-center mb-3">
-                  <a
-                    href=""
-                    onClick={this.openForgotPassword.bind(this)}
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-              </Form>
+              <Alert color="success">
+                {session.loginInfo}
+              </Alert>
             </Col>
           </Row>
-        </Container>
+        }
+
+        <Row>
+          <Col>
+            <Form method="post" onSubmit={this.submit.bind(this)}>
+              <FormGroup>
+                <Label for="loginEmail">Email Address</Label>
+                <Input
+                  autoFocus
+                  value={this.state.email}
+                  onChange={e => { this.setState({ email: e.target.value }) }}
+                  type="email"
+                  name="email"
+                  id="loginEmail"
+                  placeholder="Enter email..."/>
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="loginPassword">Password</Label>
+                <Input
+                  value={this.state.password}
+                  onChange={e => { this.setState({ password: e.target.value }) }}
+                  type="password"
+                  name="password"
+                  id="loginPassword"
+                  placeholder="Enter password..." />
+              </FormGroup>
+
+              <FormGroup className="mt-4">
+                <Button block color="primary" role="button" type="submit">
+                  Login
+                </Button>
+              </FormGroup>
+
+              <div className="text-center mb-3">
+                <a
+                  href=""
+                  onClick={this.openForgotPassword.bind(this)}
+                >
+                  Forgot your password?
+                </a>
+              </div>
+            </Form>
+          </Col>
+        </Row>
       </Modal>
     )
   }
