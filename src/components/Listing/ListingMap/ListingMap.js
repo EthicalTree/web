@@ -1,8 +1,8 @@
 import React from 'react'
 import { Marker } from 'react-google-maps'
-import { Icon } from '../Icon'
-import { Map } from '../Maps/Map'
-import { formatAddress, formatGetDirectionsUrl } from '../../utils/address'
+import { Icon } from '../../Icon'
+import { Map } from '../../Maps/Map'
+import { formatAddress, formatGetDirectionsUrl } from '../../../utils/address'
 
 const ListingMap = props => {
   const { locations, canEdit, dispatch } = props

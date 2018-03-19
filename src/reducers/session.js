@@ -1,9 +1,10 @@
-import store from 'store'
 import { getLocation } from '../models/session'
 
 const defaultState = {
-  userLoading: true,
-  authToken: store.get('ETHICALTREE_AUTH_TOKEN')
+  isSigningUp: false,
+  isVerifyingEmail: false,
+  user: null,
+  userLoading: true
 }
 
 const session = (state=defaultState, action) => {
@@ -29,12 +30,10 @@ const session = (state=defaultState, action) => {
         loginError: false,
         isLoggingIn: false,
         loginInfo: null,
-        authToken: action.data.jwt,
       }
     case 'LOGOUT':
       return {
         ...state,
-        authToken: null,
         user: null,
         isLoggingOut: false,
       }

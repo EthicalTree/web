@@ -13,8 +13,8 @@ import {
 } from 'reactstrap'
 
 import { changePassword, checkForgotPassword } from '../../actions/session'
-import { Loader } from '../Loader'
-import { PasswordStrength } from '../PasswordStrength'
+import { Loader } from '../../components/Loader'
+import { PasswordStrength } from '../../components/PasswordStrength'
 
 class ForgotPasswordPage extends React.Component {
 

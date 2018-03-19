@@ -2,15 +2,23 @@ import './Loader.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import Spinner from 'react-spinkit'
 
 const Loader = (props) => {
+  const { loading, progress, className, fixed } = props
 
-  const { loading, progress, className } = props
+
 
   if (loading || progress >= 0) {
+    const classNames = classnames(
+      'loading',
+      className,
+      { 'loader-fixed': fixed }
+    )
+
     return (
-      <div className={`loading ${className}`}>
+      <div className={classNames}>
         <div className="et-spinner-wrapper">
           <Spinner
             color="#526173"
@@ -23,31 +31,35 @@ const Loader = (props) => {
           }
         </div>
 
-
-
         <div className="loading-overlay">
         </div>
 
         <div className="loading-content">
-          {props.children}
         </div>
       </div>
     )
   }
 
+  const classNames = classnames(
+    'loader',
+    className,
+  )
+
   return (
-    <div className={`loader ${className}`}>
+    <div className={classNames}>
       {props.children}
     </div>
   )
 }
 
 Loader.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  fixed: PropTypes.bool
 }
 
 Loader.defaultProps = {
-  className: ''
+  className: '',
+  fixed: false
 }
 
 export default Loader

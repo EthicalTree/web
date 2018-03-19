@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Card, CardBody } from 'reactstrap'
 
-import { Ethicality } from '../Ethicality/Ethicality'
+import { Ethicality } from '../../Ethicality/Ethicality'
 
 const AddEthicalityButton = props => {
   const { hasEthicalities, dispatch } = props

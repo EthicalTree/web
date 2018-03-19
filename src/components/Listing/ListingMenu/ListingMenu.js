@@ -1,12 +1,12 @@
 import React from 'react'
-import { ImageManager } from '../ImageManager'
+import { ImageManager } from '../../ImageManager'
 
 import {
   addImageToMenu,
   deleteImageFromMenu
-} from '../../actions/listing'
+} from '../../../actions/listing'
 
-import { setConfirm } from '../../actions/confirm'
+import { setConfirm } from '../../../actions/confirm'
 
 const ListingMenu = props => {
   const {

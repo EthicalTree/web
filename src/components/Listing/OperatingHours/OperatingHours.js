@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import groupBy from 'lodash/groupBy'
 
-import { OpenClose } from '../OpenClose'
-import { localizedDates } from '../../models/hours'
+import { OpenClose } from '../../OpenClose'
+import { localizedDates } from '../../../models/hours'
 
 const DAY_LABELS = {
   'sunday': 'Sunday',

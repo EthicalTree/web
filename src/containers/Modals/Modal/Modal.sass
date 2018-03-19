@@ -1,13 +1,13 @@
 @import "variables.sass"
 
-.ReactModal__Body--open
-  overflow: hidden
-
 .ReactModal__Overlay--after-open
   z-index: 3
 
-.app.modal-open
-  filter: blur(1px)
+.ReactModal__Body--open
+  overflow: overlay
+
+  .app
+    filter: blur(1px)
 
 .et-modal
   height: auto

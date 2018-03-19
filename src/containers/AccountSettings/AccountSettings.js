@@ -4,8 +4,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-import { Loader } from '../Loader'
-import { PasswordStrength } from '../PasswordStrength'
+import { Loader } from '../../components/Loader'
+import { PasswordStrength } from '../../components/PasswordStrength'
 import { isLoggedIn } from '../../utils/permissions'
 
 import {

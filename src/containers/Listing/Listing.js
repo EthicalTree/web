@@ -23,17 +23,17 @@ import {
   removeTagFromListing
 } from '../../actions/listing'
 
-import EthicalityArea from './EthicalityArea'
-import OperatingHours from './OperatingHours'
-import ListingMap from './ListingMap'
-import ListingMenu from './ListingMenu'
+import { EthicalityArea } from '../../components/Listing/EthicalityArea'
+import { OperatingHours } from '../../components/Listing/OperatingHours'
+import { ListingMap } from '../../components/Listing/ListingMap'
+import { ListingMenu } from '../../components/Listing/ListingMenu'
+import { TagBar } from '../../components/Listing/TagBar'
+import { Featured } from '../../components/Listing/Featured'
 
-import { EthicalityBar } from '../Ethicality/Ethicality'
-import { Featured } from './Featured'
-import { Icon } from '../Icon'
-import { TagBar } from './TagBar'
-import { Loader } from '../Loader'
-import { ImageManager } from '../ImageManager'
+import { EthicalityBar } from '../../components/Ethicality/Ethicality'
+import { Icon } from '../../components/Icon'
+import { Loader } from '../../components/Loader'
+import { ImageManager } from '../../components/ImageManager'
 
 import { hasPermission, isAdmin } from '../../utils/permissions'
 
@@ -266,7 +266,13 @@ class Listing extends React.Component {
   }
 
   render() {
-    const { listing, app, search, dispatch } = this.props
+    const {
+      app,
+      dispatch,
+      listing,
+      match,
+      search,
+    } = this.props
 
     if (listing.title) {
       document.title = `EthicalTree · ${listing.title}`
@@ -285,7 +291,11 @@ class Listing extends React.Component {
     }
 
     return (
-      <Loader key={listing.slug} loading={listing.isListingLoading}>
+      <Loader
+        key={match.params.slug}
+        loading={listing.isListingLoading}
+        fixed={true}
+      >
         <Col className="ethicality-bar pt-2 pb-2">
           <EthicalityBar
             className=""

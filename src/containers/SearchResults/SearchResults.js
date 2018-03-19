@@ -1,26 +1,22 @@
 import './SearchResults.css'
 
 import React from 'react'
-import { connect } from 'react-redux'
-import { Search } from '../Search'
-import { ResultsMap } from '../ResultsMap'
-import { Result } from '../Result'
-import { MapSwitcher } from '../MapSwitcher'
-
 import querystring from 'querystring'
+import { connect } from 'react-redux'
 import { OverlayView } from 'react-google-maps'
+import { Row, Col } from 'reactstrap'
 
-import {
-  Row,
-  Col,
-} from 'reactstrap'
+import { Search } from '../../components/Search/Search'
+import { ResultsMap } from '../../components/Search/ResultsMap'
+import { Result } from '../../components/Search/Result'
+import { MapSwitcher } from '../../components/Search/MapSwitcher'
 
-import { Loader } from '../../Loader'
-import { EthicalityBar } from '../../Ethicality/Ethicality'
-import { Paginator } from '../../Paginator'
-import { CustomOverlayView } from '../../Maps/CustomOverlayView'
+import { Loader } from '../../components/Loader'
+import { EthicalityBar } from '../../components/Ethicality/Ethicality'
+import { Paginator } from '../../components/Paginator'
+import { CustomOverlayView } from '../../components/Maps/CustomOverlayView'
 
-import { performSearch, toggleSearchEthicalities } from '../../../actions/search'
+import { performSearch, toggleSearchEthicalities } from '../../actions/search'
 
 const SearchResults = (props) => {
   const { app, search, dispatch, history, handleSearch } = props

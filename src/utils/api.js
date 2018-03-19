@@ -47,14 +47,19 @@ const post = (url, data, config) => { return wrapper('post', url, {...config, da
 const put = (url, data, config) => { return wrapper('put', url, {...config, data}) }
 const patch = (url, data, config) => { return wrapper('patch', url, {...config, data}) }
 
+const all = requests => axios.all(requests)
+const spread = func => axios.spread(func)
+
 const api = {
+  all,
   get,
   delete: _delete,
   head,
   options,
   post,
   put,
-  patch
+  patch,
+  spread,
 }
 
 export {

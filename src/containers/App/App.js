@@ -1,58 +1,37 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
 
-import { trackPageView } from '../../utils/ga'
 import { ConnectedRouter } from 'react-router-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
 
-import AccountSettings from '../../components/AccountSettings/AccountSettings'
 import { Loader } from '../../components/Loader'
 import { Header } from '../../components/Header'
 import { Footer } from '../../components/Footer'
-import { ForgotPasswordPage }from '../../components/Session'
-import { SearchResults } from '../../components/Search'
-import { Listing } from '../../components/Listing'
 import { ScrollToTop } from '../../components/ScrollToTop'
 import { DevTools } from '../../components/DevTools';
 
-import FrontPage from '../FrontPage'
-import { AdminPage } from '../Admin'
-import { ContactUs } from '../ContactUs'
-import { TermsOfService } from '../TermsOfService'
 import Modals from '../Modals'
 
-import { getCurrentUser, getSessionInformation } from '../../actions/session'
-import { getEthicalities } from '../../actions/app'
+import { initApp } from '../../actions/app'
 
 import history from '../../utils/history'
-import { authenticate } from '../../utils/api'
+import { split } from '../../utils/codesplitting'
 
 class InnerApp extends React.Component {
   handleSkip = () => {
     this.main.focus()
   }
 
-  componentWillMount() {
-    const { dispatch, session } = this.props
-
-    if (session.authToken) {
-      authenticate(session.authToken)
-      dispatch(getCurrentUser())
-    } else {
-      dispatch({ type: 'SET_USER_LOADING', data: false })
-      trackPageView()
-    }
-
-    dispatch(getSessionInformation())
-    dispatch(getEthicalities())
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch(initApp())
   }
 
   render() {
-    const { app, modal } = this.props
-    const modalOpenClass = !!modal.openModal ? 'modal-open' : ''
+    const { app } = this.props
 
     return (
-      <div className={`app ${modalOpenClass}`}>
+      <div className="app">
         <Loader loading={app.isAppLoading}>
           <Header
             handleSkip={this.handleSkip}
@@ -63,16 +42,52 @@ class InnerApp extends React.Component {
             tabIndex="-1"
           >
             <Switch>
-              <Route exact path="/" component={FrontPage} />
-              <Route exact path="/forgot_password/:token" component={ForgotPasswordPage} />
-              <Route exact path="/listings/:slug" component={Listing} />
-              <Route exact path="/s/:query?" component={SearchResults} />
-              <Route exact path="/account" component={AccountSettings} />
+              <Route
+                exact
+                path="/"
+                component={split(() => import('../FrontPage/FrontPage'))}
+              />
 
-              <Route exact path="/contact-us" component={ContactUs} />
-              <Route exact path="/terms-of-service" component={TermsOfService} />
+              <Route
+                exact
+                path="/forgot_password/:token"
+                component={split(() => import('../ForgotPasswordPage/ForgotPasswordPage'))}
+              />
 
-              <Route path="/admin" component={AdminPage} />
+              <Route
+                exact
+                path="/listings/:slug"
+                component={split(() => import('../Listing/Listing'))}
+              />
+
+              <Route
+                exact
+                path="/s/:query?"
+                component={split(() => import('../SearchResults/SearchResults'))}
+              />
+
+              <Route
+                exact
+                path="/account"
+                component={split(() => import('../AccountSettings/AccountSettings'))}
+              />
+
+              <Route
+                exact
+                path="/contact-us"
+                component={split(() => import('../ContactUs/ContactUs'))}
+              />
+
+              <Route
+                exact
+                path="/terms-of-service"
+                component={split(() => import('../TermsOfService/TermsOfService'))}
+              />
+
+              <Route
+                path="/admin"
+                component={split(() => import('../Admin/AdminPage/AdminPage'))}
+              />
             </Switch>
           </main>
 
@@ -91,7 +106,6 @@ class InnerApp extends React.Component {
 const select = state => ({
   session: state.session,
   app: state.app,
-  modal: state.modal
 })
 
 InnerApp = withRouter(connect(select)(InnerApp))

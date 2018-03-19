@@ -2,6 +2,7 @@ import './FrontPage.css'
 
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import {
   Container,
@@ -14,14 +15,10 @@ import { CuratedList } from '../../components/CuratedList'
 import { Loader } from '../../components/Loader'
 
 import { toggleSearchEthicalities } from '../../actions/search'
-import { getCuratedLists } from '../../actions/app'
 
 export class FrontPage extends React.Component {
 
   componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(getCuratedLists())
-
     document.title = 'EthicalTree'
   }
 
@@ -84,9 +81,8 @@ export class FrontPage extends React.Component {
 const select = (state) => {
   return {
     app: state.app,
-    search: state.search,
-    curatedLists: state.curatedLists
+    search: state.search
   }
 }
 
-export default connect(select)(FrontPage)
+export default withRouter(connect(select)(FrontPage))

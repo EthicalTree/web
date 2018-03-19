@@ -87,95 +87,100 @@ const BottomBar = props => {
   return <div></div>
 }
 
-const Modal = props => {
-  let {
-    children,
-    dispatch,
-    modalName,
-    modal,
-    noDecoration,
-    style
-  } = props
+class Modal extends React.Component {
 
-  const isOpen = modal.openModal === modalName
+  render() {
+    const { props } = this
 
-  style = style || {}
+    let {
+      children,
+      dispatch,
+      modalName,
+      modal,
+      noDecoration,
+      style
+    } = props
 
-  const newStyles = {
-    content: {
-      ...baseStyles.content,
-      ...style.content
-    },
-    overlay: {
-      ...baseStyles.overlay,
-      ...style.overlay
-    }
-  }
+    const isOpen = modal.openModal === modalName
 
-  const onClose = (e) => {
-    if (e) {
-      e.preventDefault()
-    }
+    style = style || {}
 
-    dispatch(closeModal());
-  }
-
-  return (
-    <div>
-      <div className="modal-wrapper" />
-      {isOpen &&
-        <ReactModal
-          shouldCloseOnOverlayClick={false}
-          onRequestClose={onClose}
-          isOpen={isOpen}
-          {...props}
-          style={newStyles}
-          className={`et-modal ${props.className}`}
-          appElement={document.getElementById('root')}
-        >
-          {noDecoration &&
-            <div style={{ height: '100%' }}>
-              <ModalCloser onClose={onClose} />
-              {props.children}
-            </div>
-          }
-
-          {!noDecoration &&
-            <Loader loading={props.loading}>
-              <TopBar
-                onClose={onClose}
-                title={props.contentLabel}
-              />
-
-              <div className="p-3">
-                {isOpen &&
-                  <Container>
-                    {modal.errors &&
-                      <Row>
-                        <Col>
-                          <Alert color="danger">
-                            {modal.errors}
-                          </Alert>
-                        </Col>
-                      </Row>
-                    }
-
-                    {children}
-                  </Container>
-                }
-              </div>
-
-              <BottomBar
-                saveLabel={props.saveLabel}
-                onSave={props.onSave}
-                onClose={onClose}
-              />
-            </Loader>
-          }
-        </ReactModal>
+    const newStyles = {
+      content: {
+        ...baseStyles.content,
+        ...style.content
+      },
+      overlay: {
+        ...baseStyles.overlay,
+        ...style.overlay
       }
-    </div>
-  )
+    }
+
+    const onClose = (e) => {
+      if (e) {
+        e.preventDefault()
+      }
+
+      dispatch(closeModal());
+    }
+
+    return (
+      <div>
+        <div className="modal-wrapper" />
+        {isOpen &&
+          <ReactModal
+            shouldCloseOnOverlayClick={false}
+            onRequestClose={onClose}
+            isOpen={isOpen}
+            {...props}
+            style={newStyles}
+            className={`et-modal ${props.className}`}
+            appElement={document.getElementById('root')}
+          >
+            {noDecoration &&
+              <div style={{ height: '100%' }}>
+                <ModalCloser onClose={onClose} />
+                {props.children}
+              </div>
+            }
+
+            {!noDecoration &&
+              <Loader loading={props.loading}>
+                <TopBar
+                  onClose={onClose}
+                  title={props.contentLabel}
+                />
+
+                <div className="p-3">
+                  {isOpen &&
+                    <Container>
+                      {modal.errors &&
+                        <Row>
+                          <Col>
+                            <Alert color="danger">
+                              {modal.errors}
+                            </Alert>
+                          </Col>
+                        </Row>
+                      }
+
+                      {children}
+                    </Container>
+                  }
+                </div>
+
+                <BottomBar
+                  saveLabel={props.saveLabel}
+                  onSave={props.onSave}
+                  onClose={onClose}
+                />
+              </Loader>
+            }
+          </ReactModal>
+        }
+      </div>
+    )
+  }
 }
 
 Modal.propTypes = {

@@ -1,1 +1,1 @@
-export {default} from './FrontPage'
+export {default as FrontPage} from './FrontPage'
