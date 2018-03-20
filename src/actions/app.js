@@ -21,11 +21,11 @@ export const initApp = (options={}) => {
         api.get('/users/current')
       )
     } else {
-      dispatch({ type: 'SET_USER_LOADING', data: false })
+      requests.push(new Promise(resolve => resolve({ data: {} })))
       trackPageView()
     }
 
-    api.all(requests)
+    Promise.all(requests)
       .then(api.spread((s, e, c, p, u) => {
         const sessionData = s.data
         const ethicalitiesData = e.data
@@ -33,16 +33,20 @@ export const initApp = (options={}) => {
         const plans = p.data
         const { user } = u.data
 
+
         dispatch({ type: 'SET_SESSION_INFO', data: sessionData })
         dispatch({ type: 'SET_ETHICALITIES', data: ethicalitiesData })
         dispatch({ type: 'SET_CURATED_LISTS', data: curatedLists })
         dispatch({ type: 'SET_PLANS', data: plans })
-        dispatch({ type: 'SET_CURRENT_USER', data: user })
-        dispatch({ type: 'SET_ACCOUNT_FIRST_NAME', data: user.firstName })
-        dispatch({ type: 'SET_ACCOUNT_LAST_NAME', data: user.lastName })
-        dispatch({ type: 'SET_USER_LOADING', data: false })
 
-        trackPageView({ user })
+        if (user) {
+          dispatch({ type: 'SET_CURRENT_USER', data: user })
+          dispatch({ type: 'SET_ACCOUNT_FIRST_NAME', data: user.firstName })
+          dispatch({ type: 'SET_ACCOUNT_LAST_NAME', data: user.lastName })
+          trackPageView({ user })
+        }
+
+        dispatch({ type: 'SET_USER_LOADING', data: false })
       }))
       .catch(() => {})
       .then(() => {
