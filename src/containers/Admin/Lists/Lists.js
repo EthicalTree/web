@@ -21,7 +21,8 @@ const ListTable = props => {
     handleDelete,
     handlePageChange,
     handleMove,
-    toggleHidden
+    toggleHidden,
+    toggleFeatured
   } = props
 
   const lists = admin.lists
@@ -53,6 +54,7 @@ const ListTable = props => {
             <th>Description</th>
             <th className="no-stretch">Tag</th>
             <th className="no-stretch">Enabled</th>
+            <th className="no-stretch">Featured</th>
             <th className="no-stretch">Actions</th>
           </tr>
         </thead>
@@ -67,6 +69,14 @@ const ListTable = props => {
                   type="checkbox"
                   checked={!l.hidden}
                   onChange={() => toggleHidden(l)}
+                />
+              </td>
+              <td>
+                <input
+                  type="radio"
+                  checked={l.featured}
+                  onClick={() => toggleFeatured(l)}
+                  onChange={() => {}}
                 />
               </td>
               <td>
@@ -173,6 +183,14 @@ export class Lists extends React.Component {
     }))
   }
 
+  toggleFeatured = list => {
+    const { dispatch } = this.props
+    dispatch(updateList({
+      id: list.id,
+      featured: !list.featured
+    }))
+  }
+
   componentDidMount() {
     document.title = "EthicalTree · Lists Admin"
     this.refreshLists()
@@ -192,6 +210,7 @@ export class Lists extends React.Component {
         dispatch={dispatch}
         admin={admin}
         toggleHidden={this.toggleHidden}
+        toggleFeatured={this.toggleFeatured}
         handleAdd={this.handleAdd}
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
