@@ -17,6 +17,7 @@ import { Paginator } from '../../components/Paginator'
 import { CustomOverlayView } from '../../components/Maps/CustomOverlayView'
 
 import { performSearch, toggleSearchEthicalities } from '../../actions/search'
+import { extractEthicalitiesFromSearchQuery } from '../../models/search'
 
 const SearchResults = (props) => {
   const { app, search, dispatch, history, handleSearch } = props
@@ -144,7 +145,10 @@ class SearchResultsPage extends React.Component {
     const selectedEthicalities = ethicalities ? ethicalities : search.selectedEthicalities
     const searchLocation = location ? location : search.location
 
-    dispatch(performSearch(query, selectedEthicalities, searchLocation, newPage))
+    const extracted = extractEthicalitiesFromSearchQuery(query, selectedEthicalities)
+    dispatch({ type: 'SET_SEARCH_ETHICALITIES', data: extracted.ethicalities })
+
+    dispatch(performSearch(query, extracted.ethicalities, searchLocation, newPage))
   }
 
   search(newPage=0, ethicalities) {
@@ -200,7 +204,10 @@ class SearchResultsPage extends React.Component {
     } = this.props
 
     return (
-      <Loader loading={search.isSearchLoading}>
+      <Loader
+        fixed={true}
+        loading={search.isSearchLoading}
+      >
         <Col className="search-results-page">
           <Row>
             <SearchResults
