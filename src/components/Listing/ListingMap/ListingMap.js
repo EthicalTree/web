@@ -15,8 +15,7 @@ const ListingMap = props => {
     geocoder.geocode({'location': latLng}, function(results, status) {
       if (status === 'OK') {
         dispatch({ type: 'SET_LISTING_LOCATION', data: [{
-          ...locations[0],
-          address: formatAddress(results[0].address_components, 'simple')
+          ...locations[0]
         }]})
       }
     })
@@ -35,7 +34,7 @@ const ListingMap = props => {
         </h3>
         {hasLocations &&
           <a
-            href={formatGetDirectionsUrl(locations[0].address)}
+            href={formatGetDirectionsUrl(locations[0].lat, locations[0].lng)}
             rel="noopener noreferrer"
             target="_blank"
             className="external-link"

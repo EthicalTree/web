@@ -1,6 +1,6 @@
 import store from 'store'
 
-const GOOGLE_MAPS_DIRECTIONS_BASE_URL = 'https://www.google.com/maps/dir//'
+const GOOGLE_MAPS_DIRECTIONS_BASE_URL = 'https://www.google.com/maps/dir/?api=1&destination='
 
 class AddressException {
   constructor(msg) {
@@ -46,7 +46,6 @@ export const setSavedSearchLocation = location => {
   store.set('ETHICALTREE_SEARCH_LOCATION', location)
 }
 
-export const formatGetDirectionsUrl = (address="") => {
-  const searchAddress = address.replace(/[, ]/g, '+')
-  return `${GOOGLE_MAPS_DIRECTIONS_BASE_URL}${searchAddress}`
+export const formatGetDirectionsUrl = (lat, lng) => {
+  return `${GOOGLE_MAPS_DIRECTIONS_BASE_URL}${lat},${lng}`
 }
