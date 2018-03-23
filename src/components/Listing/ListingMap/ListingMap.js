@@ -47,7 +47,7 @@ const ListingMap = props => {
 
       {hasLocations &&
         <p className="address-area">
-          {locations[0].address}
+          {locations[0].formattedAddress}
         </p>
       }
 
