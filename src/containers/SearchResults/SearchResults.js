@@ -219,6 +219,7 @@ class SearchResultsPage extends React.Component {
               handleSearch={this.search.bind(this)}
             />
             <ResultsMap
+              key={search.resultMode}
               selectedResult={selectedResult}
               handleMarkerClick={slug => {
                 const newSlug = !!search.selectedResult && search.selectedResult === slug ? null : slug

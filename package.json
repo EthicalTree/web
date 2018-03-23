@@ -7,7 +7,7 @@
     "url": "git+https://github.com/applepicke/ethicaltree-web.git"
   },
   "scripts": {
-    "deploy": "shipit production build",
+    "deploy": "npm run build && aws --profile ethicaltree s3 sync build/ s3://beta.ethicaltree.com",
     "build-css": "node-sass-chokidar src/ -o src/ --include-path src",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --include-path src --watch --recursive -q",
     "start-js": "react-scripts start",

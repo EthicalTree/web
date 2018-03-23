@@ -29,6 +29,7 @@ import { ListingMap } from '../../components/Listing/ListingMap'
 import { ListingMenu } from '../../components/Listing/ListingMenu'
 import { TagBar } from '../../components/Listing/TagBar'
 import { Featured } from '../../components/Listing/Featured'
+import { Search } from '../../components/Search/Search'
 
 import { EthicalityBar } from '../../components/Ethicality/Ethicality'
 import { Icon } from '../../components/Icon'
@@ -296,7 +297,10 @@ class Listing extends React.Component {
         loading={listing.isListingLoading}
         fixed={true}
       >
-        <Col className="ethicality-bar pt-2 pb-2">
+        <Col className="d-lg-none d-xl-none mt-3 mb-3" >
+          <Search />
+        </Col>
+        <Col className="listing-ethicality-bar pt-2 pb-2">
           <EthicalityBar
             className=""
             showLabels={true}

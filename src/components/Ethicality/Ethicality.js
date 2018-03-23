@@ -11,8 +11,9 @@ import {
 
 import { a11yClick } from '../../utils/a11y'
 
-export const EthicalityBar = (props) => {
+export const EthicalityBar = props => {
   const {
+    className,
     ethicalities,
     selectedEthicalities,
     onEthicalitySelect,
@@ -21,8 +22,15 @@ export const EthicalityBar = (props) => {
     showIcons
   } = props
 
+  const classNames = classnames(
+    'ethicality-bar',
+    'd-flex',
+    'flex-wrap',
+    className
+  )
+
   return (
-    <div className={`${props.className} d-flex flex-wrap`}>
+    <div className={classNames}>
       {ethicalities.map(ethicality => {
         return (
           <span key={ethicality.slug} className="mt-1 mb-1">
