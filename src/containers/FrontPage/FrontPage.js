@@ -15,16 +15,20 @@ import { CuratedList } from '../../components/CuratedList'
 import { Loader } from '../../components/Loader'
 
 import { toggleSearchEthicalities } from '../../actions/search'
+import { getCuratedLists } from '../../actions/frontPage'
 
 export class FrontPage extends React.Component {
 
   componentDidMount() {
+    const { dispatch } = this.props
+    dispatch(getCuratedLists())
     document.title = 'EthicalTree'
   }
 
   render() {
     const {
       app,
+      frontPage,
       search,
       dispatch
     } = this.props
@@ -60,10 +64,10 @@ export class FrontPage extends React.Component {
         </Container>
 
         <Loader
-          loading={app.areCuratedListsLoading}
+          loading={frontPage.areCuratedListsLoading}
           className="curated-lists"
         >
-          {app.curatedLists.map(cl => {
+          {frontPage.curatedLists.map(cl => {
             return (
               <CuratedList
                 key={cl.id}
@@ -81,6 +85,7 @@ export class FrontPage extends React.Component {
 const select = (state) => {
   return {
     app: state.app,
+    frontPage: state.frontPage,
     search: state.search
   }
 }

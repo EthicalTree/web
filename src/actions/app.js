@@ -11,7 +11,6 @@ export const initApp = (options={}) => {
     const requests = [
       api.get('/sessions'),
       api.get('/v1/ethicalities'),
-      api.get('/v1/curated_lists'),
       api.get('/v1/plans')
     ]
 
@@ -26,17 +25,15 @@ export const initApp = (options={}) => {
     }
 
     Promise.all(requests)
-      .then(api.spread((s, e, c, p, u) => {
+      .then(api.spread((s, e, p, u) => {
         const sessionData = s.data
         const ethicalitiesData = e.data
-        const { curatedLists } = c.data
         const plans = p.data
         const { user } = u.data
 
 
         dispatch({ type: 'SET_SESSION_INFO', data: sessionData })
         dispatch({ type: 'SET_ETHICALITIES', data: ethicalitiesData })
-        dispatch({ type: 'SET_CURATED_LISTS', data: curatedLists })
         dispatch({ type: 'SET_PLANS', data: plans })
 
         if (user) {
@@ -70,17 +67,3 @@ export const getEthicalities = () => {
   }
 }
 
-export const getCuratedLists = () => {
-  return dispatch => {
-    dispatch({ type: 'SET_CURATED_LISTS_LOADING', data: true })
-
-    api.get('/v1/curated_lists')
-      .then(({ data }) => {
-        dispatch({ type: 'SET_CURATED_LISTS', data: data.curatedLists })
-      })
-      .catch(() => {})
-      .then(() => {
-        dispatch({ type: 'SET_CURATED_LISTS_LOADING', data: false })
-      })
-  }
-}

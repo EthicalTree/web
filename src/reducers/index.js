@@ -1,30 +1,32 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 
+import account from './account'
+import admin from './admin'
 import app from './app'
-import session from './session'
-import header from './header'
-import user from './user'
-import listing from './listing'
 import confirm from './confirm'
-import search from './search'
+import frontPage from './frontPage'
+import header from './header'
+import listing from './listing'
 import modal from './modal'
 import permissions from './permissions'
-import admin from './admin'
-import account from './account'
+import search from './search'
+import session from './session'
+import user from './user'
 
 const rootReducer = combineReducers({
+  account,
+  admin,
   app,
-  session,
-  header,
-  user,
-  listing,
   confirm,
-  search,
+  frontPage,
+  header,
+  listing,
   modal,
   permissions,
-  admin,
-  account,
+  search,
+  session,
+  user,
   router: routerReducer
 })
 
