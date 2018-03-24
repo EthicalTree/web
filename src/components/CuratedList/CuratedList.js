@@ -7,13 +7,13 @@ import { Result } from '../Search/Result'
 import { curatedListProps } from '../../utils/types'
 
 export const CuratedList = props => {
-  const { tag, name } = props
+  const { listings, name } = props
 
   return (
     <div className="curated-list">
       <h4 className="list-name">{name}</h4>
       <div className="listings">
-        {tag.sampledListings.map(l => {
+        {listings.map(l => {
           return (
             <Result key={l.id} listing={l} />
           )
