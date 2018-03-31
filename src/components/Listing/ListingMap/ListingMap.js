@@ -63,12 +63,6 @@ const ListingMap = props => {
               lat: locations[0].lat,
               lng: locations[0].lng
             }}
-            containerElement={
-              <div style={{ height: `100%` }} />
-            }
-            mapElement={
-              <div style={{ height: `100%` }} />
-            }
           >
             <Marker
               key={`${locations[0].lat}+${locations[0].lng}`}

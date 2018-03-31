@@ -7,10 +7,7 @@ import {
   Form,
   Label,
   Input,
-  Container,
-  Row,
   Col,
-  Alert
 } from 'reactstrap'
 
 import { updateListing } from '../../../../actions/admin'
@@ -42,73 +39,60 @@ class EditListingModal extends React.Component {
         modalName="admin-edit-listing"
         saveLabel="Save"
       >
+        <Form onSubmit={this.submit.bind(this)}>
+          <Col className="mt-3 mb-3">
+            <Label for="name">Plan Type</Label>
+            <Input
+              autoFocus
+              value={planType}
+              onChange={e => this.handleChange({ planType: e.target.value }) }
+              type="select"
+              name="name"
+              id="name"
+              placeholder="Enter a name"
+            >
+              <option value="">Free</option>
+              {app.plans.map(p => {
+                return (
+                  <option
+                    key={p.type}
+                    value={p.type}
+                  >
+                    {`${p.name} ($${numeral(p.price).format('0.00')})`}
+                  </option>
+                )
+              })}
+            </Input>
+          </Col>
 
-        <Container>
-          {modal.errors &&
-            <Row>
-              <Col>
-                <Alert color="danger">
-                  {modal.errors}
-                </Alert>
-              </Col>
-            </Row>
+          {planType &&
+            <Col className="mt-3 mb-3">
+              <Label for="description">Custom Price</Label>
+              <Input
+                onChange={e => { this.handleChange({ price: e.target.value }) }}
+                type="text"
+                value={price}
+                placeholder="Override plan price"
+                name="price"
+                id="price"
+              />
+            </Col>
           }
 
-          <Form onSubmit={this.submit.bind(this)}>
-            <Col className="mt-3 mb-3">
-              <Label for="name">Plan Type</Label>
-              <Input
-                autoFocus
-                value={planType}
-                onChange={e => this.handleChange({ planType: e.target.value }) }
-                type="select"
-                name="name"
-                id="name"
-                placeholder="Enter a name"
-              >
-                <option value="">Free</option>
-                {app.plans.map(p => {
-                  return (
-                    <option
-                      key={p.type}
-                      value={p.type}
-                    >
-                      {`${p.name} ($${numeral(p.price).format('0.00')})`}
-                    </option>
-                  )
-                })}
-              </Input>
-            </Col>
+          <Col className="mt-3 mb-3">
+            <Label for="description">Visibility</Label>
+            <Input
+              type="select"
+              name="visibility"
+              onChange={e => this.handleChange({ visibility: e.target.value })}
+              value={visibility}
+            >
+              <option value="published">Visible</option>
+              <option value="unpublished">Hidden</option>
+            </Input>
+          </Col>
 
-            {planType &&
-              <Col className="mt-3 mb-3">
-                <Label for="description">Custom Price</Label>
-                <Input
-                  onChange={e => { this.handleChange({ price: e.target.value }) }}
-                  type="text"
-                  value={price}
-                  placeholder="Override plan price"
-                  name="price"
-                  id="price"
-                />
-              </Col>
-            }
-
-            <Col className="mt-3 mb-3">
-              <Label for="description">Visibility</Label>
-              <Input
-                type="select"
-                name="visibility"
-                onChange={e => this.handleChange({ visibility: e.target.value })}
-                value={visibility}
-              >
-                <option value="published">Visible</option>
-                <option value="unpublished">Hidden</option>
-              </Input>
-            </Col>
-
-          </Form>
-        </Container>
+        </Form>
       </Modal>
     )
   }

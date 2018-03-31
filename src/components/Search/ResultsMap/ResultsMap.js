@@ -70,12 +70,6 @@ export class ResultsMap extends React.Component {
               zoomControl: true,
               draggableCursor: 'pointer'
             }}
-            containerElement={
-              <div style={{ height: `100%` }} />
-            }
-            mapElement={
-              <div style={{ height: `100%` }} />
-            }
           >
             {markers}
             {overlay}

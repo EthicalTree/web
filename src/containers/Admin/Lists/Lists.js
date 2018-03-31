@@ -135,7 +135,6 @@ export class Lists extends React.Component {
   handleAdd = () => {
     const { dispatch } = this.props
 
-    dispatch({ type: 'SET_ADMIN_EDIT_LIST', data: {} })
     dispatch({ type: 'OPEN_MODAL', data: 'new-list' })
   }
 

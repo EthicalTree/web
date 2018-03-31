@@ -70,6 +70,23 @@ export const getLists = queryObj => {
   }
 }
 
+export const getLocations = queryObj => {
+  return dispatch => {
+    dispatch({ type: 'SET_ADMIN_LOADING', data: true })
+
+    api.get(`/v1/admin/locations?${querystring.stringify(queryObj)}`)
+      .then(({ data }) => {
+        const { locations, currentPage, totalPages } = data
+        dispatch({ type: 'SET_ADMIN_LOCATIONS', data: locations })
+        dispatch({ type: 'SET_ADMIN_PAGINATION', data: { currentPage, totalPages } })
+      })
+      .catch(() => {})
+      .then(() => {
+        dispatch({ type: 'SET_ADMIN_LOADING', data: false })
+      })
+  }
+}
+
 export const toggleAdmin = userData => {
   return dispatch => {
     api.put(`/v1/admin/users/${userData.id}`, {user: userData})
@@ -153,6 +170,22 @@ export const editList = ({ id, name, description, hashtag, location }) => {
           dispatch({ type: 'CLOSE_MODAL' })
           success('List updated')
           dispatch(getLists())
+        }
+      })
+  }
+}
+
+export const editLocation = location => {
+  return dispatch => {
+    api.put(`/v1/admin/locations/${location.id}`, { location })
+      .then(({ data }) => {
+        if (data.errors) {
+          dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
+        }
+        else {
+          dispatch({ type: 'CLOSE_MODAL' })
+          success('Location updated')
+          dispatch(getLocations())
         }
       })
   }

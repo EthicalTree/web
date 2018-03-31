@@ -6,10 +6,8 @@ import {
   Form,
   Label,
   Input,
-  Container,
   Row,
   Col,
-  Alert
 } from 'reactstrap'
 
 import { addList, editList } from '../../../../actions/admin'
@@ -47,63 +45,50 @@ class NewListModal extends React.Component {
         modalName="new-list"
         saveLabel={isUpdate ? 'Save' : 'Create'}
       >
+        <Form onSubmit={this.submit.bind(this)}>
+          <Row>
+            <Col size={6}>
+              <Label for="name">Name</Label>
+              <Input
+                autoFocus
+                value={name || ''}
+                onChange={e => this.handleChange({ name: e.target.value }) }
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Enter a name"
+              />
+            </Col>
+            <Col size={6}>
+              <Label for="description">Hashtag</Label>
+              <Input
+                onChange={e => { this.handleChange({ hashtag: e.target.value }) }}
+                type="text"
+                name="hashtag"
+                value={hashtag || ''}
+                id="hashtag"
+                placeholder="Enter a tag"
+              />
+            </Col>
+          </Row>
 
-        <Container>
-          {modal.errors &&
-            <Row>
-              <Col>
-                <Alert color="danger">
-                  {modal.errors}
-                </Alert>
-              </Col>
-            </Row>
-          }
+          <Row className="mt-3">
+            <Col>
+              <Label for="description">Description</Label>
+              <Input
+                onChange={e => { this.handleChange({ description: e.target.value }) }}
+                type="textarea"
+                value={description || ''}
+                name="description"
+                id="description"
+              />
+            </Col>
+          </Row>
 
-          <Form onSubmit={this.submit.bind(this)}>
-            <Row>
-              <Col size={6}>
-                <Label for="name">Name</Label>
-                <Input
-                  autoFocus
-                  value={name || ''}
-                  onChange={e => this.handleChange({ name: e.target.value }) }
-                  type="text"
-                  name="name"
-                  id="name"
-                  placeholder="Enter a name"
-                />
-              </Col>
-              <Col size={6}>
-                <Label for="description">Hashtag</Label>
-                <Input
-                  onChange={e => { this.handleChange({ hashtag: e.target.value }) }}
-                  type="text"
-                  name="hashtag"
-                  value={hashtag || ''}
-                  id="hashtag"
-                  placeholder="Enter a tag"
-                />
-              </Col>
-            </Row>
+          <Row className="mt-3">
 
-            <Row className="mt-3">
-              <Col>
-                <Label for="description">Description</Label>
-                <Input
-                  onChange={e => { this.handleChange({ description: e.target.value }) }}
-                  type="textarea"
-                  value={description || ''}
-                  name="description"
-                  id="description"
-                />
-              </Col>
-            </Row>
-
-            <Row className="mt-3">
-
-            </Row>
-          </Form>
-        </Container>
+          </Row>
+        </Form>
       </Modal>
     )
   }

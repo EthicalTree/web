@@ -7,6 +7,7 @@ import { Users } from '../Users'
 import { Listings } from '../Listings'
 import { Tags } from '../Tags'
 import { Lists } from '../Lists'
+import { Locations } from '../Locations'
 
 import { Route, withRouter, Redirect, Link } from 'react-router-dom'
 
@@ -66,6 +67,14 @@ export class AdminPage extends React.Component {
                 Lists
               </Link>
             </NavItem>
+            <NavItem>
+              <Link
+                className={cn('nav-link', { active: pathname === '/admin/locations' })}
+                to="/admin/locations"
+              >
+                Locations
+              </Link>
+            </NavItem>
           </Nav>
         </div>
         <TabContent>
@@ -75,6 +84,7 @@ export class AdminPage extends React.Component {
               <Route path="/admin/listings" exact={true} component={Listings} />
               <Route path="/admin/tags" exact={true} component={Tags} />
               <Route path="/admin/lists" exact={true} component={Lists} />
+              <Route path="/admin/locations" exact={true} component={Locations} />
             </div>
           </TabPane>
         </TabContent>

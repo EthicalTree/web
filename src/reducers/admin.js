@@ -3,10 +3,9 @@ const defaultState = {
   tags: [],
   listings: [],
   lists: [],
+  locations: [],
   currentPage: 1,
   totalPages: 1,
-  listBeingEdited: {},
-  listingBeingEdited: {},
   query: '',
   filter: ''
 }
@@ -38,8 +37,8 @@ const admin = (state=defaultState, {type, data}) => {
       return {...state, listings: data}
     case 'SET_ADMIN_LISTS':
       return {...state, lists: data}
-    case 'SET_ADMIN_EDIT_LIST':
-      return {...state, listBeingEdited: data}
+    case 'SET_ADMIN_LOCATIONS':
+      return {...state, locations: data}
     case 'SET_ADMIN_PAGINATION':
       return {
         ...state,

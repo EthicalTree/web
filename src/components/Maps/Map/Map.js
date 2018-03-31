@@ -1,9 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { withGoogleMap, GoogleMap } from 'react-google-maps'
 
-export class Map extends React.Component {
+class InnerMap extends React.Component {
   render() {
     const {
       center,
@@ -27,6 +26,7 @@ export class Map extends React.Component {
           }],
           ...defaultOptions,
         }}
+
         defaultCenter={center}
       >
         {children}
@@ -35,13 +35,21 @@ export class Map extends React.Component {
   }
 }
 
-Map.propTypes = {
-  center: PropTypes.object
+InnerMap = withGoogleMap(InnerMap)
+
+export const Map = props => {
+  return (
+    <InnerMap
+      containerElement={
+        <div style={{ height: `100%` }} />
+      }
+      mapElement={
+        <div style={{ height: `100%` }} />
+      }
+      {...props}
+    />
+  )
 }
 
-Map.defaultProps = {
-  center: { lat: 0, lng: 0 },
-  zoom: 11
-}
+export default Map
 
-export default withGoogleMap(Map)

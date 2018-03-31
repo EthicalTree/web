@@ -19,7 +19,8 @@ import { ForgotPasswordModal } from './ForgotPasswordModal'
 import {
   NewTagModal,
   NewListModal,
-  EditListingModal as EditAdminListingModal
+  EditListingModal as EditAdminListingModal,
+  EditLocationModal as EditAdminLocationModal
 } from './Admin'
 
 const modals = {
@@ -37,7 +38,8 @@ const modals = {
   'forgot-password': ForgotPasswordModal,
   'new-tag': NewTagModal,
   'new-list': NewListModal,
-  'admin-edit-listing': EditAdminListingModal
+  'admin-edit-listing': EditAdminListingModal,
+  'admin-edit-location': EditAdminLocationModal
 }
 
 const Modals = props => {
