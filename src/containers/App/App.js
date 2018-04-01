@@ -68,6 +68,12 @@ class InnerApp extends React.Component {
 
               <Route
                 exact
+                path="/tags/:hashtag"
+                component={split(() => import('../TagPage/TagPage'))}
+              />
+
+              <Route
+                exact
                 path="/account"
                 component={split(() => import('../AccountSettings/AccountSettings'))}
               />
@@ -88,6 +94,7 @@ class InnerApp extends React.Component {
                 path="/admin"
                 component={split(() => import('../Admin/AdminPage/AdminPage'))}
               />
+
             </Switch>
           </main>
 

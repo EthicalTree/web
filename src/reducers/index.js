@@ -12,6 +12,7 @@ import modal from './modal'
 import permissions from './permissions'
 import search from './search'
 import session from './session'
+import tag from './tag'
 import user from './user'
 
 const rootReducer = combineReducers({
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   permissions,
   search,
   session,
+  tag,
   user,
   router: routerReducer
 })

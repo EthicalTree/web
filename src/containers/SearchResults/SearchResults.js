@@ -20,12 +20,11 @@ import { performSearch, toggleSearchEthicalities } from '../../actions/search'
 import { extractEthicalitiesFromSearchQuery } from '../../models/search'
 
 const SearchResults = (props) => {
-  const { app, search, dispatch, history, handleSearch } = props
+  const { app, search, dispatch, handleSearch } = props
 
   const ethicalities = app.ethicalities
   const selectedEthicalities = search.selectedEthicalities
 
-  const hasSearch = history.location.pathname !== '/'
   const hasListings = search.listings && search.listings.length > 0
   const mobileHidden = search.resultMode === 'map' ? 'd-none d-xl-block' : ''
 
@@ -38,11 +37,9 @@ const SearchResults = (props) => {
 
   return (
     <Col xs="12" xl="8" className={`search-results p-4 ${mobileHidden}`}>
-      {hasSearch &&
-        <Col className="d-lg-none d-xl-none mb-3" >
-          <Search />
-        </Col>
-      }
+      <Col className="d-lg-none d-xl-none mb-3" >
+        <Search />
+      </Col>
       <EthicalityBar
         className="search-results-ethicalities justify-content-center"
         showLabels={true}

@@ -1,18 +1,26 @@
 import './Paginator.css'
 
 import React from 'react'
-import ReactPaginate from 'react-paginate';
+import PropTypes from 'prop-types'
+import ReactPaginate from 'react-paginate'
+import classnames from 'classnames'
 import { Icon } from '../Icon'
 
 export const Paginator = (props) => {
   const {
-    pageCount,
+    className,
     currentPage,
+    pageCount,
     onPageChange
   } = props
 
   const previous = <Icon iconKey="chevron_left" />
   const next = <Icon iconKey="chevron_right" />
+
+    const classNames = classnames(
+      'et-paginator',
+      className
+    )
 
   return (
     <ReactPaginate
@@ -24,11 +32,22 @@ export const Paginator = (props) => {
       marginPagesDisplayed={2}
       pageRangeDisplayed={5}
       breakClassName="et-paginator-break"
-      containerClassName="et-paginator"
+      containerClassName={classNames}
       subContainerClassName="et-paginator-pages"
       activeClassName="et-paginator-active"
     />
   )
+}
+
+Paginator.propTypes = {
+  className: PropTypes.string,
+  currentPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  pageCount: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+}
+
+Paginator.defaultProps = {
+  className: ''
 }
 
 export default Paginator

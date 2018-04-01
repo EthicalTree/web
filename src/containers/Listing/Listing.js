@@ -11,7 +11,6 @@ import {
   NavLink,
   TabContent,
   TabPane,
-  Col
 } from 'reactstrap'
 
 import {
@@ -29,9 +28,7 @@ import { ListingMap } from '../../components/Listing/ListingMap'
 import { ListingMenu } from '../../components/Listing/ListingMenu'
 import { TagBar } from '../../components/Listing/TagBar'
 import { Featured } from '../../components/Listing/Featured'
-import { Search } from '../../components/Search/Search'
 
-import { EthicalityBar } from '../../components/Ethicality/Ethicality'
 import { Icon } from '../../components/Icon'
 import { Loader } from '../../components/Loader'
 import { ImageManager } from '../../components/ImageManager'
@@ -39,7 +36,6 @@ import { ImageManager } from '../../components/ImageManager'
 import { hasPermission, isAdmin } from '../../utils/permissions'
 
 import { setConfirm } from '../../actions/confirm'
-import { toggleSearchEthicalities } from '../../actions/search'
 
 const TitleBar = (props) => {
   return (
@@ -268,19 +264,14 @@ class Listing extends React.Component {
 
   render() {
     const {
-      app,
       dispatch,
       listing,
       match,
-      search,
     } = this.props
 
     if (listing.title) {
       document.title = `EthicalTree · ${listing.title}`
     }
-
-    const ethicalities = app.ethicalities
-    const selectedEthicalities = search.selectedEthicalities
 
     if (!listing.id && !listing.isListingLoading) {
       return (
@@ -297,25 +288,6 @@ class Listing extends React.Component {
         loading={listing.isListingLoading}
         fixed={true}
       >
-        <Col className="d-lg-none d-xl-none mt-3 mb-3" >
-          <Search />
-        </Col>
-        <Col className="listing-ethicality-bar pt-2 pb-2">
-          <EthicalityBar
-            className=""
-            showLabels={true}
-            showTooltips={false}
-            showIcons={true}
-            ethicalities={ethicalities}
-            onEthicalitySelect={slug => {
-              dispatch({
-                type: 'SET_SEARCH_ETHICALITIES',
-                data: toggleSearchEthicalities(selectedEthicalities, slug)
-              })
-            }}
-            selectedEthicalities={selectedEthicalities}
-          />
-        </Col>
         <Container>
           <div className="listing-detail">
             <ImageManager
@@ -390,12 +362,8 @@ class Listing extends React.Component {
   }
 }
 
-const select = (state) => {
-  return {
-    listing: state.listing,
-    app: state.app,
-    search: state.search
-  }
-}
+const select = state => ({
+  listing: state.listing
+})
 
 export default connect(select)(Listing)

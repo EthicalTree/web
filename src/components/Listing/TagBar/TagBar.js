@@ -12,8 +12,6 @@ import {
   InputGroupAddon
 } from 'reactstrap'
 
-import { tagProp } from '../../../utils/types'
-
 export const Tag = props => {
   const { tag, handleTagRemove } = props
 
@@ -101,7 +99,7 @@ export class TagBar extends React.Component {
 TagBar.propTypes = {
   onTagAdd: PropTypes.func.isRequired,
   onTagRemove: PropTypes.func.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.shape(tagProp))
+  tags: PropTypes.array
 }
 
 TagBar.defaultProps = {

@@ -1,17 +1,29 @@
 import './CuratedList.css'
 
 import React from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 import { Result } from '../Search/Result'
 
-import { curatedListProps } from '../../utils/types'
-
 export const CuratedList = props => {
-  const { listings, name } = props
+  const { listings, name, tag } = props
 
   return (
     <div className="curated-list">
-      <h4 className="list-name">{name}</h4>
+      <div className="curated-list-title d-flex align-items-center">
+        <h4 className="list-name">{name}</h4>
+
+        <span className="divider">|</span>
+
+        <Link
+          to={`/tags/${tag.hashtag}`}
+          className="see-more-link"
+        >
+          See all
+        </Link>
+      </div>
+
       <div className="listings">
         {listings.map(l => {
           return (
@@ -23,10 +35,10 @@ export const CuratedList = props => {
   )
 }
 
-CuratedList.propTypes = curatedListProps
-
-CuratedList.defaultProps = {
-  description: '',
+CuratedList.propTypes = {
+  id: PropTypes.number.isRequired,
+  listings: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
 }
 
 export default CuratedList

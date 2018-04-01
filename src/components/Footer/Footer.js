@@ -7,12 +7,12 @@ import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import { Container } from 'reactstrap'
 
-import { hasFixedHeader } from '../Header'
+import { isCurrentPath } from '../../utils/url'
 
 class Footer extends React.PureComponent {
   render() {
     const classNames = classnames(
-      { 'has-fixed-header': hasFixedHeader() }
+      { 'has-fixed-header': isCurrentPath('/s/') }
     )
 
     return (

@@ -2,15 +2,7 @@ import './Header.css'
 
 import React from 'react'
 import { connect } from 'react-redux'
-
 import { Link, withRouter } from 'react-router-dom'
-import AccountIcon from '../Session/AccountIcon'
-import { Search } from '../Search'
-import { Banner } from '../Banner'
-import { SkipLink } from '../SkipLink'
-
-import etLogo from './images/et-logo.svg'
-import history from '../../utils/history'
 
 import {
   Button,
@@ -27,26 +19,32 @@ import {
   DropdownItem
 } from 'reactstrap'
 
-const FixedPaths = [
-  '/s/'
-]
+import AccountIcon from '../Session/AccountIcon'
+import { Search } from '../Search'
+import { Banner } from '../Banner'
+import { SkipLink } from '../SkipLink'
+import { EthicalityBar } from '../Ethicality/Ethicality'
 
-export const hasFixedHeader = () => {
-  return FixedPaths.filter(
-    fp => window.location.pathname.startsWith(fp)
-  ).length
-}
+import etLogo from './images/et-logo.svg'
+import { isCurrentPath } from '../../utils/url'
+
+import { toggleSearchEthicalities } from '../../actions/search'
 
 const Header = props => {
   const {
     dispatch,
+    app,
     handleSkip,
     header,
+    location,
+    search,
     session,
   } = props
 
-  const isFixed = hasFixedHeader()
-  const hasSearch = history.location.pathname !== '/'
+  const isFixed = isCurrentPath('/s/')
+  const hasSubHeaderSearch = !isCurrentPath('/s/') && (location.pathname !== '/')
+  const hasHeaderSearch = isCurrentPath('/s/')
+
   const fixedHeader = isFixed ? 'fixed-top' : ''
   const fixedHeaderWrapper = isFixed ? 'fixed-header-wrapper' : ''
 
@@ -79,7 +77,7 @@ const Header = props => {
           onClick={e => { dispatch({ type: 'TOGGLE_HEADER_ACCESSIBLE' }) }}
         />
 
-        {hasSearch &&
+        {hasHeaderSearch &&
           <Col lg="7" xl="5" className="mt-3 d-none d-lg-block">
             <Search />
           </Col>
@@ -151,13 +149,43 @@ const Header = props => {
           }
         </Collapse>
       </Navbar>
+
+      {hasSubHeaderSearch &&
+        <React.Fragment>
+          <Col className="global-ethicality-bar pt-2 pb-2">
+            <Col lg="7" xl="5" className="">
+              <Search />
+            </Col>
+
+            <Col>
+              <EthicalityBar
+                className=""
+                showLabels={true}
+                showTooltips={false}
+                showIcons={true}
+                ethicalities={app.ethicalities}
+                onEthicalitySelect={slug => {
+                  dispatch({
+                    type: 'SET_SEARCH_ETHICALITIES',
+                    data: toggleSearchEthicalities(search.selectedEthicalities, slug)
+                  })
+                }}
+                selectedEthicalities={search.selectedEthicalities}
+              />
+            </Col>
+          </Col>
+        </React.Fragment>
+      }
+
     </header>
   )
 }
 
 const select = (state) => {
   return {
+    app: state.app,
     session: state.session,
+    search: state.search,
     header: state.header
   }
 }
