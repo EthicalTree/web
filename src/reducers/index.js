@@ -5,6 +5,7 @@ import account from './account'
 import admin from './admin'
 import app from './app'
 import confirm from './confirm'
+import curatedList from './curatedList'
 import frontPage from './frontPage'
 import header from './header'
 import listing from './listing'
@@ -12,7 +13,6 @@ import modal from './modal'
 import permissions from './permissions'
 import search from './search'
 import session from './session'
-import tag from './tag'
 import user from './user'
 
 const rootReducer = combineReducers({
@@ -20,6 +20,7 @@ const rootReducer = combineReducers({
   admin,
   app,
   confirm,
+  curatedList,
   frontPage,
   header,
   listing,
@@ -27,7 +28,6 @@ const rootReducer = combineReducers({
   permissions,
   search,
   session,
-  tag,
   user,
   router: routerReducer
 })

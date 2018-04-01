@@ -1,37 +1,37 @@
 @import 'variables.sass'
 
-.tag-page
+.curated-list-page
 
-  .tag-title
+  .curated-list-title
     margin: $space-6 0 $space-6
 
-  .tag-listings
+  .curated-list-listings
     display: flex
     flex-wrap: wrap
     justify-content: flex-start
 
-    .tag-listing
+    .curated-list-listing
       margin: $space-3
       width: 100%
       height: 100%
       padding: 0 $space-3
 
   @media (min-width: $screen-sm-min) and (max-width: $screen-md-max) //{}
-    .tag-title
+    .curated-list-title
       margin: $space-6 0 $space-7
 
-    .tag-listings
-      .tag-listing
+    .curated-list-listings
+      .curated-list-listing
         margin: 0
         width: 25%
 
   @media (min-width: $screen-lg-min) //{}
     padding: $space-6
 
-    .tag-listings
+    .curated-list-listings
       padding: $space-4
 
-      .tag-listing
+      .curated-list-listing
         margin: 0 0 $space-5
         width: 16.6666666667%
 

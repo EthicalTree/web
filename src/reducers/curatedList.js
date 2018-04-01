@@ -1,7 +1,7 @@
 const defaultState = {
   hashtag: '',
   listings: [],
-  isTagLoading: false,
+  isLoading: false,
   totalPages: 1,
   currentPage: 1
 }
@@ -9,9 +9,9 @@ const defaultState = {
 const frontPage = (state=defaultState, { type, data }) => {
 
   switch (type) {
-    case 'SET_GET_TAG_LOADING':
-      return {...state, isTagLoading: data}
-    case 'SET_CURRENT_TAG':
+    case 'SET_GET_CURATED_LIST_LOADING':
+      return {...state, isLoading: data}
+    case 'SET_CURATED_LIST':
       return {...state, ...data}
     default:
       return state

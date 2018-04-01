@@ -17,7 +17,7 @@ export const CuratedList = props => {
         <span className="divider">|</span>
 
         <Link
-          to={`/tags/${tag.hashtag}`}
+          to={`/lists/${tag.hashtag}`}
           className="see-more-link"
         >
           See all
