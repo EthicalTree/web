@@ -32,7 +32,11 @@ export class AllCollectionsPage extends React.Component {
           <div className="collections">
             {collections.collections.map(c => {
               return (
-                <Link to={`/collections/${c.slug}`} className="collection">
+                <Link
+                  key={c.id}
+                  to={`/collections/${c.slug}`}
+                  className="collection"
+                >
                   {c.name}
                 </Link>
               )

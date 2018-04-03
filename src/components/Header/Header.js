@@ -84,78 +84,82 @@ const Header = props => {
           </Col>
         }
 
+
         <Collapse isOpen={header.isOpen} navbar>
-          {session.user &&
-            <Nav navbar className="ml-auto">
-              <div className="mr-3 d-flex">
-                <NavItem>
-                  <Link to="/collections" className="nav-link">
-                    Collections
-                  </Link>
-                </NavItem>
-              </div>
 
+          <Nav navbar className="ml-auto">
+            <div className="mr-3 d-flex">
               <NavItem>
-                <Button
-                  color="success"
-                  block
-                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'add-listing' }) }}
-                >
-                  Add Listing
-                </Button>
+                <Link to="/collections" className="nav-link">
+                  Collections
+                </Link>
               </NavItem>
+            </div>
 
-              <Dropdown
-                nav
-                className="account-dropdown"
-                isOpen={header.isAccountDropdownOpen}
-                toggle={() => dispatch({ type: 'TOGGLE_HEADER_ACCOUNT_DROPDOWN' })}
-              >
-                <DropdownToggle nav caret>
-                  <AccountIcon email={session.user.email} />
-                </DropdownToggle>
-                <DropdownMenu right>
-                  {session.user.admin &&
-                    <Link to="/admin/users">
+            {session.user &&
+              <React.Fragment>
+                <NavItem>
+                  <Button
+                    color="success"
+                    block
+                    onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'add-listing' }) }}
+                  >
+                    Add Listing
+                  </Button>
+                </NavItem>
+
+                <Dropdown
+                  nav
+                  className="account-dropdown"
+                  isOpen={header.isAccountDropdownOpen}
+                  toggle={() => dispatch({ type: 'TOGGLE_HEADER_ACCOUNT_DROPDOWN' })}
+                >
+                  <DropdownToggle nav caret>
+                    <AccountIcon email={session.user.email} />
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    {session.user.admin &&
+                      <Link to="/admin/users">
+                        <DropdownItem>
+                          Admin
+                        </DropdownItem>
+                      </Link>
+                    }
+
+                    <Link to="/account">
                       <DropdownItem>
-                        Admin
+                        Account Settings
                       </DropdownItem>
                     </Link>
-                  }
 
-                  <Link to="/account">
-                    <DropdownItem>
-                      Account Settings
+                    <DropdownItem onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'logout' }) }}>
+                      Logout
                     </DropdownItem>
-                  </Link>
+                  </DropdownMenu>
+                </Dropdown>
+              </React.Fragment>
+            }
 
-                  <DropdownItem onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'logout' }) }}>
-                    Logout
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </Nav>
-          }
+            {!session.user &&
+              <React.Fragment>
+                <NavItem>
+                  <NavLink
+                    href="#"
+                    onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'signup' }) }}>
+                    Signup
+                  </NavLink>
+                </NavItem>
 
-          {!session.user &&
-            <Nav navbar className="mr-4 ml-auto">
-              <NavItem>
-                <NavLink
-                  href="#"
-                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'signup' }) }}>
-                  Signup
-                </NavLink>
-              </NavItem>
-
-              <NavItem className="mr-4">
-                <NavLink
-                  href="#"
-                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'login' }) }}>
-                  Login
-                </NavLink>
-              </NavItem>
-            </Nav>
-          }
+                <NavItem className="mr-4">
+                  <NavLink
+                    href="#"
+                    onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'login' }) }}>
+                    Login
+                  </NavLink>
+                </NavItem>
+              </React.Fragment>
+            }
+          </Nav>
         </Collapse>
       </Navbar>
 
