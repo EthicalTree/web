@@ -73,6 +73,7 @@ const Header = props => {
           <img className="ml-4 mr-2" src={etLogo} alt="EthicalTree Logo" />
         </Link>
 
+
         <NavbarToggler
           onClick={e => { dispatch({ type: 'TOGGLE_HEADER_ACCESSIBLE' }) }}
         />
@@ -86,6 +87,14 @@ const Header = props => {
         <Collapse isOpen={header.isOpen} navbar>
           {session.user &&
             <Nav navbar className="ml-auto">
+              <div className="mr-3 d-flex">
+                <NavItem>
+                  <Link to="/collections" className="nav-link">
+                    Collections
+                  </Link>
+                </NavItem>
+              </div>
+
               <NavItem>
                 <Button
                   color="success"

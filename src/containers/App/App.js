@@ -69,6 +69,7 @@ class InnerApp extends React.Component {
               <Route
                 exact
                 path="/collections"
+                component={split(() => import('../AllCollectionsPage/AllCollectionsPage'))}
               />
 
               <Route

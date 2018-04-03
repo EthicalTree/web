@@ -4,6 +4,7 @@ import { routerReducer } from 'react-router-redux'
 import account from './account'
 import admin from './admin'
 import app from './app'
+import collections from './collections'
 import confirm from './confirm'
 import curatedList from './curatedList'
 import frontPage from './frontPage'
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   account,
   admin,
   app,
+  collections,
   confirm,
   curatedList,
   frontPage,

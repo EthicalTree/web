@@ -1,0 +1,39 @@
+@import 'variables.sass'
+
+.all-collections-page
+  .all-collections-title
+    margin: $space-6 0
+
+  .collections
+    display: flex
+    justify-content: center
+
+    .collection
+      display: flex
+      justify-content: center
+      align-items: center
+      height: 150px
+      margin: $space-3
+      border-radius: 5px
+      background: $color-inverse
+      color: $color-white
+      font-weight: $font-light
+      font-size: 18px
+
+      &:hover, &:focus
+        background: rgba($color-inverse, 0.7)
+
+
+  @media (min-width: $screen-sm-min) and (max-width: $screen-md-max) //{}
+    .all-collections-title
+      margin: $space-6 0 $space-7
+
+    .collection
+      width: 25%
+
+  @media (min-width: $screen-lg-min) //{}
+    padding: $space-6
+
+    .collection
+      width: 15%
+

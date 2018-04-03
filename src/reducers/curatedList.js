@@ -6,7 +6,7 @@ const defaultState = {
   currentPage: 1
 }
 
-const frontPage = (state=defaultState, { type, data }) => {
+const curatedList = (state=defaultState, { type, data }) => {
 
   switch (type) {
     case 'SET_GET_CURATED_LIST_LOADING':
@@ -19,4 +19,4 @@ const frontPage = (state=defaultState, { type, data }) => {
 
 }
 
-export default frontPage
+export default curatedList
