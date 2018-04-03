@@ -17,14 +17,7 @@ class EditEthicalitiesModal extends React.Component {
     super(props)
 
     this.state = {
-      selectedEthicalities: []
-    }
-  }
-
-  componentWillReceiveProps(props) {
-    const { listing } = props
-    if (listing.ethicalities) {
-      this.setState({ selectedEthicalities: listing.ethicalities})
+      selectedEthicalities: props.listing.ethicalities
     }
   }
 

@@ -34,3 +34,4 @@ export const getOpenCloseStatus = hours => {
 
   return 'closed'
 }
+

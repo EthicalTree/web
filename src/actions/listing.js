@@ -1,4 +1,5 @@
 import moment from 'moment-timezone'
+
 import { api } from '../utils/api'
 import { error } from '../utils/notifications'
 
@@ -80,7 +81,7 @@ export const editEthicalities = (listingSlug, ethicalities) => {
   return dispatch => {
     dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
-    api.post(`/v1/listings/${listingSlug}/listing_ethicalities`, { ethicalities })
+    api.post(`/v1/listings/${listingSlug}/ethicalities`, { ethicalities })
       .then(response => {
         if (response.data.errors) {
           dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })

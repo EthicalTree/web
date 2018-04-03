@@ -50,7 +50,6 @@ class Search extends React.Component {
 
   onLocationSearch = e => {
     e.preventDefault()
-    console.log(e.target.value)
   }
 
   constructor(props) {
