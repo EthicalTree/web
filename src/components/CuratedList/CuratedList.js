@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { Result } from '../Search/Result'
 
 export const CuratedList = props => {
-  const { listings, name, tag } = props
+  const { listings, name, slug } = props
 
   return (
     <div className="curated-list">
@@ -17,7 +17,7 @@ export const CuratedList = props => {
         <span className="divider">|</span>
 
         <Link
-          to={`/lists/${tag.hashtag}`}
+          to={`/collections/${slug}`}
           className="see-more-link"
         >
           See all

@@ -64,7 +64,7 @@ export class AdminPage extends React.Component {
                 className={cn('nav-link', { active: pathname === '/admin/lists' })}
                 to="/admin/lists"
               >
-                Lists
+                Collections
               </Link>
             </NavItem>
             <NavItem>

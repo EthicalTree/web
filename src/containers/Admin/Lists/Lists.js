@@ -30,7 +30,7 @@ const ListTable = props => {
   return (
     <Loader loading={admin.isAdminLoading}>
       <h4 className="mt-3 mb-3 d-flex justify-content-between">
-        Tag lists
+        Collections
 
         <div className="d-flex">
           <Button
@@ -38,7 +38,7 @@ const ListTable = props => {
             color="default"
             onClick={handleAdd}
           >
-            + New List
+            + New Collection
           </Button>
           <Search
             handleSearch={() => dispatch(getLists({ page: 1, query: admin.query }))}
@@ -144,8 +144,8 @@ export class Lists extends React.Component {
     return event => {
       event.preventDefault()
       dispatch(setConfirm({
-        title: 'Delete List',
-        msg: 'Are you sure you want to delete this list?',
+        title: 'Delete Collection',
+        msg: 'Are you sure you want to delete this collection?',
         action: deleteList,
         data: id
       }))
@@ -191,7 +191,7 @@ export class Lists extends React.Component {
   }
 
   componentDidMount() {
-    document.title = "EthicalTree · Lists Admin"
+    document.title = "EthicalTree · Collections Admin"
     this.refreshLists()
   }
 

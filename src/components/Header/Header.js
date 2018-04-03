@@ -78,7 +78,7 @@ const Header = props => {
         />
 
         {hasHeaderSearch &&
-          <Col lg="7" xl="5" className="mt-3 d-none d-lg-block">
+          <Col lg="7" xl="5" className="d-none d-lg-block">
             <Search />
           </Col>
         }
@@ -90,8 +90,8 @@ const Header = props => {
                 <Button
                   color="success"
                   block
-                  className="mt-3"
-                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'add-listing' }) }}>
+                  onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'add-listing' }) }}
+                >
                   Add Listing
                 </Button>
               </NavItem>

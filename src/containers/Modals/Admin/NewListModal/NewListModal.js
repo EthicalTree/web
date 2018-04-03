@@ -40,7 +40,7 @@ class NewListModal extends React.Component {
       <Modal
         className="add-list-modal medium-modal"
         loading={modal.isLoading}
-        contentLabel={isUpdate ? 'Edit List' : 'Add New List'}
+        contentLabel={isUpdate ? 'Edit Collection' : 'Add New Collection'}
         onSave={this.submit.bind(this)}
         modalName="new-list"
         saveLabel={isUpdate ? 'Save' : 'Create'}

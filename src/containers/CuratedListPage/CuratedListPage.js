@@ -15,7 +15,7 @@ export class CuratedListPage extends React.Component {
     const { dispatch, match } = this.props
 
     dispatch(getCuratedList({
-      hashtag: match.params.hashtag,
+      slug: match.params.slug,
       page: 1
     }))
   }
@@ -49,7 +49,7 @@ export class CuratedListPage extends React.Component {
             pageCount={curatedList.totalPages}
             currentPage={curatedList.currentPage}
             onPageChange={data => dispatch(getCuratedList({
-              hashtag: curatedList.hashtag,
+              slug: curatedList.slug,
               page: data.selected
             }))}
           />
