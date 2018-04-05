@@ -62,7 +62,8 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "store": "^2.0.4",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "webpack": "^4.5.0"
   },
   "devDependencies": {
     "enzyme": "^3.3.0",
