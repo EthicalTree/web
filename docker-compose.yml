@@ -1,0 +1,21 @@
+version: '3.0'
+
+services:
+
+  ethicaltree-web:
+    container_name: ethicaltree-web
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 3002:3000
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+networks:
+  default:
+    external:
+      name: ethicaltree
+

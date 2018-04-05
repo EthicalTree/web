@@ -22,3 +22,7 @@ yarn-error.log*
 
 /data
 *.css
+
+.ash_history
+.config
+.npm
