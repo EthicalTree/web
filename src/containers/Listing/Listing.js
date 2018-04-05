@@ -35,8 +35,6 @@ import { Loader } from '../../components/Loader'
 import { ImageManager } from '../../components/ImageManager'
 
 import { hasPermission, isAdmin } from '../../utils/permissions'
-import { getSitePath } from '../../utils/url'
-import { s3Url } from '../../utils/s3'
 
 import { setConfirm } from '../../actions/confirm'
 
@@ -272,8 +270,6 @@ class Listing extends React.Component {
       match,
     } = this.props
 
-    const imageUrl = listing.images.length > 0 ? s3Url('ethicaltree', listing.images[0].key) : getSitePath('/images/et-logo.svg')
-
     if (!listing.id && !listing.isListingLoading) {
       return (
         <div className="mt-5 text-center col">
@@ -296,6 +292,7 @@ class Listing extends React.Component {
         <Container>
           <div className="listing-detail">
             <ImageManager
+              className="image-manager"
               dispatch={dispatch}
               onImageUploadProgress={progress => dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: progress })}
               onSetCurrentImage={image => dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: image })}

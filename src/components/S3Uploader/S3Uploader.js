@@ -14,7 +14,7 @@ export const S3Uploader = props => {
         accept={accept}
         style={{ display: 'none'}}
         signingUrl="/s3/sign"
-        signingUrlWithCredentials={true}
+        signingUrlWithCredentials={false}
         signingUrlHeaders={{ Authorization: `Bearer ${store.get('ETHICALTREE_AUTH_TOKEN')}` }}
         signingUrlQueryParams={signingUrlQueryParams}
         server={`${process.env.REACT_APP_API_URL}`}
