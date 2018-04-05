@@ -13,6 +13,13 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
 
+    <script>
+      var openGraph = document.createElement('link')
+      openGraph.rel = 'opengraph'
+      openGraph.href = '%REACT_APP_API_URL%' + '/opengraph?url=' + document.location.pathname
+      document.head.appendChild(openGraph)
+    </script>
+
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="%PUBLIC_URL%/apple-touch-icon-144x144.png" />
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="%PUBLIC_URL%/apple-touch-icon-152x152.png" />
     <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon-32x32.png" sizes="32x32" />

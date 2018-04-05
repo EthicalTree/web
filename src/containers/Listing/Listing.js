@@ -291,11 +291,6 @@ class Listing extends React.Component {
       >
         <Helmet key={listing.id}>
           <title>{`EthicalTree · ${listing.title}`}</title>
-          <meta property="og:title" content={listing.title} />
-          <meta property="og:description" content={listing.bio} />
-          <meta property="og:image" content={imageUrl} />
-          <meta property="og:url" content={window.location.href} />
-          <meta name="twitter:card" content="summary_large_image" />
         </Helmet>
 
         <Container>
