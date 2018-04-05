@@ -1,5 +1,6 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 
 import { ConnectedRouter } from 'react-router-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
@@ -32,6 +33,13 @@ class InnerApp extends React.Component {
 
     return (
       <div className="app">
+        <Helmet>
+          <title>{'EthicalTree'}</title>
+          <meta property="fb:app_id" content={process.env.REACT_APP_FACEBOOK_ID} />
+          <meta property="og:site_name" content="EthicalTree" />
+          <meta name="twitter:site" content="@EthicalTree" />
+        </Helmet>
+
         <Loader loading={app.isAppLoading}>
           <Header
             handleSkip={this.handleSkip}

@@ -22,7 +22,6 @@ export class FrontPage extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(getCuratedLists())
-    document.title = 'EthicalTree'
   }
 
   render() {

@@ -6,3 +6,7 @@ export const isCurrentPath = path => {
     p => window.location.pathname.startsWith(p)
   ).length
 }
+
+export const getSitePath = path => {
+  return `${process.env.REACT_APP_URL}${path}`
+}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 
 import { Button, Table } from 'reactstrap'
 
@@ -191,7 +192,6 @@ export class Lists extends React.Component {
   }
 
   componentDidMount() {
-    document.title = "EthicalTree · Collections Admin"
     this.refreshLists()
   }
 
@@ -205,17 +205,23 @@ export class Lists extends React.Component {
     const { dispatch, admin } = this.props
 
     return (
-      <ListTable
-        dispatch={dispatch}
-        admin={admin}
-        toggleHidden={this.toggleHidden}
-        toggleFeatured={this.toggleFeatured}
-        handleAdd={this.handleAdd}
-        handleEdit={this.handleEdit}
-        handleDelete={this.handleDelete}
-        handleMove={this.handleMove}
-        handlePageChange={data => dispatch(getLists({ page: data.selected }))}
-      />
+      <React.Fragment>
+        <Helmet>
+          <title>{'EthicalTree · Collections Admin'}</title>
+        </Helmet>
+
+        <ListTable
+          dispatch={dispatch}
+          admin={admin}
+          toggleHidden={this.toggleHidden}
+          toggleFeatured={this.toggleFeatured}
+          handleAdd={this.handleAdd}
+          handleEdit={this.handleEdit}
+          handleDelete={this.handleDelete}
+          handleMove={this.handleMove}
+          handlePageChange={data => dispatch(getLists({ page: data.selected }))}
+        />
+      </React.Fragment>
     )
   }
 }

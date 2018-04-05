@@ -3,6 +3,7 @@ import './AccountSettings.css'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 import { Loader } from '../../components/Loader'
 import { PasswordStrength } from '../../components/PasswordStrength'
@@ -45,10 +46,6 @@ class AccountSettings extends React.Component {
     }))
   }
 
-  componentDidMount() {
-    document.title = `EthicalTree · Account Settings`
-  }
-
   render() {
     const { dispatch, session, account } = this.props
 
@@ -58,6 +55,11 @@ class AccountSettings extends React.Component {
 
     return (
       <Loader loading={session.userLoading}>
+
+        <Helmet>
+          <title>{'EthicalTree · Account Settings'}</title>
+        </Helmet>
+
         <div
           style={{
           }}

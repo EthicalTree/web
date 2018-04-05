@@ -5,6 +5,7 @@ import querystring from 'querystring'
 import { connect } from 'react-redux'
 import { OverlayView } from 'react-google-maps'
 import { Row, Col } from 'reactstrap'
+import { Helmet } from 'react-helmet'
 
 import { Search } from '../../components/Search/Search'
 import { ResultsMap } from '../../components/Search/ResultsMap'
@@ -131,9 +132,6 @@ class SearchResultsPage extends React.Component {
     const queryParams = this.getQueryParams()
 
     this.performSearch(queryParams.page, queryParams.ethicalities, queryParams.location)
-    const titleLocation = queryParams.location || 'Search'
-
-    document.title = `EthicalTree · ${titleLocation}`
   }
 
   performSearch(newPage=0, ethicalities, location) {
@@ -200,11 +198,17 @@ class SearchResultsPage extends React.Component {
       selectedResult
     } = this.props
 
+    const titleLocation = this.getQueryParams().location || 'Search'
+
     return (
       <Loader
         fixed={true}
         loading={search.isSearchLoading}
       >
+        <Helmet>
+          <title>{`EthicalTree · ${titleLocation}`}</title>
+        </Helmet>
+
         <Col className="search-results-page">
           <Row>
             <SearchResults

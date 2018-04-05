@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 
 import {
   Table
@@ -19,7 +20,6 @@ export class Users extends React.Component {
 
     dispatch({ type: 'SET_ADMIN_SEARCH_QUERY', data: '' })
     dispatch(getUsers({ page: 1, query: '' }))
-    document.title = "EthicalTree · User Admin"
   }
 
   toggleAdmin(user_id, e) {
@@ -40,6 +40,10 @@ export class Users extends React.Component {
 
     return (
       <Loader loading={admin.isAdminLoading}>
+        <Helmet>
+          <title>{'EthicalTree · User Admin'}</title>
+        </Helmet>
+
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
           Users
 

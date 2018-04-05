@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 
 import { Table } from 'reactstrap'
 
@@ -28,7 +29,6 @@ export class Locations extends React.Component {
 
     dispatch({ type: 'SET_ADMIN_SEARCH_QUERY', data: '' })
     dispatch(getLocations({ page: 1, query: '' }))
-    document.title = "EthicalTree · Location Admin"
   }
 
   render() {
@@ -37,6 +37,9 @@ export class Locations extends React.Component {
 
     return (
       <Loader loading={admin.isAdminLoading}>
+        <Helmet>
+          <title>{'EthicalTree · Location Admin'}</title>
+        </Helmet>
 
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
           Locations

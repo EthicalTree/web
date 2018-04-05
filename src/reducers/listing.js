@@ -1,6 +1,7 @@
 const defaultState = {
   listingInfoTab: 'location',
   menus: [{}],
+  images: [],
   tags: [],
   featuredListings: []
 }

@@ -3,6 +3,7 @@ import './Listing.css'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 
 import {
   Container,
@@ -34,6 +35,8 @@ import { Loader } from '../../components/Loader'
 import { ImageManager } from '../../components/ImageManager'
 
 import { hasPermission, isAdmin } from '../../utils/permissions'
+import { getSitePath } from '../../utils/url'
+import { s3Url } from '../../utils/s3'
 
 import { setConfirm } from '../../actions/confirm'
 
@@ -269,9 +272,7 @@ class Listing extends React.Component {
       match,
     } = this.props
 
-    if (listing.title) {
-      document.title = `EthicalTree · ${listing.title}`
-    }
+    const imageUrl = listing.images.length > 0 ? s3Url('ethicaltree', listing.images[0].key) : getSitePath('/images/et-logo.svg')
 
     if (!listing.id && !listing.isListingLoading) {
       return (
@@ -288,6 +289,15 @@ class Listing extends React.Component {
         loading={listing.isListingLoading}
         fixed={true}
       >
+        <Helmet key={listing.id}>
+          <title>{`EthicalTree · ${listing.title}`}</title>
+          <meta property="og:title" content={listing.title} />
+          <meta property="og:description" content={listing.bio} />
+          <meta property="og:image" content={imageUrl} />
+          <meta property="og:url" content={window.location.href} />
+          <meta name="twitter:card" content="summary_large_image" />
+        </Helmet>
+
         <Container>
           <div className="listing-detail">
             <ImageManager

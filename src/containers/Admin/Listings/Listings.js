@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import numeral from 'numeral'
+import { Helmet } from 'react-helmet'
 
 import { Button, Table } from 'reactstrap'
 
@@ -21,7 +22,6 @@ export class Listings extends React.Component {
 
     dispatch({ type: 'SET_ADMIN_SEARCH_QUERY', data: '' })
     dispatch(getListings({ page: 1, query: '' }))
-    document.title = "EthicalTree · Listing Admin"
   }
 
   handleVisibilityChange = id => {
@@ -62,6 +62,10 @@ export class Listings extends React.Component {
 
     return (
       <Loader loading={admin.isAdminLoading}>
+        <Helmet>
+          <title>{'EthicalTree · Listing Admin'}</title>
+        </Helmet>
+
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
           Listings
 
