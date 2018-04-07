@@ -1,0 +1,17 @@
+FROM node:9.10-alpine
+
+ENV HOME /app
+ENV PATH="./node_modules/.bin:${PATH}"
+
+ADD . /app
+
+RUN apk --update add --virtual build-dependencies build-base linux-headers && \
+  cd /app && \
+  npm install && \
+  npm run build
+
+
+FROM nginx:1.13-alpine
+COPY --from=0 /app /app
+ADD ./config/nginx.conf /etc/nginx/nginx.conf
+
