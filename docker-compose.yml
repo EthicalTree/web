@@ -4,16 +4,11 @@ services:
 
   ethicaltree-web:
     container_name: ethicaltree-web
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile.local
+    image: nginx
     ports:
       - 3002:80
-    working_dir: /app
-    command: ash -c "PORT=80 HOST=0.0.0.0 npm start"
     volumes:
-      - .:/app
-      - /app/node_modules
+      - ./build:/usr/share/nginx/html:ro
 
   ethicaltree-proxy:
     container_name: ethicaltree-proxy

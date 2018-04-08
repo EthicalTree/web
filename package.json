@@ -15,7 +15,8 @@
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",
-    "build": "PUBLIC_URL=https://cdn.ethicaltree.com npm-run-all -p build-css build-js",
+    "build": "npm-run-all -p build-css build-js",
+    "simulate-prod": "env $(cat .env.development | xargs) npm run build && docker-compose up",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
