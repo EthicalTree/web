@@ -15,6 +15,16 @@ services:
       - .:/app
       - /app/node_modules
 
+  ethicaltree-proxy:
+    container_name: ethicaltree-proxy
+    image: nginx
+    depends_on:
+      - ethicaltree-web
+    ports:
+      - 3003:80
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+
 networks:
   default:
     external:
