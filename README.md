@@ -27,3 +27,13 @@ This will do the following:
 - build a development copy of `ethicaltree-web` into `./build`
 - run a docker container acting as a proxy to the SSR server
 - run a docker container that will proxy to `./build`
+
+## Deploying
+
+```
+npm run deploy
+```
+
+This will build, deploy to S3, and invalidate the cloudfront cache
+
+
