@@ -45,7 +45,7 @@ export class Result extends React.Component {
           >
             {listing.plan &&
               <span className="featured-badge">
-                Featured
+                Supporter
                 <span className="triangle" />
               </span>
             }
