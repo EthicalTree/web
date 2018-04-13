@@ -41,6 +41,7 @@
     "react": "^16.1.1",
     "react-autosuggest": "^9.3.2",
     "react-dom": "^16.1.1",
+    "react-facebook-pixel": "^0.1.1",
     "react-ga": "^2.2.0",
     "react-google-maps": "^9.4.5",
     "react-gravatar": "^2.6.3",

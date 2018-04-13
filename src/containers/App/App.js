@@ -9,6 +9,7 @@ import { Loader } from '../../components/Loader'
 import { Header } from '../../components/Header'
 import { Footer } from '../../components/Footer'
 import { ScrollToTop } from '../../components/ScrollToTop'
+import { FacebookPixel } from '../../components/ThirdParty'
 import { DevTools } from '../../components/DevTools';
 
 import Modals from '../Modals'
@@ -138,9 +139,11 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <ScrollToTop>
+          <React.Fragment>
+            <ScrollToTop />
+            <FacebookPixel />
             <InnerApp />
-          </ScrollToTop>
+          </React.Fragment>
         </ConnectedRouter>
       </Provider>
     )
