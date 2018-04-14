@@ -25,6 +25,8 @@ import CoverPhotoIcon from './RawIcons/Picture2Icon'
 import CameraIcon from './RawIcons/Camera3Icon'
 import EnvelopeIcon from './RawIcons/EnvelopeIcon'
 import TelephoneIcon from './RawIcons/TelephoneIcon'
+import SourceIcon from './RawIcons/SourceIcon'
+import MoveIcon from './RawIcons/MoveIcon'
 
 // Date Time Icons
 import StopwatchIcon from './RawIcons/StopwatchIcon'
@@ -60,6 +62,8 @@ export default {
   camera: CameraIcon,
   email: EnvelopeIcon,
   phone: TelephoneIcon,
+  reposition: SourceIcon,
+  move: MoveIcon,
 
   stopwatch: StopwatchIcon,
   stopwatch_cross: StopwatchCrossIcon,

@@ -7,7 +7,8 @@ import { UncontrolledTooltip as Tooltip } from 'reactstrap'
 import { Loader } from '../Loader'
 import { S3Uploader } from '../S3Uploader'
 import { Icon } from '../Icon'
-import { Slider as ETSlider } from '../Slider'
+import { Slider } from '../Slider'
+import { Repositioner } from './Repositioner'
 
 import { s3Url } from '../../utils/s3'
 
@@ -60,6 +61,7 @@ const ImageActions = (props) => {
     deleteAction,
     addAction,
     fullScreenAction,
+    repositionAction,
     signingParams,
   } = props
 
@@ -67,7 +69,8 @@ const ImageActions = (props) => {
     !!fullScreenAction.handleAction ||
     !!coverAction.handleAction ||
     !!deleteAction.handleAction ||
-    !!addAction.handleAction
+    !!addAction.handleAction ||
+    !!repositionAction.handleAction
   )
 
   if (!hasActions) {
@@ -88,6 +91,13 @@ const ImageActions = (props) => {
 
         {canEdit &&
           <React.Fragment>
+            <Action
+              type="reposition"
+              icon="reposition"
+              currentImage={currentImage}
+              action={repositionAction}
+            />
+
             <Action
               type="cover"
               icon="cover_photo"
@@ -128,6 +138,7 @@ ImageActions.propTypes = {
   coverAction: PropTypes.object,
   deleteAction: PropTypes.object,
   addAction: PropTypes.object,
+  repositionAction: PropTypes.object,
   fullScreenAction: PropTypes.object
 }
 
@@ -136,10 +147,27 @@ ImageActions.defaultProps = {
   coverAction: {},
   deleteAction: {},
   addAction: {},
+  repositionAction: {},
   fullScreenAction: {}
 }
 
 class ImageManager extends React.Component {
+  state = {
+    isRepositioning: false,
+    repositionData: null
+  }
+
+  handleFinishReposition = () => {
+    const { currentImage, handleReposition } = this.props
+    const { repositionData } = this.state
+
+    this.setState({
+      isRepositioning: false,
+      repositionData: null
+    })
+
+    handleReposition(currentImage, repositionData)
+  }
 
   componentDidMount() {
     const { onSetCurrentImage } = this.props
@@ -163,15 +191,17 @@ class ImageManager extends React.Component {
       isLoading,
       uploadProgress,
       currentImage,
+      handleReposition,
       coverAction,
       deleteAction,
       addAction,
       fullScreenAction,
       onImageUploadProgress,
       signingParams,
-      styleOverrides,
-      renderWithImgTag
+      imgStyle
     } = this.props
+
+    const { isRepositioning, repositionData } = this.state
 
     const hasSlides = images && images.length > 0
     let displayImages
@@ -191,52 +221,68 @@ class ImageManager extends React.Component {
       >
         {hasSlides &&
           <div className="image-manager text-center">
-            <ImageActions
-              dispatch={dispatch}
-              canEdit={canEdit}
-              onImageUploadProgress={onImageUploadProgress}
-              hasSlides={hasSlides}
-              currentImage={currentImage}
-              coverAction={coverAction}
-              deleteAction={deleteAction}
-              addAction={addAction}
-              fullScreenAction={fullScreenAction}
-              signingParams={signingParams}
-            />
+            {!isRepositioning &&
+              <ImageActions
+                dispatch={dispatch}
+                canEdit={canEdit}
+                onImageUploadProgress={onImageUploadProgress}
+                hasSlides={hasSlides}
+                currentImage={currentImage}
+                coverAction={coverAction}
+                deleteAction={deleteAction}
+                addAction={addAction}
+                repositionAction={{
+                  handleAction: handleReposition && (() => this.setState({ isRepositioning: true })),
+                  title: 'Reposition Photo'
+                }}
+                fullScreenAction={fullScreenAction}
+                signingParams={signingParams}
+              />
+            }
 
             {hasSlides &&
-              <ETSlider
+              <Slider
                 afterChange={this.handleSlideChange.bind(this)}
                 initialSlide={images.findIndex(i => (i.id === (currentImage ? currentImage.id : -1)))}
+                arrows={!isRepositioning}
                 slides={
                   displayImages.map((image, i) => {
                     const url = s3Url('ethicaltree', image.key)
                     const key = `${image.key}-${i}`
 
-                    if (renderWithImgTag) {
-                      return (
-                        <div key={key}>
-                          <img alt="Listing" style={styleOverrides(url)} src={url} />
-                        </div>
-                      )
-                    }
+                    const offsetY = -image.coverOffsetY || 0
+                    const extraOffsetY = repositionData ? repositionData.diffY : 0
 
-                    let style = {
-                      background: `url('${url}') no-repeat center center`,
-                      height: '300px'
+                    const repositionStyle = {
+                      transform: `translateY(${offsetY - extraOffsetY}px)`
                     }
-
-                    style = {...style, ...styleOverrides ? styleOverrides(url) : {}}
 
                     return (
                       <div
+                        key={key}
                         className="image-manager-image"
-                        key={key}>
-                        <div style={style} />
+                      >
+                        <img
+                          alt="Listing"
+                          src={url}
+                          style={{
+                            maxWidth: '100%',
+                            ...imgStyle,
+                            ...repositionStyle
+                          }}
+                        />
                       </div>
                     )
                   })
                 }
+              />
+            }
+
+            {isRepositioning &&
+              <Repositioner
+                offset={repositionData}
+                handleReposition={data => this.setState({ repositionData: data })}
+                handleFinishReposition={this.handleFinishReposition}
               />
             }
           </div>
@@ -271,12 +317,12 @@ class ImageManager extends React.Component {
 
 ImageManager.propTypes = {
   className: PropTypes.string,
+  handleReposition: PropTypes.func,
   coverAction: PropTypes.object,
   deleteAction: PropTypes.object,
   addAction: PropTypes.object,
   fullScreenAction: PropTypes.object,
-  styleOverrides: PropTypes.func,
-  renderWithImgTag: PropTypes.bool
+  imgStyle: PropTypes.object,
 }
 
 ImageManager.defaultProps = {
@@ -284,9 +330,9 @@ ImageManager.defaultProps = {
   coverAction: {},
   deleteAction: {},
   addAction: {},
+  repositionAction: {},
   fullScreenAction: {},
-  styleOverrides: null,
-  renderWithImgTag: false,
+  imgStyle: {},
   images: []
 }
 

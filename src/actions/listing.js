@@ -243,6 +243,27 @@ export const makeImageCover = data => {
   }
 }
 
+export const updateListingImage = ({ listingSlug, imageId, offset }) => {
+  const data = {
+    offsetY: offset ? offset.y : undefined
+  }
+
+  return dispatch => {
+    dispatch({ type: 'SET_IMAGE_LOADING', data: true })
+
+    api.put(`/v1/listings/${listingSlug}/images/${imageId}`, data)
+      .then(response => {
+        if (response.data.images) {
+          dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
+        }
+      })
+      .catch(() => {})
+      .then(() => {
+        dispatch({ type: 'SET_IMAGE_LOADING', data: false })
+      })
+  }
+}
+
 export const saveOperatingHours = (listingSlug, operatingHours) => {
   const utcHours = {}
 

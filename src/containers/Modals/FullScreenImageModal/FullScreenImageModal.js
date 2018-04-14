@@ -1,3 +1,5 @@
+import './FullScreenImageModal.css'
+
 import React from 'react'
 import { connect } from 'react-redux'
 import { ImageManager } from '../../../components/ImageManager'
@@ -37,14 +39,11 @@ class FullScreenImageModal extends React.Component {
           onSetCurrentImage={image => dispatch({ type: 'SET_FULLSCREEN_MODAL_CURRENT_IMAGE', data: image })}
           images={modal.fullScreenImages}
           currentImage={modal.fullScreenCurrentImage}
-          renderWithImgTag={true}
           locationKey="fullscreen-image"
-          styleOverrides={url => ({
-            height: '100%',
-            maxWidth: '100%',
-            margin: 'auto'
-          })}
           emptyText="No photos added"
+          imgStyle={{
+            maxHeight: '100%'
+          }}
           canEdit={false}
         />
       </Modal>

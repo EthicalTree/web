@@ -19,6 +19,7 @@ import {
   deleteImageFromListing,
   getListing,
   makeImageCover,
+  updateListingImage,
   addTagToListing,
   removeTagFromListing
 } from '../../actions/listing'
@@ -235,6 +236,16 @@ class Listing extends React.Component {
     dispatch(removeTagFromListing(listing.slug, id))
   }
 
+  handleReposition = (image, reposition) => {
+    const { dispatch, listing } = this.props
+
+    dispatch(updateListingImage({
+      listingSlug: listing.slug,
+      imageId: image.id,
+      offset: { y: image.coverOffsetY + reposition.diffY }
+    }))
+  }
+
   componentDidMount() {
     const { dispatch, match } = this.props
 
@@ -292,7 +303,7 @@ class Listing extends React.Component {
         <Container>
           <div className="listing-detail">
             <ImageManager
-              className="image-manager"
+              className="listing-image-manager"
               dispatch={dispatch}
               onImageUploadProgress={progress => dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: progress })}
               onSetCurrentImage={image => dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: image })}
@@ -338,6 +349,7 @@ class Listing extends React.Component {
                 })),
                 title: 'Add Photo'
               }}
+              handleReposition={this.handleReposition}
             />
 
             <TitleBar />

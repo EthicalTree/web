@@ -32,11 +32,8 @@ const ListingMenu = props => {
         canEdit={canEdit}
         signingParams={{ slug: listingSlug, menuId: menu.id }}
         locationKey="listing-menu-images"
-        styleOverrides={url => {
-          return {
-            background: `url('${url}')`,
-            height: '500px'
-          }
+        imgStyle={{
+          maxHeight: '100%'
         }}
         fullScreenAction={{
           handleAction: image => {
