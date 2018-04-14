@@ -57,6 +57,7 @@ const ImageActions = (props) => {
     canEdit,
     currentImage,
     coverAction,
+    cropAction,
     deleteAction,
     addAction,
     fullScreenAction,
@@ -88,6 +89,13 @@ const ImageActions = (props) => {
 
         {canEdit &&
           <React.Fragment>
+            <Action
+              type="crop"
+              icon="crop"
+              currentImage={currentImage}
+              action={cropAction}
+            />
+
             <Action
               type="cover"
               icon="cover_photo"
@@ -126,6 +134,7 @@ const ImageActions = (props) => {
 ImageActions.propTypes = {
   canEdit: PropTypes.bool,
   coverAction: PropTypes.object,
+  cropAction: PropTypes.object,
   deleteAction: PropTypes.object,
   addAction: PropTypes.object,
   fullScreenAction: PropTypes.object
@@ -134,6 +143,7 @@ ImageActions.propTypes = {
 ImageActions.defaultProps = {
   canEdit: false,
   coverAction: {},
+  cropAction: {},
   deleteAction: {},
   addAction: {},
   fullScreenAction: {}
@@ -154,6 +164,7 @@ class ImageManager extends React.Component {
 
   render() {
     const {
+      cropData,
       images,
       className,
       dispatch,
@@ -164,6 +175,7 @@ class ImageManager extends React.Component {
       uploadProgress,
       currentImage,
       coverAction,
+      cropAction,
       deleteAction,
       addAction,
       fullScreenAction,
@@ -198,6 +210,7 @@ class ImageManager extends React.Component {
               hasSlides={hasSlides}
               currentImage={currentImage}
               coverAction={coverAction}
+              cropAction={cropAction}
               deleteAction={deleteAction}
               addAction={addAction}
               fullScreenAction={fullScreenAction}
@@ -216,23 +229,36 @@ class ImageManager extends React.Component {
                     if (renderWithImgTag) {
                       return (
                         <div key={key}>
-                          <img alt="Listing" style={styleOverrides(url)} src={url} />
+                          <img
+                            alt=""
+                            style={styleOverrides(url)}
+                            src={url}
+                          />
                         </div>
                       )
                     }
 
-                    let style = {
-                      background: `url('${url}') no-repeat center center`,
-                      height: '300px'
-                    }
-
-                    style = {...style, ...styleOverrides ? styleOverrides(url) : {}}
+                    console.log(cropData)
+                    const data = cropData || {}
 
                     return (
                       <div
-                        className="image-manager-image"
-                        key={key}>
-                        <div style={style} />
+                        key={key}
+                        style={{
+                          height: 300
+                        }}
+                      >
+                        <img
+                          alt=""
+                          style={{
+                            maxWidth: '100%',
+                            margin: '0 auto',
+                            width: data.width,
+                            height: data.height,
+                            transform: `translate()`
+                          }}
+                          src={url}
+                        />
                       </div>
                     )
                   })
@@ -272,6 +298,7 @@ class ImageManager extends React.Component {
 ImageManager.propTypes = {
   className: PropTypes.string,
   coverAction: PropTypes.object,
+  cropAction: PropTypes.object,
   deleteAction: PropTypes.object,
   addAction: PropTypes.object,
   fullScreenAction: PropTypes.object,
@@ -282,6 +309,7 @@ ImageManager.propTypes = {
 ImageManager.defaultProps = {
   className: '',
   coverAction: {},
+  cropAction: {},
   deleteAction: {},
   addAction: {},
   fullScreenAction: {},

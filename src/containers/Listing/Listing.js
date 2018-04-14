@@ -293,6 +293,7 @@ class Listing extends React.Component {
           <div className="listing-detail">
             <ImageManager
               className="image-manager"
+              cropData={listing.listingCropData}
               dispatch={dispatch}
               onImageUploadProgress={progress => dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: progress })}
               onSetCurrentImage={image => dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: image })}
@@ -321,6 +322,13 @@ class Listing extends React.Component {
                   data: {listingSlug: listing.slug, imageId: image.id}
                 })),
                 title: 'Set Cover Photo'
+              }}
+              cropAction={{
+                handleAction: image => {
+                  dispatch({ type: 'OPEN_MODAL', data: 'crop-listing-photo' })
+                  dispatch({ type: 'UPDATE_MODAL_DATA', data: image })
+                },
+                title: 'Crop Photo'
               }}
               deleteAction={{
                 handleAction: image => dispatch(setConfirm({

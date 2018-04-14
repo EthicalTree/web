@@ -55,7 +55,7 @@ const TopBar = props => {
   const { onClose } = props
 
   return (
-    <div className="top-bar text-left mb-4">
+    <div className="top-bar text-left">
       <h5 className="title">{props.title}</h5>
       <ModalCloser onClose={onClose} />
     </div>
@@ -151,7 +151,7 @@ class Modal extends React.Component {
                   title={props.contentLabel}
                 />
 
-                <div className="p-3">
+                <div className="modal-body">
                   {isOpen &&
                     <Container>
                       {modal.errors &&

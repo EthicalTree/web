@@ -9,6 +9,7 @@ import { EditDescriptionModal } from './EditDescriptionModal'
 import { EditLocationModal } from './EditLocationModal'
 import { EditOperatingHoursModal } from './EditOperatingHoursModal'
 import { EditEthicalitiesModal } from './EditEthicalitiesModal'
+import { CropListingPhoto } from './CropListingPhoto'
 
 import { LoginModal } from './LoginModal'
 import { LogoutModal } from './LogoutModal'
@@ -29,6 +30,7 @@ const modals = {
   'signup': SignupModal,
   'verify-email': VerifyEmailModal,
   'add-listing': AddListingModal,
+  'crop-listing-photo': CropListingPhoto,
   'edit-description': EditDescriptionModal,
   'edit-location': EditLocationModal,
   'edit-operating-hours': EditOperatingHoursModal,

@@ -33,6 +33,8 @@ const listing = (state=defaultState, {type, data}) => {
       return {...state, locations: data}
     case 'CHANGE_LISTING_INFO_TAB':
       return {...state, listingInfoTab: data}
+    case 'SET_LISTING_CROP_DATA':
+      return {...state, listingCropData: data}
     case 'ADD_TAG_TO_LISTING':
       return {...state, tags: [...state.tags, data]}
     case 'REMOVE_TAG_FROM_LISTING':

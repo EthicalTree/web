@@ -26,6 +26,8 @@ import CameraIcon from './RawIcons/Camera3Icon'
 import EnvelopeIcon from './RawIcons/EnvelopeIcon'
 import TelephoneIcon from './RawIcons/TelephoneIcon'
 
+import CropIcon from './RawIcons/CropIcon'
+
 // Date Time Icons
 import StopwatchIcon from './RawIcons/StopwatchIcon'
 import StopwatchCrossIcon from './RawIcons/StopwatchCrossIcon'
@@ -56,6 +58,7 @@ export default {
 
   zoom_in: ZoomInIcon,
   cover_photo: CoverPhotoIcon,
+  crop: CropIcon,
   plus: PlusIcon,
   camera: CameraIcon,
   email: EnvelopeIcon,

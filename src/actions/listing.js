@@ -243,6 +243,12 @@ export const makeImageCover = data => {
   }
 }
 
+export const cropPhoto = data => {
+  return dispatch => {
+
+  }
+}
+
 export const saveOperatingHours = (listingSlug, operatingHours) => {
   const utcHours = {}
 
