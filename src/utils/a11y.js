@@ -28,3 +28,10 @@ export const blurClick = func => {
     }
   }
 }
+
+export const autoPreventDefault = func => {
+  return event => {
+    event.preventDefault()
+    safeFunc(event, func)
+  }
+}

@@ -12,6 +12,8 @@ import {
   InputGroupAddon
 } from 'reactstrap'
 
+import { autoPreventDefault } from '../../../utils/a11y'
+
 export const Tag = props => {
   const { tag, handleTagRemove } = props
 
@@ -24,6 +26,21 @@ export const Tag = props => {
         onClick={handleTagRemove}
       ></Icon>
     </span>
+  )
+}
+
+const TagBarToggle = props => {
+  const { isOpen, handleToggle } = props
+
+  return (
+    <a
+      className="tagbar-toggle"
+      href=""
+      onClick={handleToggle}
+    >
+      {isOpen && 'Close Tag Bar'}
+      {!isOpen && 'Open Tag Bar'}
+    </a>
   )
 }
 
@@ -49,16 +66,34 @@ export class TagBar extends React.Component {
     super(props)
 
     this.state = {
-      currentTag: ''
+      currentTag: '',
+      isOpen: false
     }
   }
 
   render() {
     const { tags } = this.props
-    const { currentTag } = this.state
+    const { currentTag, isOpen } = this.state
+
+    const tagBarToggle = (
+      <TagBarToggle
+        isOpen={isOpen}
+        handleToggle={autoPreventDefault(() => this.setState({ isOpen: !isOpen }))}
+      />
+    )
+
+    if (!isOpen) {
+      return (
+        <div className="tagbar-closed">
+          {tagBarToggle}
+        </div>
+      )
+    }
 
     return (
       <div className="tagbar">
+        {tagBarToggle}
+
         <div className="tags">
           {tags.map(tag => {
             return (
