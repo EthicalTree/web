@@ -28,6 +28,10 @@
     z-index: 5
     border-bottom: 2px solid $color-inverse
 
+    .action-reposition
+      @media (max-width: $screen-lg-max)//{}
+        display: none
+
     .tooltip-container
       & > *
         display: inline-block
@@ -54,7 +58,7 @@
       width: 30px
       height: 30px
 
-  @media (max-width: $screen-md-max)//{}
+  @media (max-width: $screen-lg-max)//{}
     .image-manager-image
       img
         transform: translateY(0px) !important

@@ -31,7 +31,7 @@ const Action = props => {
   }
 
   return (
-    <span>
+    <span className={`action-${type}`}>
       <Icon
         id={id}
         clickable
