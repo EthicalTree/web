@@ -239,10 +239,13 @@ class Listing extends React.Component {
   handleReposition = (image, reposition) => {
     const { dispatch, listing } = this.props
 
+    const originalY = image.coverOffsetY || 0
+    const diffY = reposition ? reposition.diffY : 0
+
     dispatch(updateListingImage({
       listingSlug: listing.slug,
       imageId: image.id,
-      offset: { y: image.coverOffsetY + reposition.diffY }
+      offset: { y: originalY + diffY }
     }))
   }
 
