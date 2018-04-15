@@ -22,7 +22,7 @@ export const Featured = props => {
       <Row>
         {featuredListings.map(l => {
           return (
-            <Col xs="12" lg="6" key={l.id}>
+            <Col xs="12" md="6" key={l.id}>
               <Result
                 listing={l}
               />

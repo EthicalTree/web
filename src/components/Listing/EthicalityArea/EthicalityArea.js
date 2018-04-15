@@ -36,7 +36,7 @@ const EthicalityArea = (props) => {
   return (
     <Card className={`ethicality ${className}`}>
       <CardBody
-        className="ethicalities d-flex justify-content-center d-md-block"
+        className="ethicalities d-flex justify-content-center d-lg-block"
       >
         {!hasEthicalities &&
           <p>No ethicalities set!</p>

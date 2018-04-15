@@ -35,3 +35,14 @@ export const autoPreventDefault = func => {
     safeFunc(event, func)
   }
 }
+
+export const dragClick = func => {
+  return event => {
+    if (event.touches && event.touches.length > 0) {
+      const touch = event.touches[0]
+      event.screenX = touch.screenX
+      event.screenY = touch.screenY
+    }
+    safeFunc(event, func)
+  }
+}

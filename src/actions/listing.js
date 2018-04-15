@@ -154,7 +154,7 @@ export const addImageToListing = data => {
       .then(response => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
-          dispatch({ type: 'SET_LISTING_CURRENT_IMAGE' })
+          dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: response.data.images.reverse()[0] })
         }
       })
       .catch(() => {})

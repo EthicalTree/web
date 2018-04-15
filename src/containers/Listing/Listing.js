@@ -51,7 +51,7 @@ const AsideInfo = (props) => {
 
   return (
     <aside className={className}>
-      <div className="d-none d-md-block">
+      <div className="d-none d-lg-block">
         <EthicalityArea
           dispatch={dispatch}
           ethicalityChoices={listing.ethicalityChoices}
@@ -199,7 +199,7 @@ const ListingContent = (props) => {
 
   return (
     <div className="row listing-content">
-      <div className="mobile-ethicalities col-12 d-md-none">
+      <div className="mobile-ethicalities col-12 d-lg-none">
         <EthicalityArea
           dispatch={dispatch}
           ethicalityChoices={listing.ethicalityChoices}
@@ -208,7 +208,7 @@ const ListingContent = (props) => {
       </div>
 
       <ListingInfo
-        className="listing-info col-xl-9 col-lg-8 col-md-7"
+        className="listing-info col-xl-9 col-lg-8"
         onClickDescriptionEdit={props.onClickDescriptionEdit}
         onClickLocationEdit={props.onClickLocationEdit}
         listing={listing}
@@ -217,7 +217,7 @@ const ListingContent = (props) => {
 
       <AsideInfo
         dispatch={dispatch}
-        className="col-xl-3 col-lg-4 col-md-5"
+        className="col-xl-3 col-lg-4"
         listing={listing}
       />
     </div>
@@ -323,6 +323,7 @@ class Listing extends React.Component {
               canEdit={hasPermission('update', listing)}
               signingParams={{ slug: listing.slug }}
               locationKey="listing-images"
+              repositionImages={true}
               fullScreenAction={{
                 handleAction: image => {
                   dispatch({ type: 'SET_FULLSCREEN_MODAL_IMAGES', data: [...listing.images] })

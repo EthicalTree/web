@@ -197,6 +197,7 @@ class ImageManager extends React.Component {
       addAction,
       fullScreenAction,
       onImageUploadProgress,
+      repositionImages,
       signingParams,
       imgStyle
     } = this.props
@@ -249,12 +250,15 @@ class ImageManager extends React.Component {
                   displayImages.map((image, i) => {
                     const url = s3Url('ethicaltree', image.key)
                     const key = `${image.key}-${i}`
+                    let repositionStyle = {}
 
-                    const offsetY = -image.coverOffsetY || 0
-                    const extraOffsetY = repositionData ? repositionData.diffY : 0
+                    if (repositionImages) {
+                      const offsetY = -image.coverOffsetY || 0
+                      const extraOffsetY = repositionData ? repositionData.diffY : 0
 
-                    const repositionStyle = {
-                      transform: `translateY(${offsetY - extraOffsetY}px)`
+                      repositionStyle = {
+                        transform: `translateY(${(offsetY - extraOffsetY) / 4}%)`
+                      }
                     }
 
                     return (
@@ -323,6 +327,7 @@ ImageManager.propTypes = {
   addAction: PropTypes.object,
   fullScreenAction: PropTypes.object,
   imgStyle: PropTypes.object,
+  repositionImages: PropTypes.bool
 }
 
 ImageManager.defaultProps = {
@@ -333,7 +338,8 @@ ImageManager.defaultProps = {
   repositionAction: {},
   fullScreenAction: {},
   imgStyle: {},
-  images: []
+  images: [],
+  repositionImages: false
 }
 
 export default ImageManager

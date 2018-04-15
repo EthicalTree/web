@@ -5,8 +5,25 @@
   border-top: none
 
   .listing-image-manager
+    min-height: 277px
+
     .image-manager-image
-      height: 300px
+      height: 277px
+
+      img
+        width: 100%
+
+    @media (max-width: $screen-lg-max)//{}
+      min-height: 232px
+
+      .image-manager-image
+        height: 232px
+
+    @media (max-width: $screen-md-max)//{}
+      min-height: 172px
+
+      .image-manager-image
+        height: 172px
 
   .external-link
     text-decoration: underline

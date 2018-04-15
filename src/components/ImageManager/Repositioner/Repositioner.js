@@ -6,13 +6,15 @@ import { Button } from 'reactstrap'
 
 import { Icon } from '../../Icon'
 
+import { dragClick } from '../../../utils/a11y'
+
 export class Repositioner extends React.Component {
   state = {
     isMouseDown: false,
     startPosition: null
   }
 
-  reposition = event => {
+  reposition = dragClick(event => {
     const { handleReposition } = this.props
     const { isMouseDown, startPosition } = this.state
 
@@ -25,9 +27,9 @@ export class Repositioner extends React.Component {
         diffY
       })
     }
-  }
+  })
 
-  handleMouseDown = event => {
+  handleMouseDown = dragClick(event => {
     const { offset } = this.props
 
     const offsetX = offset ? offset.diffX : 0
@@ -40,7 +42,7 @@ export class Repositioner extends React.Component {
         y: offsetY + event.screenY
       }
     })
-  }
+  })
 
   handleMouseUp = () => {
     this.setState({ isMouseDown: false })
