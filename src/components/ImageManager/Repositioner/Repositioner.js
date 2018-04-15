@@ -16,8 +16,6 @@ export class Repositioner extends React.Component {
     const { handleReposition } = this.props
     const { isMouseDown, startPosition } = this.state
 
-    event.preventDefault()
-
     if (isMouseDown) {
       const diffX = startPosition.x - event.screenX
       const diffY = startPosition.y - event.screenY
@@ -50,12 +48,16 @@ export class Repositioner extends React.Component {
 
   componentDidMount() {
     document.addEventListener('mousemove', this.reposition)
+    document.addEventListener('touchmove', this.reposition)
     document.addEventListener('mouseup', this.handleMouseUp)
+    document.addEventListener('touchend', this.handleMouseUp)
   }
 
   componentWillUnmount() {
     document.removeEventListener('mousemove', this.reposition)
+    document.removeEventListener('touchmove', this.reposition)
     document.removeEventListener('mouseup', this.handleMouseUp)
+    document.removeEventListener('touchend', this.handleMouseUp)
   }
 
   render() {
@@ -65,6 +67,7 @@ export class Repositioner extends React.Component {
       <div
         className="repositioner"
         onMouseDown={this.handleMouseDown}
+        onTouchStart={this.handleMouseDown}
       >
         <p>Click and drag to reposition</p>
 

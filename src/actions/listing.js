@@ -252,9 +252,10 @@ export const updateListingImage = ({ listingSlug, imageId, offset }) => {
     dispatch({ type: 'SET_IMAGE_LOADING', data: true })
 
     api.put(`/v1/listings/${listingSlug}/images/${imageId}`, data)
-      .then(response => {
-        if (response.data.images) {
-          dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
+      .then(({ data }) => {
+        if (data.images) {
+          dispatch({ type: 'SET_LISTING_IMAGES', data: data.images })
+          dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: data.images.find(i => i.id === imageId) })
         }
       })
       .catch(() => {})
