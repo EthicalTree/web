@@ -1,15 +1,16 @@
 const defaultSearch = {
-  query: '',
-  selectedEthicalities: [],
-  selectedResult: null,
-  listings: [],
-  featured: [],
+  categorySuggestions: [],
   currentPage: 1,
+  featured: [],
   hoveredResult: null,
+  listings: [],
   location: '',
   locationSuggestions: [],
-  categorySuggestions: [],
-  resultMode: 'listing'
+  matches: 0,
+  query: '',
+  resultMode: 'listing',
+  selectedEthicalities: [],
+  selectedResult: null,
 }
 
 const search = (state=defaultSearch, action) => {
@@ -32,14 +33,15 @@ const search = (state=defaultSearch, action) => {
     case 'SET_SEARCH_LOADING':
       return {...state, isSearchLoading: action.data}
     case 'SET_SEARCH_RESULTS':
-      const { listings, featured, pageCount, currentPage } = action.data
+      const { listings, featured, pageCount, currentPage, matches } = action.data
 
       return {
         ...state,
-        listings,
+        currentPage: parseInt(currentPage, 10),
         featured,
+        listings,
+        matches,
         pageCount: parseInt(pageCount, 10),
-        currentPage: parseInt(currentPage, 10)
       }
     case 'SET_SEARCH_ETHICALITIES':
       return {...state, selectedEthicalities: action.data}

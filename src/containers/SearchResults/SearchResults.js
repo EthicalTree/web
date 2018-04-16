@@ -54,7 +54,21 @@ const SearchResults = (props) => {
       <Row className="mt-2 no-gutters">
         <Col xs="12" lg="9">
           <div className="search-listings">
-            <h5 className="p-3">Search Results</h5>
+
+            {search.matches === 0 &&
+              <React.Fragment>
+                <div className="no-matches">
+                  Oh no, nothing matched your search!
+                </div>
+
+                <h5 className="p-3">Places you might like</h5>
+              </React.Fragment>
+            }
+
+            {search.matches > 0 &&
+              <h5 className="p-3">Search Results</h5>
+            }
+
             <div className="d-flex flex-wrap align-items-stretch">
               {hasListings &&
                 search.listings.map(listing => (
@@ -92,7 +106,7 @@ const SearchResults = (props) => {
         </Col>
       </Row>
 
-      {hasListings &&
+      {hasListings && search.matches > 0 &&
         <Row className="text-center">
           <Paginator
             pageCount={search.pageCount}
