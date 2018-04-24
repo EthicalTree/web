@@ -2,6 +2,7 @@ import moment from 'moment-timezone'
 
 import { api } from '../utils/api'
 import { error } from '../utils/notifications'
+import { trackEvent } from '../utils/ga'
 
 export const getListing = (slug) => {
   return dispatch => {
@@ -28,6 +29,7 @@ export const addListing = (data, history) => {
   return dispatch => {
     dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
+
     api.post('/v1/listings', { listing: data })
       .then(response => {
         if (response.data.errors) {
@@ -36,6 +38,13 @@ export const addListing = (data, history) => {
         else {
           dispatch({ type: 'SET_LISTING', data: response.data })
           dispatch({ type: 'CLOSE_MODAL' })
+
+          trackEvent({
+            action: 'Add Listing',
+            category: 'Listing',
+            label: response.data.slug
+          })
+
           history.push(`/listings/${response.data.slug}`)
         }
       })
@@ -89,6 +98,12 @@ export const editEthicalities = (listingSlug, ethicalities) => {
         else {
           dispatch({ type: 'SET_LISTING_ETHICALITIES', data: response.data.ethicalities })
           dispatch({ type: 'CLOSE_MODAL' })
+
+          trackEvent({
+            action: 'Edit Listing Ethicalities',
+            category: 'Listing',
+            label: listingSlug
+          })
         }
       })
       .catch(() => {})
@@ -110,6 +125,12 @@ export const editDescription = (data) => {
         else {
           dispatch({ type: 'SET_LISTING', data: response.data })
           dispatch({ type: 'CLOSE_MODAL' })
+
+          trackEvent({
+            action: 'Edit Listing Description',
+            category: 'Listing',
+            label: data.slug
+          })
         }
       })
       .catch(() => {})
@@ -132,6 +153,12 @@ export const editLocation = (listingSlug, data) => {
         else {
           dispatch({ type: 'SET_LISTING_LOCATION', data: response.data.locations})
           dispatch({ type: 'CLOSE_MODAL' })
+
+          trackEvent({
+            action: 'Edit Listing Location',
+            category: 'Listing',
+            label: listingSlug
+          })
         }
       })
       .catch(error => {
@@ -155,6 +182,12 @@ export const addImageToListing = data => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
           dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: response.data.images.reverse()[0] })
+
+          trackEvent({
+            action: 'Add Image to Listing',
+            category: 'Listing',
+            label: listingSlug
+          })
         }
       })
       .catch(() => {})
@@ -173,6 +206,12 @@ export const addImageToMenu = data => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_MENU_IMAGES', data: response.data.images })
           dispatch({ type: 'SET_LISTING_MENU_CURRENT_IMAGE' })
+
+          trackEvent({
+            action: 'Add Image to Menu',
+            category: 'Listing',
+            label: listingSlug
+          })
         }
       })
       .catch(() => {})
@@ -194,6 +233,12 @@ export const deleteImageFromListing = data => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
           dispatch({ type: 'SET_LISTING_CURRENT_IMAGE' })
+
+          trackEvent({
+            action: 'Remove Image from Listing',
+            category: 'Listing',
+            label: listingSlug
+          })
         }
       })
       .catch(() => {})
@@ -214,6 +259,12 @@ export const deleteImageFromMenu = data => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_MENU_IMAGES', data: response.data.images })
           dispatch({ type: 'SET_LISTING_MENU_CURRENT_IMAGE' })
+
+          trackEvent({
+            action: 'Remove Image from Menu',
+            category: 'Listing',
+            label: listingSlug
+          })
         }
       })
       .catch(() => {})
@@ -234,6 +285,12 @@ export const makeImageCover = data => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
           dispatch({ type: 'SET_LISTING_CURRENT_IMAGE' })
+
+          trackEvent({
+            action: 'Make Image Cover',
+            category: 'Listing',
+            label: listingSlug
+          })
         }
       })
       .catch(() => {})
@@ -256,6 +313,12 @@ export const updateListingImage = ({ listingSlug, imageId, offset }) => {
         if (data.images) {
           dispatch({ type: 'SET_LISTING_IMAGES', data: data.images })
           dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: data.images.find(i => i.id === imageId) })
+
+          trackEvent({
+            action: 'Reposition Listing Image',
+            category: 'Listing',
+            label: listingSlug
+          })
         }
       })
       .catch(() => {})
@@ -287,6 +350,12 @@ export const saveOperatingHours = (listingSlug, operatingHours) => {
         if (operatingHours) {
           dispatch(getListing(listingSlug))
           dispatch({ type: 'CLOSE_MODAL' })
+
+          trackEvent({
+            action: 'Save Listing Operating Hours',
+            category: 'Listing',
+            label: listingSlug
+          })
         }
       })
       .catch(() => {})

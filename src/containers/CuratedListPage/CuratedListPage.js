@@ -38,7 +38,10 @@ export class CuratedListPage extends React.Component {
             {curatedList.listings.map(l => {
               return (
                 <div key={l.id} className="curated-list-listing">
-                  <Result listing={l} />
+                  <Result
+                    listing={l}
+                    location="Collection Page"
+                  />
                 </div>
               )
             })}

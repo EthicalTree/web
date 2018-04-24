@@ -27,6 +27,7 @@ import { EthicalityBar } from '../Ethicality/Ethicality'
 
 import etLogo from './images/et-logo.svg'
 import { isCurrentPath } from '../../utils/url'
+import { trackEvent } from '../../utils/ga'
 
 import { toggleSearchEthicalities } from '../../actions/search'
 
@@ -68,7 +69,16 @@ const Header = props => {
           handleSkip={handleSkip}
         />
 
-        <Link className="navbar-brand" to="/">
+        <Link
+          className="navbar-brand"
+          to="/"
+          onClick={() => {
+            trackEvent({
+              action: 'Clicked Home Button',
+              category: 'General'
+            })
+          }}
+        >
           <span className="sr-only">EthicalTree</span>
           <img className="ml-4 mr-2" src={etLogo} alt="EthicalTree Logo" />
         </Link>
@@ -83,7 +93,6 @@ const Header = props => {
             <Search />
           </Col>
         }
-
 
         <Collapse isOpen={header.isOpen} navbar>
 

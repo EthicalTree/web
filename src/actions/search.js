@@ -1,6 +1,7 @@
 import querystring from 'querystring'
 import { api } from '../utils/api'
 import { setSavedSearchLocation } from '../utils/address'
+import { trackEvent } from '../utils/ga'
 
 export const performSearch = (query, ethicalities, location, page) => {
 
@@ -15,6 +16,12 @@ export const performSearch = (query, ethicalities, location, page) => {
 
   return dispatch => {
     dispatch({ type: 'SET_SEARCH_LOADING', data: true })
+
+    trackEvent({
+      action: 'Listing Search',
+      category: 'Search',
+      label: query
+    })
 
     api.get(`/v1/search?${querystring.stringify(queryObj)}`)
       .then(({ data }) => {
@@ -36,6 +43,12 @@ export const toggleSearchEthicalities = (ethicalities, slug) => {
   else {
     selectedEthicalities = [...ethicalities, slug]
   }
+
+  trackEvent({
+    action: 'Select Ethicality',
+    category: 'Ethicality',
+    label: slug
+  })
 
   return selectedEthicalities
 }

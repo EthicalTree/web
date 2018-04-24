@@ -8,9 +8,13 @@ if (GA_CODE) {
   ReactGA.initialize(process.env.REACT_APP_GA_CODE)
 }
 
-export const trackPageView = (options) => {
+const getCurrentUser = () => {
   const state = store.getState()
-  const user = options && options.user ? options.user : state.session.user
+  return state.session.user
+}
+
+export const trackPageView = (options) => {
+  const user = options && options.user ? options.user : getCurrentUser()
   const url = window.location.pathname + window.location.search
 
   if (user && user.admin) {
@@ -26,6 +30,17 @@ export const trackPageView = (options) => {
 
     ReactGA.pageview(url)
   }
+}
+
+export const trackEvent = options => {
+  const { action, category, label, value } = options
+
+  ReactGA.event({
+    action,
+    category,
+    label,
+    value
+  })
 }
 
 history.listen(location => {

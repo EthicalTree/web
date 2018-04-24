@@ -3,6 +3,7 @@ import { Marker } from 'react-google-maps'
 import { Icon } from '../../Icon'
 import { Map } from '../../Maps/Map'
 import { formatGetDirectionsUrl } from '../../../utils/address'
+import { trackEvent } from '../../../utils/ga'
 
 const ListingMap = props => {
   const { locations, canEdit, dispatch } = props
@@ -38,6 +39,12 @@ const ListingMap = props => {
             rel="noopener noreferrer"
             target="_blank"
             className="external-link"
+            onClick={() => {
+              trackEvent({
+                action: 'Clicked Get Direction',
+                category: 'Listing'
+              })
+            }}
           >
             Get Directions
             <Icon iconKey="extract" />

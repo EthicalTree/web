@@ -36,6 +36,7 @@ import { Loader } from '../../components/Loader'
 import { ImageManager } from '../../components/ImageManager'
 
 import { hasPermission, isAdmin } from '../../utils/permissions'
+import { trackEvent } from '../../utils/ga'
 
 import { setConfirm } from '../../actions/confirm'
 
@@ -91,6 +92,12 @@ const Bio = (props) => {
             rel="noopener noreferrer"
             target="_blank"
             className="external-link"
+            onClick={() => {
+              trackEvent({
+                action: 'Clicked Listing Website',
+                category: 'Listing'
+              })
+            }}
           >
             Website
             <Icon iconKey="extract" />

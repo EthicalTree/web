@@ -76,6 +76,7 @@ const SearchResults = (props) => {
                     <Result
                       listing={listing}
                       hovered={listing.slug === search.hoveredResult}
+                      location="Search Results"
                     />
                   </Col>
                 ))
@@ -98,6 +99,7 @@ const SearchResults = (props) => {
                   <Result
                     listing={listing}
                     hovered={listing.slug === search.hoveredResult}
+                    location="Featured Search Results"
                   />
                 </Col>
               ))}
@@ -194,6 +196,7 @@ class SearchResultsPage extends React.Component {
             className="result-overlay"
             key={listing.slug}
             listing={listing}
+            location="Search Results Map"
             smallView={true}
           />
         </CustomOverlayView>

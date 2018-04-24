@@ -15,6 +15,7 @@ import { OpenClose } from '../../OpenClose'
 
 import { listingProps } from '../../../utils/types'
 import { s3Url } from '../../../utils/s3'
+import { trackEvent } from '../../../utils/ga'
 import { localizedDates } from '../../../models/hours'
 
 export class Result extends React.Component {
@@ -30,14 +31,24 @@ export class Result extends React.Component {
   }
 
   render() {
-    const { listing, hovered, className } = this.props
+    const { listing, location, hovered, className } = this.props
     const { currentImage } = this.state
 
     const extraStyle = currentImage ? { backgroundImage: `url(${s3Url('thumbnail', currentImage.key)})` }  : {}
     const hoveredClass = hovered ? 'hovered' : ''
 
     return (
-      <Link to={`/listings/${listing.slug}`} className="listing-result">
+      <Link
+        to={`/listings/${listing.slug}`}
+        className="listing-result"
+        onClick={() => {
+          trackEvent({
+            action: 'Clicked listing',
+            category: 'Listing',
+            label: location
+          })
+        }}
+      >
         <Card className={`hoverable ${hoveredClass} ${className}`}>
           <div
             className="card-img"
@@ -80,7 +91,8 @@ export class Result extends React.Component {
 }
 
 Result.propTypes = {
-  listing: PropTypes.shape(listingProps)
+  listing: PropTypes.shape(listingProps),
+  location: PropTypes.string
 }
 
 Result.defaultProps = {

@@ -10,6 +10,7 @@ import { Container } from 'reactstrap'
 import { Icon } from '../Icon'
 
 import { isCurrentPath } from '../../utils/url'
+import { trackEvent } from '../../utils/ga'
 
 class Footer extends React.PureComponent {
   render() {
@@ -38,6 +39,13 @@ class Footer extends React.PureComponent {
                 href="https://www.facebook.com/ethicaltree"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => {
+                  trackEvent({
+                    action: 'Clicked Social Media',
+                    category: 'Social Media',
+                    label: 'Facebook'
+                  })
+                }}
               >
                 <Icon iconKey="facebook" />
               </a>
@@ -46,6 +54,13 @@ class Footer extends React.PureComponent {
                 href="https://www.twitter.com/ethicaltree"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => {
+                  trackEvent({
+                    action: 'Clicked Social Media',
+                    category: 'Social Media',
+                    label: 'Twitter'
+                  })
+                }}
               >
                 <Icon iconKey="twitter" />
               </a>

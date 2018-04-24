@@ -25,6 +25,7 @@ export const Featured = props => {
             <Col xs="12" md="6" key={l.id}>
               <Result
                 listing={l}
+                location="Featured Listing"
               />
             </Col>
           )

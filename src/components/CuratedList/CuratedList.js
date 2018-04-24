@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 
 import { Result } from '../Search/Result'
 
+import { trackEvent } from '../../utils/ga'
+
 export const CuratedList = props => {
   const { listings, name, slug } = props
 
@@ -19,6 +21,13 @@ export const CuratedList = props => {
         <Link
           to={`/collections/${slug}`}
           className="see-more-link"
+          onClick={() => {
+            trackEvent({
+              action: 'View Collection',
+              category: 'Collections',
+              label: name
+            })
+          }}
         >
           See all
         </Link>
@@ -27,7 +36,11 @@ export const CuratedList = props => {
       <div className="listings">
         {listings.map(l => {
           return (
-            <Result key={l.id} listing={l} />
+            <Result
+              key={l.id}
+              listing={l}
+              location="Collection"
+            />
           )
         })}
       </div>
