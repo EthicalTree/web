@@ -1,11 +1,11 @@
-// Ethicality Icons
+// Ethicality
 import LeafIcon from './RawIcons/LeafIcon'
 import VeganIcon from './RawIcons/VeganIcon'
 import BriefcaseIcon from './RawIcons/BriefcaseIcon'
 import BalanceIcon from './RawIcons/BalanceIcon'
 import BasketIcon from './RawIcons/BasketIcon'
 
-// Utility Icons
+// Utility
 import SearchIcon from './RawIcons/SearchIcon'
 import RoadSignIcon from './RawIcons/RoadSignIcon'
 import CircleExtractIcon from './RawIcons/CircleExtractIcon'
@@ -28,13 +28,17 @@ import TelephoneIcon from './RawIcons/TelephoneIcon'
 import SourceIcon from './RawIcons/SourceIcon'
 import MoveIcon from './RawIcons/MoveIcon'
 
-// Date Time Icons
+// Date Time
 import StopwatchIcon from './RawIcons/StopwatchIcon'
 import StopwatchCrossIcon from './RawIcons/StopwatchCrossIcon'
 import StopwatchRunningIcon from './RawIcons/StopwatchRunningIcon'
 
-// Map Icons
+// Map
 import Map2Icon from './RawIcons/Map2Icon'
+
+// Social
+import Facebook from './SocialIcons/Facebook'
+import Twitter from './SocialIcons/Twitter'
 
 export default {
   vegetarian: LeafIcon,
@@ -69,5 +73,8 @@ export default {
   stopwatch_cross: StopwatchCrossIcon,
   stopwatch_running: StopwatchRunningIcon,
   map: Map2Icon,
-  extract: CircleExtractIcon
+  extract: CircleExtractIcon,
+
+  facebook: Facebook,
+  twitter: Twitter
 }
