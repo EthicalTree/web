@@ -180,6 +180,11 @@ class SearchResultsPage extends React.Component {
 
     if (selectedResult) {
       const listing = listings.find(r => r.slug === selectedResult)
+
+      if (!listing) {
+        return null
+      }
+
       const location = listing.locations[0]
 
       return (
