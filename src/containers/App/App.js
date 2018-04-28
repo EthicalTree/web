@@ -106,6 +106,18 @@ class InnerApp extends React.Component {
               />
 
               <Route
+                exact
+                path="/faq"
+                component={split(() => import('../FAQ/FAQ'))}
+              />
+
+              <Route
+                exact
+                path="/about-us"
+                component={split(() => import('../AboutUs/AboutUs'))}
+              />
+
+              <Route
                 path="/admin"
                 component={split(() => import('../Admin/AdminPage/AdminPage'))}
               />

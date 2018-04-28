@@ -26,6 +26,14 @@ class Footer extends React.PureComponent {
           </div>
 
           <div>
+            <Link to="/about-us">
+              About Us
+            </Link>
+
+            <Link to="/faq">
+              FAQ
+            </Link>
+
             <Link to="/contact-us">
               Contact Us
             </Link>
