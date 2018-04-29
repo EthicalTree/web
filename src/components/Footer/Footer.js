@@ -72,6 +72,21 @@ class Footer extends React.PureComponent {
               >
                 <Icon iconKey="twitter" />
               </a>
+
+              <a
+                href="https://www.instagram.com/ethicaltree_Ottawa/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  trackEvent({
+                    action: 'Clicked Social Media',
+                    category: 'Social Media',
+                    label: 'Instagram'
+                  })
+                }}
+              >
+                <Icon iconKey="instagram" />
+              </a>
             </div>
           </div>
         </Container>

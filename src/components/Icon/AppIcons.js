@@ -39,6 +39,7 @@ import Map2Icon from './RawIcons/Map2Icon'
 // Social
 import Facebook from './SocialIcons/Facebook'
 import Twitter from './SocialIcons/Twitter'
+import Instagram from './SocialIcons/Instagram'
 
 export default {
   vegetarian: LeafIcon,
@@ -76,5 +77,6 @@ export default {
   extract: CircleExtractIcon,
 
   facebook: Facebook,
-  twitter: Twitter
+  twitter: Twitter,
+  instagram: Instagram
 }
