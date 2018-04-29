@@ -2,10 +2,12 @@ import './CuratedListPage.css'
 
 import React from 'react'
 import { connect } from 'react-redux'
+import { Container } from 'reactstrap'
 
 import { Loader } from '../../components/Loader'
 import { Result } from '../../components/Search/Result'
 import { Paginator } from '../../components/Paginator'
+import { Featured } from '../../components/Listing/Featured'
 
 import { getCuratedList } from '../../actions/curatedList'
 
@@ -56,6 +58,16 @@ export class CuratedListPage extends React.Component {
               page: data.selected
             }))}
           />
+
+          {curatedList.featuredListings &&
+            <Container className="mb-4">
+              <Featured
+                featuredListings={curatedList.featuredListings}
+                lg={3}
+              />
+            </Container>
+          }
+
         </Loader>
       </div>
     )

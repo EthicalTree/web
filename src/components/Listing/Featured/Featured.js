@@ -9,7 +9,7 @@ import { Result } from '../../Search/Result'
 import { listingProps } from '../../../utils/types'
 
 export const Featured = props => {
-  const { featuredListings } = props
+  const { featuredListings, ...rest } = props
 
   if (featuredListings.length < 1) {
     return null
@@ -22,7 +22,7 @@ export const Featured = props => {
       <Row>
         {featuredListings.map(l => {
           return (
-            <Col xs="12" md="6" key={l.id}>
+            <Col {...rest} key={l.id}>
               <Result
                 listing={l}
                 location="Featured Listing"
@@ -36,11 +36,15 @@ export const Featured = props => {
 }
 
 Featured.propTypes = {
-  featuredListings: PropTypes.arrayOf(PropTypes.shape(listingProps))
+  featuredListings: PropTypes.arrayOf(PropTypes.shape(listingProps)),
+  xs: PropTypes.number,
+  md: PropTypes.number,
 }
 
 Featured.defaultProps = {
-  featuredListings: []
+  featuredListings: [],
+  xs: 12,
+  md: 6
 }
 
 export default Featured

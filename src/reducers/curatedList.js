@@ -1,4 +1,5 @@
 const defaultState = {
+  featuredListings: null,
   hashtag: '',
   listings: [],
   isLoading: false,
