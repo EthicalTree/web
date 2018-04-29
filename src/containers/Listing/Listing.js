@@ -190,7 +190,7 @@ const ListingInfo = (props) => {
 
       <div className="clearfix"></div>
 
-      <Featured featuredListings={listing.featuredListings} />
+      <Featured />
     </div>
   )
 }

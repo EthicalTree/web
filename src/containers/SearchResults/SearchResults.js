@@ -11,6 +11,7 @@ import { Search } from '../../components/Search/Search'
 import { ResultsMap } from '../../components/Search/ResultsMap'
 import { Result } from '../../components/Search/Result'
 import { MapSwitcher } from '../../components/Search/MapSwitcher'
+import { Featured } from '../../components/Listing/Featured'
 
 import { Loader } from '../../components/Loader'
 import { EthicalityBar } from '../../components/Ethicality/Ethicality'
@@ -91,19 +92,11 @@ const SearchResults = (props) => {
         </Col>
 
         <Col xs="12" lg="3">
-          <div className="featured-listings">
-            <h5 className="featured-listings-header">Featured</h5>
-            <div className="d-flex flex-wrap flex-direction-column">
-              {search.featured.map(listing => (
-                <Col key={listing.slug} xs="12" sm="6" lg="12">
-                  <Result
-                    listing={listing}
-                    hovered={listing.slug === search.hoveredResult}
-                    location="Featured Search Results"
-                  />
-                </Col>
-              ))}
-            </div>
+          <div className="d-flex flex-wrap flex-direction-column">
+            <Featured
+              sm={6}
+              lg={12}
+            />
           </div>
         </Col>
       </Row>

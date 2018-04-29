@@ -61,6 +61,28 @@ export const toggleSearchEthicalities = (ethicalities, slug) => {
   return selectedEthicalities
 }
 
+export const getFeaturedListings = () => {
+  const location = getSavedSearchLocation()
+
+  const data = {
+    location,
+    is_featured: true
+  }
+
+  return dispatch => {
+    dispatch({ type: 'SET_FEATURED_LISTINGS_LOADING', data: true })
+
+    api.get(`/v1/listings?${querystring.stringify(data)}`)
+      .then(results => {
+        dispatch({ type: 'SET_FEATURED_LISTINGS', data: results.data })
+      })
+      .catch(() => {})
+      .then(() => {
+        dispatch({ type: 'SET_FEATURED_LISTINGS_LOADING', data: false })
+      })
+  }
+}
+
 export const getLocations = query => {
   const queryObj = { query }
 

@@ -13,10 +13,12 @@ export class ResultsMap extends React.Component {
   }
 
   shouldComponentUpdate(newProps) {
-    const searchChanged = newProps.location.search !== this.props.location.search
-    const selectionChanged = newProps.search.selectedResult !== this.props.search.selectedResult
+    const { search, location } = this.props
+    const searchChanged = newProps.location.search !== location.search
+    const featuredChanged = newProps.search.featured.map(id => id).join(',') !== search.featured.map(id => id).join(',')
+    const selectionChanged = newProps.search.selectedResult !== search.selectedResult
 
-    return searchChanged || selectionChanged
+    return searchChanged || selectionChanged || featuredChanged
   }
 
   render() {
@@ -32,15 +34,16 @@ export class ResultsMap extends React.Component {
     const { zoom } = this.state
     const hiddenClass = search.resultMode === 'listing' ? 'd-none d-xl-block' : ''
     let bounds = new window.google.maps.LatLngBounds()
+    const boundListings = [...search.listings, ...search.featured]
 
-    search.listings.forEach(l => {
+    boundListings.forEach(l => {
       const location = l.locations[0]
       bounds.extend(new window.google.maps.LatLng(location.lat, location.lng))
     })
 
     const markers = (
       <Markers
-        listings={search.listings}
+        listings={boundListings}
         onMarkerClick={handleMarkerClick}
         onMarkerMouseOver={handleMarkerMouseOver}
         onMarkerMouseOut={handleMarkerMouseOut}

@@ -2,6 +2,7 @@ const defaultSearch = {
   categorySuggestions: [],
   currentPage: 1,
   featured: [],
+  featuredListingsLoading: false,
   hoveredResult: null,
   listings: [],
   location: '',
@@ -32,13 +33,16 @@ const search = (state=defaultSearch, action) => {
       return {...state, query: action.data || ''}
     case 'SET_SEARCH_LOADING':
       return {...state, isSearchLoading: action.data}
+    case 'SET_FEATURED_LISTINGS':
+      return {...state, featured: action.data}
+    case 'SET_FEATURED_LISTINGS_LOADING':
+      return {...state, featuredListingsLoading: action.data}
     case 'SET_SEARCH_RESULTS':
-      const { listings, featured, pageCount, currentPage, matches } = action.data
+      const { listings, pageCount, currentPage, matches } = action.data
 
       return {
         ...state,
         currentPage: parseInt(currentPage, 10),
-        featured,
         listings,
         matches,
         pageCount: parseInt(pageCount, 10),

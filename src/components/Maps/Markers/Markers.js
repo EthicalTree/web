@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import uniqBy from 'lodash/uniqBy'
 import Marker from './Marker'
 
 const Markers = props => {
@@ -12,7 +13,7 @@ const Markers = props => {
 
   return (
     <div>
-      {listings.map(listing => {
+      {uniqBy(listings, l => l.id).map(listing => {
         const location = listing.locations[0]
 
         return (

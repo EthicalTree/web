@@ -71,14 +71,11 @@ export class CuratedListPage extends React.Component {
             }))}
           />
 
-          {curatedList.featuredListings &&
-            <Container className="mb-4">
-              <Featured
-                featuredListings={curatedList.featuredListings}
-                lg={3}
-              />
-            </Container>
-          }
+          <Container className="mb-4">
+            <Featured
+              lg={3}
+            />
+          </Container>
 
         </Loader>
       </div>
