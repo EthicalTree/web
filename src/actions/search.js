@@ -1,6 +1,6 @@
 import querystring from 'querystring'
 import { api } from '../utils/api'
-import { setSavedSearchLocation } from '../utils/address'
+import { setSavedSearchLocation, getSavedSearchLocation } from '../utils/address'
 import { trackEvent } from '../utils/ga'
 
 export const performSearch = (query, ethicalities, location, page) => {
@@ -11,8 +11,6 @@ export const performSearch = (query, ethicalities, location, page) => {
     location,
     page
   }
-
-  setSavedSearchLocation(location)
 
   return dispatch => {
     dispatch({ type: 'SET_SEARCH_LOADING', data: true })
@@ -31,6 +29,16 @@ export const performSearch = (query, ethicalities, location, page) => {
       .then(() => {
         dispatch({ type: 'SET_SEARCH_LOADING', data: false })
       })
+  }
+}
+
+export const setSearchLocation = l => {
+  const location = l ? l : getSavedSearchLocation()
+
+  return dispatch => {
+    setSavedSearchLocation(location)
+    dispatch({ type: 'SET_SEARCH_LOCATION', data: location })
+    dispatch({ type: 'SET_USER_LOCATION', data: location })
   }
 }
 
@@ -54,9 +62,7 @@ export const toggleSearchEthicalities = (ethicalities, slug) => {
 }
 
 export const getLocations = query => {
-  const queryObj = {
-    query
-  }
+  const queryObj = { query }
 
   return dispatch => {
     api.get(`/v1/locations?${querystring.stringify(queryObj)}`)

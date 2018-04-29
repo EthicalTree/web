@@ -24,6 +24,14 @@ export class FrontPage extends React.Component {
     dispatch(getCuratedLists())
   }
 
+  componentDidUpdate(prevProps) {
+    const { dispatch, user } = this.props
+
+    if (user.location !== prevProps.user.location) {
+      dispatch(getCuratedLists())
+    }
+  }
+
   render() {
     const {
       app,
@@ -85,7 +93,8 @@ const select = (state) => {
   return {
     app: state.app,
     frontPage: state.frontPage,
-    search: state.search
+    search: state.search,
+    user: state.user
   }
 }
 

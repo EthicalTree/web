@@ -11,6 +11,10 @@ import { trackEvent } from '../../utils/ga'
 export const CuratedList = props => {
   const { listings, name, slug } = props
 
+  if (!listings.length > 0) {
+    return null
+  }
+
   return (
     <div className="curated-list">
       <div className="curated-list-title d-flex align-items-center">

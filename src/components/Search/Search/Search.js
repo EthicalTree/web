@@ -14,7 +14,7 @@ import {
 import querystring from 'querystring'
 import { IconInput } from '../../Icon'
 
-import { getCategories, getLocations } from '../../../actions/search'
+import { getCategories, getLocations, setSearchLocation } from '../../../actions/search'
 import { getSavedSearchLocation } from '../../../utils/address'
 
 const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
@@ -48,16 +48,13 @@ const LocationInput = props => {
 
 class Search extends React.Component {
 
-  onLocationSearch = e => {
-    e.preventDefault()
-  }
-
   constructor(props) {
     super(props)
 
     this.state = {
       query: '',
       dirty: false,
+      location: '',
       isLocationFocused: false
     }
   }
@@ -65,7 +62,7 @@ class Search extends React.Component {
   onLocationClick(e) {
     e.preventDefault()
     const { dispatch } = this.props
-    dispatch({ type: 'SET_SEARCH_LOCATION', data: '' })
+    this.setState({ location: '' })
     dispatch(getLocations(''))
     this.locationInput.focus()
   }
@@ -104,7 +101,7 @@ class Search extends React.Component {
   render() {
     const { search, dispatch } = this.props
 
-    const { isLocationFocused } = this.state
+    const { isLocationFocused, location } = this.state
     let { query, dirty } = this.state
 
     if (!dirty && search.query) {
@@ -117,7 +114,11 @@ class Search extends React.Component {
           <Col xs="12" md="5" lg="4">
             <Autosuggest
               suggestions={search.locationSuggestions}
-              onSuggestionsFetchRequested={({ value }) => dispatch(getLocations(value))}
+              onSuggestionsFetchRequested={({ value }) => {
+                if (isLocationFocused) {
+                  dispatch(getLocations(value))
+                }
+              }}
               onSuggestionsClearRequested={() => dispatch({ type: 'CLEAR_SEARCH_LOCATIONS' })}
               getSuggestionValue={suggestion => suggestion}
               onSuggestionSelected={this.onLocationSelected.bind(this)}
@@ -129,13 +130,18 @@ class Search extends React.Component {
                 onClick: this.onLocationClick.bind(this),
                 isLocationFocused: isLocationFocused,
                 innerRef: locationInput => { this.locationInput = locationInput },
-                location: search.location,
-                value: search.location,
+                location: location,
+                value: location,
                 placeholder: 'Where?',
                 onFocus: () => { this.setState({ isLocationFocused: true }) },
-                onBlur: () => { this.setState({ isLocationFocused: false }) },
+                onBlur: () => {
+                  setTimeout(() => {
+                    this.setState({ isLocationFocused: false })
+                    dispatch(setSearchLocation(this.state.location))
+                  }, 0)
+                },
                 onChange: (e, value) => {
-                  dispatch({ type: 'SET_SEARCH_LOCATION', data: value.newValue })
+                  this.setState({ location: value.newValue })
                 }
               }}
             />

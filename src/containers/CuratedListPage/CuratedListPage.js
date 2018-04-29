@@ -14,6 +14,18 @@ import { getCuratedList } from '../../actions/curatedList'
 export class CuratedListPage extends React.Component {
 
   componentDidMount() {
+    this.fetchCuratedList()
+  }
+
+  componentDidUpdate(prevProps) {
+    const { user } = this.props
+
+    if (user.location !== prevProps.user.location) {
+      this.fetchCuratedList()
+    }
+  }
+
+  fetchCuratedList() {
     const { dispatch, match } = this.props
 
     dispatch(getCuratedList({
@@ -75,7 +87,8 @@ export class CuratedListPage extends React.Component {
 }
 
 const select = state => ({
-  curatedList: state.curatedList
+  curatedList: state.curatedList,
+  user: state.user
 })
 
 export default connect(select)(CuratedListPage)
