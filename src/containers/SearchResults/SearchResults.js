@@ -169,10 +169,14 @@ class SearchResultsPage extends React.Component {
   }
 
   getOverlay() {
-    const { selectedResult, listings } = this.props.search
+    const { selectedResult, listings, featured } = this.props.search
 
     if (selectedResult) {
-      const listing = listings.find(r => r.slug === selectedResult)
+      let listing = listings.find(r => r.slug === selectedResult)
+
+      if (!listing) {
+        listing = featured.find(r => r.slug === selectedResult)
+      }
 
       if (!listing) {
         return null
