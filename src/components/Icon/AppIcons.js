@@ -1,9 +1,9 @@
 // Ethicality
-import LeafIcon from './RawIcons/LeafIcon'
-import VeganIcon from './RawIcons/VeganIcon'
-import BriefcaseIcon from './RawIcons/BriefcaseIcon'
-import BalanceIcon from './RawIcons/BalanceIcon'
-import BasketIcon from './RawIcons/BasketIcon'
+import VegetarianIcon from './EthicalityIcons/VegetarianIcon'
+import VeganIcon from './EthicalityIcons/VeganIcon'
+import WomanOwnedIcon from './EthicalityIcons/WomanOwnedIcon'
+import FairTradeIcon from './EthicalityIcons/FairTradeIcon'
+import OrganicIcon from './EthicalityIcons/OrganicIcon'
 
 // Utility
 import SearchIcon from './RawIcons/SearchIcon'
@@ -41,11 +41,11 @@ import Facebook from './SocialIcons/Facebook'
 import Twitter from './SocialIcons/Twitter'
 
 export default {
-  vegetarian: LeafIcon,
+  vegetarian: VegetarianIcon,
   vegan: VeganIcon,
-  woman_owned: BriefcaseIcon,
-  fair_trade: BalanceIcon,
-  organic: BasketIcon,
+  woman_owned: WomanOwnedIcon,
+  fair_trade: FairTradeIcon,
+  organic: OrganicIcon,
 
   search: SearchIcon,
   road_sign: RoadSignIcon,
