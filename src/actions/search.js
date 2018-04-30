@@ -61,10 +61,11 @@ export const toggleSearchEthicalities = (ethicalities, slug) => {
   return selectedEthicalities
 }
 
-export const getFeaturedListings = () => {
+export const getFeaturedListings = ({ count }) => {
   const location = getSavedSearchLocation()
 
   const data = {
+    count,
     location,
     is_featured: true
   }

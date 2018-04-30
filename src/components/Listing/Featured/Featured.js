@@ -13,8 +13,8 @@ import { getFeaturedListings } from '../../../actions/search'
 export class Featured extends React.Component {
 
   componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(getFeaturedListings())
+    const { count, dispatch } = this.props
+    dispatch(getFeaturedListings({ count }))
   }
 
   render() {
@@ -55,11 +55,13 @@ const select = state => ({
 })
 
 Featured.propTypes = {
+  count: PropTypes.number,
   xs: PropTypes.number,
   md: PropTypes.number,
 }
 
 Featured.defaultProps = {
+  count: 4,
   xs: 12,
   md: 6
 }
