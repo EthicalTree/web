@@ -21,7 +21,6 @@ import {
 
 import AccountIcon from '../Session/AccountIcon'
 import { Search } from '../Search'
-import { Banner } from '../Banner'
 import { SkipLink } from '../SkipLink'
 import { EthicalityBar } from '../Ethicality/Ethicality'
 
@@ -51,18 +50,6 @@ const Header = props => {
 
   return (
     <header className={fixedHeaderWrapper}>
-      <Banner>
-        Please take a moment to give us your feedback on our beta
-        &nbsp;
-        <a
-          href="https://ethicaltree.wufoo.com/forms/m11y0bsz0si3gkw/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          here
-        </a>
-        . Your feedback is super important to us!
-      </Banner>
 
       <Navbar light expand="md" className={fixedHeader}>
         <SkipLink
@@ -98,6 +85,19 @@ const Header = props => {
 
           <Nav navbar className="ml-auto">
             <div className="mr-3 d-flex">
+              <NavItem>
+                <a
+                  className="nav-link"
+                  href=""
+                  onClick={e => {
+                    e.preventDefault()
+                    dispatch({ type: 'OPEN_MODAL', data: 'feedback' })
+                  }}
+                >
+                  Feedback
+                </a>
+              </NavItem>
+
               <NavItem>
                 <Link to="/collections" className="nav-link">
                   Collections

@@ -63,28 +63,31 @@ const TopBar = props => {
 }
 
 const BottomBar = props => {
+  const saveLabel = props.saveLabel || 'Save'
+  let saveButton
+
   if (props.onSave) {
-    const saveLabel = props.saveLabel || 'Save'
-
-    return (
-      <div className="bottom-bar text-right mt-5">
-        <Button
-          className="mr-2"
-          color="default"
-          onClick={props.onClose}>
-          Cancel
-        </Button>
-
-        <Button
-          color="primary"
-          onClick={props.onSave}>
-          {saveLabel}
-        </Button>
-      </div>
+    saveButton = (
+      <Button
+        color="primary"
+        onClick={props.onSave}>
+        {saveLabel}
+      </Button>
     )
   }
 
-  return <div></div>
+  return (
+    <div className="bottom-bar text-right mt-3">
+      <Button
+        className="mr-2"
+        color="default"
+        onClick={props.onClose}>
+        Cancel
+      </Button>
+
+      {saveButton}
+    </div>
+  )
 }
 
 class Modal extends React.Component {

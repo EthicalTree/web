@@ -16,6 +16,8 @@ import { SignupModal } from './SignupModal'
 import { VerifyEmailModal } from './VerifyEmailModal'
 import { ForgotPasswordModal } from './ForgotPasswordModal'
 
+import { FeedbackModal } from './FeedbackModal'
+
 import {
   NewTagModal,
   NewListModal,
@@ -39,7 +41,8 @@ const modals = {
   'new-tag': NewTagModal,
   'new-list': NewListModal,
   'admin-edit-listing': EditAdminListingModal,
-  'admin-edit-location': EditAdminLocationModal
+  'admin-edit-location': EditAdminLocationModal,
+  'feedback': FeedbackModal
 }
 
 const Modals = props => {
