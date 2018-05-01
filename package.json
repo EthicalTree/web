@@ -29,6 +29,7 @@
     "babel-plugin-ramda": "^1.4.3",
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
+    "core-js": "^2.5.5",
     "jquery": "^3.2.1",
     "lodash": "^4.17.5",
     "moment": "^2.18.1",

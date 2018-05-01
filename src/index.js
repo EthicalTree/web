@@ -1,4 +1,5 @@
 import './index.css'
+import './utils/polyfills.js'
 
 import React from 'react'
 import { render } from 'react-dom'
