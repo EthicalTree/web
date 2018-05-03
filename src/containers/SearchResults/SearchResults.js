@@ -38,7 +38,7 @@ const SearchResults = (props) => {
   }
 
   return (
-    <Col xs="12" xl="8" className={`search-results p-4 ${mobileHidden}`}>
+    <Col xs="12" xl="6" className={`search-results col-xxl-8 p-4 ${mobileHidden}`}>
       <Col className="d-lg-none d-xl-none mb-3" >
         <Search />
       </Col>
@@ -53,7 +53,7 @@ const SearchResults = (props) => {
       />
 
       <Row className="mt-2 no-gutters">
-        <Col xs="12" lg="9">
+        <Col xs="12" lg="9" xl="12" className="col-xxl-9">
           <div className="search-listings">
 
             {search.matches === 0 &&
@@ -73,7 +73,7 @@ const SearchResults = (props) => {
             <div className="d-flex flex-wrap align-items-stretch">
               {hasListings &&
                 search.listings.map(listing => (
-                  <Col key={listing.slug} xs="12" sm="6" lg="4">
+                  <Col key={listing.slug} xs="12" sm="6" lg="4" xl="6" className="col-xxl-4">
                     <Result
                       listing={listing}
                       hovered={listing.slug === search.hoveredResult}
@@ -91,11 +91,13 @@ const SearchResults = (props) => {
           </div>
         </Col>
 
-        <Col xs="12" lg="3">
+        <Col xs="12" lg="3" xl="12" className="col-xxl-3">
           <div className="d-flex flex-wrap flex-direction-column">
             <Featured
               sm={6}
               lg={12}
+              xl={6}
+              xxl={12}
             />
           </div>
         </Col>

@@ -18,7 +18,7 @@ export class Featured extends React.Component {
   }
 
   render() {
-    const { dispatch, search, ...rest } = this.props
+    const { dispatch, search, xxl, ...rest } = this.props
 
     if (search.featured.length < 1) {
       return null
@@ -36,7 +36,7 @@ export class Featured extends React.Component {
         <Row>
           {search.featured.map(l => {
             return (
-              <Col {...rest} key={l.id}>
+              <Col className={`col-xxl-${xxl}`} {...rest} key={l.id}>
                 <Result
                   listing={l}
                   location="Featured Listing"
