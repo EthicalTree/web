@@ -51,7 +51,7 @@ const Header = props => {
   return (
     <header className={fixedHeaderWrapper}>
 
-      <Navbar light expand="md" className={fixedHeader}>
+      <Navbar light expand="xl" className={fixedHeader}>
         <SkipLink
           handleSkip={handleSkip}
         />
@@ -70,16 +70,15 @@ const Header = props => {
           <img className="ml-4 mr-2" src={etLogo} alt="EthicalTree Logo" />
         </Link>
 
+        {hasHeaderSearch &&
+          <Col lg="7" className="d-none d-lg-block">
+            <Search />
+          </Col>
+        }
 
         <NavbarToggler
           onClick={e => { dispatch({ type: 'TOGGLE_HEADER_ACCESSIBLE' }) }}
         />
-
-        {hasHeaderSearch &&
-          <Col lg="7" xl="5" className="d-none d-lg-block">
-            <Search />
-          </Col>
-        }
 
         <Collapse isOpen={header.isOpen} navbar>
 

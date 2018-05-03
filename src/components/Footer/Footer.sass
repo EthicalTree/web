@@ -20,6 +20,7 @@ footer
       margin: $space-2 0
 
     a
+      white-space: nowrap
       color: $color-white
       margin: 0 $space-2
 
@@ -29,6 +30,9 @@ footer
 
     &.has-fixed-header
       width: 67%
+
+      @media (max-width: $screen-xl-max) // {}
+        width: 50%
 
     .container
       flex-direction: row
