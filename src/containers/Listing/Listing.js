@@ -190,7 +190,9 @@ const ListingInfo = (props) => {
 
       <div className="clearfix"></div>
 
-      <Featured />
+      {!listing.plan &&
+        <Featured />
+      }
     </div>
   )
 }
