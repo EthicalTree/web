@@ -9,6 +9,8 @@
 
     <meta name="et:opengraph">
 
+
+
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
@@ -23,6 +25,19 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "url": "https://beta.ethicaltree.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://beta.ethicaltree.com/s/{search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing&key=%REACT_APP_GOOGLE_MAPS_KEY%"></script>
 
