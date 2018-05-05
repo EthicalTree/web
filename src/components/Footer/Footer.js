@@ -74,7 +74,7 @@ class Footer extends React.PureComponent {
               </a>
 
               <a
-                href="https://www.instagram.com/ethicaltree_Ottawa/"
+                href="https://www.instagram.com/ethicaltree/"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
