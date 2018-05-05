@@ -3,8 +3,9 @@ import moment from 'moment-timezone'
 import { api } from '../utils/api'
 import { error } from '../utils/notifications'
 import { trackEvent } from '../utils/ga'
+import history from '../utils/history'
 
-export const getListing = (slug) => {
+export const getListing = slug => {
   return dispatch => {
     dispatch({ type: 'SET_GET_LISTING_LOADING', data: true })
 
@@ -19,9 +20,9 @@ export const getListing = (slug) => {
   }
 }
 
-export const gotoListing = (slug, history) => {
+export const gotoListing = ({ city, slug }) => {
   return dispatch => {
-    history.push(`/listings/${slug}`)
+    history.push(`/listings/${city}/${slug}`)
   }
 }
 

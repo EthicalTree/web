@@ -101,7 +101,7 @@ export class Listings extends React.Component {
               <tr key={l.id}>
                 <td>{l.id}</td>
                 <td>
-                  <Link to={`/listings/${l.slug}`} target="_blank">
+                  <Link to={`/listings/${l.city}/${l.slug}`} target="_blank">
                     {l.title}
                   </Link>
                 </td>

@@ -39,7 +39,7 @@ export class Result extends React.Component {
 
     return (
       <Link
-        to={`/listings/${listing.slug}`}
+        to={`/listings/${listing.city}/${listing.slug}`}
         className="listing-result"
         onClick={() => {
           trackEvent({

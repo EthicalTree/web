@@ -271,7 +271,10 @@ class Listing extends React.Component {
   componentWillReceiveProps(newProps) {
     const { match, dispatch } = this.props
 
-    if (newProps.match.params.slug !== match.params.slug) {
+    const slugChanged = newProps.match.params.slug !== match.params.slug
+    const cityChanged = newProps.match.params.city !== match.params.city
+
+    if (slugChanged || cityChanged) {
       dispatch(getListing(newProps.match.params.slug))
     }
   }
