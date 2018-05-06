@@ -59,6 +59,10 @@ export class CuratedListPage extends React.Component {
                 </div>
               )
             })}
+
+            {curatedList.listings.length === 0 &&
+              <i>There are no listings in this collection for your selected location.</i>
+            }
           </div>
 
           <Paginator

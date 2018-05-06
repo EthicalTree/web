@@ -14,6 +14,10 @@ export const Paginator = (props) => {
     onPageChange
   } = props
 
+  if (pageCount <= 1) {
+    return null
+  }
+
   const previous = <Icon iconKey="chevron_left" />
   const next = <Icon iconKey="chevron_right" />
 

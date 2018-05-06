@@ -1,4 +1,5 @@
 import React from 'react'
+import querystring from 'querystring'
 import { Provider, connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 
@@ -25,8 +26,10 @@ class InnerApp extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(initApp())
+    const { dispatch, location } = this.props
+    dispatch(initApp({
+      queryParams: querystring.parse(location.search.slice(1))
+    }))
   }
 
   render() {

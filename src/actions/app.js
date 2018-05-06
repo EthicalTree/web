@@ -1,12 +1,20 @@
 import store from 'store'
 import { api, authenticate } from '../utils/api'
 import { trackPageView } from '../utils/ga'
+import { setSearchLocation } from './search'
 
 export const initApp = (options={}) => {
   const token = store.get('ETHICALTREE_AUTH_TOKEN')
+  const { location } = options.queryParams
 
   return dispatch => {
     dispatch({ type: 'SET_LOADING', data: true })
+
+    console.log(options)
+
+    if (location) {
+      dispatch(setSearchLocation(location))
+    }
 
     const requests = [
       api.get('/sessions'),
