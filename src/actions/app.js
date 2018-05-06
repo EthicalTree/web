@@ -10,8 +10,6 @@ export const initApp = (options={}) => {
   return dispatch => {
     dispatch({ type: 'SET_LOADING', data: true })
 
-    console.log(options)
-
     if (location) {
       dispatch(setSearchLocation(location))
     }
