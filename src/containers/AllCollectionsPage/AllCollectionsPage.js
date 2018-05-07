@@ -31,6 +31,10 @@ export class AllCollectionsPage extends React.Component {
 
           <div className="collections">
             {collections.collections.map(c => {
+              if (c.listings.length === 0) {
+                return null
+              }
+
               return (
                 <Link
                   key={c.id}
