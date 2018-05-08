@@ -2,7 +2,6 @@ import './CuratedList.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Col } from 'reactstrap'
 import { Link } from 'react-router-dom'
 
 import { Result } from '../Search/Result'
