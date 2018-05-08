@@ -16,6 +16,14 @@ export class AllCollectionsPage extends React.Component {
     dispatch(getCuratedLists())
   }
 
+  componentDidUpdate(nextProps) {
+    const { dispatch, search } = this.props
+
+    if (search.location !== nextProps.search.location) {
+      dispatch(getCuratedLists())
+    }
+  }
+
   render() {
     const { collections } = this.props
 
@@ -53,7 +61,8 @@ export class AllCollectionsPage extends React.Component {
 }
 
 const select = state => ({
-  collections: state.collections
+  collections: state.collections,
+  search: state.search
 })
 
 export default connect(select)(AllCollectionsPage)
