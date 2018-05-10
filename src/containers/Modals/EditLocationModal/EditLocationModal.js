@@ -81,7 +81,7 @@ class EditLocationModal extends React.Component {
   }
 
   render() {
-    const { listing, modal } = this.props
+    const { modal } = this.props
     let { location } = this.state
 
     let marker
