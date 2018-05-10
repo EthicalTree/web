@@ -24,9 +24,11 @@ class EditLocationModal extends React.Component {
 
   constructor(props) {
     super(props)
+    const { listing } = props
+    const location = listing.locations ? listing.locations[0] : {}
 
     this.state = {
-      location: {},
+      location,
       center: null,
       address: ''
     }
@@ -84,11 +86,6 @@ class EditLocationModal extends React.Component {
 
     let marker
     let center
-
-
-    if (Object.keys(location).length === 0) {
-      location = listing.locations ? listing.locations[0] : null
-    }
 
     if (location) {
       const { lat, lng } = location
