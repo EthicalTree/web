@@ -2,6 +2,7 @@ import querystring from 'querystring'
 import { api } from '../utils/api'
 import { setSavedSearchLocation, getSavedSearchLocation } from '../utils/address'
 import { trackEvent } from '../utils/ga'
+import { toTitleCase } from '../utils/string'
 
 export const performSearch = (query, ethicalities, location, page) => {
 
@@ -33,7 +34,8 @@ export const performSearch = (query, ethicalities, location, page) => {
 }
 
 export const setSearchLocation = l => {
-  const location = l ? l : getSavedSearchLocation()
+  let location = l ? l : getSavedSearchLocation()
+  location = toTitleCase(location)
 
   return dispatch => {
     setSavedSearchLocation(location)

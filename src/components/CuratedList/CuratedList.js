@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom'
 
 import { Result } from '../Search/Result'
 
+import { getSavedSearchLocation } from '../../utils/address'
 import { trackEvent } from '../../utils/ga'
 
 export const CuratedList = props => {
   const { listings, name, slug } = props
+  const location = getSavedSearchLocation()
 
   if (!listings.length > 0) {
     return null
@@ -18,7 +20,9 @@ export const CuratedList = props => {
   return (
     <div className="curated-list">
       <div className="curated-list-title d-flex align-items-center">
-        <h4 className="list-name">{name}</h4>
+        <h4 className="list-name">
+          {name} ({ location })
+        </h4>
 
         <span className="divider">|</span>
 

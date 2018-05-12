@@ -19,8 +19,8 @@ export const getCuratedLists = () => {
   }
 }
 
-export const getCuratedList = ({ slug, page=1 }) => {
-  const location = getSavedSearchLocation()
+export const getCuratedList = ({ city, slug, page=1 }) => {
+  const location = city ? city : getSavedSearchLocation()
   const params = { location, page }
 
   return dispatch => {

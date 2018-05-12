@@ -10,11 +10,20 @@ import { Paginator } from '../../components/Paginator'
 import { Featured } from '../../components/Listing/Featured'
 
 import { getCuratedList } from '../../actions/curatedList'
+import { setSearchLocation } from '../../actions/search'
+import { getSavedSearchLocation } from '../../utils/address'
 
 export class CuratedListPage extends React.Component {
 
   componentDidMount() {
+    const { dispatch, match } = this.props
+    const { city } = match.params
+
     this.fetchCuratedList()
+
+    if (city) {
+      dispatch(setSearchLocation(city))
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -36,6 +45,7 @@ export class CuratedListPage extends React.Component {
 
   render() {
     const { dispatch, curatedList } = this.props
+    const location = getSavedSearchLocation()
 
     return (
       <div className="curated-list-page">
@@ -45,7 +55,7 @@ export class CuratedListPage extends React.Component {
         >
 
           <h2 className="curated-list-title text-center">
-            {curatedList.name}
+            {curatedList.name} ({ location })
           </h2>
 
           <div className="curated-list-listings">
