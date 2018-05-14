@@ -34,11 +34,14 @@ $grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 160
 // Global Syles
 html
   position: relative
-  min-height: 100%
   overflow-x: hidden
 
-html, body, #root, .app
-  height: 100%
+  @media (min-width: $screen-sm-min)
+    min-height: 100%
+
+@media (min-width: $screen-sm-min)
+  html, body, #root, .app
+    height: 100%
 
 #root
   overflow-x: hidden
