@@ -8,6 +8,10 @@
     display: flex
     overflow-x: auto
 
+    @media (max-width: $screen-md-max)
+      overflow-x: scroll
+      -webkit-overflow-scrolling: touch
+
     .listing-result
       flex-shrink: 0
       margin: $space-2
