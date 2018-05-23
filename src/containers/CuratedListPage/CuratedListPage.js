@@ -15,15 +15,17 @@ import { getSavedSearchLocation } from '../../utils/address'
 
 export class CuratedListPage extends React.Component {
 
-  componentDidMount() {
+  componentWillMount() {
     const { dispatch, match } = this.props
     const { city } = match.params
-
-    this.fetchCuratedList()
 
     if (city) {
       dispatch(setSearchLocation(city))
     }
+  }
+
+  componentDidMount() {
+    this.fetchCuratedList()
   }
 
   componentDidUpdate(prevProps) {
