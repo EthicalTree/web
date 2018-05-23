@@ -1,4 +1,6 @@
 const defaultState = {
+  isListingLoading: true,
+  isImageLoading: false,
   listingInfoTab: 'location',
   menus: [{}],
   images: [],

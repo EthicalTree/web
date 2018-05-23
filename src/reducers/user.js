@@ -1,5 +1,7 @@
+import { getSavedSearchLocation } from '../utils/address'
+
 const initialState = {
-  location: 'Ottawa, ON'
+  location: getSavedSearchLocation()
 }
 
 const user = (state=initialState, {type, data}) => {

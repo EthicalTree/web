@@ -6,9 +6,14 @@ import classnames from 'classnames'
 import Spinner from 'react-spinkit'
 
 const Loader = (props) => {
-  const { loading, progress, className, fixed } = props
-
-
+  const {
+    children,
+    className,
+    loading,
+    fixed,
+    progress,
+    render
+  } = props
 
   if (loading || progress >= 0) {
     const classNames = classnames(
@@ -47,14 +52,16 @@ const Loader = (props) => {
 
   return (
     <div className={classNames}>
-      {props.children}
+      {render ? render() : children}
     </div>
   )
 }
 
 Loader.propTypes = {
+  children: PropTypes.node,
   className: PropTypes.string,
-  fixed: PropTypes.bool
+  fixed: PropTypes.bool,
+  render: PropTypes.func
 }
 
 Loader.defaultProps = {

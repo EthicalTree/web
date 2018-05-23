@@ -2,7 +2,7 @@ const defaultState = {
   featuredListings: null,
   hashtag: '',
   listings: [],
-  isLoading: false,
+  isLoading: true,
   totalPages: 1,
   currentPage: 1
 }

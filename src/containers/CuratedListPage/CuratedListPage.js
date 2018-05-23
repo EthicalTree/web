@@ -15,7 +15,7 @@ import { getSavedSearchLocation } from '../../utils/address'
 
 export class CuratedListPage extends React.Component {
 
-  componentWillMount() {
+  componentWillMount(nextProps) {
     const { dispatch, match } = this.props
     const { city } = match.params
 
@@ -30,8 +30,9 @@ export class CuratedListPage extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { user } = this.props
+    const didLocationChange = user.location !== prevProps.user.location
 
-    if (user.location !== prevProps.user.location) {
+    if (didLocationChange) {
       this.fetchCuratedList()
     }
   }
@@ -54,46 +55,47 @@ export class CuratedListPage extends React.Component {
         <Loader
           loading={curatedList.isLoading}
           fixed={true}
-        >
+          render={() => (
+            <React.Fragment>
+              <h2 className="curated-list-title text-center">
+                {curatedList.name} ({ location })
+              </h2>
 
-          <h2 className="curated-list-title text-center">
-            {curatedList.name} ({ location })
-          </h2>
+              <div className="curated-list-listings">
+                {curatedList.listings.map(l => {
+                  return (
+                    <div key={l.id} className="curated-list-listing">
+                      <Result
+                        listing={l}
+                        location="Collection Page"
+                      />
+                    </div>
+                  )
+                })}
 
-          <div className="curated-list-listings">
-            {curatedList.listings.map(l => {
-              return (
-                <div key={l.id} className="curated-list-listing">
-                  <Result
-                    listing={l}
-                    location="Collection Page"
-                  />
-                </div>
-              )
-            })}
+                {curatedList.listings.length === 0 &&
+                  <i>There are no listings in this collection for your selected location.</i>
+                }
+              </div>
 
-            {curatedList.listings.length === 0 &&
-              <i>There are no listings in this collection for your selected location.</i>
-            }
-          </div>
+              <Paginator
+                className="text-center"
+                pageCount={curatedList.totalPages}
+                currentPage={curatedList.currentPage}
+                onPageChange={data => dispatch(getCuratedList({
+                  slug: curatedList.slug,
+                  page: data.selected
+                }))}
+              />
 
-          <Paginator
-            className="text-center"
-            pageCount={curatedList.totalPages}
-            currentPage={curatedList.currentPage}
-            onPageChange={data => dispatch(getCuratedList({
-              slug: curatedList.slug,
-              page: data.selected
-            }))}
-          />
-
-          <Container className="mb-4">
-            <Featured
-              lg={3}
-            />
-          </Container>
-
-        </Loader>
+              <Container className="mb-4">
+                <Featured
+                  lg={3}
+                />
+              </Container>
+            </React.Fragment>
+          )}
+        />
       </div>
     )
   }
