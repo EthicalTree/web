@@ -11,7 +11,6 @@ import { Featured } from '../../components/Listing/Featured'
 
 import { getCuratedList } from '../../actions/curatedList'
 import { setSearchLocation } from '../../actions/search'
-import { getSavedSearchLocation } from '../../utils/address'
 
 export class CuratedListPage extends React.Component {
 
@@ -48,7 +47,7 @@ export class CuratedListPage extends React.Component {
 
   render() {
     const { dispatch, curatedList } = this.props
-    const location = getSavedSearchLocation()
+    const city = curatedList.location ? `(${curatedList.location.city})` : ''
 
     return (
       <div className="curated-list-page">
@@ -58,7 +57,7 @@ export class CuratedListPage extends React.Component {
           render={() => (
             <React.Fragment>
               <h2 className="curated-list-title text-center">
-                {curatedList.name} ({ location })
+                {curatedList.name} { city }
               </h2>
 
               <div className="curated-list-listings">

@@ -34,8 +34,14 @@ const search = (state=defaultSearch, action) => {
       return {...state, query: action.data || ''}
     case 'SET_SEARCH_LOADING':
       return {...state, isSearchLoading: action.data}
-    case 'SET_FEATURED_LISTINGS':
-      return {...state, featured: action.data}
+    case 'SET_FEATURED_LISTINGS': {
+      const { listings, location } = action.data
+      return {
+        ...state,
+        featured: listings,
+        directoryLocation: location
+      }
+    }
     case 'SET_FEATURED_LISTINGS_LOADING':
       return {...state, featuredListingsLoading: action.data}
     case 'SET_SEARCH_RESULTS':

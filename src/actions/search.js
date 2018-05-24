@@ -76,8 +76,8 @@ export const getFeaturedListings = ({ count }) => {
     dispatch({ type: 'SET_FEATURED_LISTINGS_LOADING', data: true })
 
     api.get(`/v1/listings?${querystring.stringify(data)}`)
-      .then(results => {
-        dispatch({ type: 'SET_FEATURED_LISTINGS', data: results.data })
+      .then(({ data }) => {
+        dispatch({ type: 'SET_FEATURED_LISTINGS', data })
       })
       .catch(() => {})
       .then(() => {

@@ -79,7 +79,6 @@ export class FrontPage extends React.Component {
               <CuratedList
                 key={cl.id}
                 {...cl}
-                location="front_page"
               />
             )
           })}

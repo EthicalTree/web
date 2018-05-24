@@ -14,7 +14,6 @@ export class Featured extends React.Component {
 
   componentDidMount() {
     const { count, dispatch } = this.props
-    console.log('hey')
     dispatch(getFeaturedListings({ count }))
   }
 
