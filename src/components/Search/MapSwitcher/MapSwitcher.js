@@ -11,7 +11,7 @@ const MapSwitcher = props => {
   return (
     <div className="map-switcher">
       <Button
-        color="primary"
+        color="default"
         onClick={() => dispatch({ type: 'TOGGLE_SEARCH_RESULTS_MODE' })}
       >
         {mode === 'map' ? 'Show Search Results' : 'Show Map'}

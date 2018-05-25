@@ -1,11 +1,16 @@
 @import 'variables.sass'
 
 .map-switcher
+  width: 100%
   position: fixed
-  bottom: 10px
-  left: 50%
+  bottom: 0
+  left: 0
   z-index: 100
-  transform: translateX(-50%)
+  background: rgba($color-inverse, 0.4)
+  display: flex
+  justify-content: center
+  align-items: center
+  padding: 10px
 
   @media (min-width: $screen-xl-min)//{}
     visibility: hidden
