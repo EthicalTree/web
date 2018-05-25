@@ -15,7 +15,7 @@ export const CuratedList = props => {
   }
 
   const city = location ? `(${location.city})` : ''
-  const collectionLink = city ? `/collections/${city.toLowerCase()}/${slug}` : `/collections/${slug}`
+  const collectionLink = city ? `/collections/${location.city.toLowerCase()}/${slug}` : `/collections/${slug}`
 
   return (
     <div className="curated-list">
