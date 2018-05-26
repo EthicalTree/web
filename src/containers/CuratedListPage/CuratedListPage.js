@@ -19,7 +19,7 @@ export class CuratedListPage extends React.Component {
     const { dispatch, match, user } = this.props
     const { city } = match.params
 
-    if (city !== user.city) {
+    if (city.toLowerCase() !== user.city.toLowerCase()) {
       dispatch(setSearchLocation(city))
     }
 
