@@ -298,6 +298,7 @@ class Listing extends React.Component {
       dispatch,
       listing,
       match,
+      user,
     } = this.props
 
     if (!listing.id && !listing.isListingLoading) {
@@ -316,7 +317,11 @@ class Listing extends React.Component {
         fixed={true}
       >
         <Helmet key={listing.id}>
-          <title>{`EthicalTree · ${listing.title}`}</title>
+          <title>{`${listing.title} in ${user.city} · ${listing.address} · EthicalTree`}</title>
+          <meta
+            name="description"
+            content={`${listing.bio}`}
+          />
         </Helmet>
 
         <Container>
@@ -397,7 +402,8 @@ class Listing extends React.Component {
 }
 
 const select = state => ({
-  listing: state.listing
+  listing: state.listing,
+  user: state.user
 })
 
 export default connect(select)(Listing)

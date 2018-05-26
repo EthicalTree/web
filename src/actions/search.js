@@ -12,11 +12,17 @@ import { trackEvent } from '../utils/ga'
 import { toTitleCase } from '../utils/string'
 
 export const performSearch = (query, ethicalities, location, page) => {
+  const city = getSavedCity()
+  let searchLocation = location
+
+  if (!location.toLowerCase().includes(city.toLowerCase())) {
+    searchLocation = `${location}, ${city}`
+  }
 
   const queryObj = {
     query,
     ethicalities: ethicalities.join(','),
-    location,
+    location: searchLocation,
     page
   }
 

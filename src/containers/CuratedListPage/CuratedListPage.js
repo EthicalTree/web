@@ -55,7 +55,11 @@ export class CuratedListPage extends React.Component {
           render={() => (
             <React.Fragment>
               <Helmet>
-                <title>{`EthicalTree · ${curatedList.name}`}</title>
+                <title>{`${user.city}'s ${curatedList.name} - Best Local Restaurants, Shops and More · EthicalTree`}</title>
+                <meta
+                  name="description"
+                  content={`${curatedList.description}`}
+                />
               </Helmet>
 
               <h2 className="curated-list-title text-center">

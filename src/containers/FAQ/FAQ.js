@@ -2,10 +2,19 @@ import './FAQ.css'
 
 import React from 'react'
 import { Container } from 'reactstrap'
+import { Helmet } from 'react-helmet'
 
 export const FAQ = props => {
   return (
     <div className="faq">
+      <Helmet>
+        <title>{`FAQ · EthicalTree`}</title>
+        <meta
+          name="description"
+          content={`EthicalTree Frequently Asked Questions`}
+        />
+      </Helmet>
+
       <Container>
         <h1 className="mt-5 mb-5">Frequently Asked Questions</h1>
 

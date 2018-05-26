@@ -35,11 +35,15 @@ export class AllCollectionsPage extends React.Component {
           fixed={true}
         >
           <Helmet>
-            <title>{`EthicalTree · Collections`}</title>
+            <title>{`${user.city} Collections - Best Local Restaurants, Shops and More · EthicalTree`}</title>
+            <meta
+              name="description"
+              content={`Discover the best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
+            />
           </Helmet>
 
           <h2 className="all-collections-title text-center">
-            Collections
+            Collections ({ user.city })
           </h2>
 
           <div className="collections">

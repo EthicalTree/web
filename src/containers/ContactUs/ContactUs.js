@@ -2,11 +2,19 @@ import './ContactUs.css'
 
 import React from 'react'
 import { Container } from 'reactstrap'
+import { Helmet } from 'react-helmet'
 import { Icon } from '../../components/Icon'
 
 export const ContactUs = props => {
   return (
     <div className="contact-us">
+      <Helmet>
+        <title>{`Contact Us · EthicalTree`}</title>
+        <meta
+          name="description"
+          content={`Contact EthicalTree`}
+        />
+      </Helmet>
       <Container>
         <h1 className="mt-5">Contact Us</h1>
 

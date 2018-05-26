@@ -1,10 +1,13 @@
 const defaultState = {
+  name: '',
+  description: '',
   featuredListings: null,
   hashtag: '',
   listings: [],
   isLoading: true,
   totalPages: 1,
-  currentPage: 1
+  currentPage: 1,
+  slug: ''
 }
 
 const curatedList = (state=defaultState, { type, data }) => {

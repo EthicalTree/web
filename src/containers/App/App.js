@@ -52,10 +52,11 @@ class InnerApp extends React.Component {
     return (
       <div className="app">
         <Helmet>
-          <title>{`EthicalTree · ${user.city}`}</title>
-          <meta property="fb:app_id" content={process.env.REACT_APP_FACEBOOK_ID} />
-          <meta property="og:site_name" content="EthicalTree" />
-          <meta name="twitter:site" content="@EthicalTree" />
+          <title>{`EthicalTree ${user.city} · Best Local Restaurants, Shops, and More`}</title>
+          <meta
+            name="description"
+            content={`Best of ${user.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
+          />
         </Helmet>
 
         <Loader loading={app.isAppLoading}>
@@ -88,26 +89,14 @@ class InnerApp extends React.Component {
 
               <Route
                 exact
-                path="/listings/:slug"
-                component={split(() => import('../Listing/Listing'))}
-              />
-
-              <Route
-                exact
                 path="/s/:query?"
                 component={split(() => import('../SearchResults/SearchResults'))}
               />
 
               <Route
                 exact
-                path="/collections"
+                path="/collections/:city"
                 component={split(() => import('../AllCollectionsPage/AllCollectionsPage'))}
-              />
-
-              <Route
-                exact
-                path="/collections/:slug"
-                component={split(() => import('../CuratedListPage/CuratedListPage'))}
               />
 
               <Route

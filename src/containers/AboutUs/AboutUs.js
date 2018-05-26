@@ -1,11 +1,19 @@
 import './AboutUs.css'
 
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { Container } from 'reactstrap'
 
 export const AboutUs = props => {
   return (
     <div className="about-us">
+      <Helmet>
+        <title>{`About Us · EthicalTree`}</title>
+        <meta
+          name="description"
+          content={`EthicalTree About Us`}
+        />
+      </Helmet>
       <Container>
         <h1 className="mt-5 mb-5">About Us</h1>
 

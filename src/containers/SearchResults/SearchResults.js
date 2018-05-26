@@ -216,10 +216,9 @@ class SearchResultsPage extends React.Component {
       app,
       dispatch,
       history,
-      selectedResult
+      selectedResult,
+      user
     } = this.props
-
-    const titleLocation = this.getQueryParams().location || 'Search'
 
     return (
       <Loader
@@ -227,7 +226,11 @@ class SearchResultsPage extends React.Component {
         loading={search.isSearchLoading}
       >
         <Helmet>
-          <title>{`EthicalTree · ${titleLocation}`}</title>
+          <title>{`Search for "${search.query}" in ${user.city} · EthicalTree`}</title>
+          <meta
+            name="description"
+            content={`Search for "${search.query}". Best of ${user.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
+          />
         </Helmet>
 
         <Col className="search-results-page">
@@ -273,9 +276,10 @@ const SearchResultsWrapper = props => {
 
 const select = (state) => {
   return {
-    search: state.search,
     app: state.app,
-    router: state.router
+    router: state.router,
+    search: state.search,
+    user: state.user
   }
 }
 

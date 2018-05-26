@@ -39,6 +39,7 @@ const Header = props => {
     location,
     search,
     session,
+    user,
   } = props
 
   const isFixed = isCurrentPath('/s/')
@@ -98,7 +99,7 @@ const Header = props => {
               </NavItem>
 
               <NavItem>
-                <Link to="/collections" className="nav-link">
+                <Link to={`/collections/${user.city.toLowerCase()}`} className="nav-link">
                   Collections
                 </Link>
               </NavItem>
@@ -207,7 +208,8 @@ const select = (state) => {
     app: state.app,
     session: state.session,
     search: state.search,
-    header: state.header
+    header: state.header,
+    user: state.user
   }
 }
 
