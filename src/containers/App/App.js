@@ -26,19 +26,32 @@ class InnerApp extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch, location } = this.props
+    const { dispatch, location, user } = this.props
+    const queryParams = querystring.parse(location.search.slice(1))
+
     dispatch(initApp({
-      queryParams: querystring.parse(location.search.slice(1))
+      queryParams: {
+        ...queryParams,
+        location: queryParams.location !== user.city ? queryParams.location : null
+      }
     }))
   }
 
+  shouldComponentUpdate(nextProps) {
+    const appLoadingChanged = this.props.app.isAppLoading !== nextProps.app.isAppLoading
+    const cityChanged = this.props.user.city !== nextProps.user.city
+    const pageChanged = this.props.location.pathname !== nextProps.location.pathname
+
+    return appLoadingChanged || cityChanged || pageChanged
+  }
+
   render() {
-    const { app } = this.props
+    const { app, user } = this.props
 
     return (
       <div className="app">
         <Helmet>
-          <title>{'EthicalTree'}</title>
+          <title>{`EthicalTree · ${user.city}`}</title>
           <meta property="fb:app_id" content={process.env.REACT_APP_FACEBOOK_ID} />
           <meta property="og:site_name" content="EthicalTree" />
           <meta name="twitter:site" content="@EthicalTree" />
@@ -153,8 +166,8 @@ class InnerApp extends React.Component {
 }
 
 const select = state => ({
-  session: state.session,
   app: state.app,
+  user: state.user
 })
 
 InnerApp = withRouter(connect(select)(InnerApp))

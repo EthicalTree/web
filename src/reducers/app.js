@@ -1,8 +1,11 @@
+import { getSavedCity } from '../utils/address'
+
 const defaultState = {
   isAppLoading: false,
   areEthicalitiesLoading: false,
   ethicalities: [],
   plans: [],
+  city: getSavedCity(),
 }
 
 const app = (state=defaultState, { type, data }) => {
@@ -18,6 +21,8 @@ const app = (state=defaultState, { type, data }) => {
       return {...state, ethicalities: data}
     case 'SET_PLANS':
       return {...state, plans: data}
+    case 'SET_LOCATION':
+      return {...state, location: data}
     default:
       return state
   }

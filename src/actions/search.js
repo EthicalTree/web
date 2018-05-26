@@ -1,6 +1,13 @@
 import querystring from 'querystring'
 import { api } from '../utils/api'
-import { setSavedSearchLocation, getSavedSearchLocation } from '../utils/address'
+
+import {
+  getSavedCity,
+  setSavedCity,
+  setSavedSearchLocation,
+  getSavedSearchLocation
+} from '../utils/address'
+
 import { trackEvent } from '../utils/ga'
 import { toTitleCase } from '../utils/string'
 
@@ -39,8 +46,19 @@ export const setSearchLocation = l => {
 
   return dispatch => {
     setSavedSearchLocation(location)
-    dispatch({ type: 'SET_SEARCH_LOCATION', data: location })
-    dispatch({ type: 'SET_USER_LOCATION', data: location })
+
+    api.get(`/v1/directory_locations?${querystring.stringify({ location })}`)
+      .then(({ data }) => {
+        const city = data.city ? data.city : getSavedCity()
+        setSavedCity(city)
+
+        dispatch({ type: 'SET_SEARCH_LOCATION', data: location })
+        dispatch({ type: 'SET_USER_LOCATION', data: {
+          location,
+          city
+        }})
+      })
+      .catch(() => {})
   }
 }
 

@@ -51,8 +51,10 @@ class Search extends React.Component {
   constructor(props) {
     super(props)
 
+    const { search } = props
+
     this.state = {
-      query: '',
+      query: search.query || '',
       dirty: false,
       location: '',
       isLocationFocused: false

@@ -3,6 +3,7 @@ import './AllCollectionsPage.css'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 import { Loader } from '../../components/Loader'
 
@@ -25,7 +26,7 @@ export class AllCollectionsPage extends React.Component {
   }
 
   render() {
-    const { collections } = this.props
+    const { user, collections } = this.props
 
     return (
       <div className="all-collections-page">
@@ -33,6 +34,10 @@ export class AllCollectionsPage extends React.Component {
           loading={collections.isLoading}
           fixed={true}
         >
+          <Helmet>
+            <title>{`EthicalTree · Collections`}</title>
+          </Helmet>
+
           <h2 className="all-collections-title text-center">
             Collections
           </h2>
@@ -46,7 +51,7 @@ export class AllCollectionsPage extends React.Component {
               return (
                 <Link
                   key={c.id}
-                  to={`/collections/${c.slug}`}
+                  to={`/collections/${user.city.toLowerCase()}/${c.slug}`}
                   className="collection"
                 >
                   {c.name}
@@ -61,6 +66,7 @@ export class AllCollectionsPage extends React.Component {
 }
 
 const select = state => ({
+  user: state.user,
   collections: state.collections,
   search: state.search
 })

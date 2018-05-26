@@ -2,7 +2,6 @@ const defaultState = {
   featuredListings: null,
   hashtag: '',
   listings: [],
-  location: null,
   isLoading: true,
   totalPages: 1,
   currentPage: 1

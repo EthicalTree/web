@@ -36,8 +36,9 @@ export class FrontPage extends React.Component {
     const {
       app,
       frontPage,
+      dispatch,
       search,
-      dispatch
+      user
     } = this.props
 
     const ethicalities = app.ethicalities || []
@@ -77,6 +78,7 @@ export class FrontPage extends React.Component {
           {frontPage.curatedLists.map(cl => {
             return (
               <CuratedList
+                city={user.city}
                 key={cl.id}
                 {...cl}
               />

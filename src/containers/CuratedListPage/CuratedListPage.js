@@ -3,6 +3,7 @@ import './CuratedListPage.css'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Container } from 'reactstrap'
+import { Helmet } from 'react-helmet'
 
 import { Loader } from '../../components/Loader'
 import { Result } from '../../components/Search/Result'
@@ -14,16 +15,14 @@ import { setSearchLocation } from '../../actions/search'
 
 export class CuratedListPage extends React.Component {
 
-  componentWillMount(nextProps) {
-    const { dispatch, match } = this.props
+  componentDidMount() {
+    const { dispatch, match, user } = this.props
     const { city } = match.params
 
-    if (city) {
+    if (city !== user.city) {
       dispatch(setSearchLocation(city))
     }
-  }
 
-  componentDidMount() {
     this.fetchCuratedList()
   }
 
@@ -46,8 +45,7 @@ export class CuratedListPage extends React.Component {
   }
 
   render() {
-    const { dispatch, curatedList } = this.props
-    const city = curatedList.location ? `(${curatedList.location.city})` : ''
+    const { dispatch, curatedList, user } = this.props
 
     return (
       <div className="curated-list-page">
@@ -56,8 +54,12 @@ export class CuratedListPage extends React.Component {
           fixed={true}
           render={() => (
             <React.Fragment>
+              <Helmet>
+                <title>{`EthicalTree · ${curatedList.name}`}</title>
+              </Helmet>
+
               <h2 className="curated-list-title text-center">
-                {curatedList.name} { city }
+                {curatedList.name} ({ user.city })
               </h2>
 
               <div className="curated-list-listings">
