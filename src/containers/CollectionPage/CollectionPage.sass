@@ -2,6 +2,21 @@
 
 .collection-page
 
+  .collection-header
+    background-size: cover
+
+    .collection-banner
+      padding: $space-6 $space-6
+      width: 100%
+      height: 100%
+
+    &.has-image
+      .collection-banner
+        background: rgba($color-gray-1, 0.3)
+
+        & > *
+          color: $color-white
+
   .collection-title
     margin: $space-6 0
     padding: 0 $space-3
@@ -14,6 +29,7 @@
     display: flex
     flex-wrap: wrap
     justify-content: center
+    margin-top: $space-6
 
     .collection-listing
       margin: $space-3
@@ -28,10 +44,8 @@
         width: 33%
 
   @media (min-width: $screen-xl-min) //{}
-    padding: $space-6
-
     .collection-listings
-      padding: $space-4
+      padding: $space-5
 
       .collection-listing
         margin: 0 0 $space-5

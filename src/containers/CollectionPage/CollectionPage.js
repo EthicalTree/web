@@ -1,6 +1,7 @@
 import './CollectionPage.css'
 
 import React from 'react'
+import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { Container } from 'reactstrap'
 import { Helmet } from 'react-helmet'
@@ -46,6 +47,13 @@ export class CollectionPage extends React.Component {
 
   render() {
     const { dispatch, collection, user } = this.props
+    let headerStyles
+
+    if (collection.coverImage) {
+      headerStyles = {
+        backgroundImage: `url(${collection.coverImage.url})`,
+      }
+    }
 
     return (
       <div className="collection-page">
@@ -62,16 +70,25 @@ export class CollectionPage extends React.Component {
                 />
               </Helmet>
 
-              <div className="text-center">
-                <h2 className="collection-title">
-                  {collection.name} ({ user.city })
-                </h2>
+              <div
+                className={classnames(
+                  'collection-header',
+                  'text-center',
+                  { 'has-image': collection.coverImage }
+                )}
+                style={headerStyles}
+              >
+                <div className="collection-banner">
+                  <h2 className="collection-title">
+                    {collection.name} ({ user.city })
+                  </h2>
 
-                {collection.description &&
-                  <h5 className="collection-description">
-                    {collection.description}
-                  </h5>
-                }
+                  {collection.description &&
+                    <h5 className="collection-description">
+                      {collection.description}
+                    </h5>
+                  }
+                </div>
               </div>
 
               <div className="collection-listings">
