@@ -2,19 +2,19 @@ import querystring from 'querystring'
 import { api } from '../utils/api'
 import { getSavedSearchLocation } from '../utils/address'
 
-export const getCuratedLists = () => {
+export const getCollections = () => {
   const location = getSavedSearchLocation()
 
   return dispatch => {
-    dispatch({ type: 'SET_CURATED_LISTS_LOADING', data: true })
+    dispatch({ type: 'SET_COLLECTIONS_LOADING', data: true })
 
-    api.get(`/v1/curated_lists?${querystring.stringify({ location })}`)
+    api.get(`/v1/collections?${querystring.stringify({ location })}`)
       .then(({ data }) => {
-        dispatch({ type: 'SET_CURATED_LISTS', data: data.curatedLists })
+        dispatch({ type: 'SET_COLLECTIONS', data: data.collections })
       })
       .catch(() => {})
       .then(() => {
-        dispatch({ type: 'SET_CURATED_LISTS_LOADING', data: false })
+        dispatch({ type: 'SET_COLLECTIONS_LOADING', data: false })
       })
   }
 }

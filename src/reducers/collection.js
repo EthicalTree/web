@@ -10,12 +10,12 @@ const defaultState = {
   slug: ''
 }
 
-const curatedList = (state=defaultState, { type, data }) => {
+const collection = (state=defaultState, { type, data }) => {
 
   switch (type) {
-    case 'SET_GET_CURATED_LIST_LOADING':
+    case 'SET_GET_COLLECTION_LOADING':
       return {...state, isLoading: data}
-    case 'SET_CURATED_LIST':
+    case 'SET_COLLECTION':
       return {...state, ...data}
     default:
       return state
@@ -23,4 +23,4 @@ const curatedList = (state=defaultState, { type, data }) => {
 
 }
 
-export default curatedList
+export default collection

@@ -1,15 +1,15 @@
 const defaultState = {
-  areCuratedListsLoading: false,
-  curatedLists: [],
+  areCollectionsLoading: false,
+  collections: [],
 }
 
 const frontPage = (state=defaultState, { type, data }) => {
 
   switch (type) {
-    case 'SET_CURATED_LISTS_LOADING':
-      return {...state, areCuratedListsLoading: data}
-    case 'SET_CURATED_LISTS':
-      return {...state, curatedLists: data}
+    case 'SET_COLLECTIONS_LOADING':
+      return {...state, areCollectionsLoading: data}
+    case 'SET_COLLECTIONS':
+      return {...state, collections: data}
     default:
       return state
   }

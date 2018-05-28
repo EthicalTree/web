@@ -10,53 +10,58 @@ import { Icon } from '../Icon'
 import { Slider } from '../Slider'
 import { Repositioner } from './Repositioner'
 
-import { s3Url } from '../../utils/s3'
+class Action extends React.Component {
 
-const Action = props => {
-  const { action, noClick, type, icon, currentImage } = props
+  render() {
+    const { action, noClick, type, icon } = this.props
 
-  const id = `${type}`
-  const tooltipId = `${id}_tooltip`
-  let onClick = () => {}
+    const id = `${type}`
+    const tooltipId = `${id}_tooltip`
+    let onClick = () => {}
 
-  if (!action.handleAction) {
-    return null
-  }
-
-  if (!noClick) {
-    onClick = e => {
-      e.preventDefault()
-      action.handleAction(currentImage)
+    if (!action.handleAction) {
+      return null
     }
+
+    if (!noClick) {
+      onClick = e => {
+        e.preventDefault()
+        action.handleAction()
+      }
+    }
+
+    return (
+      <span className={`action-${type}`}>
+        <span ref={trigger => this.trigger = trigger}>
+          <Icon
+            id={id}
+            clickable
+            onClick={onClick}
+            iconKey={icon}
+          />
+        </span>
+
+        {this.trigger &&
+          <span id={tooltipId} className="tooltip-container">
+            <Tooltip
+              placement="bottom"
+              target={this.trigger}
+              container={tooltipId}
+              delay={0}
+            >
+              {action.title}
+            </Tooltip>
+          </span>
+        }
+      </span>
+    )
   }
 
-  return (
-    <span className={`action-${type}`}>
-      <Icon
-        id={id}
-        clickable
-        onClick={onClick}
-        iconKey={icon}
-      />
-
-      <span id={tooltipId} className="tooltip-container">
-        <Tooltip
-          placement="bottom"
-          target={id}
-          container={tooltipId}
-          delay={0}
-        >
-          {action.title}
-        </Tooltip>
-      </span>
-    </span>
-  )
 }
 
 const ImageActions = (props) => {
   const {
     canEdit,
-    currentImage,
     coverAction,
     deleteAction,
     addAction,
@@ -85,7 +90,6 @@ const ImageActions = (props) => {
         <Action
           type="fullscreen"
           icon="zoom_in"
-          currentImage={currentImage}
           action={fullScreenAction}
         />
 
@@ -94,21 +98,18 @@ const ImageActions = (props) => {
             <Action
               type="reposition"
               icon="reposition"
-              currentImage={currentImage}
               action={repositionAction}
             />
 
             <Action
               type="cover"
               icon="cover_photo"
-              currentImage={currentImage}
               action={coverAction}
             />
 
             <Action
               type="delete"
               icon="trash"
-              currentImage={currentImage}
               action={deleteAction}
             />
 
@@ -121,7 +122,6 @@ const ImageActions = (props) => {
               <Action
                 type="add"
                 icon="plus"
-                currentImage={currentImage}
                 action={addAction}
                 noClick={true}
               />
@@ -158,7 +158,7 @@ class ImageManager extends React.Component {
   }
 
   handleFinishReposition = () => {
-    const { currentImage, handleReposition } = this.props
+    const { handleReposition } = this.props
     const { repositionData } = this.state
 
     this.setState({
@@ -166,12 +166,13 @@ class ImageManager extends React.Component {
       repositionData: null
     })
 
-    handleReposition(currentImage, repositionData)
+    handleReposition(repositionData)
   }
 
   componentDidMount() {
-    const { onSetCurrentImage } = this.props
-    onSetCurrentImage()
+    const { images, onSetCurrentImage } = this.props
+    if (images.length > 0)
+      onSetCurrentImage(images[0])
   }
 
   handleSlideChange(index) {
@@ -184,13 +185,11 @@ class ImageManager extends React.Component {
     const {
       images,
       className,
-      dispatch,
       canEdit,
       addText,
       emptyText,
       isLoading,
       uploadProgress,
-      currentImage,
       handleReposition,
       coverAction,
       deleteAction,
@@ -224,11 +223,9 @@ class ImageManager extends React.Component {
           <div className="image-manager text-center">
             {!isRepositioning &&
               <ImageActions
-                dispatch={dispatch}
                 canEdit={canEdit}
                 onImageUploadProgress={onImageUploadProgress}
                 hasSlides={hasSlides}
-                currentImage={currentImage}
                 coverAction={coverAction}
                 deleteAction={deleteAction}
                 addAction={addAction}
@@ -243,13 +240,12 @@ class ImageManager extends React.Component {
 
             {hasSlides &&
               <Slider
+                key={displayImages.map(image => image.id).join(',')}
                 afterChange={this.handleSlideChange.bind(this)}
-                initialSlide={images.findIndex(i => (i.id === (currentImage ? currentImage.id : -1)))}
                 arrows={!isRepositioning}
                 slides={
                   displayImages.map((image, i) => {
-                    const url = s3Url('ethicaltree', image.key)
-                    const key = `${image.key}-${i}`
+                    const key = `${image.url}-${i}`
                     let repositionStyle = {}
 
                     if (repositionImages) {
@@ -268,9 +264,10 @@ class ImageManager extends React.Component {
                       >
                         <img
                           alt="Listing"
-                          src={url}
+                          src={image.url}
                           style={{
                             maxWidth: '100%',
+                            maxHeight: '100%',
                             ...imgStyle,
                             ...repositionStyle
                           }}

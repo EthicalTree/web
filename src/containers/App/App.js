@@ -102,7 +102,7 @@ class InnerApp extends React.Component {
               <Route
                 exact
                 path="/collections/:city/:slug"
-                component={split(() => import('../CuratedListPage/CuratedListPage'))}
+                component={split(() => import('../CollectionPage/CollectionPage'))}
               />
 
               <Route

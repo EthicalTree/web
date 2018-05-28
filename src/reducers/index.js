@@ -6,7 +6,7 @@ import admin from './admin'
 import app from './app'
 import collections from './collections'
 import confirm from './confirm'
-import curatedList from './curatedList'
+import collection from './collection'
 import frontPage from './frontPage'
 import header from './header'
 import listing from './listing'
@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
   app,
   collections,
   confirm,
-  curatedList,
+  collection,
   frontPage,
   header,
   listing,

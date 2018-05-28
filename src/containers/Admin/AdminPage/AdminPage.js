@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { Users } from '../Users'
 import { Listings } from '../Listings'
 import { Tags } from '../Tags'
-import { Lists } from '../Lists'
+import { Collections } from '../Collections'
 import { Locations } from '../Locations'
 
 import { Route, withRouter, Redirect, Link } from 'react-router-dom'
@@ -61,8 +61,8 @@ export class AdminPage extends React.Component {
             </NavItem>
             <NavItem>
               <Link
-                className={cn('nav-link', { active: pathname === '/admin/lists' })}
-                to="/admin/lists"
+                className={cn('nav-link', { active: pathname === '/admin/collections' })}
+                to="/admin/collections"
               >
                 Collections
               </Link>
@@ -83,7 +83,7 @@ export class AdminPage extends React.Component {
               <Route path="/admin/users" exact={true} component={Users} />
               <Route path="/admin/listings" exact={true} component={Listings} />
               <Route path="/admin/tags" exact={true} component={Tags} />
-              <Route path="/admin/lists" exact={true} component={Lists} />
+              <Route path="/admin/collections" exact={true} component={Collections} />
               <Route path="/admin/locations" exact={true} component={Locations} />
             </div>
           </TabPane>

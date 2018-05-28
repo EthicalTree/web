@@ -175,10 +175,11 @@ export const editLocation = (listingSlug, data) => {
 }
 
 export const addImageToListing = data => {
+  const type = 'listing'
   const { listingSlug, imageKey } = data
 
   return dispatch => {
-    api.post(`/v1/listings/${listingSlug}/images`, { key: imageKey })
+    api.post(`/v1/listings/${listingSlug}/images`, { key: imageKey, type })
       .then(response => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
@@ -199,26 +200,29 @@ export const addImageToListing = data => {
 }
 
 export const addImageToMenu = data => {
+  const type = 'menu'
   const { listingSlug, menuId, imageKey } = data
 
   return dispatch => {
-    api.post(`/v1/listings/${listingSlug}/menus/${menuId}/images`, { key: imageKey })
-      .then(response => {
-        if (response.data.images) {
-          dispatch({ type: 'SET_LISTING_MENU_IMAGES', data: response.data.images })
-          dispatch({ type: 'SET_LISTING_MENU_CURRENT_IMAGE' })
+    api.post(
+      `/v1/listings/${listingSlug}/menus/${menuId}/images`,
+      { key: imageKey, type }
+    ).then(response => {
+      if (response.data.images) {
+        dispatch({ type: 'SET_LISTING_MENU_IMAGES', data: response.data.images })
+        dispatch({ type: 'SET_LISTING_MENU_CURRENT_IMAGE' })
 
-          trackEvent({
-            action: 'Add Image to Menu',
-            category: 'Listing',
-            label: listingSlug
-          })
-        }
-      })
-      .catch(() => {})
-      .then(() => {
-        dispatch({ type: 'SET_MENU_IMAGE_UPLOAD_PROGRESS', data: undefined })
-      })
+        trackEvent({
+          action: 'Add Image to Menu',
+          category: 'Listing',
+          label: listingSlug
+        })
+      }
+    })
+    .catch(() => {})
+    .then(() => {
+      dispatch({ type: 'SET_MENU_IMAGE_UPLOAD_PROGRESS', data: undefined })
+    })
   }
 
 }
@@ -229,7 +233,7 @@ export const deleteImageFromListing = data => {
   return dispatch => {
     dispatch({ type: 'SET_IMAGE_LOADING', data: true })
 
-    api.delete(`/v1/listings/${listingSlug}/images/${imageId}`)
+    api.delete(`/v1/listings/${listingSlug}/images/${imageId}?type=listing`)
       .then(response => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
@@ -255,7 +259,7 @@ export const deleteImageFromMenu = data => {
   return dispatch => {
     dispatch({ type: 'SET_MENU_IMAGE_LOADING', data: true })
 
-    api.delete(`/v1/listings/${listingSlug}/menus/${menuId}/images/${imageId}`)
+    api.delete(`/v1/listings/${listingSlug}/menus/${menuId}/images/${imageId}?type=menu`)
       .then(response => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_MENU_IMAGES', data: response.data.images })
@@ -277,11 +281,12 @@ export const deleteImageFromMenu = data => {
 
 export const makeImageCover = data => {
   const { listingSlug, imageId } = data
+  const type = 'listing'
 
   return dispatch => {
     dispatch({ type: 'SET_IMAGE_LOADING', data: true })
 
-    api.put(`/v1/listings/${listingSlug}/images/${imageId}`, { make_cover: true })
+    api.put(`/v1/listings/${listingSlug}/images/${imageId}`, { make_cover: true, type })
       .then(response => {
         if (response.data.images) {
           dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
@@ -303,7 +308,8 @@ export const makeImageCover = data => {
 
 export const updateListingImage = ({ listingSlug, imageId, offset }) => {
   const data = {
-    offsetY: offset ? offset.y : undefined
+    offsetY: offset ? offset.y : undefined,
+    type: 'listing'
   }
 
   return dispatch => {

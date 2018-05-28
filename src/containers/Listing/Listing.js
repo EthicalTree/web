@@ -245,19 +245,20 @@ class Listing extends React.Component {
     dispatch(removeTagFromListing(listing.slug, id))
   }
 
-  handleReposition = (image, reposition) => {
+  handleReposition = (reposition) => {
     const { dispatch, listing } = this.props
+    const { currentImage } = listing
 
     if (!reposition) {
       return
     }
 
-    const originalY = image.coverOffsetY || 0
+    const originalY = currentImage.coverOffsetY || 0
     const diffY = reposition ? reposition.diffY : 0
 
     dispatch(updateListingImage({
       listingSlug: listing.slug,
-      imageId: image.id,
+      imageId: currentImage.id,
       offset: { y: originalY + diffY }
     }))
   }
@@ -301,6 +302,8 @@ class Listing extends React.Component {
       user,
     } = this.props
 
+    const { currentImage } = listing
+
     if (!listing.id && !listing.isListingLoading) {
       return (
         <div className="mt-5 text-center col">
@@ -328,42 +331,40 @@ class Listing extends React.Component {
           <div className="listing-detail">
             <ImageManager
               className="listing-image-manager"
-              dispatch={dispatch}
               onImageUploadProgress={progress => dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: progress })}
               onSetCurrentImage={image => dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: image })}
               images={listing.images}
-              currentImage={listing.currentImage}
+              imgStyle={{ maxHeight: null }}
               isLoading={listing.isImageLoading}
               uploadProgress={listing.uploadProgress}
               addText="Add a photo"
               emptyText="No photos added"
               canEdit={hasPermission('update', listing)}
-              signingParams={{ slug: listing.slug }}
-              locationKey="listing-images"
+              signingParams={{ type: 'listing', slug: listing.slug }}
               repositionImages={true}
               fullScreenAction={{
-                handleAction: image => {
+                handleAction: () => {
                   dispatch({ type: 'SET_FULLSCREEN_MODAL_IMAGES', data: [...listing.images] })
-                  dispatch({ type: 'SET_FULLSCREEN_MODAL_CURRENT_IMAGE', data: image })
+                  dispatch({ type: 'SET_FULLSCREEN_MODAL_CURRENT_IMAGE', data: currentImage })
                   dispatch({ type: 'OPEN_MODAL', data: 'fullscreen-image' })
                 },
                 title: 'Enlarge Photo',
               }}
               coverAction={{
-                handleAction: image => dispatch(setConfirm({
+                handleAction: () => dispatch(setConfirm({
                   title: 'Set Cover Photo',
                   msg: 'Are you sure you want to make this photo your cover photo?',
                   action: makeImageCover,
-                  data: {listingSlug: listing.slug, imageId: image.id}
+                  data: {listingSlug: listing.slug, imageId: currentImage.id}
                 })),
                 title: 'Set Cover Photo'
               }}
               deleteAction={{
-                handleAction: image => dispatch(setConfirm({
+                handleAction: () => dispatch(setConfirm({
                   title: 'Delete Photo',
                   msg: 'Are you sure you want to delete this photo?',
                   action: deleteImageFromListing,
-                  data: {listingSlug: listing.slug, imageId: image.id}
+                  data: {listingSlug: listing.slug, imageId: currentImage.id}
                 })),
                 title: 'Delete Photo'
               }}

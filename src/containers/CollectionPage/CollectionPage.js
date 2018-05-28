@@ -1,4 +1,4 @@
-import './CuratedListPage.css'
+import './CollectionPage.css'
 
 import React from 'react'
 import { connect } from 'react-redux'
@@ -10,10 +10,10 @@ import { Result } from '../../components/Search/Result'
 import { Paginator } from '../../components/Paginator'
 import { Featured } from '../../components/Listing/Featured'
 
-import { getCuratedList } from '../../actions/curatedList'
+import { getCollection } from '../../actions/collection'
 import { setSearchLocation } from '../../actions/search'
 
-export class CuratedListPage extends React.Component {
+export class CollectionPage extends React.Component {
 
   componentDidMount() {
     const { dispatch, match, user } = this.props
@@ -23,7 +23,7 @@ export class CuratedListPage extends React.Component {
       dispatch(setSearchLocation(city))
     }
 
-    this.fetchCuratedList()
+    this.fetchCollection()
   }
 
   componentDidUpdate(prevProps) {
@@ -31,45 +31,53 @@ export class CuratedListPage extends React.Component {
     const didLocationChange = user.location !== prevProps.user.location
 
     if (didLocationChange) {
-      this.fetchCuratedList()
+      this.fetchCollection()
     }
   }
 
-  fetchCuratedList() {
+  fetchCollection() {
     const { dispatch, match } = this.props
 
-    dispatch(getCuratedList({
+    dispatch(getCollection({
       slug: match.params.slug,
       page: 1
     }))
   }
 
   render() {
-    const { dispatch, curatedList, user } = this.props
+    const { dispatch, collection, user } = this.props
 
     return (
-      <div className="curated-list-page">
+      <div className="collection-page">
         <Loader
-          loading={curatedList.isLoading}
+          loading={collection.isLoading}
           fixed={true}
           render={() => (
             <React.Fragment>
               <Helmet>
-                <title>{`${user.city}'s ${curatedList.name} - Best Local Restaurants, Shops and More · EthicalTree`}</title>
+                <title>{`${user.city}'s ${collection.name} - Best Local Restaurants, Shops and More · EthicalTree`}</title>
                 <meta
                   name="description"
-                  content={`${curatedList.description}`}
+                  content={`${collection.description}`}
                 />
               </Helmet>
 
-              <h2 className="curated-list-title text-center">
-                {curatedList.name} ({ user.city })
-              </h2>
+              <div className="text-center">
+                <h2 className="collection-title">
+                  {collection.name} ({ user.city })
+                </h2>
 
-              <div className="curated-list-listings">
-                {curatedList.listings.map(l => {
+                {collection.description &&
+                  <h5 className="collection-description">
+                    {collection.description}
+                  </h5>
+                }
+              </div>
+
+              <div className="collection-listings">
+                {collection.listings.map(l => {
                   return (
-                    <div key={l.id} className="curated-list-listing">
+                    <div key={l.id} className="collection-listing">
                       <Result
                         listing={l}
                         location="Collection Page"
@@ -78,17 +86,17 @@ export class CuratedListPage extends React.Component {
                   )
                 })}
 
-                {curatedList.listings.length === 0 &&
+                {collection.listings.length === 0 &&
                   <i>There are no listings in this collection for your selected location.</i>
                 }
               </div>
 
               <Paginator
                 className="text-center"
-                pageCount={curatedList.totalPages}
-                currentPage={curatedList.currentPage}
-                onPageChange={data => dispatch(getCuratedList({
-                  slug: curatedList.slug,
+                pageCount={collection.totalPages}
+                currentPage={collection.currentPage}
+                onPageChange={data => dispatch(getCollection({
+                  slug: collection.slug,
                   page: data.selected
                 }))}
               />
@@ -107,8 +115,8 @@ export class CuratedListPage extends React.Component {
 }
 
 const select = state => ({
-  curatedList: state.curatedList,
+  collection: state.collection,
   user: state.user
 })
 
-export default connect(select)(CuratedListPage)
+export default connect(select)(CollectionPage)

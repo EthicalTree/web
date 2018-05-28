@@ -35,15 +35,10 @@ class FullScreenImageModal extends React.Component {
       >
         <ImageManager
           className="full-height d-flex flex-column justify-content-center"
-          dispatch={dispatch}
           onSetCurrentImage={image => dispatch({ type: 'SET_FULLSCREEN_MODAL_CURRENT_IMAGE', data: image })}
           images={modal.fullScreenImages}
           currentImage={modal.fullScreenCurrentImage}
-          locationKey="fullscreen-image"
           emptyText="No photos added"
-          imgStyle={{
-            maxHeight: '100%'
-          }}
           canEdit={false}
         />
       </Modal>

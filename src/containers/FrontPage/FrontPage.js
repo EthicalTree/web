@@ -11,24 +11,24 @@ import {
 
 import { EthicalityBar } from '../../components/Ethicality'
 import { Search } from '../../components/Search'
-import { CuratedList } from '../../components/CuratedList'
+import { Collection } from '../../components/Collection'
 import { Loader } from '../../components/Loader'
 
 import { toggleSearchEthicalities } from '../../actions/search'
-import { getCuratedLists } from '../../actions/frontPage'
+import { getCollections } from '../../actions/frontPage'
 
 export class FrontPage extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props
-    dispatch(getCuratedLists())
+    dispatch(getCollections())
   }
 
   componentDidUpdate(prevProps) {
     const { dispatch, user } = this.props
 
     if (user.location !== prevProps.user.location) {
-      dispatch(getCuratedLists())
+      dispatch(getCollections())
     }
   }
 
@@ -72,12 +72,12 @@ export class FrontPage extends React.Component {
         </Container>
 
         <Loader
-          loading={frontPage.areCuratedListsLoading}
-          className="curated-lists"
+          loading={frontPage.areCollectionsLoading}
+          className="collections"
         >
-          {frontPage.curatedLists.map(cl => {
+          {frontPage.collections.map(cl => {
             return (
-              <CuratedList
+              <Collection
                 city={user.city}
                 key={cl.id}
                 {...cl}

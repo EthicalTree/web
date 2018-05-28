@@ -53,14 +53,14 @@ export const getListings = queryObj => {
   }
 }
 
-export const getLists = queryObj => {
+export const getCollections = queryObj => {
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 
-    api.get(`/v1/admin/curated_lists?${querystring.stringify(queryObj)}`)
+    api.get(`/v1/admin/collections?${querystring.stringify(queryObj)}`)
       .then(({ data }) => {
-        const { curatedLists, currentPage, totalPages } = data
-        dispatch({ type: 'SET_ADMIN_LISTS', data: curatedLists })
+        const { collections, currentPage, totalPages } = data
+        dispatch({ type: 'SET_ADMIN_LISTS', data: collections })
         dispatch({ type: 'SET_ADMIN_PAGINATION', data: { currentPage, totalPages } })
       })
       .catch(() => {})
@@ -118,11 +118,11 @@ export const setTagUseType = (tagId, useType) => {
   }
 }
 
-export const updateList = listData => {
+export const updateCollection = collection => {
   return dispatch => {
-    api.put(`/v1/admin/curated_lists/${listData.id}`, { curatedList: listData })
+    api.put(`/v1/admin/collections/${collection.id}`, { collection })
       .then(list => {
-        dispatch(getLists())
+        dispatch(getCollections())
         success('List was successfully updated')
       })
       .catch(() => {})
@@ -139,11 +139,11 @@ export const updateListing = listingData => {
   }
 }
 
-export const addList = ({ name, description, hashtag, location }) => {
-  const list = { name, description, hashtag, location }
+export const addCollection = ({ name, description, hashtag, location }) => {
+  const collection = { name, description, hashtag, location }
 
   return dispatch => {
-    api.post(`/v1/admin/curated_lists`, { curatedList: list })
+    api.post(`/v1/admin/collections`, { collection })
       .then(({ data }) => {
         if (data.errors) {
           dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
@@ -151,25 +151,25 @@ export const addList = ({ name, description, hashtag, location }) => {
         else {
           dispatch({ type: 'CLOSE_MODAL' })
           success('List created')
-          dispatch(getLists())
+          dispatch(getCollections())
         }
       })
   }
 }
 
-export const editList = ({ id, name, description, hashtag, location }) => {
-  const list = { name, description, hashtag, location }
+export const editCollection = ({ id, name, description, hashtag, location }) => {
+  const collection = { name, description, hashtag, location }
 
   return dispatch => {
-    api.put(`/v1/admin/curated_lists/${id}`, { curatedList: list })
+    api.put(`/v1/admin/collections/${id}`, { collection })
       .then(({ data }) => {
         if (data.errors) {
           dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
         }
         else {
           dispatch({ type: 'CLOSE_MODAL' })
-          success('List updated')
-          dispatch(getLists())
+          success('Collection updated')
+          dispatch(getCollections())
         }
       })
   }
@@ -212,12 +212,12 @@ export const addTag = ({ hashtag, useType }) => {
   }
 }
 
-export const deleteList = id => {
+export const deleteCollection = id => {
   return dispatch => {
-    api.delete(`/v1/admin/curated_lists/${id}`)
+    api.delete(`/v1/admin/collections/${id}`)
       .then(() => {
-        success('List deleted')
-        dispatch(getLists())
+        success('Collection deleted')
+        dispatch(getCollections())
       })
       .catch(() => {})
   }

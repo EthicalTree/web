@@ -1,4 +1,4 @@
-import './CuratedList.css'
+import './Collection.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { Result } from '../Search/Result'
 import { trackEvent } from '../../utils/ga'
 
-export const CuratedList = props => {
+export const Collection = props => {
   const { city, listings, name, slug } = props
 
   if (!listings.length > 0) {
@@ -17,8 +17,8 @@ export const CuratedList = props => {
   const collectionLink = `/collections/${city.toLowerCase()}/${slug}`
 
   return (
-    <div className="curated-list">
-      <div className="curated-list-title d-flex align-items-center">
+    <div className="collection">
+      <div className="collection-title-title d-flex align-items-center">
         <h4 className="list-name">
           {name} ({ city })
         </h4>
@@ -55,7 +55,7 @@ export const CuratedList = props => {
   )
 }
 
-CuratedList.propTypes = {
+Collection.propTypes = {
   city: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   listings: PropTypes.array.isRequired,
@@ -63,4 +63,4 @@ CuratedList.propTypes = {
   name: PropTypes.string.isRequired,
 }
 
-export default CuratedList
+export default Collection

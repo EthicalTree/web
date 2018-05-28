@@ -11,9 +11,9 @@ import { Paginator } from '../../../components/Paginator'
 import { Loader } from '../../../components/Loader'
 
 import { setConfirm } from '../../../actions/confirm'
-import { getLists, updateList, deleteList } from '../../../actions/admin'
+import { getCollections, updateCollection, deleteCollection } from '../../../actions/admin'
 
-const ListTable = props => {
+const CollectionTable = props => {
   const {
     dispatch,
     admin,
@@ -26,7 +26,7 @@ const ListTable = props => {
     toggleFeatured
   } = props
 
-  const lists = admin.lists
+  const collections = admin.collections
 
   return (
     <Loader loading={admin.isAdminLoading}>
@@ -42,7 +42,7 @@ const ListTable = props => {
             + New Collection
           </Button>
           <Search
-            handleSearch={() => dispatch(getLists({ page: 1, query: admin.query }))}
+            handleSearch={() => dispatch(getCollections({ page: 1, query: admin.query }))}
           />
         </div>
       </h4>
@@ -51,6 +51,7 @@ const ListTable = props => {
       <Table bordered responsive>
         <thead>
           <tr>
+            <th className="no-stretch"></th>
             <th>Name</th>
             <th>Description</th>
             <th className="no-stretch">Tag</th>
@@ -60,11 +61,20 @@ const ListTable = props => {
           </tr>
         </thead>
         <tbody>
-          {lists.map(l => (
+          {collections.map(l => (
             <tr key={l.id}>
+              <td>
+                {l.coverImage &&
+                  <img
+                    className="collection-thumbnail"
+                    src={l.coverImage.thumbnailUrl}
+                    alt=""
+                  />
+                }
+              </td>
               <td>{l.name}</td>
               <td>{l.description}</td>
-              <td>{`#${l.tag.hashtag}`}</td>
+              <td>{`#${l.hashtag}`}</td>
               <td>
                 <input
                   type="checkbox"
@@ -85,16 +95,16 @@ const ListTable = props => {
 
                   <Icon
                     iconKey="trash"
-                    title="Delete List"
-                    className="delete-list"
+                    title="Delete Collection"
+                    className="delete-collection"
                     clickable
                     onClick={handleDelete(l.id)}
                   />
 
                   <Icon
                     iconKey="pencil"
-                    title="Edit List"
-                    className="edit-list"
+                    title="Edit Collection"
+                    className="edit-collection"
                     clickable
                     onClick={handleEdit(l)}
                   />
@@ -131,12 +141,20 @@ const ListTable = props => {
   )
 }
 
-export class Lists extends React.Component {
+export class Collections extends React.Component {
 
   handleAdd = () => {
     const { dispatch } = this.props
 
-    dispatch({ type: 'OPEN_MODAL', data: 'new-list' })
+    dispatch({ type: 'UPDATE_MODAL_DATA', data: {
+      collection: {
+        name: '',
+        description: '',
+        hashtag: '',
+        coverImage: ''
+      },
+    }})
+    dispatch({ type: 'OPEN_MODAL', data: 'new-collection' })
   }
 
   handleDelete = id => {
@@ -147,58 +165,58 @@ export class Lists extends React.Component {
       dispatch(setConfirm({
         title: 'Delete Collection',
         msg: 'Are you sure you want to delete this collection?',
-        action: deleteList,
+        action: deleteCollection,
         data: id
       }))
     }
   }
 
-  handleEdit = list => {
+  handleEdit = collection => {
     const { dispatch } = this.props
 
     return event => {
       event.preventDefault()
-      dispatch({ type: 'UPDATE_MODAL_DATA', data: {...list, hashtag: list.tag.hashtag} })
-      dispatch({ type: 'OPEN_MODAL', data: 'new-list' })
+      dispatch({ type: 'UPDATE_MODAL_DATA', data: { collection } })
+      dispatch({ type: 'OPEN_MODAL', data: 'new-collection' })
     }
   }
 
-  handleMove = (list, order) => {
+  handleMove = (collection, order) => {
     const { dispatch } = this.props
 
     return event => {
       event.preventDefault()
-      dispatch(updateList({
-        id: list.id,
+      dispatch(updateCollection({
+        id: collection.id,
         order
       }))
     }
   }
 
-  toggleHidden = list => {
+  toggleHidden = collection => {
     const { dispatch } = this.props
-    dispatch(updateList({
-      id: list.id,
-      hidden: !list.hidden
+    dispatch(updateCollection({
+      id: collection.id,
+      hidden: !collection.hidden
     }))
   }
 
-  toggleFeatured = list => {
+  toggleFeatured = collection => {
     const { dispatch } = this.props
-    dispatch(updateList({
-      id: list.id,
-      featured: !list.featured
+    dispatch(updateCollection({
+      id: collection.id,
+      featured: !collection.featured
     }))
   }
 
   componentDidMount() {
-    this.refreshLists()
+    this.refreshCollections()
   }
 
-  refreshLists() {
+  refreshCollections() {
     const { dispatch } = this.props
     dispatch({ type: 'SET_ADMIN_SEARCH_QUERY', data: '' })
-    dispatch(getLists({ page: 1, query: '' }))
+    dispatch(getCollections({ page: 1, query: '' }))
   }
 
   render() {
@@ -210,7 +228,7 @@ export class Lists extends React.Component {
           <title>{'EthicalTree · Collections Admin'}</title>
         </Helmet>
 
-        <ListTable
+        <CollectionTable
           dispatch={dispatch}
           admin={admin}
           toggleHidden={this.toggleHidden}
@@ -219,7 +237,7 @@ export class Lists extends React.Component {
           handleEdit={this.handleEdit}
           handleDelete={this.handleDelete}
           handleMove={this.handleMove}
-          handlePageChange={data => dispatch(getLists({ page: data.selected }))}
+          handlePageChange={data => dispatch(getCollections({ page: data.selected }))}
         />
       </React.Fragment>
     )
@@ -232,4 +250,4 @@ const select = (state) => {
   }
 }
 
-export default connect(select)(Lists)
+export default connect(select)(Collections)

@@ -7,21 +7,21 @@ import { Helmet } from 'react-helmet'
 
 import { Loader } from '../../components/Loader'
 
-import { getCuratedLists } from '../../actions/curatedList'
+import { getCollections } from '../../actions/collection'
 
 export class AllCollectionsPage extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props
 
-    dispatch(getCuratedLists())
+    dispatch(getCollections())
   }
 
   componentDidUpdate(nextProps) {
     const { dispatch, search } = this.props
 
     if (search.location !== nextProps.search.location) {
-      dispatch(getCuratedLists())
+      dispatch(getCollections())
     }
   }
 
@@ -48,17 +48,28 @@ export class AllCollectionsPage extends React.Component {
 
           <div className="collections">
             {collections.collections.map(c => {
+              let extraStyle
+
               if (c.listings.length === 0) {
                 return null
+              }
+
+              if (c.coverImage) {
+                extraStyle = {
+                  backgroundImage: `url(${c.coverImage.thumbnailUrl})`
+                }
               }
 
               return (
                 <Link
                   key={c.id}
-                  to={`/collections/${user.city.toLowerCase()}/${c.slug}`}
                   className="collection"
+                  style={extraStyle}
+                  to={`/collections/${user.city.toLowerCase()}/${c.slug}`}
                 >
-                  {c.name}
+                  <span className="collection-label">
+                    {c.name}
+                  </span>
                 </Link>
               )
             })}

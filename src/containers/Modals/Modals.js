@@ -20,7 +20,7 @@ import { FeedbackModal } from './FeedbackModal'
 
 import {
   NewTagModal,
-  NewListModal,
+  NewCollectionModal,
   EditListingModal as EditAdminListingModal,
   EditLocationModal as EditAdminLocationModal
 } from './Admin'
@@ -39,7 +39,7 @@ const modals = {
   'fullscreen-image': FullScreenImageModal,
   'forgot-password': ForgotPasswordModal,
   'new-tag': NewTagModal,
-  'new-list': NewListModal,
+  'new-collection': NewCollectionModal,
   'admin-edit-listing': EditAdminListingModal,
   'admin-edit-location': EditAdminLocationModal,
   'feedback': FeedbackModal
