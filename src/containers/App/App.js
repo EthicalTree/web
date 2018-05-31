@@ -39,11 +39,10 @@ class InnerApp extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const appLoadingChanged = this.props.app.isAppLoading !== nextProps.app.isAppLoading
-    const cityChanged = this.props.user.city !== nextProps.user.city
     const pageChanged = this.props.location.pathname !== nextProps.location.pathname
     const userChanged = this.props.session.user !== nextProps.session.user
 
-    return appLoadingChanged || cityChanged || pageChanged || userChanged
+    return appLoadingChanged || pageChanged || userChanged
   }
 
   render() {

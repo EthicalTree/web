@@ -7,7 +7,6 @@ import app from './app'
 import collections from './collections'
 import confirm from './confirm'
 import collection from './collection'
-import frontPage from './frontPage'
 import header from './header'
 import listing from './listing'
 import modal from './modal'
@@ -23,7 +22,6 @@ const rootReducer = combineReducers({
   collections,
   confirm,
   collection,
-  frontPage,
   header,
   listing,
   modal,

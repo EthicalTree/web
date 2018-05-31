@@ -14,7 +14,7 @@ import {
 import querystring from 'querystring'
 import { IconInput } from '../../Icon'
 
-import { getCategories, getLocations, setSearchLocation } from '../../../actions/search'
+import { getLocations, setSearchLocation } from '../../../actions/search'
 import { getSavedSearchLocation } from '../../../utils/address'
 
 const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
@@ -47,6 +47,29 @@ const LocationInput = props => {
 }
 
 class Search extends React.Component {
+
+  search = event => {
+    const { search, history, dispatch } = this.props
+    const { query } = this.state
+    let location = search.location
+
+    if (location && location !== this.state.location) {
+      location = this.state.location
+      dispatch(setSearchLocation(this.state.location))
+    }
+
+    const paramsObj = {
+      ethicalities: search.selectedEthicalities.join(','),
+      location: location || getSavedSearchLocation(),
+      page: 1
+    }
+
+    if ((event.key && event.key === 'Enter') || !event.key) {
+      dispatch({ type: 'SET_SEARCH_QUERY', data: query })
+      history.push(`/s/${encodeURIComponent(query)}?${querystring.stringify(paramsObj)}`)
+      dispatch({ type: 'SET_SEARCH_PENDING', data: true })
+    }
+  }
 
   constructor(props) {
     super(props)
@@ -84,22 +107,6 @@ class Search extends React.Component {
     })
   }
 
-  search(e) {
-    const { search, history, dispatch } = this.props
-    const { query } = this.state
-
-    const paramsObj = {
-      ethicalities: search.selectedEthicalities.join(','),
-      location: search.location || getSavedSearchLocation(),
-      page: 1
-    }
-
-    if ((e.key && e.key === 'Enter') || !e.key) {
-      dispatch({ type: 'SET_SEARCH_QUERY', data: query })
-      history.push(`/s/${encodeURIComponent(query)}?${querystring.stringify(paramsObj)}`)
-    }
-  }
-
   render() {
     const { search, dispatch } = this.props
 
@@ -115,6 +122,7 @@ class Search extends React.Component {
         <Row noGutters className="et-search">
           <Col xs="12" md="5" lg="4">
             <Autosuggest
+              key="suggest"
               suggestions={search.locationSuggestions}
               onSuggestionsFetchRequested={({ value }) => {
                 if (isLocationFocused) {
@@ -151,9 +159,10 @@ class Search extends React.Component {
 
           <Col xs="12" md="5" lg="6">
             <Autosuggest
+              key="query"
               suggestions={search.categorySuggestions}
-              onSuggestionsFetchRequested={() => dispatch(getCategories())}
-              onSuggestionsClearRequested={() => dispatch({ type: 'CLEAR_SEARCH_CATEGORIES' })}
+              onSuggestionsFetchRequested={() => {}}
+              onSuggestionsClearRequested={() => {}}
               getSuggestionValue={suggestion => suggestion}
               renderSuggestion={CategorySuggestion}
               renderInputComponent={props => (<IconInput leftIcon="search" inputProps={props} />)}
@@ -162,7 +171,7 @@ class Search extends React.Component {
                 className: "category-input",
                 placeholder: 'What are you looking for?',
                 onChange: this.onChange.bind(this),
-                onKeyDown: this.search.bind(this),
+                onKeyDown: this.search,
                 value: query
               }}
             />
@@ -173,7 +182,7 @@ class Search extends React.Component {
               color="danger"
               className="full-height search-button"
               block
-              onClick={this.search.bind(this)}
+              onClick={this.search}
             >
               Search
             </Button>

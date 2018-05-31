@@ -11,34 +11,17 @@ import {
 
 import { EthicalityBar } from '../../components/Ethicality'
 import { Search } from '../../components/Search'
-import { Collection } from '../../components/Collection'
-import { Loader } from '../../components/Loader'
+import { Collections } from '../Collections'
 
 import { toggleSearchEthicalities } from '../../actions/search'
-import { getCollections } from '../../actions/frontPage'
 
 export class FrontPage extends React.Component {
-
-  componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(getCollections())
-  }
-
-  componentDidUpdate(prevProps) {
-    const { dispatch, user } = this.props
-
-    if (user.location !== prevProps.user.location) {
-      dispatch(getCollections())
-    }
-  }
 
   render() {
     const {
       app,
-      frontPage,
       dispatch,
       search,
-      user
     } = this.props
 
     const ethicalities = app.ethicalities || []
@@ -71,20 +54,7 @@ export class FrontPage extends React.Component {
           </Col>
         </Container>
 
-        <Loader
-          loading={frontPage.areCollectionsLoading}
-          className="collections"
-        >
-          {frontPage.collections.map(cl => {
-            return (
-              <Collection
-                city={user.city}
-                key={cl.id}
-                {...cl}
-              />
-            )
-          })}
-        </Loader>
+        <Collections />
       </div>
     )
   }
@@ -93,9 +63,7 @@ export class FrontPage extends React.Component {
 const select = (state) => {
   return {
     app: state.app,
-    frontPage: state.frontPage,
     search: state.search,
-    user: state.user
   }
 }
 

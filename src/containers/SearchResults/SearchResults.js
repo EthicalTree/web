@@ -145,6 +145,16 @@ class SearchResultsPage extends React.Component {
     this.performSearch(queryParams.page, queryParams.ethicalities, queryParams.location)
   }
 
+  componentDidUpdate() {
+    const { dispatch, search } = this.props
+    const queryParams = this.getQueryParams()
+
+    if (search.isPending) {
+      this.performSearch(queryParams.page, queryParams.ethicalities, queryParams.location)
+      dispatch({ type: 'SET_SEARCH_PENDING', data: false })
+    }
+  }
+
   performSearch(newPage=0, ethicalities, location) {
     const { match, dispatch, search } = this.props
     const query = search.query ? search.query : match.params.query || ''

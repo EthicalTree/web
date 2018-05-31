@@ -5,6 +5,7 @@ const defaultSearch = {
   featuredListingsLoading: true,
   hoveredResult: null,
   isSearchLoading: true,
+  isSearchPending: false,
   listings: [],
   location: '',
   locationSuggestions: [],
@@ -30,6 +31,8 @@ const search = (state=defaultSearch, action) => {
       return {...state, selectedResult: action.data}
     case 'SET_SEARCH_RESULT_HOVER':
       return {...state, hoveredResult: action.data}
+    case 'SET_SEARCH_PENDING':
+      return {...state, isPending: action.data}
     case 'SET_SEARCH_QUERY':
       return {...state, query: action.data || ''}
     case 'SET_SEARCH_LOADING':
