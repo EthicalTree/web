@@ -9,14 +9,14 @@ export class Collections extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props
-    dispatch(getCollections())
+    dispatch(getCollections({ where: 'front_page' }))
   }
 
   componentDidUpdate(prevProps) {
     const { dispatch, user } = this.props
 
     if (user.location !== prevProps.user.location) {
-      dispatch(getCollections())
+      dispatch(getCollections({ where: 'front_page' }))
     }
   }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 
-import { Button, Table } from 'reactstrap'
+import { Button, Input, Table } from 'reactstrap'
 
 import { Search } from '../Search'
 
@@ -23,7 +23,8 @@ const CollectionTable = props => {
     handlePageChange,
     handleMove,
     toggleHidden,
-    toggleFeatured
+    toggleFeatured,
+    changeLocation
   } = props
 
   const collections = admin.collections
@@ -55,6 +56,7 @@ const CollectionTable = props => {
             <th>Name</th>
             <th>Description</th>
             <th className="no-stretch">Tag</th>
+            <th className="no-stretch">Location</th>
             <th className="no-stretch">Enabled</th>
             <th className="no-stretch">Featured</th>
             <th className="no-stretch">Actions</th>
@@ -75,6 +77,16 @@ const CollectionTable = props => {
               <td>{l.name}</td>
               <td>{l.description}</td>
               <td>{`#${l.hashtag}`}</td>
+              <td>
+                <Input
+                  value={l.location}
+                  onChange={e => changeLocation(l, e.target.value) }
+                  type="select"
+                >
+                  <option value=''>None</option>
+                  <option value='front_page'>Front Page</option>
+                </Input>
+              </td>
               <td>
                 <input
                   type="checkbox"
@@ -142,6 +154,15 @@ const CollectionTable = props => {
 }
 
 export class Collections extends React.Component {
+
+  changeLocation = (collection, location) => {
+    const { dispatch } = this.props
+
+    dispatch(updateCollection({
+      id: collection.id,
+      location
+    }))
+  }
 
   handleAdd = () => {
     const { dispatch } = this.props
@@ -229,8 +250,9 @@ export class Collections extends React.Component {
         </Helmet>
 
         <CollectionTable
-          dispatch={dispatch}
           admin={admin}
+          changeLocation={this.changeLocation}
+          dispatch={dispatch}
           toggleHidden={this.toggleHidden}
           toggleFeatured={this.toggleFeatured}
           handleAdd={this.handleAdd}
