@@ -4,6 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import { formatNumber, parseNumber } from 'libphonenumber-js'
 
 import {
   Container,
@@ -71,7 +72,13 @@ const AsideInfo = (props) => {
 }
 
 const Bio = (props) => {
-  const { bio, canEdit, title, website } = props
+  const {
+    bio,
+    canEdit,
+    phone,
+    title,
+    website
+  } = props
 
   return (
     <div className="bio mb-5">
@@ -86,23 +93,32 @@ const Bio = (props) => {
           }
         </h3>
 
-        {website &&
-          <a
-            href={website}
-            rel="noopener noreferrer"
-            target="_blank"
-            className="external-link"
-            onClick={() => {
-              trackEvent({
-                action: 'Clicked Listing Website',
-                category: 'Listing'
-              })
-            }}
-          >
-            Website
-            <Icon iconKey="extract" />
-          </a>
-        }
+        <div className="listing-contact">
+          {phone &&
+            <div>
+              {formatNumber(parseNumber(phone, 'CA'), 'National')}
+              <Icon iconKey="phone" />
+            </div>
+          }
+
+          {website &&
+            <a
+              href={website}
+              rel="noopener noreferrer"
+              target="_blank"
+              className="external-link"
+              onClick={() => {
+                trackEvent({
+                  action: 'Clicked Listing Website',
+                  category: 'Listing'
+                })
+              }}
+            >
+              Website
+              <Icon iconKey="extract" />
+            </a>
+          }
+        </div>
       </div>
 
       {bio &&
@@ -142,10 +158,11 @@ const ListingInfo = (props) => {
   return (
     <div className={className}>
       <Bio
-        onClickDescriptionEdit={props.onClickDescriptionEdit}
-        title={listing.title}
         bio={listing.bio}
         canEdit={hasPermission('update', listing)}
+        onClickDescriptionEdit={props.onClickDescriptionEdit}
+        phone={listing.phone}
+        title={listing.title}
         website={listing.website}
       />
 
