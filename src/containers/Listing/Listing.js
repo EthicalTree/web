@@ -80,6 +80,8 @@ const Bio = (props) => {
     website
   } = props
 
+  const formattedPhone = formatNumber(parseNumber(phone, 'CA'), 'National')
+
   return (
     <div className="bio mb-5">
       <div className="listing-title">
@@ -95,10 +97,27 @@ const Bio = (props) => {
 
         <div className="listing-contact">
           {phone &&
-            <div>
-              {formatNumber(parseNumber(phone, 'CA'), 'National')}
-              <Icon iconKey="phone" />
-            </div>
+            <React.Fragment>
+              <div className="d-none d-md-flex">
+                {formattedPhone}
+                <Icon iconKey="phone" />
+              </div>
+              <div className="d-md-none">
+                <a
+                  href={`tel:${phone}`}
+                  className="external-link"
+                  onClick={() => {
+                    trackEvent({
+                      action: 'Clicked Listing Phone Number',
+                      category: 'Listing'
+                    })
+                  }}
+                >
+                  {formattedPhone}
+                  <Icon iconKey="phone" />
+                </a>
+              </div>
+            </React.Fragment>
           }
 
           {website &&
