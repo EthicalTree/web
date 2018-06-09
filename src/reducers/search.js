@@ -8,8 +8,10 @@ const defaultSearch = {
   isSearchPending: false,
   listings: [],
   location: '',
+  located: false,
   locationSuggestions: [],
   matches: 0,
+  pageCount: 0,
   query: '',
   resultMode: 'listing',
   selectedEthicalities: [],
@@ -47,16 +49,24 @@ const search = (state=defaultSearch, action) => {
     }
     case 'SET_FEATURED_LISTINGS_LOADING':
       return {...state, featuredListingsLoading: action.data}
-    case 'SET_SEARCH_RESULTS':
-      const { listings, pageCount, currentPage, matches } = action.data
+    case 'SET_SEARCH_RESULTS': {
+      const {
+        listings,
+        located,
+        pageCount,
+        currentPage,
+        matches
+      } = action.data
 
       return {
         ...state,
         currentPage: parseInt(currentPage, 10),
         listings,
+        located,
         matches,
         pageCount: parseInt(pageCount, 10),
       }
+    }
     case 'SET_SEARCH_ETHICALITIES':
       return {...state, selectedEthicalities: action.data}
     default:

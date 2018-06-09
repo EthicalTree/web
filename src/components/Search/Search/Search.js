@@ -1,8 +1,9 @@
 import './Search.css'
 
 import React from 'react'
-import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
+import debounce from 'lodash/debounce'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import {
@@ -53,18 +54,18 @@ class Search extends React.Component {
     const { query } = this.state
     let location = search.location
 
-    if (location && location !== this.state.location) {
-      location = this.state.location
-      dispatch(setSearchLocation(this.state.location))
-    }
-
-    const paramsObj = {
-      ethicalities: search.selectedEthicalities.join(','),
-      location: location || getSavedSearchLocation(),
-      page: 1
-    }
-
     if ((event.key && event.key === 'Enter') || !event.key) {
+      if (location && location !== this.state.location) {
+        location = this.state.location
+        dispatch(setSearchLocation(this.state.location))
+      }
+
+      const paramsObj = {
+        ethicalities: search.selectedEthicalities.join(','),
+        location: location || getSavedSearchLocation(),
+        page: 1
+      }
+
       dispatch({ type: 'SET_SEARCH_QUERY', data: query })
       history.push(`/s/${encodeURIComponent(query)}?${querystring.stringify(paramsObj)}`)
       dispatch({ type: 'SET_SEARCH_PENDING', data: true })
@@ -74,7 +75,7 @@ class Search extends React.Component {
   constructor(props) {
     super(props)
 
-    const { search } = props
+    const { dispatch, search } = props
 
     this.state = {
       query: search.query || '',
@@ -82,6 +83,16 @@ class Search extends React.Component {
       location: '',
       isLocationFocused: false
     }
+
+    this.fetchSuggestions = debounce(({ value }) => {
+      if (this.isLocationFocused()) {
+        dispatch(getLocations(value))
+      }
+    }, 100)
+  }
+
+  isLocationFocused() {
+    return this.state.isLocationFocused
   }
 
   onLocationClick(e) {
@@ -124,11 +135,7 @@ class Search extends React.Component {
             <Autosuggest
               key="suggest"
               suggestions={search.locationSuggestions}
-              onSuggestionsFetchRequested={({ value }) => {
-                if (isLocationFocused) {
-                  dispatch(getLocations(value))
-                }
-              }}
+              onSuggestionsFetchRequested={this.fetchSuggestions}
               onSuggestionsClearRequested={() => dispatch({ type: 'CLEAR_SEARCH_LOCATIONS' })}
               getSuggestionValue={suggestion => suggestion}
               onSuggestionSelected={this.onLocationSelected.bind(this)}
@@ -147,7 +154,9 @@ class Search extends React.Component {
                 onBlur: () => {
                   setTimeout(() => {
                     this.setState({ isLocationFocused: false })
-                    dispatch(setSearchLocation(this.state.location))
+                    if (search.location !== this.state.location) {
+                      dispatch(setSearchLocation(this.state.location))
+                    }
                   }, 0)
                 },
                 onChange: (e, value) => {

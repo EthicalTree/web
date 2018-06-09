@@ -80,7 +80,7 @@ const Bio = (props) => {
     website
   } = props
 
-  const formattedPhone = formatNumber(parseNumber(phone, 'CA'), 'National')
+  const formattedPhone = phone ? formatNumber(parseNumber(phone, 'CA'), 'National') : ''
 
   return (
     <div className="bio mb-5">

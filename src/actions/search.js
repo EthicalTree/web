@@ -47,13 +47,14 @@ export const setSearchLocation = l => {
 
   return dispatch => {
     setSavedSearchLocation(location)
+    dispatch({ type: 'SET_SEARCH_LOCATION', data: location })
+    dispatch({ type: 'SET_SEARCH_PENDING', data: true })
 
     api.get(`/v1/directory_locations?${querystring.stringify({ location })}`)
       .then(({ data }) => {
         const city = data.city ? data.city : getSavedCity()
         setSavedCity(city)
 
-        dispatch({ type: 'SET_SEARCH_LOCATION', data: location })
         dispatch({ type: 'SET_USER_LOCATION', data: {
           location,
           city

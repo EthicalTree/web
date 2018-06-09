@@ -89,7 +89,7 @@ class InnerApp extends React.Component {
               <Route
                 exact
                 path="/s/:query?"
-                component={split(() => import('../SearchResults/SearchResults'))}
+                component={split(() => import('../SearchResultsPage/SearchResultsPage'))}
               />
 
               <Route
