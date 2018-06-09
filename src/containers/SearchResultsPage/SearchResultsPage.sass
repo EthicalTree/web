@@ -11,22 +11,20 @@
 
 .search-map-area
   position: relative
+  overflow: hidden
 
   .search-map
-    display: block
-    position: fixed
+    position: absolute
     right: 0
-    bottom: 0
-    width: 33%
-    height: calc(100%)
+    top: 0
+    width: 100%
     z-index: 2
     border-left: 1px solid $color-border
 
     @media (max-width: $screen-lg-max)//{}
+      position: fixed
+      margin-top: 73px !important
       width: 100%
-
-    @media (min-width: $screen-xl-min) and (max-width: $screen-xl-max)//{}
-      width: 50%
 
 .result-overlay
   position: relative

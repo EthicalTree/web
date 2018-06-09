@@ -7,18 +7,47 @@ import { Markers } from '../../Maps/Markers'
 
 export class ResultsMap extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {}
+  updateMapPosition = () => {
+    if (this.map) {
+      this.setState({
+        mapHeight: this.getInnerHeight(),
+        scrollTop: this.app.scrollTop
+      })
+    }
   }
 
-  shouldComponentUpdate(newProps) {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      mapHeight: this.getInnerHeight(),
+      scrollTop: 0
+    }
+  }
+
+  componentDidMount() {
+    this.app = document.getElementsByClassName('app')[0]
+    this.app.addEventListener('scroll', this.updateMapPosition)
+    window.addEventListener('resize', this.updateMapPosition)
+  }
+
+  componentWillUnmount() {
+    this.app.removeEventListener('scroll', this.updateMapPosition)
+    window.removeEventListener('resize', this.updateMapPosition)
+  }
+
+  shouldComponentUpdate(newProps, newState) {
     const { search, location } = this.props
     const searchChanged = newProps.location.search !== location.search
     const featuredChanged = newProps.search.featured.map(id => id).join(',') !== search.featured.map(id => id).join(',')
     const selectionChanged = newProps.search.selectedResult !== search.selectedResult
+    const stateChanged = newState !== this.state
 
-    return searchChanged || selectionChanged || featuredChanged
+    return searchChanged || selectionChanged || featuredChanged || stateChanged
+  }
+
+  getInnerHeight() {
+    return window.innerHeight - 73
   }
 
   render() {
@@ -31,7 +60,8 @@ export class ResultsMap extends React.Component {
       search,
     } = this.props
 
-    const { zoom } = this.state
+    const { zoom, mapHeight, scrollTop } = this.state
+
     const hiddenClass = search.resultMode === 'listing' ? 'd-none d-xl-block' : ''
     let bounds = new window.google.maps.LatLngBounds()
     const boundListings = [...search.listings, ...search.featured]
@@ -52,8 +82,6 @@ export class ResultsMap extends React.Component {
 
     const onLoad = map => {
       if (map) {
-        this.map = map
-
         if (!this.hasBeenFit) {
           map.fitBounds(bounds)
           this.hasBeenFit = true
@@ -63,7 +91,14 @@ export class ResultsMap extends React.Component {
 
     return (
       <Col className={`search-map-area ${hiddenClass}`}>
-        <div className="search-map">
+        <div
+          className="search-map"
+          ref={map => this.map = map}
+          style={{
+            height: mapHeight,
+            marginTop: scrollTop
+          }}
+        >
           <Map
             key={search.resultMode}
             onLoad={onLoad}
@@ -71,7 +106,8 @@ export class ResultsMap extends React.Component {
             zoom={zoom}
             defaultOptions={{
               zoomControl: true,
-              draggableCursor: 'pointer'
+              draggableCursor: 'pointer',
+              gestureHandling: 'cooperative'
             }}
           >
             {markers}

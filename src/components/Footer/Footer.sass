@@ -1,6 +1,7 @@
 @import "variables.sass"
 
 footer
+  position: relative
   font-weight: $font-light
   color: $color-white
   padding: $space-5 0
@@ -27,12 +28,6 @@ footer
 
   @media (min-width: $screen-xl-min) // {}
     padding-bottom: $space-5
-
-    &.has-fixed-header
-      width: 68%
-
-      @media (max-width: $screen-xl-max) // {}
-        width: 50%
 
     .container
       flex-direction: row
