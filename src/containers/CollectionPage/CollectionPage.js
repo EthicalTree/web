@@ -21,7 +21,7 @@ export class CollectionPage extends React.Component {
     const { city } = match.params
 
     if (city.toLowerCase() !== user.city.toLowerCase()) {
-      dispatch(setSearchLocation(city))
+      dispatch(setSearchLocation(city, city))
     }
 
     this.fetchCollection()

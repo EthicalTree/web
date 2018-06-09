@@ -20,7 +20,7 @@ import { getSavedSearchLocation } from '../../../utils/address'
 
 const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
   return (
-    <span>{suggestion}</span>
+    <span>{suggestion.name}</span>
   )
 }
 
@@ -57,7 +57,7 @@ class Search extends React.Component {
     if ((event.key && event.key === 'Enter') || !event.key) {
       if (location && location !== this.state.location) {
         location = this.state.location
-        dispatch(setSearchLocation(this.state.location))
+        dispatch(setSearchLocation(this.state.location, this.state.city))
       }
 
       const paramsObj = {
@@ -80,6 +80,7 @@ class Search extends React.Component {
     this.state = {
       query: search.query || '',
       dirty: false,
+      city: undefined,
       location: '',
       isLocationFocused: false
     }
@@ -155,12 +156,17 @@ class Search extends React.Component {
                   setTimeout(() => {
                     this.setState({ isLocationFocused: false })
                     if (search.location !== this.state.location) {
-                      dispatch(setSearchLocation(this.state.location))
+                      dispatch(setSearchLocation(this.state.location, this.state.city))
                     }
                   }, 0)
                 },
                 onChange: (e, value) => {
-                  this.setState({ location: value.newValue })
+                  const { city, name } = value.newValue
+
+                  this.setState({
+                    location: name || value.newValue,
+                    city
+                  })
                 }
               }}
             />

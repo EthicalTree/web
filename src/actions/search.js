@@ -41,26 +41,20 @@ export const performSearch = (query, ethicalities, location, page) => {
   }
 }
 
-export const setSearchLocation = l => {
+export const setSearchLocation = (l, c) => {
   let location = l ? l : getSavedSearchLocation()
+  let city = c ? c : getSavedCity()
+
   location = toTitleCase(location)
+  city = toTitleCase(city)
 
   return dispatch => {
     setSavedSearchLocation(location)
+    setSavedCity(city)
+
     dispatch({ type: 'SET_SEARCH_LOCATION', data: location })
+    dispatch({ type: 'SET_USER_LOCATION', data: { location, city } })
     dispatch({ type: 'SET_SEARCH_PENDING', data: true })
-
-    api.get(`/v1/directory_locations?${querystring.stringify({ location })}`)
-      .then(({ data }) => {
-        const city = data.city ? data.city : getSavedCity()
-        setSavedCity(city)
-
-        dispatch({ type: 'SET_USER_LOCATION', data: {
-          location,
-          city
-        }})
-      })
-      .catch(() => {})
   }
 }
 

@@ -11,7 +11,7 @@ export const initApp = (options={}) => {
     dispatch({ type: 'SET_LOADING', data: true })
 
     if (location) {
-      dispatch(setSearchLocation(location))
+      dispatch(setSearchLocation(location, location))
     }
 
     const requests = [

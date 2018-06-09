@@ -8,20 +8,31 @@ import { Helmet } from 'react-helmet'
 import { Loader } from '../../components/Loader'
 
 import { getCollections } from '../../actions/collection'
+import { setSearchLocation } from '../../actions/search'
 
 export class AllCollectionsPage extends React.Component {
 
   componentDidMount() {
-    const { dispatch } = this.props
+    const { dispatch, match, user } = this.props
+    const { city } = match.params
 
-    dispatch(getCollections())
+    if (city.toLowerCase() !== user.city.toLowerCase()) {
+      dispatch(setSearchLocation(city, city))
+    }
+    else {
+      dispatch(getCollections())
+    }
   }
 
-  componentDidUpdate(nextProps) {
-    const { dispatch, search } = this.props
+  componentDidUpdate(prevProps) {
+    const { dispatch, history, search, user } = this.props
 
-    if (search.location !== nextProps.search.location) {
+    if (search.location !== prevProps.search.location) {
       dispatch(getCollections())
+    }
+
+    if (user.city !== prevProps.user.city) {
+      history.push(`/collections/${user.city.toLowerCase()}`)
     }
   }
 
