@@ -12,6 +12,24 @@ import { toggleSearchEthicalities } from '../../../actions/search'
 
 export class SearchResults extends React.Component {
 
+  handleResize = () => {
+    this.setState({ minHeight: window.innerHeight })
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      minHeight: window.innerHeight
+    }
+
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
   renderResultsHeader() {
     const { search } = this.props
 
@@ -34,6 +52,7 @@ export class SearchResults extends React.Component {
 
   render() {
     const { app, search, dispatch, handleSearch } = this.props
+    const { minHeight } = this.state
 
     const ethicalities = app.ethicalities
     const selectedEthicalities = search.selectedEthicalities
@@ -49,8 +68,15 @@ export class SearchResults extends React.Component {
     }
 
     return (
-      <Col xs="12" xl="6" className={`search-results col-xxl-8 p-4 ${mobileHidden}`}>
-        <Col className="d-lg-none d-xl-none mb-3" >
+      <Col
+        xs="12"
+        xl="6"
+        className={`search-results col-xxl-8 p-4 ${mobileHidden}`}
+        style={{ minHeight }}
+      >
+        <Col
+          className="d-lg-none d-xl-none mb-3"
+        >
           <Search />
         </Col>
         <EthicalityBar

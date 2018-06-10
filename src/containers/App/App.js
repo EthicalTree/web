@@ -139,6 +139,11 @@ class InnerApp extends React.Component {
                 component={split(() => import('../Admin/AdminPage/AdminPage'))}
               />
 
+              <Route
+                path="/"
+                component={split(() => import('../../components/Status/Status404/Status404'))}
+              />
+
             </Switch>
           </main>
 
