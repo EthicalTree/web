@@ -150,7 +150,7 @@ class Search extends React.Component {
                 innerRef: locationInput => { this.locationInput = locationInput },
                 location: location,
                 value: location,
-                placeholder: 'Where?',
+                placeholder: 'address, city, postal code...',
                 onFocus: () => { this.setState({ isLocationFocused: true }) },
                 onBlur: () => {
                   setTimeout(() => {
@@ -184,7 +184,7 @@ class Search extends React.Component {
               inputProps={{
                 innerRef: categoryInput => { this.categoryInput = categoryInput },
                 className: "category-input",
-                placeholder: 'What are you looking for?',
+                placeholder: 'eg. burgers, health store, clothing, brunch...',
                 onChange: this.onChange.bind(this),
                 onKeyDown: this.search,
                 value: query
