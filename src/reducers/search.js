@@ -25,6 +25,8 @@ const search = (state=defaultSearch, action) => {
       return {...state, resultMode: state.resultMode === 'map' ? 'listing' : 'map'}
     case 'SET_SEARCH_LOCATION':
       return {...state, location: action.data}
+    case 'SET_SEARCH_PAGE':
+      return {...state, currentPage: action.data}
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':
       return {...state, locationSuggestions: action.data}
     case 'SET_DEFAULT_SEARCH_LOCATION':

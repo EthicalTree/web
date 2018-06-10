@@ -43,7 +43,13 @@ export class ResultsMap extends React.Component {
     const selectionChanged = newProps.search.selectedResult !== search.selectedResult
     const stateChanged = newState !== this.state
 
-    return searchChanged || selectionChanged || featuredChanged || stateChanged
+    const shouldUpdate = searchChanged || selectionChanged || featuredChanged
+
+    if (shouldUpdate) {
+      this.hasBeenFit = false
+    }
+
+    return shouldUpdate || stateChanged
   }
 
   getInnerHeight() {

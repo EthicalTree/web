@@ -19,18 +19,22 @@ import { performSearch } from '../../actions/search'
 
 class SearchResultsPage extends React.Component {
 
-  performSearch = (newPage=0, ethicalities, location) => {
+  performSearch = (newPage=1, ethicalities, location) => {
     const { dispatch, history, search } = this.props
 
     const query = search.query
     const selectedEthicalities = ethicalities ? ethicalities : search.selectedEthicalities
     const searchLocation = location ? location : search.location
+    const page = newPage || search.currentPage
 
-    const paramsObj = { ethicalities: selectedEthicalities.join(','), location: searchLocation }
-
+    const paramsObj = {
+      ethicalities: selectedEthicalities.join(','),
+      location: searchLocation,
+      page
+    }
 
     dispatch({ type: 'SET_SEARCH_QUERY', data: query })
-    dispatch({ type: 'SET_SEARCH_PAGE', data: newPage })
+    dispatch({ type: 'SET_SEARCH_PAGE', data: page })
     dispatch({ type: 'SET_SEARCH_LOCATION', data: searchLocation })
     dispatch({ type: 'SET_SEARCH_ETHICALITIES', data: selectedEthicalities})
     dispatch({ type: 'SET_SEARCH_PENDING', data: true })
@@ -41,7 +45,7 @@ class SearchResultsPage extends React.Component {
     const { location } = this.props
     let search = querystring.parse(location.search.slice(1))
 
-    search.page = search.page || 0
+    search.page = search.page || 1
     search.ethicalities = search.ethicalities ? search.ethicalities.split(',') : []
 
     return search
