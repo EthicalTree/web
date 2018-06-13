@@ -13,9 +13,9 @@ const getCurrentUser = () => {
   return state.session.user
 }
 
-export const trackPageView = (options) => {
-  const user = options && options.user ? options.user : getCurrentUser()
+export const trackPageView = options => {
   const url = window.location.pathname + window.location.search
+  const user = options && options.user ? options.user : getCurrentUser()
 
   if (user && user.admin) {
     return
@@ -34,6 +34,11 @@ export const trackPageView = (options) => {
 
 export const trackEvent = options => {
   const { action, category, label, value } = options
+  const user = getCurrentUser()
+
+  if (user && user.admin) {
+    return
+  }
 
   ReactGA.event({
     action,

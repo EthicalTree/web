@@ -189,7 +189,15 @@ const ListingInfo = (props) => {
         <NavItem>
           <NavLink
             className={`${activeTab === 'location' ? 'active' : ''}`}
-            onClick={() => { dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'location' }) }}
+            onClick={() => {
+              trackEvent({
+                action: 'Select Location Tab',
+                category: 'Listing',
+                label: listing.slug
+              })
+
+              dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'location' })
+            }}
           >
             Location
           </NavLink>
@@ -197,7 +205,15 @@ const ListingInfo = (props) => {
         <NavItem>
           <NavLink
             className={`${activeTab === 'menu' ? 'active' : ''}`}
-            onClick={() => { dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'menu' }) }}
+            onClick={() => {
+              trackEvent({
+                action: 'Select Menu Tab',
+                category: 'Listing',
+                label: listing.slug
+              })
+
+              dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'menu' })
+            }}
           >
             Menu
           </NavLink>
