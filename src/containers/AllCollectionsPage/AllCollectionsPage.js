@@ -6,8 +6,9 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 import { Loader } from '../../components/Loader'
+import { Paginator } from '../../components/Paginator'
 
-import { getCollections } from '../../actions/collection'
+import { getCollections } from '../../actions/collections'
 import { setSearchLocation } from '../../actions/search'
 
 export class AllCollectionsPage extends React.Component {
@@ -20,7 +21,7 @@ export class AllCollectionsPage extends React.Component {
       dispatch(setSearchLocation(city, city))
     }
     else {
-      dispatch(getCollections())
+      dispatch(getCollections({}))
     }
   }
 
@@ -37,7 +38,7 @@ export class AllCollectionsPage extends React.Component {
   }
 
   render() {
-    const { user, collections } = this.props
+    const { dispatch, user, collections } = this.props
 
     return (
       <div className="all-collections-page">
@@ -84,6 +85,15 @@ export class AllCollectionsPage extends React.Component {
                 </Link>
               )
             })}
+
+            <Paginator
+              className="text-center"
+              pageCount={collections.totalPages}
+              currentPage={collections.currentPage}
+              onPageChange={data => dispatch(getCollections({
+                page: data.selected
+              }))}
+            />
           </div>
         </Loader>
       </div>

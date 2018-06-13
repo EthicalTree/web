@@ -2,12 +2,12 @@ import querystring from 'querystring'
 import { api } from '../utils/api'
 import { getSavedSearchLocation } from '../utils/address'
 
-export const getCollections = (options={}) => {
+export const getCollections = ({ page=1 }) => {
   const location = getSavedSearchLocation()
 
   const data = {
     location,
-    ...options
+    page
   }
 
   return dispatch => {
@@ -15,7 +15,7 @@ export const getCollections = (options={}) => {
 
     api.get(`/v1/collections?${querystring.stringify(data)}`)
       .then(({ data }) => {
-        dispatch({ type: 'SET_COLLECTIONS', data: data.collections })
+        dispatch({ type: 'SET_COLLECTIONS', data })
       })
       .catch(() => {})
       .then(() => {
