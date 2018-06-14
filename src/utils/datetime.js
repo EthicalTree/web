@@ -1,19 +1,23 @@
 import moment from 'moment-timezone'
 
-export const getOpenCloseStatus = hours => {
-  const now = moment()
+const USER_TIMEZONE = moment.tz.guess()
+
+export const getOpenCloseStatus = (hours, timezone) => {
+  const tz = timezone ? timezone : USER_TIMEZONE
+  const now = moment.tz(tz)
+
   const todaysHours = hours.filter(h => h.day === now.format('dddd').toLowerCase())
 
   const result = todaysHours.map(h => {
-    const openTime = moment(h.openStr, 'hh:mm a')
-    const closeTime = moment(h.closeStr, 'hh:mm a')
+    const openTime = moment.tz(h.openStr, 'hh:mm a', tz)
+    const closeTime = moment.tz(h.closeStr, 'hh:mm a', tz)
 
     if (closeTime < openTime) {
       closeTime.add(1, 'day')
     }
 
-    const openingSoonTime = moment(openTime).add(-30, 'minutes')
-    const closingSoonTime = moment(closeTime).add(-30, 'minutes')
+    const openingSoonTime = moment.tz(openTime, tz).add(-30, 'minutes')
+    const closingSoonTime = moment.tz(closeTime, tz).add(-30, 'minutes')
 
     if (now.isBetween(openingSoonTime, openTime)) {
       return 'opening_soon'

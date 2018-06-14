@@ -335,14 +335,14 @@ export const updateListingImage = ({ listingSlug, imageId, offset }) => {
   }
 }
 
-export const saveOperatingHours = (listingSlug, operatingHours) => {
+export const saveOperatingHours = (listing, operatingHours) => {
   const utcHours = {}
 
   Object.keys(operatingHours).forEach(day => {
     utcHours[day] = {...operatingHours[day], hours: operatingHours[day].hours.map(h => {
       return {
-        openStr: moment(h.openStr, 'hh:mm a').utc().format('hh:mm a'),
-        closeStr: moment(h.closeStr, 'hh:mm a').utc().format('hh:mm a')
+        openStr: moment.tz(h.openStr, 'hh:mm a', listing.timezone).utc().format('hh:mm a'),
+        closeStr: moment.tz(h.closeStr, 'hh:mm a', listing.timezone).utc().format('hh:mm a')
       }
     })}
   })
@@ -350,18 +350,18 @@ export const saveOperatingHours = (listingSlug, operatingHours) => {
   return dispatch => {
     dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
-    api.post(`/v1/listings/${listingSlug}/operating_hours`, utcHours)
+    api.post(`/v1/listings/${listing.slug}/operating_hours`, utcHours)
       .then(response => {
         const operatingHours = response.data.operatingHours
 
         if (operatingHours) {
-          dispatch(getListing(listingSlug))
+          dispatch(getListing(listing.slug))
           dispatch({ type: 'CLOSE_MODAL' })
 
           trackEvent({
             action: 'Save Listing Operating Hours',
             category: 'Listing',
-            label: listingSlug
+            label: listing.slug
           })
         }
       })

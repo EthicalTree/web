@@ -7,10 +7,10 @@ import { Icon } from '../Icon'
 import { getOpenCloseStatus } from '../../utils/datetime'
 
 const OpenClose = props => {
-  const { hours } = props
+  const { hours, timezone } = props
   let icon
 
-  const status = getOpenCloseStatus(hours)
+  const status = getOpenCloseStatus(hours, timezone)
 
   if (status === 'open')
     icon = <Icon iconKey="stopwatch" label="Open Now" />
@@ -29,7 +29,8 @@ const OpenClose = props => {
 }
 
 OpenClose.propTypes = {
-  hours: PropTypes.array
+  hours: PropTypes.array,
+  timezone: PropTypes.string
 }
 
 OpenClose.defaultProps = {

@@ -80,7 +80,10 @@ export class Result extends React.Component {
               </div>
             </CardTitle>
 
-            <OpenClose hours={localizedDates(listing.operatingHours)} />
+            <OpenClose
+              hours={localizedDates(listing.operatingHours, listing.timezone)}
+              timezone={listing.timezone}
+            />
           </CardBody>
         </Card>
       </Link>

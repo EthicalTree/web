@@ -63,9 +63,10 @@ const AsideInfo = (props) => {
       </div>
 
       <OperatingHours
+        canEdit={hasPermission('update', listing)}
         dispatch={dispatch}
         hours={listing.operatingHours}
-        canEdit={hasPermission('update', listing)}
+        timezone={listing.timezone}
       />
     </aside>
   )

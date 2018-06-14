@@ -43,10 +43,10 @@ const DailyHours = props => {
 
 class OperatingHours extends React.PureComponent {
   render() {
-    const { dispatch, hours, canEdit } = this.props
+    const { canEdit, dispatch, hours, timezone } = this.props
     const hasHours = hours && hours.length > 0
 
-    const localHours = localizedDates(hours)
+    const localHours = localizedDates(hours, timezone)
     const groupedHours = groupBy(localHours, h => h.day)
 
     return (
@@ -56,7 +56,10 @@ class OperatingHours extends React.PureComponent {
         </div>
 
         <div className="mt-4">
-          <OpenClose hours={localHours} />
+          <OpenClose
+            hours={localHours}
+            timezone={timezone}
+          />
         </div>
 
         <div className="card-body pt-3">

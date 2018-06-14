@@ -9,14 +9,16 @@ export const asToday = datetime => {
   })
 }
 
-export const localizedDates = operatingHours => {
+export const localizedDates = (operatingHours, timezone) => {
+  const tz = timezone ? timezone : USER_TIMEZONE
+
   return operatingHours.map(oh => {
     const open = asToday(moment.utc(oh.open))
     const close = asToday(moment.utc(oh.close))
 
     let result = {
-      openStr: open.tz(USER_TIMEZONE).format('hh:mm a'),
-      closeStr: close.tz(USER_TIMEZONE).format('hh:mm a'),
+      openStr: open.tz(tz).format('hh:mm a'),
+      closeStr: close.tz(tz).format('hh:mm a'),
     }
 
     result.hours = `${result.openStr} - ${result.closeStr}`

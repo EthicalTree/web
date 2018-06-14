@@ -15,7 +15,7 @@ class EditOperatingHoursModal extends React.Component {
     const { listing } = props
     let operatingHours = listing.operatingHours ? listing.operatingHours : []
 
-    operatingHours = localizedDates(operatingHours)
+    operatingHours = localizedDates(operatingHours, listing.timezone)
 
     let hours = {
       'sunday': { label: 'Sunday', hours: []},
@@ -44,7 +44,7 @@ class EditOperatingHoursModal extends React.Component {
 
     const { dispatch, listing } = this.props
 
-    dispatch(saveOperatingHours(listing.slug, this.state.operatingHours))
+    dispatch(saveOperatingHours(listing, this.state.operatingHours))
   }
 
   setDay(day) {
