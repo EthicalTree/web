@@ -38,6 +38,7 @@ import { ImageManager } from '../../components/ImageManager'
 
 import { hasPermission, isAdmin } from '../../utils/permissions'
 import { trackEvent } from '../../utils/ga'
+import { toTitleCase } from '../../utils/string'
 
 import { setConfirm } from '../../actions/confirm'
 
@@ -318,7 +319,6 @@ class Listing extends React.Component {
 
   componentDidMount() {
     const { dispatch, match } = this.props
-
     dispatch(getListing(match.params.slug))
   }
 
@@ -351,11 +351,15 @@ class Listing extends React.Component {
     const {
       dispatch,
       listing,
-      match,
-      user,
+      match
     } = this.props
 
     const { currentImage } = listing
+    const title = listing.address && listing.city ? (
+      `${listing.title} in ${toTitleCase(listing.city)} · ${listing.address} · EthicalTree`
+    ) : (
+      `${listing.title} · EthicalTree`
+    )
 
     if (!listing.id && !listing.isListingLoading) {
       return (
@@ -373,7 +377,7 @@ class Listing extends React.Component {
         fixed={true}
       >
         <Helmet key={listing.id}>
-          <title>{`${listing.title} in ${user.city} · ${listing.address} · EthicalTree`}</title>
+          <title>{title}</title>
           <meta
             name="description"
             content={`${listing.bio}`}
