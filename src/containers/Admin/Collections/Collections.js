@@ -79,7 +79,7 @@ const CollectionTable = props => {
               <td>{`#${l.hashtag}`}</td>
               <td>
                 <Input
-                  value={l.location}
+                  value={l.location || ''}
                   onChange={e => changeLocation(l, e.target.value) }
                   type="select"
                 >
