@@ -31,7 +31,11 @@ class SearchResultsPage extends React.Component {
     let paramsObj = {
       ethicalities: ethicalities.join(','),
       location: location,
-      page
+      page,
+      swlat: '',
+      swlng: '',
+      nelat: '',
+      nelng: ''
     }
 
     if (bounds) {

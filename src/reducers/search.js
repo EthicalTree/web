@@ -50,10 +50,10 @@ const search = (state=defaultSearch, {type, data}) => {
         currentPage: data.page || state.currentPage,
         location: data.location || state.location,
         selectedEthicalities: ethicalities || state.selectedEthicalities,
-        nelat: data.nelat || state.nelat,
-        nelng: data.nelng || state.nelng,
-        swlat: data.swlat || state.swlat,
-        swlng: data.swlng || state.swlng,
+        nelat: data.nelat === undefined ? state.nelat : data.nelat,
+        nelng: data.nelng === undefined ? state.nelng : data.nelng,
+        swlat: data.swlat === undefined ? state.swlat : data.swlat,
+        swlng: data.swlng === undefined ? state.swlng : data.swlng,
       }
     }
     case 'SET_SEARCH_LOADING':
