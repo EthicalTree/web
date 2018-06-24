@@ -1,1 +1,1 @@
-export {default as SearchResults} from './SearchResults'
+export {default as SearchResultsPage} from './SearchResultsPage'

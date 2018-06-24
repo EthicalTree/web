@@ -45,8 +45,10 @@ export class FrontPage extends React.Component {
               showIcons={true}
               onEthicalitySelect={slug => {
                 dispatch({
-                  type: 'SET_SEARCH_ETHICALITIES',
-                  data: toggleSearchEthicalities(selectedEthicalities, slug)
+                  type: 'SET_SEARCH_QUERY_PARAMS',
+                  data: {
+                    ethicalities: toggleSearchEthicalities(selectedEthicalities, slug)
+                  }
                 })
               }}
               selectedEthicalities={selectedEthicalities}

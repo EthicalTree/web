@@ -14,20 +14,17 @@ export class Featured extends React.Component {
 
   componentDidMount() {
     const { count, dispatch } = this.props
+
     dispatch(getFeaturedListings({ count }))
   }
 
   render() {
     const { dispatch, search, xxl, ...rest } = this.props
 
-    if (search.featured.length < 1) {
-      return null
-    }
-
     return (
       <Loader
         className="featured-listings"
-        loading={search.featuredListingsLoading}
+        loading={search.featured.length === 0 && search.featuredListingsLoading}
       >
         <h5 className="featured-listings-header pt-3 pb-3">
           Featured

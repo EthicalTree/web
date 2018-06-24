@@ -16,6 +16,7 @@ class InnerMap extends React.Component {
       <GoogleMap
         {...this.props}
         ref={onLoad}
+        minZoom={0}
         zoom={zoom}
         defaultOptions={{
           disableDefaultUI: true,

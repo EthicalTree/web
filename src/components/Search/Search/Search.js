@@ -66,7 +66,7 @@ class Search extends React.Component {
         page: 1
       }
 
-      dispatch({ type: 'SET_SEARCH_QUERY', data: query })
+      dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: {query}})
       history.push(`/s/${encodeURIComponent(query)}?${querystring.stringify(paramsObj)}`)
       dispatch({ type: 'SET_SEARCH_PENDING', data: true })
     }

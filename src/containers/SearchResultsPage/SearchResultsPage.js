@@ -19,26 +19,42 @@ import { performSearch } from '../../actions/search'
 
 class SearchResultsPage extends React.Component {
 
-  performSearch = (newPage=1, ethicalities, location) => {
+  performSearch = (params={}) => {
     const { dispatch, history, search } = this.props
+    const { bounds } = params
 
     const query = search.query
-    const selectedEthicalities = ethicalities ? ethicalities : search.selectedEthicalities
-    const searchLocation = location ? location : search.location
-    const page = newPage || search.currentPage
+    const ethicalities = params.ethicalities || search.selectedEthicalities
+    const location = params.location || search.location
+    const page = params.page || search.currentPage
 
-    const paramsObj = {
-      ethicalities: selectedEthicalities.join(','),
-      location: searchLocation,
+    let paramsObj = {
+      ethicalities: ethicalities.join(','),
+      location: location,
       page
     }
 
-    dispatch({ type: 'SET_SEARCH_QUERY', data: query })
-    dispatch({ type: 'SET_SEARCH_PAGE', data: page })
-    dispatch({ type: 'SET_SEARCH_LOCATION', data: searchLocation })
-    dispatch({ type: 'SET_SEARCH_ETHICALITIES', data: selectedEthicalities})
+    if (bounds) {
+      const sw = bounds.getSouthWest()
+      const ne = bounds.getNorthEast()
+
+      paramsObj = {
+        ...paramsObj,
+        swlat: sw.lat(),
+        swlng: sw.lng(),
+        nelat: ne.lat(),
+        nelng: ne.lng()
+      }
+    }
+
+    dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: paramsObj})
     dispatch({ type: 'SET_SEARCH_PENDING', data: true })
+
     history.push(`/s/${query}?${querystring.stringify(paramsObj)}`)
+  }
+
+  handleRedoSearch = bounds => {
+    this.performSearch({ bounds })
   }
 
   getQueryParams() {
@@ -51,14 +67,15 @@ class SearchResultsPage extends React.Component {
     return search
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { match, dispatch } = this.props
     const queryParams = this.getQueryParams()
 
-    dispatch({ type: 'SET_SEARCH_QUERY', data: match.params.query })
-    dispatch({ type: 'SET_SEARCH_PAGE', data: queryParams.page })
-    dispatch({ type: 'SET_SEARCH_LOCATION', data: queryParams.location })
-    dispatch({ type: 'SET_SEARCH_ETHICALITIES', data: queryParams.ethicalities})
+    dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: {
+      query: match.params.query,
+      ...queryParams
+    }})
+
     dispatch({ type: 'SET_SEARCH_PENDING', data: true })
   }
 
@@ -66,7 +83,17 @@ class SearchResultsPage extends React.Component {
     const { dispatch, search } = this.props
 
     if (search.isPending) {
-      dispatch(performSearch(search.query, search.selectedEthicalities, search.location, search.currentPage))
+      dispatch(performSearch({
+        query: search.query,
+        ethicalities: search.selectedEthicalities,
+        location: search.location,
+        page: search.currentPage,
+        nelat: search.nelat,
+        nelng: search.nelng,
+        swlat: search.swlat,
+        swlng: search.swlng
+      }))
+
       dispatch({ type: 'SET_SEARCH_PENDING', data: false })
     }
   }
@@ -138,7 +165,6 @@ class SearchResultsPage extends React.Component {
           dispatch={dispatch}
           history={history}
           search={search}
-          handlePageChange={this.performSearch}
           handleSearch={this.performSearch}
         />
         <ResultsMap
@@ -156,6 +182,7 @@ class SearchResultsPage extends React.Component {
               dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: null })
             }, 0)
           }}
+          handleRedoSearch={this.handleRedoSearch}
           search={search}
           overlay={this.getOverlay()}
         />

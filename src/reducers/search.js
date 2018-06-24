@@ -8,6 +8,10 @@ const defaultSearch = {
   isSearchPending: false,
   listings: [],
   location: '',
+  nelat: null,
+  nelng: null,
+  swlat: null,
+  swlng: null,
   located: false,
   locationSuggestions: [],
   matches: 0,
@@ -18,31 +22,44 @@ const defaultSearch = {
   selectedResult: null,
 }
 
-const search = (state=defaultSearch, action) => {
+const search = (state=defaultSearch, {type, data}) => {
 
-  switch (action.type) {
+  switch (type) {
     case 'TOGGLE_SEARCH_RESULTS_MODE':
       return {...state, resultMode: state.resultMode === 'map' ? 'listing' : 'map'}
-    case 'SET_SEARCH_LOCATION':
-      return {...state, location: action.data}
-    case 'SET_SEARCH_PAGE':
-      return {...state, currentPage: action.data}
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':
-      return {...state, locationSuggestions: action.data}
+      return {...state, locationSuggestions: data}
     case 'SET_DEFAULT_SEARCH_LOCATION':
-      return {...state, location: !state.location ? action.data : state.location}
+      return {...state, location: !state.location ? data : state.location}
     case 'SET_SELECTED_SEARCH_RESULT':
-      return {...state, selectedResult: action.data}
+      return {...state, selectedResult: data}
     case 'SET_SEARCH_RESULT_HOVER':
-      return {...state, hoveredResult: action.data}
+      return {...state, hoveredResult: data}
     case 'SET_SEARCH_PENDING':
-      return {...state, isPending: action.data}
-    case 'SET_SEARCH_QUERY':
-      return {...state, query: action.data || ''}
+      return {...state, isPending: data}
+    case 'SET_SEARCH_QUERY_PARAMS': {
+      let ethicalities = data.ethicalities
+
+      if (ethicalities && !Array.isArray(ethicalities)) {
+        ethicalities = ethicalities.split(',')
+      }
+
+      return {
+        ...state,
+        query: data.query === undefined ? state.query : data.query,
+        currentPage: data.page || state.currentPage,
+        location: data.location || state.location,
+        selectedEthicalities: ethicalities || state.selectedEthicalities,
+        nelat: data.nelat || state.nelat,
+        nelng: data.nelng || state.nelng,
+        swlat: data.swlat || state.swlat,
+        swlng: data.swlng || state.swlng,
+      }
+    }
     case 'SET_SEARCH_LOADING':
-      return {...state, isSearchLoading: action.data}
+      return {...state, isSearchLoading: data}
     case 'SET_FEATURED_LISTINGS': {
-      const { listings, location } = action.data
+      const { listings, location } = data
       return {
         ...state,
         featured: listings,
@@ -50,7 +67,7 @@ const search = (state=defaultSearch, action) => {
       }
     }
     case 'SET_FEATURED_LISTINGS_LOADING':
-      return {...state, featuredListingsLoading: action.data}
+      return {...state, featuredListingsLoading: data}
     case 'SET_SEARCH_RESULTS': {
       const {
         listings,
@@ -58,7 +75,7 @@ const search = (state=defaultSearch, action) => {
         pageCount,
         currentPage,
         matches
-      } = action.data
+      } = data
 
       return {
         ...state,
@@ -69,8 +86,6 @@ const search = (state=defaultSearch, action) => {
         pageCount: parseInt(pageCount, 10),
       }
     }
-    case 'SET_SEARCH_ETHICALITIES':
-      return {...state, selectedEthicalities: action.data}
     default:
       return state
   }
