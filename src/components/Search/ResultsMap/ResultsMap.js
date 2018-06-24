@@ -12,7 +12,7 @@ export class ResultsMap extends React.Component {
     if (this.mapEl) {
       this.setState({
         mapHeight: this.getInnerHeight(),
-        scrollTop: this.app.scrollTop
+        scrollTop: document.getElementsByTagName('html')[0].scrollTop
       })
     }
   }
@@ -45,13 +45,12 @@ export class ResultsMap extends React.Component {
   }
 
   componentDidMount() {
-    this.app = document.getElementsByClassName('app')[0]
-    this.app.addEventListener('scroll', this.updateMapPosition)
+    window.addEventListener('scroll', this.updateMapPosition)
     window.addEventListener('resize', this.updateMapPosition)
   }
 
   componentWillUnmount() {
-    this.app.removeEventListener('scroll', this.updateMapPosition)
+    window.removeEventListener('scroll', this.updateMapPosition)
     window.removeEventListener('resize', this.updateMapPosition)
   }
 
