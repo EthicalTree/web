@@ -44,6 +44,21 @@ class Footer extends React.PureComponent {
 
             <div className="social">
               <a
+                href="https://www.instagram.com/ethicaltree/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  trackEvent({
+                    action: 'Clicked Social Media',
+                    category: 'Social Media',
+                    label: 'Instagram'
+                  })
+                }}
+              >
+                <Icon iconKey="instagram" />
+              </a>
+
+              <a
                 href="https://www.facebook.com/ethicaltree"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -71,21 +86,6 @@ class Footer extends React.PureComponent {
                 }}
               >
                 <Icon iconKey="twitter" />
-              </a>
-
-              <a
-                href="https://www.instagram.com/ethicaltree/"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => {
-                  trackEvent({
-                    action: 'Clicked Social Media',
-                    category: 'Social Media',
-                    label: 'Instagram'
-                  })
-                }}
-              >
-                <Icon iconKey="instagram" />
               </a>
             </div>
           </div>
