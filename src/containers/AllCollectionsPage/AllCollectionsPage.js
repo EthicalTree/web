@@ -29,7 +29,7 @@ export class AllCollectionsPage extends React.Component {
     const { dispatch, history, search, user } = this.props
 
     if (search.location !== prevProps.search.location) {
-      dispatch(getCollections())
+      dispatch(getCollections({}))
     }
 
     if (user.city !== prevProps.user.city) {

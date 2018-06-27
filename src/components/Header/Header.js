@@ -188,8 +188,10 @@ const Header = props => {
                 ethicalities={app.ethicalities}
                 onEthicalitySelect={slug => {
                   dispatch({
-                    type: 'SET_SEARCH_ETHICALITIES',
-                    data: toggleSearchEthicalities(search.selectedEthicalities, slug)
+                    type: 'SET_SEARCH_QUERY_PARAMS',
+                    data: {
+                      ethicalities: toggleSearchEthicalities(search.selectedEthicalities, slug)
+                    }
                   })
                 }}
                 selectedEthicalities={search.selectedEthicalities}

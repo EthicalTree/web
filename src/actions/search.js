@@ -11,23 +11,17 @@ import {
 import { trackEvent } from '../utils/ga'
 import { toTitleCase } from '../utils/string'
 
-export const performSearch = (query, ethicalities, location, page) => {
-  let searchLocation = location
-
+export const performSearch = (params={}) => {
   const queryObj = {
-    query,
-    ethicalities: ethicalities.join(','),
-    location: searchLocation,
-    page
+    ...params,
+    ethicalities: params.ethicalities.join(',')
   }
 
   return dispatch => {
-    dispatch({ type: 'SET_SEARCH_LOADING', data: true })
-
     trackEvent({
       action: 'Listing Search',
       category: 'Search',
-      label: query
+      label: params.query
     })
 
     api.get(`/v1/search?${querystring.stringify(queryObj)}`)
@@ -52,7 +46,7 @@ export const setSearchLocation = (l, c) => {
     setSavedSearchLocation(location)
     setSavedCity(city)
 
-    dispatch({ type: 'SET_SEARCH_LOCATION', data: location })
+    dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: {location}})
     dispatch({ type: 'SET_USER_LOCATION', data: { location, city } })
     dispatch({ type: 'SET_SEARCH_PENDING', data: true })
   }

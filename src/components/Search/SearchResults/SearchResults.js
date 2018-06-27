@@ -63,8 +63,11 @@ export class SearchResults extends React.Component {
     const onEthicalitySelect = slug => {
       const newSelectedEthicalities = toggleSearchEthicalities(selectedEthicalities, slug)
 
-      dispatch({ type: 'SET_SEARCH_ETHICALITIES', data: newSelectedEthicalities })
-      handleSearch(0, newSelectedEthicalities)
+      dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: {ethicalities: newSelectedEthicalities}})
+      handleSearch({
+        page: 0,
+        ethicalities: newSelectedEthicalities
+      })
     }
 
     return (
@@ -119,6 +122,7 @@ export class SearchResults extends React.Component {
           <Col xs="12" lg="3" xl="12" className="col-xxl-3">
             <div className="d-flex flex-wrap flex-direction-column">
               <Featured
+                key="search-results-featured"
                 sm={6}
                 lg={12}
                 xl={6}
@@ -133,7 +137,9 @@ export class SearchResults extends React.Component {
             <Paginator
               pageCount={search.pageCount}
               currentPage={search.currentPage}
-              onPageChange={data => this.props.handlePageChange(data.selected)}
+              onPageChange={data => {
+                handleSearch({ page: data.selected })
+              }}
             />
           </Row>
         }

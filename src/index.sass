@@ -31,22 +31,17 @@ $grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 160
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss"
 
-// Global Syles
 html
-  position: relative
-  min-height: 100%
+  overflow-x: hidden
 
 html, body, #root, .app
+  position: relative
   width: 100%
-  overflow-x: hidden
   height: calc(100%)
 
   @media (max-width: $screen-md-max)
     overflow-y: scroll
     -webkit-overflow-scrolling: touch
-
-#root
-  overflow-x: hidden
 
 body
   margin: 0
