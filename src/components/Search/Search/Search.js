@@ -152,6 +152,7 @@ class Search extends React.Component {
                 value: location,
                 placeholder: 'address, city, postal code...',
                 onFocus: () => { this.setState({ isLocationFocused: true }) },
+                onKeyDown: this.search,
                 onBlur: () => {
                   setTimeout(() => {
                     this.setState({ isLocationFocused: false })
