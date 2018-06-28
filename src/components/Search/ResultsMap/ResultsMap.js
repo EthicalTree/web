@@ -31,6 +31,7 @@ export class ResultsMap extends React.Component {
   handleMapLoad = map => {
     if (map) {
       this.map = map
+      this.updateMapPosition()
     }
   }
 
@@ -105,7 +106,7 @@ export class ResultsMap extends React.Component {
       })
     }
 
-    if (this.map) {
+    if (this.map && this.bounds) {
       this.map.fitBounds(this.bounds, padding)
     }
   }
@@ -154,7 +155,6 @@ export class ResultsMap extends React.Component {
           }}
         >
           <Map
-            key={search.resultMode}
             onLoad={this.handleMapLoad}
             onClick={handleMapClick}
             onDragEnd={this.handleBoundsChanged}
