@@ -175,6 +175,7 @@ const ListingInfo = (props) => {
 
   const activeTab = listing.listingInfoTab
   const menu = listing.menus.length > 0 ? listing.menus[0] : null
+  const isStore = listing.categories.map(c => c.slug).includes('store')
 
   return (
     <div className={className}>
@@ -217,7 +218,8 @@ const ListingInfo = (props) => {
               dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'menu' })
             }}
           >
-            Menu
+            {isStore && 'More Info'}
+            {!isStore && 'Menu'}
           </NavLink>
         </NavItem>
       </Nav>
