@@ -1,7 +1,10 @@
 import store from 'store'
+
+import { setSearchLocation } from './search'
+
 import { api, authenticate } from '../utils/api'
 import { trackPageView } from '../utils/ga'
-import { setSearchLocation } from './search'
+import { hasSavedLocation } from '../utils/address'
 
 export const initApp = (options={}) => {
   const token = store.get('ETHICALTREE_AUTH_TOKEN')
@@ -36,7 +39,12 @@ export const initApp = (options={}) => {
         const ethicalitiesData = e.data
         const plans = p.data
         const { user } = u.data
+        const { location } = sessionData
 
+        if (!hasSavedLocation() && location && location.directoryLocation) {
+          const { city, directoryLocation } = location
+          dispatch(setSearchLocation(directoryLocation, city))
+        }
 
         dispatch({ type: 'SET_SESSION_INFO', data: sessionData })
         dispatch({ type: 'SET_ETHICALITIES', data: ethicalitiesData })
