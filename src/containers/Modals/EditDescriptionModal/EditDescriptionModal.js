@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from '../Modal'
 import PhoneInput from 'react-phone-number-input'
+import {isValidNumber} from 'libphonenumber-js'
 
 import {
   Label,
@@ -22,7 +23,8 @@ class EditDescriptionModal extends React.Component {
       title: listing.title,
       bio: listing.bio,
       website: listing.website,
-      phone: listing.phone
+      phone: listing.phone,
+      validPhone: true
     }
   }
 
@@ -37,6 +39,14 @@ class EditDescriptionModal extends React.Component {
     }))
   }
 
+	changePhone = (phone) => {
+		if (isValidNumber(phone)) {
+			this.setState({phone, validPhone: true})
+		} else {
+			this.setState({validPhone: false})
+		}
+	};
+
   render() {
     const { listing, modal } = this.props
 
@@ -46,6 +56,7 @@ class EditDescriptionModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Edit Listing"
         onSave={this.submit.bind(this)}
+				saveDisabled={!this.state.validPhone}
         modalName="edit-description"
       >
         <Row>
@@ -78,10 +89,12 @@ class EditDescriptionModal extends React.Component {
 						<PhoneInput
 							placeholder="Enter phone number"
 							country="CA"
-							value={ this.state.phone }
-							onChange={ phone => this.setState({ phone }) }
+							value={this.state.phone}
+							onChange={this.changePhone}
               name="phoneNumber"
               id="phoneNumber"
+							error="Phone Number is invalid"
+							indicateInvalid={!this.state.validPhone}
 						/>
           </Col>
         </Row>

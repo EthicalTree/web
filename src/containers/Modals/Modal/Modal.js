@@ -64,13 +64,15 @@ const TopBar = props => {
 
 const BottomBar = props => {
   const saveLabel = props.saveLabel || 'Save'
+	const saveDisabled = props.saveDisabled || false
   let saveButton
 
   if (props.onSave) {
     saveButton = (
       <Button
         color="primary"
-        onClick={props.onSave}>
+				onClick={props.onSave}
+				disabled={saveDisabled}>
         {saveLabel}
       </Button>
     )
@@ -174,6 +176,7 @@ class Modal extends React.Component {
 
                 <BottomBar
                   saveLabel={props.saveLabel}
+                  saveDisabled={props.saveDisabled}
                   onSave={props.onSave}
                   onClose={onClose}
                 />
