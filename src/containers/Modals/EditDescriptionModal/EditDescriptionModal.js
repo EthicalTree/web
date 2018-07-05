@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from '../Modal'
+import PhoneInput from 'react-phone-number-input'
 
 import {
   Label,
@@ -20,7 +21,8 @@ class EditDescriptionModal extends React.Component {
     this.state = {
       title: listing.title,
       bio: listing.bio,
-      website: listing.website
+      website: listing.website,
+      phone: listing.phone
     }
   }
 
@@ -67,6 +69,20 @@ class EditDescriptionModal extends React.Component {
               name="listingWebsite"
               id="listingWebsite"
             />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col className="mb-4" xs={12} md={6}>
+            <Label for="phoneNumber">Phone Number</Label>
+						<PhoneInput
+							placeholder="Enter phone number"
+							country="CA"
+							value={ this.state.phone }
+							onChange={ phone => this.setState({ phone }) }
+              name="phoneNumber"
+              id="phoneNumber"
+						/>
           </Col>
         </Row>
 
