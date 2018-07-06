@@ -80,10 +80,13 @@ export class Result extends React.Component {
               </div>
             </CardTitle>
 
-            <OpenClose
-              hours={localizedDates(listing.operatingHours, listing.timezone)}
-              timezone={listing.timezone}
-            />
+						<div className="d-flex justify-content-between">
+							<OpenClose
+								hours={localizedDates(listing.operatingHours, listing.timezone)}
+								timezone={listing.timezone}
+							/>
+							{listing.distance}
+						</div>
           </CardBody>
         </Card>
       </Link>
