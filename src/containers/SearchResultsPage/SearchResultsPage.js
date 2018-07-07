@@ -104,6 +104,7 @@ class SearchResultsPage extends React.Component {
 
 
   getOverlay() {
+    const { session } = this.props
     const { selectedResult, listings, featured } = this.props.search
 
     if (selectedResult) {
@@ -135,6 +136,7 @@ class SearchResultsPage extends React.Component {
             listing={listing}
             location="Search Results Map"
             smallView={true}
+            session={session}
           />
         </CustomOverlayView>
       )
@@ -150,7 +152,8 @@ class SearchResultsPage extends React.Component {
       history,
       location,
       search,
-      selectedResult
+      selectedResult,
+      session,
     } = this.props
 
     if (!search.located) {
@@ -169,6 +172,7 @@ class SearchResultsPage extends React.Component {
           dispatch={dispatch}
           history={history}
           search={search}
+          session={session}
           handleSearch={this.performSearch}
         />
         <ResultsMap
@@ -240,6 +244,7 @@ const select = (state) => {
     app: state.app,
     router: state.router,
     search: state.search,
+    session: state.session,
     user: state.user
   }
 }

@@ -2,6 +2,7 @@ import './Result.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import numeral from 'numeral'
 import { Link } from 'react-router-dom'
 
 import {
@@ -15,6 +16,7 @@ import { OpenClose } from '../../OpenClose'
 
 import { listingProps } from '../../../utils/types'
 import { trackEvent } from '../../../utils/ga'
+import { getDistance } from '../../../utils/location'
 import { localizedDates } from '../../../models/hours'
 
 export class Result extends React.Component {
@@ -30,11 +32,25 @@ export class Result extends React.Component {
   }
 
   render() {
-    const { listing, location, hovered, className } = this.props
+    const {
+      className,
+      hovered,
+      listing,
+      location,
+      session
+    } = this.props
+
     const { currentImage } = this.state
 
     const extraStyle = currentImage ? { backgroundImage: `url(${currentImage.thumbnailUrl})` }  : {}
     const hoveredClass = hovered ? 'hovered' : ''
+
+    const distance = session && session.location && listing.location ? getDistance(
+      session.location.latitude,
+      session.location.longitude,
+      listing.location.lat,
+      listing.location.lng
+    ) : null
 
     return (
       <Link
@@ -80,13 +96,13 @@ export class Result extends React.Component {
               </div>
             </CardTitle>
 
-						<div className="d-flex justify-content-between">
-							<OpenClose
-								hours={localizedDates(listing.operatingHours, listing.timezone)}
-								timezone={listing.timezone}
-							/>
-							{listing.distance}
-						</div>
+            <div className="d-flex justify-content-between">
+              <OpenClose
+                hours={localizedDates(listing.operatingHours, listing.timezone)}
+                timezone={listing.timezone}
+              />
+              {distance && `${numeral(distance).format('0.0')} km`}
+            </div>
           </CardBody>
         </Card>
       </Link>

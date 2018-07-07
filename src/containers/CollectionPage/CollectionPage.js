@@ -46,7 +46,7 @@ export class CollectionPage extends React.Component {
   }
 
   render() {
-    const { dispatch, collection, user } = this.props
+    const { dispatch, collection, session, user } = this.props
     let headerStyles
 
     if (collection.coverImage) {
@@ -98,6 +98,7 @@ export class CollectionPage extends React.Component {
                       <Result
                         listing={l}
                         location="Collection Page"
+                        session={session}
                       />
                     </div>
                   )
@@ -133,6 +134,7 @@ export class CollectionPage extends React.Component {
 
 const select = state => ({
   collection: state.collection,
+  session: state.session,
   user: state.user
 })
 

@@ -3,6 +3,7 @@ import { getLocation } from '../models/session'
 const defaultState = {
   isSigningUp: false,
   isVerifyingEmail: false,
+  location: null,
   user: null,
   userLoading: true
 }

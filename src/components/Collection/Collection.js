@@ -8,7 +8,13 @@ import { Result } from '../Search/Result'
 import { trackEvent } from '../../utils/ga'
 
 export const Collection = props => {
-  const { city, listings, name, slug } = props
+  const {
+    city,
+    listings,
+    name,
+    session,
+    slug
+  } = props
 
   if (!listings.length > 0) {
     return null
@@ -47,6 +53,7 @@ export const Collection = props => {
               key={l.id}
               listing={l}
               location="Collection"
+              session={session}
             />
           )
         })}
@@ -61,6 +68,7 @@ Collection.propTypes = {
   listings: PropTypes.array.isRequired,
   location: PropTypes.object,
   name: PropTypes.string.isRequired,
+  session: PropTypes.object
 }
 
 export default Collection

@@ -72,7 +72,7 @@
   "devDependencies": {
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.9.1",
     "node-sass-chokidar": "0.0.3",
     "react-test-renderer": "^16.2.0",
     "react-wufoo-embed": "^1.0.0",

@@ -21,7 +21,7 @@ export class Collections extends React.Component {
   }
 
   render() {
-    const { collections, user } = this.props
+    const { collections, session, user } = this.props
 
     return (
       <Loader
@@ -33,6 +33,7 @@ export class Collections extends React.Component {
             <Collection
               city={user.city}
               key={cl.id}
+              session={session}
               {...cl}
             />
           )
@@ -44,6 +45,7 @@ export class Collections extends React.Component {
 
 const select = state => ({
   collections: state.collections,
+  session: state.session,
   user: state.user
 })
 

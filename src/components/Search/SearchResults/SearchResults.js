@@ -51,7 +51,7 @@ export class SearchResults extends React.Component {
   }
 
   render() {
-    const { app, search, dispatch, handleSearch } = this.props
+    const { app, search, session, dispatch, handleSearch } = this.props
     const { minHeight } = this.state
 
     const ethicalities = app.ethicalities
@@ -106,6 +106,7 @@ export class SearchResults extends React.Component {
                         listing={listing}
                         hovered={listing.slug === search.hoveredResult}
                         location="Search Results"
+                        session={session}
                       />
                     </Col>
                   ))

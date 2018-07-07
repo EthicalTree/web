@@ -19,7 +19,13 @@ export class Featured extends React.Component {
   }
 
   render() {
-    const { dispatch, search, xxl, ...rest } = this.props
+    const {
+      dispatch,
+      search,
+      session,
+      xxl,
+      ...rest
+    } = this.props
 
     return (
       <Loader
@@ -37,6 +43,7 @@ export class Featured extends React.Component {
                 <Result
                   listing={l}
                   location="Featured Listing"
+                  session={session}
                 />
               </Col>
             )
@@ -48,7 +55,8 @@ export class Featured extends React.Component {
 }
 
 const select = state => ({
-  search: state.search
+  search: state.search,
+  session: state.session
 })
 
 Featured.propTypes = {
