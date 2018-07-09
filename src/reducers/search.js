@@ -1,3 +1,5 @@
+import { concat } from 'ramda'
+
 const defaultSearch = {
   categorySuggestions: [],
   currentPage: 1,
@@ -28,7 +30,12 @@ const search = (state=defaultSearch, {type, data}) => {
     case 'TOGGLE_SEARCH_RESULTS_MODE':
       return {...state, resultMode: state.resultMode === 'map' ? 'listing' : 'map'}
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':
-      return {...state, locationSuggestions: data}
+			// set near me as the top result if geolocation is available
+			const nearMe = {
+				name: 'Near Me',
+			};
+			const suggested = concat([nearMe], data);
+      return {...state, locationSuggestions: suggested}
     case 'SET_DEFAULT_SEARCH_LOCATION':
       return {...state, location: !state.location ? data : state.location}
     case 'SET_SELECTED_SEARCH_RESULT':
