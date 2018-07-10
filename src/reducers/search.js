@@ -1,5 +1,3 @@
-import { concat } from 'ramda'
-
 const defaultSearch = {
   categorySuggestions: [],
   currentPage: 1,
@@ -34,7 +32,7 @@ const search = (state=defaultSearch, {type, data}) => {
 			const nearMe = {
 				name: 'Near Me',
 			};
-			const suggested = concat([nearMe], data);
+			const suggested = [nearMe].concat(data);
       return {...state, locationSuggestions: suggested}
     case 'SET_DEFAULT_SEARCH_LOCATION':
       return {...state, location: !state.location ? data : state.location}
