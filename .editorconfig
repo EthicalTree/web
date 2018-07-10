@@ -1,0 +1,14 @@
+root = true
+
+[*]
+end_of_line = lf # Unix-style newlines
+
+[*.{js,html,sass,css}]
+indent_style = space
+indent_size = 2
+insert_final_newline: false
+
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+

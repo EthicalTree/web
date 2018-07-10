@@ -28,11 +28,8 @@ const search = (state=defaultSearch, {type, data}) => {
     case 'TOGGLE_SEARCH_RESULTS_MODE':
       return {...state, resultMode: state.resultMode === 'map' ? 'listing' : 'map'}
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':
-			// set near me as the top result if geolocation is available
-			const nearMe = {
-				name: 'Near Me',
-			};
-			const suggested = [nearMe].concat(data);
+      // set near me as the top result
+      const suggested = [{name: 'Near Me'}].concat(data);
       return {...state, locationSuggestions: suggested}
     case 'SET_DEFAULT_SEARCH_LOCATION':
       return {...state, location: !state.location ? data : state.location}
