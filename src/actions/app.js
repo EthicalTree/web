@@ -5,6 +5,7 @@ import { setSearchLocation } from './search'
 import { api, authenticate } from '../utils/api'
 import { trackPageView } from '../utils/ga'
 import { hasSavedLocation } from '../utils/address'
+import { assignBugsnagUser } from '../utils/bugsnag'
 
 export const initApp = (options={}) => {
   const token = store.get('ETHICALTREE_AUTH_TOKEN')
@@ -55,6 +56,7 @@ export const initApp = (options={}) => {
           dispatch({ type: 'SET_ACCOUNT_FIRST_NAME', data: user.firstName })
           dispatch({ type: 'SET_ACCOUNT_LAST_NAME', data: user.lastName })
           trackPageView({ user })
+          assignBugsnagUser(user)
         }
 
         dispatch({ type: 'SET_USER_LOADING', data: false })

@@ -1,6 +1,7 @@
 import history from '../utils/history'
 import { api, authenticate, deauthenticate } from '../utils/api'
 import { trackPageView } from '../utils/ga'
+import { assignBugsnagUser } from '../utils/bugsnag'
 
 export const login = data => {
   return dispatch => {
@@ -167,6 +168,7 @@ export const getCurrentUser = () => {
         dispatch({ type: 'SET_ACCOUNT_LAST_NAME', data: user.lastName })
 
         trackPageView({ user })
+        assignBugsnagUser(user)
       })
       .then(() => {
         dispatch({ type: 'SET_USER_LOADING', data: false })

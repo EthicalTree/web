@@ -19,6 +19,7 @@ import { initApp } from '../../actions/app'
 
 import history from '../../utils/history'
 import { split } from '../../utils/codesplitting'
+import BugsnagErrorBoundary from '../../utils/bugsnag'
 
 class InnerApp extends React.Component {
   handleSkip = () => {
@@ -172,15 +173,17 @@ class App extends React.Component {
     const { store } = this.props
 
     return (
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <React.Fragment>
-            <ScrollToTop />
-            <FacebookPixel />
-            <InnerApp />
-          </React.Fragment>
-        </ConnectedRouter>
-      </Provider>
+      <BugsnagErrorBoundary>
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <React.Fragment>
+              <ScrollToTop />
+              <FacebookPixel />
+              <InnerApp />
+            </React.Fragment>
+          </ConnectedRouter>
+        </Provider>
+      </BugsnagErrorBoundary>
     )
   }
 }
