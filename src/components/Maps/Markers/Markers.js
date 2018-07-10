@@ -14,7 +14,7 @@ const Markers = props => {
   return (
     <div>
       {uniqBy(listings, l => l.id).map(listing => {
-        const location = listing.locations[0]
+        const location = listing.location
 
         return (
           <Marker
