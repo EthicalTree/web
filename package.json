@@ -28,6 +28,8 @@
     "axios": "^0.16.1",
     "babel-plugin-ramda": "^1.4.3",
     "bootstrap": "^4.0.0",
+    "bugsnag-js": "^4.7.2",
+    "bugsnag-react": "^1.1.1",
     "classnames": "^2.2.5",
     "core-js": "^2.5.5",
     "jquery": "^3.2.1",
