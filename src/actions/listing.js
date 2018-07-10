@@ -46,7 +46,7 @@ export const addListing = (data, history) => {
             label: response.data.slug
           })
 
-          history.push(`/listings/${response.data.slug}`)
+          history.push(`/listings/_/${response.data.slug}`)
         }
       })
       .catch(() => {})
