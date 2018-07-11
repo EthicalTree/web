@@ -1,5 +1,6 @@
 import store from '../store/store'
-import * as R from 'ramda'
+import isEmpty from 'lodash/isEmpty'
+import isNil from 'lodash/isNil'
 
 const defaultSearch = {
   categorySuggestions: [],
@@ -33,7 +34,7 @@ const search = (state=defaultSearch, {type, data}) => {
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':
       // set near me as the top result if location exists on the sesssion
       const location = store.getState().session.location
-      const hasLocation = !R.isEmpty(location) && !R.isNil(location)
+      const hasLocation = !isEmpty(location) && !isNil(location)
       const suggestedList = hasLocation ? [{ key: 'nearme', name: 'Near Me', city: location.city }].concat(data) : data
 
       return {...state, locationSuggestions: suggestedList}
