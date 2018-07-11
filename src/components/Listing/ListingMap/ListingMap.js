@@ -1,14 +1,14 @@
 import React from 'react'
+import isEmpty from 'lodash/isEmpty'
 import { Marker } from 'react-google-maps'
 import { Icon } from '../../Icon'
 import { Map } from '../../Maps/Map'
 import { formatGetDirectionsUrl } from '../../../utils/address'
 import { trackEvent } from '../../../utils/ga'
-import * as R from 'ramda'
 
 const ListingMap = props => {
   const { location, canEdit, dispatch } = props
-  const hasLocation = location && !R.isEmpty(location)
+  const hasLocation = location && !isEmpty(location)
 
   if (hasLocation) {
     const geocoder = new window.google.maps.Geocoder()
