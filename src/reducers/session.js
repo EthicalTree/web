@@ -1,5 +1,3 @@
-import { getLocation } from '../models/session'
-
 const defaultState = {
   isSigningUp: false,
   isVerifyingEmail: false,
@@ -12,7 +10,7 @@ const session = (state=defaultState, action) => {
 
   switch (action.type) {
     case 'SET_SESSION_INFO':
-      return {...state, location: getLocation(action.data)}
+      return {...state, location: action.data && action.data.location}
     case 'SET_LOGIN_INFO':
       return {...state, loginInfo: action.data}
     case 'SET_VERIFY_EMAIL_LOADING':

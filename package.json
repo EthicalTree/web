@@ -41,7 +41,6 @@
     "npm-run-all": "^4.1.2",
     "numeral": "^2.0.6",
     "prop-types": "^15.6.0",
-    "ramda": "^0.25.0",
     "react": "^16.1.1",
     "react-autosuggest": "^9.3.2",
     "react-dom": "^16.1.1",
