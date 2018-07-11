@@ -34,7 +34,7 @@ const listing = (state=defaultState, {type, data}) => {
     case 'SET_LISTING_OPERATING_HOURS':
       return {...state, operatingHours: data}
     case 'SET_LISTING_LOCATION':
-      return {...state, locations: data}
+      return {...state, location: data}
     case 'CHANGE_LISTING_INFO_TAB':
       return {...state, listingInfoTab: data}
     case 'ADD_TAG_TO_LISTING':

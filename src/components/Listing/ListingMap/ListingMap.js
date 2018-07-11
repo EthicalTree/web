@@ -1,4 +1,5 @@
 import React from 'react'
+import isEmpty from 'lodash/isEmpty'
 import { Marker } from 'react-google-maps'
 import { Icon } from '../../Icon'
 import { Map } from '../../Maps/Map'
@@ -6,18 +7,16 @@ import { formatGetDirectionsUrl } from '../../../utils/address'
 import { trackEvent } from '../../../utils/ga'
 
 const ListingMap = props => {
-  const { locations, canEdit, dispatch } = props
-  const hasLocations = locations && locations.length > 0
+  const { location, canEdit, dispatch } = props
+  const hasLocation = location && !isEmpty(location)
 
-  if (hasLocations) {
+  if (hasLocation) {
     const geocoder = new window.google.maps.Geocoder()
-    const latLng = {lat: locations[0].lat, lng: locations[0].lng}
+    const latLng = {lat: location.lat, lng: location.lng}
 
     geocoder.geocode({'location': latLng}, function(results, status) {
       if (status === 'OK') {
-        dispatch({ type: 'SET_LISTING_LOCATION', data: [{
-          ...locations[0]
-        }]})
+        dispatch({ type: 'SET_LISTING_LOCATION', data: location })
       }
     })
   }
@@ -27,15 +26,15 @@ const ListingMap = props => {
       <div className="location-title">
         <h3>
           How to get here
-          {canEdit && hasLocations &&
+          {canEdit && hasLocation &&
             <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickLocationEdit}>
               Edit
             </a>
           }
         </h3>
-        {hasLocations &&
+        {hasLocation &&
           <a
-            href={formatGetDirectionsUrl(locations[0].lat, locations[0].lng)}
+            href={formatGetDirectionsUrl(location.lat, location.lng)}
             rel="noopener noreferrer"
             target="_blank"
             className="external-link"
@@ -52,14 +51,14 @@ const ListingMap = props => {
         }
       </div>
 
-      {hasLocations &&
+      {hasLocation &&
         <p className="address-area">
-          {locations[0].formattedAddress}
+          {location.formattedAddress}
         </p>
       }
 
       <div className="listing-map-area">
-        {hasLocations &&
+        {hasLocation &&
           <Map
             zoom={16}
             defaultOptions={{
@@ -67,21 +66,21 @@ const ListingMap = props => {
               disableDefaultUI: false
             }}
             center={{
-              lat: locations[0].lat,
-              lng: locations[0].lng
+              lat: location.lat,
+              lng: location.lng
             }}
           >
             <Marker
-              key={`${locations[0].lat}+${locations[0].lng}`}
+              key={`${location.lat}+${location.lng}`}
               position={{
-                lat: locations[0].lat,
-                lng: locations[0].lng
+                lat: location.lat,
+                lng: location.lng
               }}
             />
           </Map>
         }
 
-        {!hasLocations &&
+        {!hasLocation &&
           <div className="no-content">
             {canEdit &&
               <a

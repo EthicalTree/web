@@ -118,7 +118,7 @@ class SearchResultsPage extends React.Component {
         return null
       }
 
-      const location = listing.locations[0]
+      const location = listing.location
 
       return (
         <CustomOverlayView

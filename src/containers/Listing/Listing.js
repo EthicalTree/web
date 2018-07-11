@@ -82,7 +82,12 @@ const Bio = (props) => {
     website
   } = props
 
-  const formattedPhone = phone ? formatNumber(parseNumber(phone, 'CA'), 'National') : ''
+  let formattedPhone;
+  try {
+    formattedPhone = phone ? formatNumber(parseNumber(phone, 'CA'), 'National') : ''
+  } catch (e) {
+    formattedPhone = phone
+  }
 
   return (
     <div className="bio mb-5">
@@ -227,7 +232,7 @@ const ListingInfo = (props) => {
         <TabPane tabId="location">
           <ListingMap
             onClickLocationEdit={props.onClickLocationEdit}
-            locations={listing.locations}
+            location={listing.location}
             canEdit={hasPermission('update', listing)}
             dispatch={dispatch}
           />

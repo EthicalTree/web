@@ -39,13 +39,13 @@ class EditDescriptionModal extends React.Component {
     }))
   }
 
-	changePhone = (phone) => {
-		if (isValidNumber(phone)) {
-			this.setState({phone, validPhone: true})
-		} else {
-			this.setState({validPhone: false})
-		}
-	};
+  changePhone = (phone) => {
+    if (isValidNumber(phone)) {
+      this.setState({phone, validPhone: true})
+    } else {
+      this.setState({validPhone: false})
+    }
+  };
 
   render() {
     const { listing, modal } = this.props
@@ -56,7 +56,7 @@ class EditDescriptionModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Edit Listing"
         onSave={this.submit.bind(this)}
-				saveDisabled={!this.state.validPhone}
+        saveDisabled={!this.state.validPhone}
         modalName="edit-description"
       >
         <Row>
@@ -86,16 +86,16 @@ class EditDescriptionModal extends React.Component {
         <Row>
           <Col className="mb-4" xs={12} md={6}>
             <Label for="phoneNumber">Phone Number</Label>
-						<PhoneInput
-							placeholder="Enter phone number"
-							country="CA"
-							value={this.state.phone}
-							onChange={this.changePhone}
+            <PhoneInput
+              placeholder="Enter phone number"
+              country="CA"
+              value={this.state.phone}
+              onChange={this.changePhone}
               name="phoneNumber"
               id="phoneNumber"
-							error="Phone Number is invalid"
-							indicateInvalid={!this.state.validPhone}
-						/>
+              error="Phone Number is invalid"
+              indicateInvalid={!this.state.validPhone}
+            />
           </Col>
         </Row>
 

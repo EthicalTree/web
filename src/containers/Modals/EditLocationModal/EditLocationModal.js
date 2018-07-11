@@ -25,7 +25,7 @@ class EditLocationModal extends React.Component {
   constructor(props) {
     super(props)
     const { listing } = props
-    const location = listing.locations ? listing.locations[0] : {}
+    const location = listing.location ? listing.location : {}
 
     this.state = {
       location,
