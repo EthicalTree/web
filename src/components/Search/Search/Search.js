@@ -14,14 +14,20 @@ import {
 
 import querystring from 'querystring'
 import { IconInput } from '../../Icon'
+import icons from '../../Icon/AppIcons'
 
 import { getLocations, setSearchLocation } from '../../../actions/search'
 import { getSavedSearchLocation } from '../../../utils/address'
 
 const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
-  return (
-    <span>{suggestion.name}</span>
-  )
+	const Marker = icons.mapMarker;
+	if (suggestion.key === 'nearme') {
+		return <span>{suggestion.name}<Marker className={'float-right'}/></span>
+	} else {
+		return (
+			<span>{suggestion.name}</span>
+		)
+	}
 }
 
 const CategorySuggestion = props => {
