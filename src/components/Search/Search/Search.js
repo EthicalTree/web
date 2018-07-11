@@ -3,6 +3,7 @@ import './Search.css'
 import React from 'react'
 import Autosuggest from 'react-autosuggest'
 import debounce from 'lodash/debounce'
+import querystring from 'querystring'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -12,16 +13,26 @@ import {
   Row
 } from 'reactstrap'
 
-import querystring from 'querystring'
 import { IconInput } from '../../Icon'
+import { Icon } from '../../Icon'
 
 import { getLocations, setSearchLocation } from '../../../actions/search'
 import { getSavedSearchLocation } from '../../../utils/address'
 
 const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
-  return (
-    <span>{suggestion.name}</span>
-  )
+
+  if (suggestion.key === 'nearme') {
+    return (
+      <span className='near-me'>
+        {suggestion.name}
+        <Icon iconKey='map_marker' />
+      </span>
+    )
+  } else {
+    return (
+      <span>{suggestion.name}</span>
+    )
+  }
 }
 
 const CategorySuggestion = props => {

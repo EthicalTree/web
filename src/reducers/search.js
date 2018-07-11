@@ -1,3 +1,7 @@
+import store from '../store/store'
+import isEmpty from 'lodash/isEmpty'
+import isNil from 'lodash/isNil'
+
 const defaultSearch = {
   categorySuggestions: [],
   currentPage: 1,
@@ -28,7 +32,12 @@ const search = (state=defaultSearch, {type, data}) => {
     case 'TOGGLE_SEARCH_RESULTS_MODE':
       return {...state, resultMode: state.resultMode === 'map' ? 'listing' : 'map'}
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':
-      return {...state, locationSuggestions: data}
+      // set near me as the top result if location exists on the sesssion
+      const location = store.getState().session.location
+      const hasLocation = !isEmpty(location) && !isNil(location)
+      const suggestedList = hasLocation ? [{ key: 'nearme', name: 'Near Me', city: location.city }].concat(data) : data
+
+      return {...state, locationSuggestions: suggestedList}
     case 'SET_DEFAULT_SEARCH_LOCATION':
       return {...state, location: !state.location ? data : state.location}
     case 'SET_SELECTED_SEARCH_RESULT':

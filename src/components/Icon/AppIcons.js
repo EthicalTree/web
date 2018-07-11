@@ -35,6 +35,7 @@ import StopwatchRunningIcon from './RawIcons/StopwatchRunningIcon'
 
 // Map
 import Map2Icon from './RawIcons/Map2Icon'
+import MapMarkerIcon from './RawIcons/MapMarkerIcon'
 
 // Social
 import Facebook from './SocialIcons/Facebook'
@@ -74,6 +75,7 @@ export default {
   stopwatch_cross: StopwatchCrossIcon,
   stopwatch_running: StopwatchRunningIcon,
   map: Map2Icon,
+  map_marker: MapMarkerIcon,
   extract: CircleExtractIcon,
 
   facebook: Facebook,
