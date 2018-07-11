@@ -101,7 +101,7 @@ export class ResultsMap extends React.Component {
       padding = 8
 
       this.getBoundListings().forEach(l => {
-        const location = l.locations[0]
+        const location = l.location
         this.bounds.extend(new window.google.maps.LatLng(location.lat, location.lng))
       })
     }
