@@ -25,7 +25,7 @@ const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
     return (
       <span className='near-me'>
         {suggestion.name}
-        <Icon iconKey='mapMarker' />
+        <Icon iconKey='map_marker' />
       </span>
     )
   } else {

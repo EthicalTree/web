@@ -75,7 +75,7 @@ export default {
   stopwatch_cross: StopwatchCrossIcon,
   stopwatch_running: StopwatchRunningIcon,
   map: Map2Icon,
-  mapMarker: MapMarkerIcon,
+  map_marker: MapMarkerIcon,
   extract: CircleExtractIcon,
 
   facebook: Facebook,
