@@ -227,7 +227,7 @@ const ListingInfo = (props) => {
         <TabPane tabId="location">
           <ListingMap
             onClickLocationEdit={props.onClickLocationEdit}
-            locations={listing.locations}
+            location={listing.location}
             canEdit={hasPermission('update', listing)}
             dispatch={dispatch}
           />
