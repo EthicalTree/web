@@ -1,9 +1,11 @@
 import React from 'react'
+import store from '../../../store/store'
 import { withRouter } from 'react-router-dom'
 import { Button, Col } from 'reactstrap'
+import { InfoWindow } from 'react-google-maps'
 
 import { Map } from '../../Maps/Map'
-import { Markers } from '../../Maps/Markers'
+import { Markers, PinMarker } from '../../Maps/Markers'
 import { MapControl } from '../../Maps/MapControl'
 
 export class ResultsMap extends React.Component {
@@ -125,6 +127,8 @@ export class ResultsMap extends React.Component {
       overlay,
       search,
     } = this.props
+    const session = store.getState().session
+    const location = session.location
 
     const {
       mapHeight,
@@ -143,7 +147,6 @@ export class ResultsMap extends React.Component {
     )
 
     this.calculateBounds()
-
     return (
       <Col className={`search-map-area ${hiddenClass}`}>
         <div
@@ -166,6 +169,16 @@ export class ResultsMap extends React.Component {
             }}
           >
             {markers}
+            {location.latitude &&
+              location.longitude && (
+                <React.Fragment>
+                  <PinMarker location={location}>
+                    <InfoWindow>
+                      <span>You are here.</span>
+                    </InfoWindow>
+                  </PinMarker>
+                </React.Fragment>
+              )}
             {overlay}
             {this.renderSearchTools()}
           </Map>
