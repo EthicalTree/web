@@ -4,7 +4,7 @@ const USER_TIMEZONE = moment.tz.guess()
 
 export const getOpenCloseStatus = (hours, timezone) => {
   const tz = timezone ? timezone : USER_TIMEZONE
-  const now = moment.tz(tz)
+  const now = moment()
 
   const todaysHours = hours.filter(h => h.day === now.format('dddd').toLowerCase())
 
