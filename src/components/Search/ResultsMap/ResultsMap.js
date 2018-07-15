@@ -43,6 +43,7 @@ export class ResultsMap extends React.Component {
     this.state = {
       boundsChanged: false,
       mapHeight: this.getInnerHeight(),
+      showYouAreHere: false,
       scrollTop: 0
     }
   }
@@ -127,12 +128,14 @@ export class ResultsMap extends React.Component {
       overlay,
       search,
     } = this.props
+
     const session = store.getState().session
     const location = session.location
 
     const {
       mapHeight,
       scrollTop,
+      showYouAreHere
     } = this.state
 
     const hiddenClass = search.resultMode === 'listing' ? 'd-none d-xl-block' : ''
@@ -147,6 +150,7 @@ export class ResultsMap extends React.Component {
     )
 
     this.calculateBounds()
+
     return (
       <Col className={`search-map-area ${hiddenClass}`}>
         <div
@@ -172,10 +176,15 @@ export class ResultsMap extends React.Component {
             {location.latitude &&
               location.longitude && (
                 <React.Fragment>
-                  <PinMarker location={location}>
-                    <InfoWindow>
-                      <span>You are here.</span>
-                    </InfoWindow>
+                  <PinMarker
+                    location={location}
+                    onClick={() => this.setState({ showYouAreHere: !showYouAreHere })}
+                  >
+                    {showYouAreHere &&
+                      <InfoWindow>
+                        <span>You are here</span>
+                      </InfoWindow>
+                    }
                   </PinMarker>
                 </React.Fragment>
               )}
