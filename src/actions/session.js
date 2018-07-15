@@ -10,7 +10,8 @@ export const login = data => {
     api.post('/login', { auth: data })
       .then(response => {
         if (!response.data.jwt) {
-          dispatch({ type: 'SET_MODAL_ERRORS', data: ["Invalid email/password"] })
+          const errors = response.data.errors || ["Invalid email/password combination"]
+          dispatch({ type: 'SET_MODAL_ERRORS', data: errors })
         }
         else {
           const jwt = response.data.jwt

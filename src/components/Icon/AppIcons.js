@@ -13,6 +13,7 @@ import TrashIcon from './RawIcons/TrashIcon'
 import Pencil3Icon from './RawIcons/Pencil3Icon'
 import CrossIcon from './RawIcons/CrossIcon'
 import PlusIcon from './RawIcons/PlusIcon'
+import CheckIcon from './RawIcons/CheckIcon'
 
 import ArrowUpIcon from './RawIcons/ArrowUpIcon'
 import ArrowDownIcon from './RawIcons/ArrowDownIcon'
@@ -54,6 +55,7 @@ export default {
   trash: TrashIcon,
   pencil: Pencil3Icon,
   cross: CrossIcon,
+  check: CheckIcon,
 
   chevron_left: ChevronLeftIcon,
   chevron_right: ChevronRightIcon,

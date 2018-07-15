@@ -8,6 +8,7 @@ import {
 
 import { Search } from '../Search'
 
+import { Icon } from '../../../components/Icon'
 import { Loader } from '../../../components/Loader'
 import { Paginator } from '../../../components/Paginator'
 
@@ -55,6 +56,7 @@ export class Users extends React.Component {
           <thead>
             <tr>
               <th>Email</th>
+              <th className="no-stretch">Verified</th>
               <th className="no-stretch">Admin</th>
             </tr>
           </thead>
@@ -62,6 +64,9 @@ export class Users extends React.Component {
             {users.map(u => (
               <tr key={u.id}>
                 <td>{u.email}</td>
+                <td>
+                  {!!u.confirmedAt ? <Icon iconKey="check" /> : <Icon iconKey="cross" />}
+                </td>
                 <td>
                   <input
                     type="checkbox"
