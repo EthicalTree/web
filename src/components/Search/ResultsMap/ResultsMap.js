@@ -1,9 +1,11 @@
 import React from 'react'
+import store from '../../../store/store'
 import { withRouter } from 'react-router-dom'
 import { Button, Col } from 'reactstrap'
+import { InfoWindow } from 'react-google-maps'
 
 import { Map } from '../../Maps/Map'
-import { Markers } from '../../Maps/Markers'
+import { Markers, PinMarker } from '../../Maps/Markers'
 import { MapControl } from '../../Maps/MapControl'
 
 export class ResultsMap extends React.Component {
@@ -41,6 +43,7 @@ export class ResultsMap extends React.Component {
     this.state = {
       boundsChanged: false,
       mapHeight: this.getInnerHeight(),
+      showYouAreHere: false,
       scrollTop: 0
     }
   }
@@ -126,9 +129,13 @@ export class ResultsMap extends React.Component {
       search,
     } = this.props
 
+    const session = store.getState().session
+    const location = session.location
+
     const {
       mapHeight,
       scrollTop,
+      showYouAreHere
     } = this.state
 
     const hiddenClass = search.resultMode === 'listing' ? 'd-none d-xl-block' : ''
@@ -166,6 +173,21 @@ export class ResultsMap extends React.Component {
             }}
           >
             {markers}
+            {location.latitude &&
+              location.longitude && (
+                <React.Fragment>
+                  <PinMarker
+                    location={location}
+                    onClick={() => this.setState({ showYouAreHere: !showYouAreHere })}
+                  >
+                    {showYouAreHere &&
+                      <InfoWindow>
+                        <span>You are here</span>
+                      </InfoWindow>
+                    }
+                  </PinMarker>
+                </React.Fragment>
+              )}
             {overlay}
             {this.renderSearchTools()}
           </Map>
