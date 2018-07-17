@@ -6,6 +6,7 @@ import { Result } from '../Result'
 import { Featured } from '../../Listing/Featured'
 
 import { EthicalityBar } from '../../Ethicality/Ethicality'
+import { FilterBar } from '../../Filters/Filter'
 import { Paginator } from '../../Paginator'
 
 import { toggleSearchEthicalities } from '../../../actions/search'
@@ -91,6 +92,7 @@ export class SearchResults extends React.Component {
           onEthicalitySelect={onEthicalitySelect}
           selectedEthicalities={selectedEthicalities}
         />
+        <FilterBar openNow={search.openNow} dispatch={dispatch}/>
 
         <Row className="mt-2 no-gutters">
           <Col xs="12" lg="9" xl="12" className="col-xxl-9">
