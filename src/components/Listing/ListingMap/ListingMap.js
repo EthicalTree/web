@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty'
 import { Marker } from 'react-google-maps'
 import { Icon } from '../../Icon'
 import { Map } from '../../Maps/Map'
-import { formatGetDirectionsUrl } from '../../../utils/address'
+import { formatGetDirectionsUrl, formatAddress } from '../../../utils/address'
 import { trackEvent } from '../../../utils/ga'
 
 const ListingMap = props => {
@@ -53,7 +53,7 @@ const ListingMap = props => {
 
       {hasLocation &&
         <p className="address-area">
-          {location.formattedAddress}
+          {formatAddress(location.address, location.city, location.region)}
         </p>
       }
 

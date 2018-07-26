@@ -51,3 +51,7 @@ const _setLocationData = (location, city)=> {
 export const formatGetDirectionsUrl = (lat, lng) => {
   return `${GOOGLE_MAPS_DIRECTIONS_BASE_URL}${lat},${lng}`
 }
+
+export const formatAddress = (street, city, province) => {
+  return `${street}, ${city}, ${province}`
+}
