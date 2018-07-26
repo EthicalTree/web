@@ -7,6 +7,7 @@ import { InfoWindow } from 'react-google-maps'
 import { Map } from '../../Maps/Map'
 import { Markers, PinMarker } from '../../Maps/Markers'
 import { MapControl } from '../../Maps/MapControl'
+import {sessionHasLocation} from '../../../utils/location'
 
 export class ResultsMap extends React.Component {
 
@@ -87,7 +88,7 @@ export class ResultsMap extends React.Component {
 
   calculateBounds() {
     let padding = 0
-    const { search } = this.props
+    const { search, session } = this.props
     const { boundsChanged } = this.state
     const { nelat, nelng, swlat, swlng } = search
 
@@ -107,6 +108,11 @@ export class ResultsMap extends React.Component {
         const location = l.location
         this.bounds.extend(new window.google.maps.LatLng(location.lat, location.lng))
       })
+
+      // set bounds inside of location if "near me" set.
+      if (search.location === "Near Me" && sessionHasLocation(session)) {
+        this.bounds.extend(new window.google.maps.LatLng(session.location.lat, session.location.lng))
+      }
     }
 
     if (this.map && this.bounds) {
@@ -173,20 +179,17 @@ export class ResultsMap extends React.Component {
             }}
           >
             {markers}
-            {location.latitude &&
-              location.longitude && (
-                <React.Fragment>
-                  <PinMarker
-                    location={location}
-                    onClick={() => this.setState({ showYouAreHere: !showYouAreHere })}
-                  >
-                    {showYouAreHere &&
-                      <InfoWindow>
-                        <span>You are here</span>
-                      </InfoWindow>
-                    }
-                  </PinMarker>
-                </React.Fragment>
+            {sessionHasLocation(session) && (
+                <PinMarker
+                  location={location}
+                  onClick={() => this.setState({ showYouAreHere: !showYouAreHere })}
+                >
+                  {showYouAreHere &&
+                    <InfoWindow>
+                      <span>You are here</span>
+                    </InfoWindow>
+                  }
+                </PinMarker>
               )}
             {overlay}
             {this.renderSearchTools()}

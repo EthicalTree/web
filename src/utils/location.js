@@ -1,3 +1,4 @@
+import {isEmpty, isNil, isNumber} from 'lodash'
 
 export const getDistance = (lat1, lng1, lat2, lng2) => {
   if (lat1 && lng1 && lat2 && lng2 && window.google) {
@@ -9,4 +10,14 @@ export const getDistance = (lat1, lng1, lat2, lng2) => {
 
     return kilometers
   }
+}
+
+export const sessionHasLocation = session => {
+  const location = session.location
+  return (
+    !isEmpty(location) &&
+    !isNil(location) &&
+    isNumber(location.lng) &&
+    isNumber(location.lat)
+  )
 }

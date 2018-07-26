@@ -1,6 +1,5 @@
 import store from '../store/store'
-import isEmpty from 'lodash/isEmpty'
-import isNil from 'lodash/isNil'
+import {sessionHasLocation} from '../utils/location'
 
 const defaultSearch = {
   categorySuggestions: [],
@@ -33,9 +32,8 @@ const search = (state=defaultSearch, {type, data}) => {
       return {...state, resultMode: state.resultMode === 'map' ? 'listing' : 'map'}
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':
       // set near me as the top result if location exists on the sesssion
-      const location = store.getState().session.location
-      const hasLocation = !isEmpty(location) && !isNil(location)
-      const suggestedList = hasLocation ? [{ key: 'nearme', name: 'Near Me', city: location.city }].concat(data) : data
+      const session = store.getState().session
+      const suggestedList = sessionHasLocation(session) ? [{ key: 'nearme', name: 'Near Me', city: session.location.city }].concat(data) : data
 
       return {...state, locationSuggestions: suggestedList}
     case 'SET_DEFAULT_SEARCH_LOCATION':

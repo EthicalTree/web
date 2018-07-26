@@ -193,6 +193,7 @@ class SearchResultsPage extends React.Component {
           handleRedoSearch={this.handleRedoSearch}
           search={search}
           overlay={this.getOverlay()}
+          session={session}
         />
       </React.Fragment>
     )
