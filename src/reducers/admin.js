@@ -7,7 +7,7 @@ const defaultState = {
   currentPage: 1,
   totalPages: 1,
   query: '',
-  filter: ''
+  filters: []
 }
 
 const admin = (state=defaultState, {type, data}) => {
@@ -24,7 +24,7 @@ const admin = (state=defaultState, {type, data}) => {
         users: [...state.users.filter(u => u.id !== data.id), user]
       }
     case 'SET_ADMIN_FILTER':
-      return {...state, filter: data}
+      return {...state, filters: data}
     case 'SET_ADMIN_SEARCH_QUERY':
       return {...state, query: data}
     case 'SET_ADMIN_LOADING':

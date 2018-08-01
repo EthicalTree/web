@@ -20,6 +20,7 @@ import ArrowDownIcon from './RawIcons/ArrowDownIcon'
 import ChevronLeftIcon from './RawIcons/ChevronLeftIcon'
 import ChevronRightIcon from './RawIcons/ChevronRightIcon'
 import ChevronDownIcon from './RawIcons/ChevronDownIcon'
+import ChevronUpIcon from './RawIcons/ChevronUpIcon'
 
 import ZoomInIcon from './RawIcons/ZoomInIcon'
 import CoverPhotoIcon from './RawIcons/Picture2Icon'
@@ -33,6 +34,7 @@ import MoveIcon from './RawIcons/MoveIcon'
 import StopwatchIcon from './RawIcons/StopwatchIcon'
 import StopwatchCrossIcon from './RawIcons/StopwatchCrossIcon'
 import StopwatchRunningIcon from './RawIcons/StopwatchRunningIcon'
+import HourglassIcon from './RawIcons/HourglassIcon'
 
 // Map
 import Map2Icon from './RawIcons/Map2Icon'
@@ -60,6 +62,7 @@ export default {
   chevron_left: ChevronLeftIcon,
   chevron_right: ChevronRightIcon,
   chevron_down: ChevronDownIcon,
+  chevron_up: ChevronUpIcon,
 
   arrow_up: ArrowUpIcon,
   arrow_down: ArrowDownIcon,
@@ -76,6 +79,7 @@ export default {
   stopwatch: StopwatchIcon,
   stopwatch_cross: StopwatchCrossIcon,
   stopwatch_running: StopwatchRunningIcon,
+  hourglass: HourglassIcon,
   map: Map2Icon,
   map_marker: MapMarkerIcon,
   extract: CircleExtractIcon,
