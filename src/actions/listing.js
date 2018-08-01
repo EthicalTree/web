@@ -1,5 +1,3 @@
-import moment from 'moment-timezone'
-
 import { api } from '../utils/api'
 import { error } from '../utils/notifications'
 import { trackEvent } from '../utils/ga'
@@ -341,8 +339,8 @@ export const saveOperatingHours = (listing, operatingHours) => {
   Object.keys(operatingHours).forEach(day => {
     utcHours[day] = {...operatingHours[day], hours: operatingHours[day].hours.map(h => {
       return {
-        openStr: moment.tz(h.openStr, 'hh:mm a', listing.timezone).utc().format('hh:mm a'),
-        closeStr: moment.tz(h.closeStr, 'hh:mm a', listing.timezone).utc().format('hh:mm a')
+        open_24_hour: h.open.clone().tz(listing.timezone).utc().format('HH:mm'),
+        close_24_hour: h.close.clone().tz(listing.timezone).utc().format('HH:mm')
       }
     })}
   })
