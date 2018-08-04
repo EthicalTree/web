@@ -32,7 +32,7 @@ class SearchResultsPage extends React.Component {
     let paramsObj = {
       ethicalities: ethicalities.join(','),
       location: location,
-      openNow: openNow,
+      open_now: openNow,
       page,
       swlat: '',
       swlng: '',
@@ -92,7 +92,7 @@ class SearchResultsPage extends React.Component {
       dispatch(performSearch({
         query: search.query,
         ethicalities: search.selectedEthicalities,
-        openNow: search.openNow,
+        open_now: search.openNow,
         location: search.location,
         page: search.currentPage,
         nelat: search.nelat,
