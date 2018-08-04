@@ -1,7 +1,6 @@
 import store from 'store'
 
 import { setSearchLocation } from './search'
-import { getSessionInformation } from './session'
 
 import { api, authenticate } from '../utils/api'
 import { trackPageView } from '../utils/ga'
@@ -67,23 +66,6 @@ export const initApp = (options = {}) => {
         dispatch({ type: 'SET_LOADING', data: false })
       })
 
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(position => {
-        dispatch({
-          type: 'SET_LOADING',
-          data: true,
-        })
-
-        api
-          .post(`/set_location`, {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          })
-          .then(({ data }) => {
-            dispatch(getSessionInformation())
-          })
-      })
-    }
   }
 }
 

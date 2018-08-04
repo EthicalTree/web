@@ -7,7 +7,7 @@ import { InfoWindow } from 'react-google-maps'
 import { Map } from '../../Maps/Map'
 import { Markers, PinMarker } from '../../Maps/Markers'
 import { MapControl } from '../../Maps/MapControl'
-import {sessionHasLocation} from '../../../utils/location'
+import {getGeoLocation} from '../../../utils/location'
 
 export class ResultsMap extends React.Component {
 
@@ -88,7 +88,7 @@ export class ResultsMap extends React.Component {
 
   calculateBounds() {
     let padding = 0
-    const { search, session } = this.props
+    const { search } = this.props
     const { boundsChanged } = this.state
     const { nelat, nelng, swlat, swlng } = search
 
@@ -109,9 +109,10 @@ export class ResultsMap extends React.Component {
         this.bounds.extend(new window.google.maps.LatLng(location.lat, location.lng))
       })
 
+      const geoLocation = getGeoLocation()
       // set bounds inside of location if "near me" set.
-      if (search.location === "Near Me" && sessionHasLocation(session)) {
-        this.bounds.extend(new window.google.maps.LatLng(session.location.lat, session.location.lng))
+      if (search.location === "Near Me" && geoLocation) {
+        this.bounds.extend(new window.google.maps.LatLng(geoLocation.lat, geoLocation.lng))
       }
     }
 
@@ -135,8 +136,7 @@ export class ResultsMap extends React.Component {
       search,
     } = this.props
 
-    const session = store.getState().session
-    const location = session.location
+    const location = getGeoLocation()
 
     const {
       mapHeight,
@@ -179,7 +179,7 @@ export class ResultsMap extends React.Component {
             }}
           >
             {markers}
-            {sessionHasLocation(session) && (
+            {location && (
                 <PinMarker
                   location={location}
                   onClick={() => this.setState({ showYouAreHere: !showYouAreHere })}

@@ -95,7 +95,9 @@ class SearchResultsPage extends React.Component {
         nelat: search.nelat,
         nelng: search.nelng,
         swlat: search.swlat,
-        swlng: search.swlng
+        swlng: search.swlng,
+        lat: search.lat,
+        lng: search.lng,
       }))
 
       dispatch({ type: 'SET_SEARCH_PENDING', data: false })

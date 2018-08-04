@@ -1,5 +1,4 @@
-import store from '../store/store'
-import {sessionHasLocation} from '../utils/location'
+import { getGeoLocation } from '../utils/location'
 
 const defaultSearch = {
   categorySuggestions: [],
@@ -32,9 +31,7 @@ const search = (state=defaultSearch, {type, data}) => {
       return {...state, resultMode: state.resultMode === 'map' ? 'listing' : 'map'}
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':
       // set near me as the top result if location exists on the sesssion
-      const session = store.getState().session
-      const suggestedList = sessionHasLocation(session) ? [{ key: 'nearme', name: 'Near Me', city: session.location.city }].concat(data) : data
-
+      const suggestedList = [{ key: 'nearme', name: 'Near Me'}].concat(data)
       return {...state, locationSuggestions: suggestedList}
     case 'SET_DEFAULT_SEARCH_LOCATION':
       return {...state, location: !state.location ? data : state.location}
@@ -51,6 +48,8 @@ const search = (state=defaultSearch, {type, data}) => {
         ethicalities = ethicalities.split(',')
       }
 
+      const latlng = getGeoLocation()
+
       return {
         ...state,
         query: data.query === undefined ? state.query : data.query,
@@ -61,6 +60,8 @@ const search = (state=defaultSearch, {type, data}) => {
         nelng: data.nelng === undefined ? state.nelng : data.nelng,
         swlat: data.swlat === undefined ? state.swlat : data.swlat,
         swlng: data.swlng === undefined ? state.swlng : data.swlng,
+        lat: latlng ? latlng.lat : '',
+        lng: latlng ? latlng.lng : '',
       }
     }
     case 'SET_SEARCH_LOADING':
