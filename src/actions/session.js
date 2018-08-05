@@ -131,9 +131,6 @@ export const signup = data => {
           dispatch({ type: 'CLOSE_MODAL' })
 
           if (data.listingSlug) {
-            dispatch({ type: 'SET_MODAL_SUCCESS_MESSAGES', data: [
-              'You have successfully claimed your listing! You can now login and edit your listing.'
-            ]})
             dispatch({ type: 'OPEN_MODAL', data: 'login' })
           }
           else {

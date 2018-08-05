@@ -2,6 +2,7 @@ import './Listing.css'
 
 import React from 'react'
 import querystring from 'querystring'
+import { Redirect } from 'react-router'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { Container } from 'reactstrap'
@@ -27,6 +28,7 @@ import { toTitleCase } from '../../utils/string'
 
 import { setConfirm } from '../../actions/confirm'
 import { openClaimListingSignup } from '../../actions/session'
+import { editListing } from '../../actions/listing'
 
 class Listing extends React.Component {
 
@@ -58,15 +60,34 @@ class Listing extends React.Component {
     }))
   }
 
-  componentDidMount() {
-    const { dispatch, location, match, session } = this.props
+  getClaimParams = () => {
+    const { location } = this.props
     const queryParams = querystring.parse(location.search.slice(1))
+
+    return {
+      claim: queryParams.claim === 'true',
+      claimId: queryParams.claimId
+    }
+  }
+
+  componentDidMount() {
+    const { dispatch, match, session } = this.props
+    const { claim, claimId } = this.getClaimParams()
     const listingSlug = match.params.slug
 
     dispatch(getListing(listingSlug))
 
-    if (queryParams.claim === 'true' && !session.user) {
-      dispatch(openClaimListingSignup(listingSlug, queryParams.claimId))
+    if (claim) {
+      if (session.user) {
+        dispatch(editListing({
+          slug: listingSlug,
+          claim: true,
+          claimId
+        }))
+      }
+      else {
+        dispatch(openClaimListingSignup(listingSlug, claimId))
+      }
     }
   }
 
@@ -99,10 +120,13 @@ class Listing extends React.Component {
     const {
       dispatch,
       listing,
+      location,
       match
     } = this.props
 
+    const { claim } = this.getClaimParams()
     const { currentImage } = listing
+
     const title = listing.address && listing.city ? (
       `${listing.title} in ${toTitleCase(listing.city)} · ${listing.address} · EthicalTree`
     ) : (
@@ -116,6 +140,10 @@ class Listing extends React.Component {
           <h5>Listing could not be found!</h5>
         </div>
       )
+    }
+
+    if (claim && listing.claimStatus === 'claimed') {
+      return <Redirect to={location.pathname} />
     }
 
     return (

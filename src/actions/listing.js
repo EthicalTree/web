@@ -1,7 +1,7 @@
 import moment from 'moment-timezone'
 
 import { api } from '../utils/api'
-import { error } from '../utils/notifications'
+import { error, success } from '../utils/notifications'
 import { trackEvent } from '../utils/ga'
 import history from '../utils/history'
 
@@ -114,7 +114,7 @@ export const editEthicalities = (listingSlug, ethicalities) => {
   }
 }
 
-export const editDescription = (data) => {
+export const editListing = (data) => {
   return dispatch => {
     dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
@@ -124,14 +124,22 @@ export const editDescription = (data) => {
           dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
         }
         else {
-          dispatch({ type: 'SET_LISTING', data: response.data })
-          dispatch({ type: 'CLOSE_MODAL' })
+          if (data.claim && response.data.claimed) {
+            success('Listing claimed')
+            dispatch(getListing(data.slug))
+          }
+          else {
+            dispatch({ type: 'SET_LISTING', data: response.data })
+            dispatch({ type: 'CLOSE_MODAL' })
 
-          trackEvent({
-            action: 'Edit Listing Description',
-            category: 'Listing',
-            label: data.slug
-          })
+            trackEvent({
+              action: 'Edit Listing Description',
+              category: 'Listing',
+              label: data.slug
+            })
+          }
+
+
         }
       })
       .catch(() => {})
