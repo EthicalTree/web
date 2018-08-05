@@ -83,16 +83,19 @@ export class SearchResults extends React.Component {
         >
           <Search />
         </Col>
-        <EthicalityBar
-          className="search-results-ethicalities justify-content-center"
-          showLabels={true}
-          showTooltips={false}
-          showIcons={true}
-          ethicalities={ethicalities}
-          onEthicalitySelect={onEthicalitySelect}
-          selectedEthicalities={selectedEthicalities}
-        />
-        <FilterBar openNow={search.openNow} dispatch={dispatch}/>
+
+        <div className="search-filters">
+          <EthicalityBar
+            className="search-results-ethicalities justify-content-start"
+            showLabels={true}
+            showTooltips={false}
+            showIcons={true}
+            ethicalities={ethicalities}
+            onEthicalitySelect={onEthicalitySelect}
+            selectedEthicalities={selectedEthicalities}
+          />
+          <FilterBar openNow={search.openNow} dispatch={dispatch}/>
+        </div>
 
         <Row className="mt-2 no-gutters">
           <Col xs="12" lg="9" xl="12" className="col-xxl-9">
