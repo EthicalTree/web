@@ -1,5 +1,7 @@
 const defaultState = {
   errors: null,
+  infoMessages: null,
+  successMessages: null,
   fullScreenCurrenImage: null,
   fullScreenImages: null,
   isLoading: false,
@@ -16,6 +18,10 @@ const modal = (state=defaultState, {type, data}) => {
       return {...state, fullScreenCurrentImage: data}
     case 'SET_MODAL_ERRORS':
       return {...state, errors: data}
+    case 'SET_MODAL_INFO_MESSAGES':
+      return {...state, infoMessages: data}
+    case 'SET_MODAL_SUCCESS_MESSAGES':
+      return {...state, successMessages: data}
     case 'SET_MODAL_LOADING':
       return {...state, isLoading: data}
     case 'UPDATE_MODAL_DATA':
@@ -23,13 +29,7 @@ const modal = (state=defaultState, {type, data}) => {
     case 'OPEN_MODAL':
       return {...state, openModal: data}
     case 'CLOSE_MODAL':
-      return {
-        ...state,
-        openModal: null,
-        errors: null,
-        modalData: {},
-        isLoading: false
-      }
+      return defaultState
     default:
       return state
   }

@@ -1,19 +1,11 @@
 import './Listing.css'
 
 import React from 'react'
-import PropTypes from 'prop-types'
+import querystring from 'querystring'
+import { Redirect } from 'react-router'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { formatNumber, parseNumber } from 'libphonenumber-js'
-
-import {
-  Container,
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane,
-} from 'reactstrap'
+import { Container } from 'reactstrap'
 
 import {
   addImageToListing,
@@ -25,274 +17,18 @@ import {
   removeTagFromListing
 } from '../../actions/listing'
 
-import { EthicalityArea } from '../../components/Listing/EthicalityArea'
-import { OperatingHours } from '../../components/Listing/OperatingHours'
-import { ListingMap } from '../../components/Listing/ListingMap'
-import { ListingMenu } from '../../components/Listing/ListingMenu'
 import { TagBar } from '../../components/Listing/TagBar'
-import { Featured } from '../../components/Listing/Featured'
+import { ListingContent } from '../../components/Listing/ListingContent'
 
-import { Icon } from '../../components/Icon'
 import { Loader } from '../../components/Loader'
 import { ImageManager } from '../../components/ImageManager'
 
 import { hasPermission, isAdmin } from '../../utils/permissions'
-import { trackEvent } from '../../utils/ga'
 import { toTitleCase } from '../../utils/string'
 
 import { setConfirm } from '../../actions/confirm'
-
-const TitleBar = (props) => {
-  return (
-    <div className="title-bar">
-    </div>
-  )
-}
-
-const AsideInfo = (props) => {
-  const { dispatch, listing, className } = props
-
-  return (
-    <aside className={className}>
-      <div className="d-none d-lg-block">
-        <EthicalityArea
-          dispatch={dispatch}
-          ethicalityChoices={listing.ethicalityChoices}
-          ethicalities={listing.ethicalities}
-          canEdit={hasPermission('update', listing)}
-        />
-      </div>
-
-      <OperatingHours
-        canEdit={hasPermission('update', listing)}
-        dispatch={dispatch}
-        hours={listing.operatingHours}
-        timezone={listing.timezone}
-      />
-    </aside>
-  )
-}
-
-const Bio = (props) => {
-  const {
-    bio,
-    canEdit,
-    phone,
-    title,
-    website
-  } = props
-
-  let formattedPhone;
-  try {
-    formattedPhone = phone ? formatNumber(parseNumber(phone, 'CA'), 'National') : ''
-  } catch (e) {
-    formattedPhone = phone
-  }
-
-  return (
-    <div className="bio mb-5">
-      <div className="listing-title">
-        <h3>
-          {title}
-
-          {canEdit && bio &&
-            <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickDescriptionEdit}>
-              Edit
-            </a>
-          }
-        </h3>
-
-        <div className="listing-contact">
-          {phone &&
-            <React.Fragment>
-              <div className="d-none d-md-flex">
-                {formattedPhone}
-                <Icon iconKey="phone" />
-              </div>
-              <div className="d-md-none">
-                <a
-                  href={`tel:${phone}`}
-                  className="external-link"
-                  onClick={() => {
-                    trackEvent({
-                      action: 'Clicked Listing Phone Number',
-                      category: 'Listing'
-                    })
-                  }}
-                >
-                  {formattedPhone}
-                  <Icon iconKey="phone" />
-                </a>
-              </div>
-            </React.Fragment>
-          }
-
-          {website &&
-            <a
-              href={website}
-              rel="noopener noreferrer"
-              target="_blank"
-              className="external-link"
-              onClick={() => {
-                trackEvent({
-                  action: 'Clicked Listing Website',
-                  category: 'Listing'
-                })
-              }}
-            >
-              Website
-              <Icon iconKey="extract" />
-            </a>
-          }
-        </div>
-      </div>
-
-      {bio &&
-        <p>{bio}</p>
-      }
-
-      {!bio &&
-        <div className="no-content">
-          {canEdit &&
-            <a
-              href=""
-              onClick={props.onClickDescriptionEdit}
-              className="btn btn-default"
-            >
-              Add a description
-            </a>
-          }
-          {!canEdit &&
-            <p>This listing has no desciption!</p>
-          }
-        </div>
-      }
-    </div>
-  )
-}
-
-const ListingInfo = (props) => {
-  const {
-    listing,
-    className,
-    dispatch
-  } = props
-
-  const activeTab = listing.listingInfoTab
-  const menu = listing.menus.length > 0 ? listing.menus[0] : null
-  const isStore = listing.categories.map(c => c.slug).includes('store')
-
-  return (
-    <div className={className}>
-      <Bio
-        bio={listing.bio}
-        canEdit={hasPermission('update', listing)}
-        onClickDescriptionEdit={props.onClickDescriptionEdit}
-        phone={listing.phone}
-        title={listing.title}
-        website={listing.website}
-      />
-
-      <Nav tabs>
-        <NavItem>
-          <NavLink
-            className={`${activeTab === 'location' ? 'active' : ''}`}
-            onClick={() => {
-              trackEvent({
-                action: 'Select Location Tab',
-                category: 'Listing',
-                label: listing.slug
-              })
-
-              dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'location' })
-            }}
-          >
-            Location
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={`${activeTab === 'menu' ? 'active' : ''}`}
-            onClick={() => {
-              trackEvent({
-                action: 'Select Menu Tab',
-                category: 'Listing',
-                label: listing.slug
-              })
-
-              dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'menu' })
-            }}
-          >
-            {isStore && 'More Info'}
-            {!isStore && 'Menu'}
-          </NavLink>
-        </NavItem>
-      </Nav>
-      <TabContent activeTab={activeTab}>
-        <TabPane tabId="location">
-          <ListingMap
-            onClickLocationEdit={props.onClickLocationEdit}
-            location={listing.location}
-            canEdit={hasPermission('update', listing)}
-            dispatch={dispatch}
-          />
-        </TabPane>
-
-        <TabPane tabId="menu">
-          <ListingMenu
-            dispatch={dispatch}
-            menu={menu}
-            listingSlug={listing.slug}
-            currentImage={listing.currentMenuImage}
-            canEdit={hasPermission('update', listing)}
-          />
-        </TabPane>
-      </TabContent>
-
-      <div className="clearfix"></div>
-
-      {!listing.plan &&
-        <Featured />
-      }
-    </div>
-  )
-}
-
-ListingInfo.propTypes = {
-  listing: PropTypes.object,
-  className: PropTypes.string,
-  dispatch: PropTypes.func
-}
-
-const ListingContent = (props) => {
-  const { listing, dispatch } = props
-
-  return (
-    <div className="row listing-content">
-      <div className="mobile-ethicalities col-12 d-lg-none">
-        <EthicalityArea
-          dispatch={dispatch}
-          ethicalityChoices={listing.ethicalityChoices}
-          ethicalities={listing.ethicalities}
-        />
-      </div>
-
-      <ListingInfo
-        className="listing-info col-xl-9 col-lg-8"
-        onClickDescriptionEdit={props.onClickDescriptionEdit}
-        onClickLocationEdit={props.onClickLocationEdit}
-        listing={listing}
-        dispatch={dispatch}
-      />
-
-      <AsideInfo
-        dispatch={dispatch}
-        className="col-xl-3 col-lg-4"
-        listing={listing}
-      />
-    </div>
-  )
-}
+import { openClaimListingSignup } from '../../actions/session'
+import { editListing } from '../../actions/listing'
 
 class Listing extends React.Component {
 
@@ -324,9 +60,35 @@ class Listing extends React.Component {
     }))
   }
 
+  getClaimParams = () => {
+    const { location } = this.props
+    const queryParams = querystring.parse(location.search.slice(1))
+
+    return {
+      claim: queryParams.claim === 'true',
+      claimId: queryParams.claimId
+    }
+  }
+
   componentDidMount() {
-    const { dispatch, match } = this.props
-    dispatch(getListing(match.params.slug))
+    const { dispatch, match, session } = this.props
+    const { claim, claimId } = this.getClaimParams()
+    const listingSlug = match.params.slug
+
+    dispatch(getListing(listingSlug))
+
+    if (claim) {
+      if (session.user) {
+        dispatch(editListing({
+          slug: listingSlug,
+          claim: true,
+          claimId
+        }))
+      }
+      else {
+        dispatch(openClaimListingSignup(listingSlug, claimId))
+      }
+    }
   }
 
   componentWillReceiveProps(newProps) {
@@ -358,10 +120,13 @@ class Listing extends React.Component {
     const {
       dispatch,
       listing,
+      location,
       match
     } = this.props
 
+    const { claim } = this.getClaimParams()
     const { currentImage } = listing
+
     const title = listing.address && listing.city ? (
       `${listing.title} in ${toTitleCase(listing.city)} · ${listing.address} · EthicalTree`
     ) : (
@@ -375,6 +140,10 @@ class Listing extends React.Component {
           <h5>Listing could not be found!</h5>
         </div>
       )
+    }
+
+    if (claim && listing.claimStatus === 'claimed') {
+      return <Redirect to={location.pathname} />
     }
 
     return (
@@ -442,7 +211,7 @@ class Listing extends React.Component {
               handleReposition={this.handleReposition}
             />
 
-            <TitleBar />
+            <div className="title-bar" />
 
             {isAdmin() &&
               <TagBar
@@ -468,6 +237,7 @@ class Listing extends React.Component {
 
 const select = state => ({
   listing: state.listing,
+  session: state.session,
   user: state.user
 })
 

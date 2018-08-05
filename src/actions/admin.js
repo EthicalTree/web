@@ -36,7 +36,13 @@ export const getTags = queryObj => {
   }
 }
 
-export const getListings = queryObj => {
+export const getListings = params => {
+
+  const queryObj = {
+    ...params,
+    filters: params.filters ? params.filters.join(',') : ''
+  }
+
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 

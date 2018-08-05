@@ -3,19 +3,28 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import numeral from 'numeral'
 import { Helmet } from 'react-helmet'
-
-import { Button, Table } from 'reactstrap'
+import { Button, ButtonGroup, Table } from 'reactstrap'
 
 import { Search } from '../Search'
 
 import { Icon } from '../../../components/Icon'
 import { Loader } from '../../../components/Loader'
 import { Paginator } from '../../../components/Paginator'
+import { ClaimStatus } from '../../../components/Listing/ClaimStatus'
+import { ListingDetail } from '../../../components/Admin/Listing/ListingDetail'
 
 import { getListings, setListingVisibility } from '../../../actions/admin'
 import { blurClick } from '../../../utils/a11y'
 
 export class Listings extends React.Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      expandedListings: []
+    }
+  }
 
   componentDidMount() {
     const { dispatch } = this.props
@@ -45,13 +54,27 @@ export class Listings extends React.Component {
     dispatch({ type: 'OPEN_MODAL', data: 'admin-edit-listing' })
   }
 
+  filter = filterType => {
+    const { dispatch, admin } = this.props
+    const { filters } = admin
+
+    const newFilters = filters.includes(filterType) ? (
+      filters.filter(f => f !== filterType)
+    ) : (
+      [...filters, filterType]
+    )
+
+    dispatch({type: 'SET_ADMIN_FILTER', data: newFilters})
+    this.getListings({ filters: newFilters })
+  }
+
   getListings(newData={}) {
     const { dispatch, admin } = this.props
 
     const currentData = {
       page: 1,
       query: admin.query,
-      filter: admin.filter
+      filters: admin.filters
     }
 
     dispatch(getListings({...currentData, ...newData}))
@@ -59,9 +82,10 @@ export class Listings extends React.Component {
 
   render() {
     const { dispatch, admin } = this.props
+    const { expandedListings } = this.state
 
     return (
-      <Loader loading={admin.isAdminLoading}>
+      <Loader loading={false}>
         <Helmet>
           <title>{'EthicalTree · Listing Admin'}</title>
         </Helmet>
@@ -70,16 +94,23 @@ export class Listings extends React.Component {
           Listings
 
           <div className="d-flex">
-            <Button
-              outline={!admin.filter}
+            <ButtonGroup
               className="mr-4"
-              onClick={blurClick(() => {
-                dispatch({type: 'SET_ADMIN_FILTER', data: admin.filter ? '' : 'plans'})
-                this.getListings({ filter: admin.filter ? '' : 'plans' })
-              })}
             >
-              Plans
-            </Button>
+              <Button
+                outline={!admin.filters.includes('pending_claims')}
+                onClick={blurClick(() => this.filter('pending_claims'))}
+              >
+                Pending Claims
+              </Button>
+
+              <Button
+                outline={!admin.filters.includes('plans')}
+                onClick={blurClick(() => this.filter('plans'))}
+              >
+                Plans
+              </Button>
+            </ButtonGroup>
 
             <Search handleSearch={() => this.getListings()}/>
           </div>
@@ -97,30 +128,70 @@ export class Listings extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {admin.listings.map(l => (
-              <tr key={l.id}>
-                <td>{l.id}</td>
-                <td>
-                  <Link to={`/listings/${l.city}/${l.slug}`} target="_blank">
-                    {l.title}
-                  </Link>
-                </td>
-                <td>{l.plan ? l.plan.type.name : ''}</td>
-                <td>{l.plan && l.plan.price > 0 ? `$${numeral(l.plan.price).format('0.00')}` : ''}</td>
-                <td>{l.visibility === 'published' ? 'Visible' : 'Hidden'}</td>
-                <td>
-                  <div className="d-flex justify-content-center">
-                    <Icon
-                      className="edit-listing"
-                      title="Edit Listing"
-                      iconKey="pencil"
-                      clickable
-                      onClick={() => this.handleEdit(l)}
+            {admin.listings.map(l => {
+              const expanded = expandedListings.includes(l.id)
+
+              const row = (
+                <tr key={l.id}>
+                  <td>{l.id}</td>
+                  <td>
+                    <div className="d-flex">
+                      <Link to={`/listings/${l.city || '_'}/${l.slug}`} target="_blank">
+                        {l.title}
+                      </Link>
+                      <ClaimStatus status={l.claimStatus} />
+                    </div>
+                  </td>
+                  <td>{l.plan ? l.plan.type.name : ''}</td>
+                  <td>{l.plan && l.plan.price > 0 ? `$${numeral(l.plan.price).format('0.00')}` : ''}</td>
+                  <td>{l.visibility === 'published' ? 'Visible' : 'Hidden'}</td>
+                  <td>
+                    <div className="d-flex justify-content-center">
+                      <Icon
+                        className="edit-listing"
+                        title="Edit Listing"
+                        iconKey="pencil"
+                        clickable
+                        onClick={() => this.handleEdit(l)}
+                      />
+
+                      <Icon
+                        className="expand-listing"
+                        title={expanded ? 'Collapse' : 'Expand'}
+                        iconKey={expanded ? 'chevron_up' : 'chevron_down'}
+                        clickable
+                        onClick={() => {
+                          const newExpandedListings = expanded ? (
+                            expandedListings.filter(el => el !== l.id)
+                          ) : (
+                            [...expandedListings, l.id]
+                          )
+
+                          this.setState({ expandedListings: newExpandedListings })
+                        }}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              )
+
+              if (!expanded) {
+                return row
+              }
+              else {
+                return [row, (
+                  <tr
+                    key={`${l.id}-details`}
+                  >
+                    <ListingDetail
+                      listing={l}
+                      regenerateClaimId={this.regenerateClaimId}
+                      setEditingClaimForListing={this.setEditingClaimForListing}
                     />
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </tr>
+                )]
+              }
+            })}
           </tbody>
         </Table>
         <div className="text-center">

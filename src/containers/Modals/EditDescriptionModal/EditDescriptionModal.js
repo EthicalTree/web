@@ -11,7 +11,7 @@ import {
   Col,
 } from 'reactstrap'
 
-import { editDescription } from '../../../actions/listing'
+import { editListing } from '../../../actions/listing'
 
 class EditDescriptionModal extends React.Component {
 
@@ -33,7 +33,7 @@ class EditDescriptionModal extends React.Component {
 
     const { dispatch, listing } = this.props
 
-    dispatch(editDescription({
+    dispatch(editListing({
       ...this.state,
       slug: listing.slug
     }))
