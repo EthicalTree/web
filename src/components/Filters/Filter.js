@@ -1,6 +1,7 @@
 import './Filter.css'
 import React from 'react'
 import classnames from 'classnames'
+import { trackEvent } from '../../utils/ga'
 
 export const FilterBar = props => {
   const { className, openNow, dispatch } = props
@@ -23,6 +24,13 @@ export const FilterBar = props => {
               },
             })
             dispatch({ type: 'SET_SEARCH_PENDING', data: true })
+
+            const label = !openNow ? 'Start filtering by Open Now' : 'Stop filtering by Open Now'
+            trackEvent({
+              action: 'Clicked Open Now',
+              category: 'Search',
+              label: label
+            })
           }}
         />
         <label className="form-check-label" htmlFor="openNow">
