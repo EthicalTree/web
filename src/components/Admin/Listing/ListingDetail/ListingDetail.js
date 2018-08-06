@@ -12,7 +12,7 @@ export class ListingDetail extends React.Component {
 
     dispatch(updateListing({
       id: listing.id,
-      owner_id: user.id
+      owner_id: user ? user.id : '-1'
     }))
 
     this.setState({ isEditingClaim: false })
@@ -106,12 +106,24 @@ export class ListingDetail extends React.Component {
                   }
 
                   {!isEditingClaim &&
-                    <Button
-                      onClick={() => this.setState({ isEditingClaim: true })}
-                      size="sm"
-                    >
-                      Change Claim
-                    </Button>
+                    <div className="d-flex">
+                      {listing.claimStatus !== 'unclaimed' &&
+                        <Button
+                          className="mr-2"
+                          color="default"
+                          onClick={() => this.changeListingClaim()}
+                        >
+                          Remove Claim
+                        </Button>
+                      }
+
+                      <Button
+                        onClick={() => this.setState({ isEditingClaim: true })}
+                        size="sm"
+                      >
+                        Change Claim
+                      </Button>
+                    </div>
                   }
                 </div>
               </td>
