@@ -11,7 +11,6 @@ import { MapControl } from '../../Maps/MapControl'
 export class ResultsMap extends React.Component {
 
   updateMapPosition = () => {
-    debugger;
     if (this.mapEl) {
       this.setState({
         mapHeight: this.getInnerHeight(),
