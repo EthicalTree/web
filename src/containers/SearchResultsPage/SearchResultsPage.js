@@ -13,7 +13,7 @@ import { Result } from '../../components/Search/Result'
 import { MapSwitcher } from '../../components/Search/MapSwitcher'
 
 import { Loader } from '../../components/Loader'
-import { CustomOverlayView } from '../../components/Maps/CustomOverlayView'
+import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
 
 import { performSearch } from '../../actions/search'
 
@@ -118,28 +118,8 @@ class SearchResultsPage extends React.Component {
         return null
       }
 
-      const location = listing.location
+      return <ListingOverlay listing={listing} session={session} />
 
-      return (
-        <CustomOverlayView
-          position={location}
-          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-          getPixelPositionOffset={(width, height) => {
-            return {
-              x: -(width / 2),
-              y: -(height + 45)}
-          }}
-        >
-          <Result
-            className="result-overlay"
-            key={listing.slug}
-            listing={listing}
-            location="Search Results Map"
-            smallView={true}
-            session={session}
-          />
-        </CustomOverlayView>
-      )
     }
 
     return null
@@ -152,7 +132,6 @@ class SearchResultsPage extends React.Component {
       history,
       location,
       search,
-      selectedResult,
       session,
     } = this.props
 
@@ -177,7 +156,6 @@ class SearchResultsPage extends React.Component {
         />
         <ResultsMap
           key={`${search.resultMode}_${location.pathname}_${location.search}`}
-          selectedResult={selectedResult}
           handleMarkerClick={slug => {
             const newSlug = !!search.selectedResult && search.selectedResult === slug ? null : slug
             dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: newSlug })
@@ -191,7 +169,15 @@ class SearchResultsPage extends React.Component {
             }, 0)
           }}
           handleRedoSearch={this.handleRedoSearch}
-          search={search}
+          bounds={{
+            nelat: search.nelat,
+            nelng: search.nelng,
+            swlat: search.swlat,
+            swlng: search.swlng,
+          }}
+          listings={search.listings}
+          featured={search.featured}
+          resultMode={search.resultMode}
           overlay={this.getOverlay()}
         />
       </React.Fragment>

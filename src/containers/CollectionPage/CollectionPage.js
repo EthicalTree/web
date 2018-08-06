@@ -3,7 +3,7 @@ import './CollectionPage.css'
 import React from 'react'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
-import { Container } from 'reactstrap'
+import { Container, Col, Row } from 'reactstrap'
 import { Helmet } from 'react-helmet'
 
 import { Loader } from '../../components/Loader'
@@ -13,8 +13,14 @@ import { Featured } from '../../components/Listing/Featured'
 
 import { getCollection } from '../../actions/collection'
 import { setSearchLocation } from '../../actions/search'
+import { ResultsMap } from '../../components/Search/ResultsMap'
+import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
 
 export class CollectionPage extends React.Component {
+  state = {
+    selectedResult: '',
+    hoveredResult: '',
+  }
 
   componentDidMount() {
     const { dispatch, match, user } = this.props
@@ -39,14 +45,30 @@ export class CollectionPage extends React.Component {
   fetchCollection() {
     const { dispatch, match } = this.props
 
-    dispatch(getCollection({
-      slug: match.params.slug,
-      page: 1
-    }))
+    dispatch(
+      getCollection({
+        slug: match.params.slug,
+        page: 1,
+      })
+    )
+  }
+
+  getOverlay() {
+    const { collection, session } = this.props
+    const { selectedResult } = this.state
+
+    const selectedListing = collection.listings.find(
+      r => r.slug === selectedResult
+    )
+
+    if (selectedListing) {
+      return <ListingOverlay listing={selectedListing} session={session} />
+    }
   }
 
   render() {
     const { dispatch, collection, session, user } = this.props
+    const { selectedResult } = this.state
     let headerStyles
 
     if (collection.coverImage) {
@@ -63,7 +85,9 @@ export class CollectionPage extends React.Component {
           render={() => (
             <React.Fragment>
               <Helmet>
-                <title>{`${user.city}'s ${collection.name} - Best Local Restaurants, Shops and More · EthicalTree`}</title>
+                <title>{`${user.city}'s ${
+                  collection.name
+                } - Best Local Restaurants, Shops and More · EthicalTree`}</title>
                 <meta
                   name="description"
                   content={`${collection.description}`}
@@ -71,59 +95,102 @@ export class CollectionPage extends React.Component {
               </Helmet>
 
               <div
-                className={classnames(
-                  'collection-header',
-                  'text-center',
-                  { 'has-image': collection.coverImage }
-                )}
-                style={headerStyles}
-              >
+                className={classnames('collection-header', 'text-center', {
+                  'has-image': collection.coverImage,
+                })}
+                style={headerStyles}>
                 <div className="collection-banner">
                   <h2 className="collection-title">
-                    {collection.name} ({ user.city })
+                    {collection.name} ({user.city})
                   </h2>
 
-                  {collection.description &&
+                  {collection.description && (
                     <h5 className="collection-description">
                       {collection.description}
                     </h5>
-                  }
+                  )}
                 </div>
               </div>
 
-              <div className="collection-listings">
-                {collection.listings.map(l => {
-                  return (
-                    <div key={l.id} className="collection-listing">
-                      <Result
-                        listing={l}
-                        location="Collection Page"
-                        session={session}
-                      />
+              <Row>
+                <Col xs="12" xl="8" className={`search-results col-xxl-8 p-4`}>
+                  <Row className="mt-2 no-gutters">
+                    <div className="collection-listings">
+                      {collection.listings.map(l => {
+                        return (
+                          <Col
+                            key={l.id}
+                            className="collection-listing"
+                            xs="12"
+                            sm="6"
+                            lg="4"
+                            xl="6"
+                            className="col-xxl-4">
+                            <Result
+                              listing={l}
+                              location="Collection Page"
+                              session={session}
+                            />
+                          </Col>
+                        )
+                      })}
+
+                      {collection.listings.length === 0 && (
+                        <i>
+                          There are no listings in this collection for your
+                          selected location.
+                        </i>
+                      )}
                     </div>
-                  )
-                })}
+                    <Col xs="12" lg="3" xl="12" className="col-xxl-3">
+                      <div className="d-flex flex-wrap flex-direction-column">
+                        <Featured sm={6} lg={12} xl={6} xxl={12} />
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
 
-                {collection.listings.length === 0 &&
-                  <i>There are no listings in this collection for your selected location.</i>
-                }
-              </div>
+                <Row className="text-center">
+                  <Paginator
+                    className="text-center"
+                    pageCount={collection.totalPages}
+                    currentPage={collection.currentPage}
+                    onPageChange={data =>
+                      dispatch(
+                        getCollection({
+                          slug: collection.slug,
+                          page: data.selected,
+                        })
+                      )
+                    }
+                  />
+                </Row>
 
-              <Paginator
-                className="text-center"
-                pageCount={collection.totalPages}
-                currentPage={collection.currentPage}
-                onPageChange={data => dispatch(getCollection({
-                  slug: collection.slug,
-                  page: data.selected
-                }))}
-              />
-
-              <Container className="mb-4">
-                <Featured
-                  lg={3}
+                <ResultsMap
+                  handleMarkerClick={slug => {
+                    const newSlug =
+                      !!selectedResult && selectedResult === slug ? null : slug
+                    this.setState({
+                      selectedResult: newSlug,
+                      hoveredResult: newSlug,
+                    })
+                  }}
+                  handleMarkerMouseOver={slug =>
+                    this.setState({ hoveredResult: slug })
+                  }
+                  handleMarkerMouseOut={() =>
+                    this.setState({ hoveredResult: '' })
+                  }
+                  handleMapClick={() => {
+                    setTimeout(() => {
+                      this.setState({ selectedResult: '' })
+                    }, 0)
+                  }}
+                  listings={collection.listings}
+                  resultMode={'listing'}
+                  overlay={this.getOverlay()}
                 />
-              </Container>
+              </Row>
             </React.Fragment>
           )}
         />
@@ -135,7 +202,7 @@ export class CollectionPage extends React.Component {
 const select = state => ({
   collection: state.collection,
   session: state.session,
-  user: state.user
+  user: state.user,
 })
 
 export default connect(select)(CollectionPage)

@@ -11,6 +11,7 @@ import { MapControl } from '../../Maps/MapControl'
 export class ResultsMap extends React.Component {
 
   updateMapPosition = () => {
+    debugger;
     if (this.mapEl) {
       this.setState({
         mapHeight: this.getInnerHeight(),
@@ -87,9 +88,9 @@ export class ResultsMap extends React.Component {
 
   calculateBounds() {
     let padding = 0
-    const { search } = this.props
+    const { bounds } = this.props
     const { boundsChanged } = this.state
-    const { nelat, nelng, swlat, swlng } = search
+    const { nelat, nelng, swlat, swlng } = bounds || {}
 
     if (boundsChanged) {
       this.bounds = this.map.getBounds()
@@ -115,8 +116,10 @@ export class ResultsMap extends React.Component {
   }
 
   getBoundListings() {
-    const { search } = this.props
-    return [...search.listings, ...search.featured]
+    let { listings, featured } = this.props
+    listings = listings || []
+    featured = featured || []
+    return [...listings, ...featured]
   }
 
   render() {
@@ -126,7 +129,7 @@ export class ResultsMap extends React.Component {
       handleMarkerMouseOut,
       handleMapClick,
       overlay,
-      search,
+      resultMode,
     } = this.props
 
     const session = store.getState().session
@@ -138,7 +141,7 @@ export class ResultsMap extends React.Component {
       showYouAreHere
     } = this.state
 
-    const hiddenClass = search.resultMode === 'listing' ? 'd-none d-xl-block' : ''
+    const hiddenClass = resultMode === 'listing' ? 'd-none d-xl-block' : ''
 
     const markers = (
       <Markers
