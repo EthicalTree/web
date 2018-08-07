@@ -246,7 +246,7 @@ export class Collections extends React.Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>{'EthicalTree · Collections Admin'}</title>
+          <title>{'EthicalTree Admin · Collections'}</title>
         </Helmet>
 
         <CollectionTable

@@ -2,6 +2,28 @@ import querystring from 'querystring'
 import { api } from '../utils/api'
 import { success } from '../utils/notifications'
 
+export const download = (type, fields, format) => {
+
+  const queryObj = {
+    format,
+    fields: fields.join(','),
+    type,
+  }
+
+  return dispatch => {
+    dispatch({ type: 'SET_ADMIN_LOADING', data: true })
+
+    api.download(
+      `/v1/admin/exports?${querystring.stringify(queryObj)}`,
+      `${type}_export.${format}`
+    )
+      .catch(() => {})
+      .then(() => {
+        dispatch({ type: 'SET_ADMIN_LOADING', data: false })
+      })
+  }
+}
+
 export const getUsers = queryObj => {
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })

@@ -87,7 +87,7 @@ export class Listings extends React.Component {
     return (
       <Loader loading={false}>
         <Helmet>
-          <title>{'EthicalTree · Listing Admin'}</title>
+          <title>{'EthicalTree Admin · Listings'}</title>
         </Helmet>
 
         <h4 className="mt-3 mb-3 d-flex justify-content-between">

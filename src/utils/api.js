@@ -1,5 +1,6 @@
 import store from 'store'
 import axios from 'axios'
+import FileDownload from 'js-file-download'
 import { error } from '../utils/notifications'
 
 // Set header for camelcasing keys automatically
@@ -50,10 +51,24 @@ const patch = (url, data, config) => { return wrapper('patch', url, {...config, 
 const all = requests => axios.all(requests)
 const spread = func => axios.spread(func)
 
+const download = (url, filename, config, method) => {
+  return wrapper(
+    method || 'get',
+    url, {
+      responseType: 'blob',
+      noCamelize: true,
+      ...config
+    }
+  ).then(response => {
+    FileDownload(response.data, filename)
+  })
+}
+
 const api = {
   all,
   get,
   delete: _delete,
+  download,
   head,
   options,
   post,
