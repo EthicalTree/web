@@ -1,0 +1,19 @@
+@import 'variables.sass'
+
+.user-search-dropdown
+  input
+    width: 400px
+
+  .react-autosuggest__container
+    position: relative
+
+    .react-autosuggest__suggestions-container--open
+      border-top: 1px solid $color-border-primary
+      left: 0
+      right: inherit
+      margin-top: -1px
+      width: auto
+
+      .react-autosuggest__suggestion
+        white-space: nowrap
+

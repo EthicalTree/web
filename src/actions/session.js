@@ -109,22 +109,33 @@ export const signup = data => {
   return dispatch => {
     dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
-    const user = {
+    const dataObj = {
+      claimId: data.claimId,
+      claimListingSlug: data.listingSlug,
       user: {
         email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
         password: data.password,
-        passwordConfirmation: data.confirmPassword
+        passwordConfirmation: data.confirmPassword,
       }
     }
 
-    api.post('/signup', user)
+    api.post('/signup', dataObj)
       .then(response => {
         if (response.data.errors) {
           dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
         }
         else {
           dispatch({ type: 'SIGNUP' })
-          dispatch({ type: 'OPEN_MODAL', data: 'verify-email' })
+          dispatch({ type: 'CLOSE_MODAL' })
+
+          if (data.listingSlug) {
+            dispatch({ type: 'OPEN_MODAL', data: 'login' })
+          }
+          else {
+            dispatch({ type: 'OPEN_MODAL', data: 'verify-email' })
+          }
         }
       })
       .then(() => {
@@ -183,6 +194,18 @@ export const getSessionInformation = () => {
       .then(response => {
         dispatch({ type: 'SET_SESSION_INFO', data: response.data })
       })
+  }
+}
+
+export const openClaimListingSignup = (listingSlug, claimId) => {
+  return dispatch => {
+    dispatch({ type: 'OPEN_MODAL', data: 'signup' })
+    dispatch({ type: 'UPDATE_MODAL_DATA', data: { claimId, listingSlug } })
+
+    dispatch({ type: 'SET_MODAL_INFO_MESSAGES', data: [`
+      Thanks for helping us improve our service by claiming your listing!
+      Sign up for an account below, and your listing will automatically be claimed for you.
+    `]})
   }
 }
 

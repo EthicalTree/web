@@ -55,7 +55,7 @@ export class Tags extends React.Component {
     return (
       <Loader loading={admin.isAdminLoading}>
         <Helmet>
-          <title>{'EthicalTree · Tag Admin'}</title>
+          <title>{'EthicalTree Admin · Tags'}</title>
         </Helmet>
 
         <h4 className="mt-3 mb-3 d-flex justify-content-between">

@@ -10,7 +10,27 @@
     filter: blur(1px)
 
 .et-modal
-  height: auto
+  position: relative
+  height: 75%
+
+  .modal-main
+    max-height: calc(100% - 112px)
+    overflow-y: auto
+    padding: $space-3
+    padding-top: $space-5
+
+  &.no-contain
+    height: auto
+
+    .modal-main
+      max-height: auto
+
+    .bottom-bar
+      position: inherit
+
+  .alert
+    p:last-child
+      margin-bottom: 0
 
   .top-bar
     background-color: $color-inverse
@@ -25,6 +45,10 @@
       color: $color-white
 
   .bottom-bar
+    position: absolute
+    left: 0
+    right: 0
+    bottom: 0
     border-top: 1px solid $color-border
     padding: 0.7em
 
@@ -64,6 +88,7 @@
 
       &:hover
         opacity: 1
+
 
 .edit-description-modal
   textarea

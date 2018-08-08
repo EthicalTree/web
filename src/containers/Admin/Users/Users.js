@@ -42,7 +42,7 @@ export class Users extends React.Component {
     return (
       <Loader loading={admin.isAdminLoading}>
         <Helmet>
-          <title>{'EthicalTree · User Admin'}</title>
+          <title>{'EthicalTree Admin · Users'}</title>
         </Helmet>
 
         <h4 className="mt-3 mb-3 d-flex justify-content-between">

@@ -38,7 +38,7 @@ export class Locations extends React.Component {
     return (
       <Loader loading={admin.isAdminLoading}>
         <Helmet>
-          <title>{'EthicalTree · Location Admin'}</title>
+          <title>{'EthicalTree Admin · Locations'}</title>
         </Helmet>
 
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
