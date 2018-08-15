@@ -10,15 +10,6 @@ import { MapControl } from '../../Maps/MapControl'
 
 export class ResultsMap extends React.Component {
 
-  updateMapPosition = () => {
-    if (this.mapEl) {
-      this.setState({
-        mapHeight: this.getInnerHeight(),
-        scrollTop: document.getElementsByTagName('html')[0].scrollTop
-      })
-    }
-  }
-
   handleBoundsChanged = () => {
     if (this.map) {
       this.setState({ boundsChanged: true })
@@ -31,10 +22,12 @@ export class ResultsMap extends React.Component {
   }
 
   handleMapLoad = map => {
-    if (map) {
+    const { handleMapLoad } = this.props
+    if (!this.map) {
       this.map = map
-      this.updateMapPosition()
     }
+    this.calculateBounds()
+    handleMapLoad && handleMapLoad(map)
   }
 
   constructor(props) {
@@ -42,24 +35,8 @@ export class ResultsMap extends React.Component {
 
     this.state = {
       boundsChanged: false,
-      mapHeight: this.getInnerHeight(),
       showYouAreHere: false,
-      scrollTop: 0
     }
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.updateMapPosition)
-    window.addEventListener('resize', this.updateMapPosition)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.updateMapPosition)
-    window.removeEventListener('resize', this.updateMapPosition)
-  }
-
-  getInnerHeight() {
-    return window.innerHeight - 73
   }
 
   renderSearchTools() {
@@ -129,14 +106,15 @@ export class ResultsMap extends React.Component {
       handleMapClick,
       overlay,
       resultMode,
+      mapHeight,
+      scrollTop,
+      mapEl,
     } = this.props
 
     const session = store.getState().session
     const location = session.location
 
     const {
-      mapHeight,
-      scrollTop,
       showYouAreHere
     } = this.state
 
@@ -151,13 +129,11 @@ export class ResultsMap extends React.Component {
       />
     )
 
-    this.calculateBounds()
-
     return (
       <Col className={`search-map-area ${hiddenClass}`}>
         <div
           className="search-map"
-          ref={map => this.mapEl = map}
+          ref={mapEl}
           style={{
             height: mapHeight,
             marginTop: scrollTop

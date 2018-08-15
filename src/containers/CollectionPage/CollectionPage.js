@@ -3,13 +3,14 @@ import './CollectionPage.css'
 import React from 'react'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
-import { Container, Col, Row } from 'reactstrap'
+import { Col, Row } from 'reactstrap'
 import { Helmet } from 'react-helmet'
 
 import { Loader } from '../../components/Loader'
 import { Result } from '../../components/Search/Result'
 import { Paginator } from '../../components/Paginator'
 import { Featured } from '../../components/Listing/Featured'
+import { MapSwitcher } from '../../components/Search/MapSwitcher'
 
 import { getCollection } from '../../actions/collection'
 import { setSearchLocation } from '../../actions/search'
@@ -20,6 +21,7 @@ export class CollectionPage extends React.Component {
   state = {
     selectedResult: '',
     hoveredResult: '',
+    displayMode: 'listing',
   }
 
   componentDidMount() {
@@ -68,7 +70,7 @@ export class CollectionPage extends React.Component {
 
   render() {
     const { dispatch, collection, session, user } = this.props
-    const { selectedResult } = this.state
+    const { selectedResult, displayMode } = this.state
     let headerStyles
 
     if (collection.coverImage) {
@@ -76,6 +78,8 @@ export class CollectionPage extends React.Component {
         backgroundImage: `url(${collection.coverImage.url})`,
       }
     }
+
+    const mobileCollectionHidden = displayMode === 'map' ? 'd-none d-xl-block' : ''
 
     return (
       <div className="collection-page">
@@ -113,19 +117,18 @@ export class CollectionPage extends React.Component {
               </div>
 
               <Row>
-                <Col xs="12" xl="8" className={`search-results col-xxl-8 p-4`}>
+                <Col xs="12" xl="8" className={`search-results col-xxl-8 p-4 ${mobileCollectionHidden}`}>
                   <Row className="mt-2 no-gutters">
                     <div className="collection-listings">
                       {collection.listings.map(l => {
                         return (
                           <Col
                             key={l.id}
-                            className="collection-listing"
+                            className="collection-listing col-xxl-4"
                             xs="12"
                             sm="6"
                             lg="4"
-                            xl="6"
-                            className="col-xxl-4">
+                            xl="6">
                             <Result
                               listing={l}
                               location="Collection Page"
@@ -187,10 +190,19 @@ export class CollectionPage extends React.Component {
                     }, 0)
                   }}
                   listings={collection.listings}
-                  resultMode={'listing'}
+                  resultMode={displayMode}
                   overlay={this.getOverlay()}
+                  mapHeight={800}
+                  scrollTop={86}
                 />
               </Row>
+
+              <MapSwitcher
+                mode={displayMode}
+                onClick={() => this.setState({displayMode: displayMode === 'listing' ? 'map' : 'listing'})}
+                showText="Show Collection"
+              />
+
             </React.Fragment>
           )}
         />
