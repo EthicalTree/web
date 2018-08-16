@@ -4,7 +4,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import numeral from 'numeral'
 import { Link } from 'react-router-dom'
-import store from 'store'
 
 import {
   Card,
@@ -45,8 +44,6 @@ export class Result extends React.Component {
 
     const extraStyle = currentImage ? { backgroundImage: `url(${currentImage.thumbnailUrl})` }  : {}
     const hoveredClass = hovered ? 'hovered' : ''
-
-    const geoLocation = store.get('geolocation')
 
     const distance = session && session.location && listing.location ? getDistance(
       session.location.lat,

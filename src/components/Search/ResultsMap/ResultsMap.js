@@ -1,5 +1,4 @@
 import React from 'react'
-import store from '../../../store/store'
 import { withRouter } from 'react-router-dom'
 import { Button, Col } from 'reactstrap'
 import { InfoWindow } from 'react-google-maps'
