@@ -1,7 +1,7 @@
-import './DateTime.css'
+import './OpenCloseSelector.css'
 
 import React from 'react'
-import moment from 'moment-timezone'
+import moment from 'moment'
 
 import {
   Row,
@@ -14,9 +14,9 @@ import {
   Input
 } from 'reactstrap'
 
-import { Icon } from '../Icon'
+import { Icon } from '../../Icon'
 
-export const DateSelector = props => {
+export const OpenCloseSelector = props => {
   const { setDay, selectedDay, days, addMoreHours, setTime } = props
 
   const Day = (p) => {
@@ -79,9 +79,9 @@ export const DateSelector = props => {
                         <Input
                           bsSize="sm"
                           type="time"
-                          value={moment(h.openStr, 'hh:mm a').format('HH:mm')}
+                          defaultValue={h.open.format('HH:mm')}
                           onChange={e => {
-                            h.openStr = moment(e.target.value, 'HH:mm').format('hh:mm a')
+                            h.open = moment(e.target.value, 'HH:mm')
                             setTime(selectedDay.hours)
                           }}
                         />
@@ -89,9 +89,9 @@ export const DateSelector = props => {
                         <Input
                           bsSize="sm"
                           type="time"
-                          value={moment(h.closeStr, 'hh:mm a').format('HH:mm')}
+                          defaultValue={h.close.format('HH:mm')}
                           onChange={e => {
-                            h.closeStr = moment(e.target.value, 'HH:mm').format('hh:mm a')
+                            h.close= moment(e.target.value, 'HH:mm')
                             setTime(selectedDay.hours)
                           }}
                         />
@@ -131,8 +131,6 @@ export const DateSelector = props => {
                 </Col>
               </Row>
             }
-
-
           </Col>
        </Col>
       </Row>
@@ -140,3 +138,4 @@ export const DateSelector = props => {
   )
 }
 
+export default OpenCloseSelector

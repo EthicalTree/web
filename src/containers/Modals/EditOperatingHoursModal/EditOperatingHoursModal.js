@@ -1,8 +1,9 @@
 import React from 'react'
+import moment from 'moment'
 import { connect } from 'react-redux'
 
 import { Modal } from '../Modal'
-import { DateSelector } from '../../../components/DateTime'
+import { OpenCloseSelector } from '../../../components/DateTime/OpenCloseSelector'
 
 import { saveOperatingHours } from '../../../actions/listing'
 import { localizedDates } from '../../../models/hours'
@@ -59,8 +60,8 @@ class EditOperatingHoursModal extends React.Component {
     let operatingHours = {...this.state.operatingHours}
 
     const newHours = {
-      openStr: '12:00 pm',
-      closeStr: '10:00 pm'
+      open: moment('12:00', 'HH:mm'),
+      close: moment('22:00', 'HH:mm')
     }
 
     operatingHours[day] = {...operatingHours[day], hours: [...operatingHours[day].hours, newHours]}
@@ -96,7 +97,7 @@ class EditOperatingHoursModal extends React.Component {
         modalName="edit-operating-hours"
         onSave={this.submit.bind(this)}
       >
-        <DateSelector
+        <OpenCloseSelector
           selectedDay={selectedDay}
           days={this.state.operatingHours}
           addMoreHours={this.addMoreHours.bind(this)}

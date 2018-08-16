@@ -2,6 +2,7 @@ import './Modal.css'
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import { connect } from 'react-redux'
 import ReactModal from 'react-modal'
 
@@ -23,7 +24,6 @@ const baseStyles = {
     position: 'absolute',
     border: '1px solid #ccc',
     background: '#fff',
-    overflow: 'auto',
     WebkitOverflowScrolling: 'touch',
     outline: 'none',
     padding: '0',
@@ -55,7 +55,7 @@ const TopBar = props => {
   const { onClose } = props
 
   return (
-    <div className="top-bar text-left mb-4">
+    <div className="top-bar text-left">
       <h5 className="title">{props.title}</h5>
       <ModalCloser onClose={onClose} />
     </div>
@@ -64,22 +64,22 @@ const TopBar = props => {
 
 const BottomBar = props => {
   const saveLabel = props.saveLabel || 'Save'
-	const saveDisabled = props.saveDisabled || false
+  const saveDisabled = props.saveDisabled || false
   let saveButton
 
   if (props.onSave) {
     saveButton = (
       <Button
         color="primary"
-				onClick={props.onSave}
-				disabled={saveDisabled}>
+        onClick={props.onSave}
+        disabled={saveDisabled}>
         {saveLabel}
       </Button>
     )
   }
 
   return (
-    <div className="bottom-bar text-right mt-3">
+    <div className="bottom-bar text-right">
       <Button
         className="mr-2"
         color="default"
@@ -99,10 +99,12 @@ class Modal extends React.Component {
 
     let {
       children,
+      className,
       dispatch,
       modalName,
       modal,
       noDecoration,
+      noContain,
       style
     } = props
 
@@ -129,6 +131,12 @@ class Modal extends React.Component {
       dispatch(closeModal());
     }
 
+    const classNames = classnames(
+      'et-modal',
+      className,
+      { 'no-contain': noContain }
+    )
+
     return (
       <div>
         <div className="modal-wrapper" />
@@ -139,7 +147,7 @@ class Modal extends React.Component {
             isOpen={isOpen}
             {...props}
             style={newStyles}
-            className={`et-modal ${props.className}`}
+            className={classNames}
             appElement={document.getElementById('root')}
           >
             {noDecoration &&
@@ -156,14 +164,40 @@ class Modal extends React.Component {
                   title={props.contentLabel}
                 />
 
-                <div className="p-3">
+                <div className="modal-main">
                   {isOpen &&
                     <Container>
+                      {modal.successMessages &&
+                        <Row>
+                          <Col>
+                            <Alert color="success">
+                              {modal.successMessages.map(message => (
+                                <p key={message}>{message}</p>
+                              ))}
+                            </Alert>
+                          </Col>
+                        </Row>
+                      }
+
+                      {modal.infoMessages &&
+                        <Row>
+                          <Col>
+                            <Alert color="primary">
+                              {modal.infoMessages.map(message => (
+                                <p key={message}>{message}</p>
+                              ))}
+                            </Alert>
+                          </Col>
+                        </Row>
+                      }
+
                       {modal.errors &&
                         <Row>
                           <Col>
                             <Alert color="danger">
-                              {modal.errors}
+                              {modal.errors.map(error => (
+                                <p key={error}>{error}</p>
+                              ))}
                             </Alert>
                           </Col>
                         </Row>
@@ -212,6 +246,7 @@ const ConfirmModal = (props) => {
     <ConnectedModal
       onSave={props.onConfirm}
       saveLabel="Yes"
+      noContain
       {...props}>
 
       <Container>

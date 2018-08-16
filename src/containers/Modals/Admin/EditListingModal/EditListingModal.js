@@ -85,7 +85,7 @@ class EditListingModal extends React.Component {
               type="select"
               name="visibility"
               onChange={e => this.handleChange({ visibility: e.target.value })}
-              value={visibility}
+              value={visibility || 'unpublished'}
             >
               <option value="published">Visible</option>
               <option value="unpublished">Hidden</option>

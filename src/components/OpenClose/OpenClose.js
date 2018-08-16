@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Icon } from '../Icon'
 
-import { getOpenCloseStatus } from '../../utils/datetime'
+import { getOpenCloseStatus } from '../../models/hours'
 
 const OpenClose = props => {
   const { hours, timezone } = props

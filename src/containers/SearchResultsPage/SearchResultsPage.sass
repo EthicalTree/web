@@ -6,8 +6,13 @@
     text-align: center
     margin: $space-7 0
 
-.search-results-ethicalities
-  width: 100%
+  .search-filters
+    @media (min-width: $screen-xxl-min)
+      display: flex
+      align-items: center
+
+    .ethicality-bar
+      padding: $space-4
 
 .search-map-area
   position: relative
@@ -24,7 +29,7 @@
     .gm-style-iw + div
       display: none
 
-    @media (max-width: $screen-lg-max)//{}
+    @media (max-width: $screen-lg-max)
       position: fixed
       margin-top: 73px !important
       width: 100%
