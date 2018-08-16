@@ -12,10 +12,11 @@ export class UserDropdown extends React.Component {
 
     const queryObj = {
       pageSize: 10,
-      query
+      query,
     }
 
-    api.get(`/v1/admin/users?${querystring.stringify(queryObj)}`)
+    api
+      .get(`/v1/admin/users?${querystring.stringify(queryObj)}`)
       .then(({ data }) => {
         const { users } = data
         this.setState({ users })
@@ -27,7 +28,7 @@ export class UserDropdown extends React.Component {
 
     this.state = {
       query: '',
-      users: []
+      users: [],
     }
   }
 
@@ -41,7 +42,7 @@ export class UserDropdown extends React.Component {
           suggestions={users}
           onSuggestionsFetchRequested={this.fetchUsers}
           onSuggestionsClearRequested={() => {
-            this.setState({ users: []})
+            this.setState({ users: [] })
           }}
           getSuggestionValue={suggestion => suggestion.displayNameWithEmail}
           onSuggestionSelected={(e, { suggestion }) => {
@@ -55,7 +56,7 @@ export class UserDropdown extends React.Component {
             placeholder: 'Search for a user...',
             onChange: (e, { newValue }) => {
               this.setState({ query: newValue })
-            }
+            },
           }}
         />
       </div>

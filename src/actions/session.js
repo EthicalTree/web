@@ -7,13 +7,15 @@ export const login = data => {
   return dispatch => {
     dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
-    api.post('/login', { auth: data })
+    api
+      .post('/login', { auth: data })
       .then(response => {
         if (!response.data.jwt) {
-          const errors = response.data.errors || ["Invalid email/password combination"]
+          const errors = response.data.errors || [
+            'Invalid email/password combination',
+          ]
           dispatch({ type: 'SET_MODAL_ERRORS', data: errors })
-        }
-        else {
+        } else {
           const jwt = response.data.jwt
           authenticate(jwt)
 
@@ -23,7 +25,7 @@ export const login = data => {
         }
       })
       .catch(() => {
-        dispatch({ type: 'SET_MODAL_ERRORS', data: ["Invalid email/password"] })
+        dispatch({ type: 'SET_MODAL_ERRORS', data: ['Invalid email/password'] })
       })
       .then(() => {
         dispatch({ type: 'SET_MODAL_LOADING', data: false })
@@ -48,14 +50,21 @@ export const sendForgotPasswordRequest = email => {
   return dispatch => {
     dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
-    api.post('/forgot_password', { email })
+    api
+      .post('/forgot_password', { email })
       .then(response => {
         if (response.data.errors) {
-          dispatch({ type: 'SET_FORGOT_PASSWORD_ERROR', data: response.data.errors })
-        }
-        else {
+          dispatch({
+            type: 'SET_FORGOT_PASSWORD_ERROR',
+            data: response.data.errors,
+          })
+        } else {
           dispatch({ type: 'OPEN_MODAL', data: 'login' })
-          dispatch({ type: 'SET_LOGIN_INFO', data: "Password reset link has been sent! Check your email and follow the link provided." })
+          dispatch({
+            type: 'SET_LOGIN_INFO',
+            data:
+              'Password reset link has been sent! Check your email and follow the link provided.',
+          })
         }
       })
       .then(() => {
@@ -68,15 +77,16 @@ export const checkForgotPassword = token => {
   return dispatch => {
     dispatch({ type: 'SET_CHANGE_PASSWORD_LOADING', data: true })
 
-    api.post('/forgot_password', {
-      token,
-      check: true
-    }).then(response => {
-      const email = response.data.email || ''
-      dispatch({ type: 'SET_FORGOT_PASSWORD_EMAIL', data: email })
-      dispatch({ type: 'SET_CHANGE_PASSWORD_LOADING', data: false })
-    })
-
+    api
+      .post('/forgot_password', {
+        token,
+        check: true,
+      })
+      .then(response => {
+        const email = response.data.email || ''
+        dispatch({ type: 'SET_FORGOT_PASSWORD_EMAIL', data: email })
+        dispatch({ type: 'SET_CHANGE_PASSWORD_LOADING', data: false })
+      })
   }
 }
 
@@ -86,22 +96,30 @@ export const changePassword = (data, token, history) => {
   return dispatch => {
     dispatch({ type: 'SET_CHANGE_PASSWORD_LOADING', data: true })
 
-    api.post('/forgot_password', {
-      password,
-      passwordConfirmation: confirmPassword,
-      token
-    }).then(response => {
-      if (response.data.errors) {
-        dispatch({ type: 'SET_CHANGE_PASSWORD_ERROR', data: response.data.errors })
-      }
-      else {
-        history.push(`/`)
-        dispatch({ type: 'SET_LOGIN_INFO', data: "Your password has been successfully reset!" })
-        dispatch({ type: 'OPEN_MODAL', data: 'login' })
-      }
-    }).then(() => {
-      dispatch({ type: 'SET_CHANGE_PASSWORD_LOADING', data: false })
-    })
+    api
+      .post('/forgot_password', {
+        password,
+        passwordConfirmation: confirmPassword,
+        token,
+      })
+      .then(response => {
+        if (response.data.errors) {
+          dispatch({
+            type: 'SET_CHANGE_PASSWORD_ERROR',
+            data: response.data.errors,
+          })
+        } else {
+          history.push(`/`)
+          dispatch({
+            type: 'SET_LOGIN_INFO',
+            data: 'Your password has been successfully reset!',
+          })
+          dispatch({ type: 'OPEN_MODAL', data: 'login' })
+        }
+      })
+      .then(() => {
+        dispatch({ type: 'SET_CHANGE_PASSWORD_LOADING', data: false })
+      })
   }
 }
 
@@ -118,22 +136,21 @@ export const signup = data => {
         lastName: data.lastName,
         password: data.password,
         passwordConfirmation: data.confirmPassword,
-      }
+      },
     }
 
-    api.post('/signup', dataObj)
+    api
+      .post('/signup', dataObj)
       .then(response => {
         if (response.data.errors) {
           dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
-        }
-        else {
+        } else {
           dispatch({ type: 'SIGNUP' })
           dispatch({ type: 'CLOSE_MODAL' })
 
           if (data.listingSlug) {
             dispatch({ type: 'OPEN_MODAL', data: 'login' })
-          }
-          else {
+          } else {
             dispatch({ type: 'OPEN_MODAL', data: 'verify-email' })
           }
         }
@@ -141,7 +158,6 @@ export const signup = data => {
       .then(() => {
         dispatch({ type: 'SET_MODAL_LOADING', data: false })
       })
-
   }
 }
 
@@ -149,16 +165,20 @@ export const verifyEmail = data => {
   return dispatch => {
     dispatch({ type: 'SET_VERIFY_EMAIL_LOADING', data: true })
 
-    api.post('/confirm_email', { token: data.token })
+    api
+      .post('/confirm_email', { token: data.token })
       .then(response => {
         if (response.data.errors) {
           dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
-        }
-        else {
+        } else {
           dispatch({ type: 'VERIFY_EMAIL' })
           dispatch({ type: 'OPEN_MODAL', data: 'login' })
           dispatch({ type: 'SET_MODAL_ERRORS', data: null })
-          dispatch({ type: 'SET_LOGIN_INFO', data: "Great, you're verified! Feel free to login whenever, and thanks for registering :)"})
+          dispatch({
+            type: 'SET_LOGIN_INFO',
+            data:
+              "Great, you're verified! Feel free to login whenever, and thanks for registering :)",
+          })
         }
       })
       .then(() => {
@@ -171,7 +191,8 @@ export const getCurrentUser = () => {
   return dispatch => {
     dispatch({ type: 'SET_USER_LOADING', data: true })
 
-    api.get('/users/current')
+    api
+      .get('/users/current')
       .then(response => {
         const user = response.data.user
 
@@ -190,10 +211,9 @@ export const getCurrentUser = () => {
 
 export const getSessionInformation = () => {
   return dispatch => {
-    api.get('/sessions')
-      .then(response => {
-        dispatch({ type: 'SET_SESSION_INFO', data: response.data })
-      })
+    api.get('/sessions').then(response => {
+      dispatch({ type: 'SET_SESSION_INFO', data: response.data })
+    })
   }
 }
 
@@ -202,10 +222,14 @@ export const openClaimListingSignup = (listingSlug, claimId) => {
     dispatch({ type: 'OPEN_MODAL', data: 'signup' })
     dispatch({ type: 'UPDATE_MODAL_DATA', data: { claimId, listingSlug } })
 
-    dispatch({ type: 'SET_MODAL_INFO_MESSAGES', data: [`
+    dispatch({
+      type: 'SET_MODAL_INFO_MESSAGES',
+      data: [
+        `
       Thanks for helping us improve our service by claiming your listing!
       Sign up for an account below, and your listing will automatically be claimed for you.
-    `]})
+    `,
+      ],
+    })
   }
 }
-

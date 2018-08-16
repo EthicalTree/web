@@ -1,1 +1,1 @@
-export {default as CustomOverlayView} from './CustomOverlayView'
+export { default as CustomOverlayView } from './CustomOverlayView'

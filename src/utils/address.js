@@ -1,6 +1,7 @@
 import store from 'store'
 
-const GOOGLE_MAPS_DIRECTIONS_BASE_URL = 'https://www.google.com/maps/dir/?api=1&destination='
+const GOOGLE_MAPS_DIRECTIONS_BASE_URL =
+  'https://www.google.com/maps/dir/?api=1&destination='
 
 export const hasSavedLocation = () => {
   const location = _getLocationData()
@@ -31,7 +32,7 @@ const _getLocationData = () => {
   return {
     location,
     city,
-    isSaved
+    isSaved,
   }
 }
 
@@ -43,7 +44,7 @@ export const setSavedCity = city => {
   _setLocationData(getSavedSearchLocation(), city)
 }
 
-const _setLocationData = (location, city)=> {
+const _setLocationData = (location, city) => {
   store.set('ETHICALTREE_SEARCH_LOCATION', location)
   store.set('ETHICALTREE_CITY', city)
 }

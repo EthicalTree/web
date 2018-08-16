@@ -1,1 +1,1 @@
-export {default as GenericConfirmModal} from './GenericConfirmModal'
+export { default as GenericConfirmModal } from './GenericConfirmModal'

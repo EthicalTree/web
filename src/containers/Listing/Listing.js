@@ -14,7 +14,7 @@ import {
   makeImageCover,
   updateListingImage,
   addTagToListing,
-  removeTagFromListing
+  removeTagFromListing,
 } from '../../actions/listing'
 
 import { TagBar } from '../../components/Listing/TagBar'
@@ -31,7 +31,6 @@ import { openClaimListingSignup } from '../../actions/session'
 import { editListing } from '../../actions/listing'
 
 class Listing extends React.Component {
-
   onTagAdd = value => {
     const { dispatch, listing } = this.props
     dispatch(addTagToListing(listing.slug, value))
@@ -42,7 +41,7 @@ class Listing extends React.Component {
     dispatch(removeTagFromListing(listing.slug, id))
   }
 
-  handleReposition = (reposition) => {
+  handleReposition = reposition => {
     const { dispatch, listing } = this.props
     const { currentImage } = listing
 
@@ -53,11 +52,13 @@ class Listing extends React.Component {
     const originalY = currentImage.coverOffsetY || 0
     const diffY = reposition ? reposition.diffY : 0
 
-    dispatch(updateListingImage({
-      listingSlug: listing.slug,
-      imageId: currentImage.id,
-      offset: { y: originalY + diffY }
-    }))
+    dispatch(
+      updateListingImage({
+        listingSlug: listing.slug,
+        imageId: currentImage.id,
+        offset: { y: originalY + diffY },
+      })
+    )
   }
 
   getClaimParams = () => {
@@ -66,7 +67,7 @@ class Listing extends React.Component {
 
     return {
       claim: queryParams.claim === 'true',
-      claimId: queryParams.claimId
+      claimId: queryParams.claimId,
     }
   }
 
@@ -79,13 +80,14 @@ class Listing extends React.Component {
 
     if (claim) {
       if (session.user) {
-        dispatch(editListing({
-          slug: listingSlug,
-          claim: true,
-          claimId
-        }))
-      }
-      else {
+        dispatch(
+          editListing({
+            slug: listingSlug,
+            claim: true,
+            claimId,
+          })
+        )
+      } else {
         dispatch(openClaimListingSignup(listingSlug, claimId))
       }
     }
@@ -117,21 +119,17 @@ class Listing extends React.Component {
   }
 
   render() {
-    const {
-      dispatch,
-      listing,
-      location,
-      match
-    } = this.props
+    const { dispatch, listing, location, match } = this.props
 
     const { claim } = this.getClaimParams()
     const { currentImage } = listing
 
-    const title = listing.address && listing.city ? (
-      `${listing.title} in ${toTitleCase(listing.city)} · ${listing.address} · EthicalTree`
-    ) : (
-      `${listing.title} · EthicalTree`
-    )
+    const title =
+      listing.address && listing.city
+        ? `${listing.title} in ${toTitleCase(listing.city)} · ${
+            listing.address
+          } · EthicalTree`
+        : `${listing.title} · EthicalTree`
 
     if (!listing.id && !listing.isListingLoading) {
       return (
@@ -150,22 +148,22 @@ class Listing extends React.Component {
       <Loader
         key={match.params.slug}
         loading={listing.isListingLoading}
-        fixed={true}
-      >
+        fixed={true}>
         <Helmet key={listing.id}>
           <title>{title}</title>
-          <meta
-            name="description"
-            content={`${listing.bio}`}
-          />
+          <meta name="description" content={`${listing.bio}`} />
         </Helmet>
 
         <Container>
           <div className="listing-detail">
             <ImageManager
               className="listing-image-manager"
-              onImageUploadProgress={progress => dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: progress })}
-              onSetCurrentImage={image => dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: image })}
+              onImageUploadProgress={progress =>
+                dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: progress })
+              }
+              onSetCurrentImage={image =>
+                dispatch({ type: 'SET_LISTING_CURRENT_IMAGE', data: image })
+              }
               images={listing.images}
               imgStyle={{ maxHeight: null }}
               isLoading={listing.isImageLoading}
@@ -177,49 +175,71 @@ class Listing extends React.Component {
               repositionImages={true}
               fullScreenAction={{
                 handleAction: () => {
-                  dispatch({ type: 'SET_FULLSCREEN_MODAL_IMAGES', data: [...listing.images] })
-                  dispatch({ type: 'SET_FULLSCREEN_MODAL_CURRENT_IMAGE', data: currentImage })
+                  dispatch({
+                    type: 'SET_FULLSCREEN_MODAL_IMAGES',
+                    data: [...listing.images],
+                  })
+                  dispatch({
+                    type: 'SET_FULLSCREEN_MODAL_CURRENT_IMAGE',
+                    data: currentImage,
+                  })
                   dispatch({ type: 'OPEN_MODAL', data: 'fullscreen-image' })
                 },
                 title: 'Enlarge Photo',
               }}
               coverAction={{
-                handleAction: () => dispatch(setConfirm({
-                  title: 'Set Cover Photo',
-                  msg: 'Are you sure you want to make this photo your cover photo?',
-                  action: makeImageCover,
-                  data: {listingSlug: listing.slug, imageId: currentImage.id}
-                })),
-                title: 'Set Cover Photo'
+                handleAction: () =>
+                  dispatch(
+                    setConfirm({
+                      title: 'Set Cover Photo',
+                      msg:
+                        'Are you sure you want to make this photo your cover photo?',
+                      action: makeImageCover,
+                      data: {
+                        listingSlug: listing.slug,
+                        imageId: currentImage.id,
+                      },
+                    })
+                  ),
+                title: 'Set Cover Photo',
               }}
               deleteAction={{
-                handleAction: () => dispatch(setConfirm({
-                  title: 'Delete Photo',
-                  msg: 'Are you sure you want to delete this photo?',
-                  action: deleteImageFromListing,
-                  data: {listingSlug: listing.slug, imageId: currentImage.id}
-                })),
-                title: 'Delete Photo'
+                handleAction: () =>
+                  dispatch(
+                    setConfirm({
+                      title: 'Delete Photo',
+                      msg: 'Are you sure you want to delete this photo?',
+                      action: deleteImageFromListing,
+                      data: {
+                        listingSlug: listing.slug,
+                        imageId: currentImage.id,
+                      },
+                    })
+                  ),
+                title: 'Delete Photo',
               }}
               addAction={{
-                handleAction: image => dispatch(addImageToListing({
-                  listingSlug: listing.slug,
-                  imageKey: image.key
-                })),
-                title: 'Add Photo'
+                handleAction: image =>
+                  dispatch(
+                    addImageToListing({
+                      listingSlug: listing.slug,
+                      imageKey: image.key,
+                    })
+                  ),
+                title: 'Add Photo',
               }}
               handleReposition={this.handleReposition}
             />
 
             <div className="title-bar" />
 
-            {isAdmin() &&
+            {isAdmin() && (
               <TagBar
                 tags={listing.tags}
                 onTagAdd={this.onTagAdd}
                 onTagRemove={this.onTagRemove}
               />
-            }
+            )}
 
             <ListingContent
               dispatch={dispatch}
@@ -231,14 +251,13 @@ class Listing extends React.Component {
         </Container>
       </Loader>
     )
-
   }
 }
 
 const select = state => ({
   listing: state.listing,
   session: state.session,
-  user: state.user
+  user: state.user,
 })
 
 export default connect(select)(Listing)

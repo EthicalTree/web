@@ -1,1 +1,1 @@
-export {default as ClaimStatus} from './ClaimStatus'
+export { default as ClaimStatus } from './ClaimStatus'

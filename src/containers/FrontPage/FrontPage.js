@@ -4,10 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import {
-  Container,
-  Col
-} from 'reactstrap'
+import { Container, Col } from 'reactstrap'
 
 import { EthicalityBar } from '../../components/Ethicality'
 import { Search } from '../../components/Search'
@@ -16,13 +13,8 @@ import { Collections } from '../Collections'
 import { toggleSearchEthicalities } from '../../actions/search'
 
 export class FrontPage extends React.Component {
-
   render() {
-    const {
-      app,
-      dispatch,
-      search,
-    } = this.props
+    const { app, dispatch, search } = this.props
 
     const ethicalities = app.ethicalities || []
     const selectedEthicalities = search.selectedEthicalities || []
@@ -31,7 +23,10 @@ export class FrontPage extends React.Component {
       <div className="front-page">
         <Container className="text-center">
           <Col className="headline" xs="12">
-            <h1>Find local places that <span className="text-info">care</span> about what you care about.</h1>
+            <h1>
+              Find local places that <span className="text-info">care</span>{' '}
+              about what you care about.
+            </h1>
           </Col>
 
           <Col xs="12">
@@ -47,8 +42,11 @@ export class FrontPage extends React.Component {
                 dispatch({
                   type: 'SET_SEARCH_QUERY_PARAMS',
                   data: {
-                    ethicalities: toggleSearchEthicalities(selectedEthicalities, slug)
-                  }
+                    ethicalities: toggleSearchEthicalities(
+                      selectedEthicalities,
+                      slug
+                    ),
+                  },
                 })
               }}
               selectedEthicalities={selectedEthicalities}
@@ -62,7 +60,7 @@ export class FrontPage extends React.Component {
   }
 }
 
-const select = (state) => {
+const select = state => {
   return {
     app: state.app,
     search: state.search,

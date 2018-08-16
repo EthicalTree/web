@@ -1,13 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane,
-} from 'reactstrap'
+import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
 
 import { Bio } from '../Bio'
 import { ListingMap } from '../ListingMap'
@@ -17,12 +11,8 @@ import { Featured } from '../Featured'
 import { trackEvent } from '../../../utils/ga'
 import { hasPermission } from '../../../utils/permissions'
 
-const ListingInfo = (props) => {
-  const {
-    listing,
-    className,
-    dispatch
-  } = props
+const ListingInfo = props => {
+  const { listing, className, dispatch } = props
 
   const activeTab = listing.listingInfoTab
   const menu = listing.menus.length > 0 ? listing.menus[0] : null
@@ -47,12 +37,11 @@ const ListingInfo = (props) => {
               trackEvent({
                 action: 'Select Location Tab',
                 category: 'Listing',
-                label: listing.slug
+                label: listing.slug,
               })
 
               dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'location' })
-            }}
-          >
+            }}>
             Location
           </NavLink>
         </NavItem>
@@ -63,12 +52,11 @@ const ListingInfo = (props) => {
               trackEvent({
                 action: 'Select Menu Tab',
                 category: 'Listing',
-                label: listing.slug
+                label: listing.slug,
               })
 
               dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'menu' })
-            }}
-          >
+            }}>
             {isStore && 'More Info'}
             {!isStore && 'Menu'}
           </NavLink>
@@ -95,11 +83,9 @@ const ListingInfo = (props) => {
         </TabPane>
       </TabContent>
 
-      <div className="clearfix"></div>
+      <div className="clearfix" />
 
-      {!listing.plan &&
-        <Featured />
-      }
+      {!listing.plan && <Featured />}
     </div>
   )
 }
@@ -107,7 +93,7 @@ const ListingInfo = (props) => {
 ListingInfo.propTypes = {
   listing: PropTypes.object,
   className: PropTypes.string,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
 }
 
 export default ListingInfo

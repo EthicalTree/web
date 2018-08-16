@@ -12,7 +12,6 @@ import { Paginator } from '../../Paginator'
 import { toggleSearchEthicalities } from '../../../actions/search'
 
 export class SearchResults extends React.Component {
-
   handleResize = () => {
     this.setState({ minHeight: window.innerHeight })
   }
@@ -21,7 +20,7 @@ export class SearchResults extends React.Component {
     super(props)
 
     this.state = {
-      minHeight: window.innerHeight
+      minHeight: window.innerHeight,
     }
 
     window.addEventListener('resize', this.handleResize)
@@ -37,18 +36,14 @@ export class SearchResults extends React.Component {
     if (search.matches === 0) {
       return (
         <React.Fragment>
-          <div className="no-matches">
-            Oh no, nothing matched your search!
-          </div>
+          <div className="no-matches">Oh no, nothing matched your search!</div>
 
           <h5 className="p-3">Places you might like</h5>
         </React.Fragment>
       )
     }
 
-    return (
-      <h5 className="p-3">Search Results</h5>
-    )
+    return <h5 className="p-3">Search Results</h5>
   }
 
   render() {
@@ -62,12 +57,18 @@ export class SearchResults extends React.Component {
     const mobileHidden = search.resultMode === 'map' ? 'd-none d-xl-block' : ''
 
     const onEthicalitySelect = slug => {
-      const newSelectedEthicalities = toggleSearchEthicalities(selectedEthicalities, slug)
+      const newSelectedEthicalities = toggleSearchEthicalities(
+        selectedEthicalities,
+        slug
+      )
 
-      dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: {ethicalities: newSelectedEthicalities}})
+      dispatch({
+        type: 'SET_SEARCH_QUERY_PARAMS',
+        data: { ethicalities: newSelectedEthicalities },
+      })
       handleSearch({
         page: 0,
-        ethicalities: newSelectedEthicalities
+        ethicalities: newSelectedEthicalities,
       })
     }
 
@@ -76,11 +77,8 @@ export class SearchResults extends React.Component {
         xs="12"
         xl="6"
         className={`search-results col-xxl-8 p-4 ${mobileHidden}`}
-        style={{ minHeight }}
-      >
-        <Col
-          className="d-lg-none d-xl-none mb-3"
-        >
+        style={{ minHeight }}>
+        <Col className="d-lg-none d-xl-none mb-3">
           <Search />
         </Col>
 
@@ -94,19 +92,24 @@ export class SearchResults extends React.Component {
             onEthicalitySelect={onEthicalitySelect}
             selectedEthicalities={selectedEthicalities}
           />
-          <FilterBar openNow={search.openNow} dispatch={dispatch}/>
+          <FilterBar openNow={search.openNow} dispatch={dispatch} />
         </div>
 
         <Row className="mt-2 no-gutters">
           <Col xs="12" lg="9" xl="12" className="col-xxl-9">
             <div className="search-listings">
-
               {this.renderResultsHeader()}
 
               <div className="d-flex flex-wrap align-items-stretch">
                 {hasListings &&
                   search.listings.map(listing => (
-                    <Col key={listing.slug} xs="12" sm="6" lg="4" xl="6" className="col-xxl-4">
+                    <Col
+                      key={listing.slug}
+                      xs="12"
+                      sm="6"
+                      lg="4"
+                      xl="6"
+                      className="col-xxl-4">
                       <Result
                         listing={listing}
                         hovered={listing.slug === search.hoveredResult}
@@ -114,13 +117,10 @@ export class SearchResults extends React.Component {
                         session={session}
                       />
                     </Col>
-                  ))
-                }
-                {!hasListings &&
-                  <Col className="text-center pt-5">
-                    No listings found!
-                  </Col>
-                }
+                  ))}
+                {!hasListings && (
+                  <Col className="text-center pt-5">No listings found!</Col>
+                )}
               </div>
             </div>
           </Col>
@@ -138,18 +138,18 @@ export class SearchResults extends React.Component {
           </Col>
         </Row>
 
-        {hasListings && search.matches > 0 &&
-          <Row className="text-center">
-            <Paginator
-              pageCount={search.pageCount}
-              currentPage={search.currentPage}
-              onPageChange={data => {
-                handleSearch({ page: data.selected })
-              }}
-            />
-          </Row>
-        }
-
+        {hasListings &&
+          search.matches > 0 && (
+            <Row className="text-center">
+              <Paginator
+                pageCount={search.pageCount}
+                currentPage={search.currentPage}
+                onPageChange={data => {
+                  handleSearch({ page: data.selected })
+                }}
+              />
+            </Row>
+          )}
       </Col>
     )
   }

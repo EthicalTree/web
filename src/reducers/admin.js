@@ -7,48 +7,46 @@ const defaultState = {
   currentPage: 1,
   totalPages: 1,
   query: '',
-  filters: []
+  filters: [],
 }
 
-const admin = (state=defaultState, {type, data}) => {
-
+const admin = (state = defaultState, { type, data }) => {
   switch (type) {
     case 'UPDATE_ADMIN_USER':
       const user = {
         ...state.users.find(u => u.id === data.id),
-        ...data
+        ...data,
       }
 
       return {
         ...state,
-        users: [...state.users.filter(u => u.id !== data.id), user]
+        users: [...state.users.filter(u => u.id !== data.id), user],
       }
     case 'SET_ADMIN_FILTER':
-      return {...state, filters: data}
+      return { ...state, filters: data }
     case 'SET_ADMIN_SEARCH_QUERY':
-      return {...state, query: data}
+      return { ...state, query: data }
     case 'SET_ADMIN_LOADING':
-      return {...state, isAdminLoading: data}
+      return { ...state, isAdminLoading: data }
     case 'SET_ADMIN_USERS':
-      return {...state, users: data}
+      return { ...state, users: data }
     case 'SET_ADMIN_TAGS':
-      return {...state, tags: data}
+      return { ...state, tags: data }
     case 'SET_ADMIN_LISTINGS':
-      return {...state, listings: data}
+      return { ...state, listings: data }
     case 'SET_ADMIN_LISTS':
-      return {...state, collections: data}
+      return { ...state, collections: data }
     case 'SET_ADMIN_LOCATIONS':
-      return {...state, locations: data}
+      return { ...state, locations: data }
     case 'SET_ADMIN_PAGINATION':
       return {
         ...state,
         currentPage: data.currentPage,
-        totalPages: data.totalPages
+        totalPages: data.totalPages,
       }
     default:
       return state
   }
-
 }
 
 export default admin

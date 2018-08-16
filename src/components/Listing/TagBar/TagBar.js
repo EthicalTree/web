@@ -5,12 +5,7 @@ import PropTypes from 'prop-types'
 import { keyPressed } from '../../../utils/a11y'
 import { Icon } from '../../Icon'
 
-import {
-  Button,
-  Input,
-  InputGroup,
-  InputGroupAddon
-} from 'reactstrap'
+import { Button, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 
 import { autoPreventDefault } from '../../../utils/a11y'
 
@@ -20,11 +15,7 @@ export const Tag = props => {
   return (
     <span className="tag">
       {`#${tag}`}
-      <Icon
-        iconKey="cross"
-        clickable
-        onClick={handleTagRemove}
-      ></Icon>
+      <Icon iconKey="cross" clickable onClick={handleTagRemove} />
     </span>
   )
 }
@@ -33,11 +24,7 @@ const TagBarToggle = props => {
   const { isOpen, handleToggle } = props
 
   return (
-    <a
-      className="tagbar-toggle"
-      href=""
-      onClick={handleToggle}
-    >
+    <a className="tagbar-toggle" href="" onClick={handleToggle}>
       {isOpen && 'Close Tag Bar'}
       {!isOpen && 'Open Tag Bar'}
     </a>
@@ -45,7 +32,6 @@ const TagBarToggle = props => {
 }
 
 export class TagBar extends React.Component {
-
   handleTagAdd = () => {
     const { onTagAdd } = this.props
     const { currentTag } = this.state
@@ -67,7 +53,7 @@ export class TagBar extends React.Component {
 
     this.state = {
       currentTag: '',
-      isOpen: false
+      isOpen: false,
     }
   }
 
@@ -78,16 +64,14 @@ export class TagBar extends React.Component {
     const tagBarToggle = (
       <TagBarToggle
         isOpen={isOpen}
-        handleToggle={autoPreventDefault(() => this.setState({ isOpen: !isOpen }))}
+        handleToggle={autoPreventDefault(() =>
+          this.setState({ isOpen: !isOpen })
+        )}
       />
     )
 
     if (!isOpen) {
-      return (
-        <div className="tagbar-closed">
-          {tagBarToggle}
-        </div>
-      )
+      return <div className="tagbar-closed">{tagBarToggle}</div>
     }
 
     return (
@@ -128,17 +112,16 @@ export class TagBar extends React.Component {
       </div>
     )
   }
-
 }
 
 TagBar.propTypes = {
   onTagAdd: PropTypes.func.isRequired,
   onTagRemove: PropTypes.func.isRequired,
-  tags: PropTypes.array
+  tags: PropTypes.array,
 }
 
 TagBar.defaultProps = {
-  tags: []
+  tags: [],
 }
 
 export default TagBar

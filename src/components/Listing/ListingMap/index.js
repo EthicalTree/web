@@ -1,1 +1,1 @@
-export {default as ListingMap} from './ListingMap'
+export { default as ListingMap } from './ListingMap'

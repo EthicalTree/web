@@ -9,7 +9,6 @@ import { saveOperatingHours } from '../../../actions/listing'
 import { localizedDates } from '../../../models/hours'
 
 class EditOperatingHoursModal extends React.Component {
-
   constructor(props) {
     super(props)
 
@@ -19,13 +18,13 @@ class EditOperatingHoursModal extends React.Component {
     operatingHours = localizedDates(operatingHours, listing.timezone)
 
     let hours = {
-      'sunday': { label: 'Sunday', hours: []},
-      'monday': { label: 'Monday', hours: []},
-      'tuesday': { label: 'Tuesday', hours: []},
-      'wednesday': { label: 'Wednesday', hours: []},
-      'thursday': { label: 'Thursday', hours: []},
-      'friday': { label: 'Friday', hours: []},
-      'saturday': { label: 'Saturday', hours: []},
+      sunday: { label: 'Sunday', hours: [] },
+      monday: { label: 'Monday', hours: [] },
+      tuesday: { label: 'Tuesday', hours: [] },
+      wednesday: { label: 'Wednesday', hours: [] },
+      thursday: { label: 'Thursday', hours: [] },
+      friday: { label: 'Friday', hours: [] },
+      saturday: { label: 'Saturday', hours: [] },
     }
 
     if (operatingHours.length > 0) {
@@ -36,7 +35,7 @@ class EditOperatingHoursModal extends React.Component {
 
     this.state = {
       selectedDay: null,
-      operatingHours: hours
+      operatingHours: hours,
     }
   }
 
@@ -50,30 +49,33 @@ class EditOperatingHoursModal extends React.Component {
 
   setDay(day) {
     this.setState({
-      selectedDay: day === this.state.selectedDay ? null : day
+      selectedDay: day === this.state.selectedDay ? null : day,
     })
   }
 
   addMoreHours() {
     const { selectedDay } = this.state
     const day = selectedDay
-    let operatingHours = {...this.state.operatingHours}
+    let operatingHours = { ...this.state.operatingHours }
 
     const newHours = {
       open: moment('12:00', 'HH:mm'),
-      close: moment('22:00', 'HH:mm')
+      close: moment('22:00', 'HH:mm'),
     }
 
-    operatingHours[day] = {...operatingHours[day], hours: [...operatingHours[day].hours, newHours]}
+    operatingHours[day] = {
+      ...operatingHours[day],
+      hours: [...operatingHours[day].hours, newHours],
+    }
 
     this.setState({
-      operatingHours: {...operatingHours}
+      operatingHours: { ...operatingHours },
     })
   }
 
   setTime(hours) {
     const { selectedDay } = this.state
-    let operatingHours = {...this.state.operatingHours}
+    let operatingHours = { ...this.state.operatingHours }
 
     operatingHours[selectedDay].hours = hours
 
@@ -86,7 +88,7 @@ class EditOperatingHoursModal extends React.Component {
 
     selectedDay = selectedDay && {
       day: selectedDay,
-      ...this.state.operatingHours[selectedDay]
+      ...this.state.operatingHours[selectedDay],
     }
 
     return (
@@ -95,8 +97,7 @@ class EditOperatingHoursModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Edit Hours"
         modalName="edit-operating-hours"
-        onSave={this.submit.bind(this)}
-      >
+        onSave={this.submit.bind(this)}>
         <OpenCloseSelector
           selectedDay={selectedDay}
           days={this.state.operatingHours}
@@ -107,13 +108,12 @@ class EditOperatingHoursModal extends React.Component {
       </Modal>
     )
   }
-
 }
 
-const select = (state) => {
+const select = state => {
   return {
     listing: state.listing,
-    modal: state.modal
+    modal: state.modal,
   }
 }
 

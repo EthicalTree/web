@@ -10,24 +10,23 @@ import {
   Container,
   Row,
   Col,
-  Alert
+  Alert,
 } from 'reactstrap'
 
 import { sendForgotPasswordRequest } from '../../../actions/session'
 
 class ForgotPasswordModal extends React.Component {
-
   constructor(props) {
     super(props)
 
     this.state = {
-      email: ''
+      email: '',
     }
   }
 
   submit(e) {
     const { dispatch } = this.props
-    e.preventDefault();
+    e.preventDefault()
 
     dispatch(sendForgotPasswordRequest(this.state.email))
   }
@@ -40,30 +39,26 @@ class ForgotPasswordModal extends React.Component {
         className="forgot-password-modal small-modal"
         loading={session.forgotPasswordLoading}
         contentLabel="Forgot Passord"
-        modalName="forgot-password"
-      >
-
+        modalName="forgot-password">
         <Container>
-          {session.sendForgotPasswordError &&
+          {session.sendForgotPasswordError && (
             <Row>
               <Col>
-                <Alert color="danger">
-                  {session.sendForgotPasswordError}
-                </Alert>
+                <Alert color="danger">{session.sendForgotPasswordError}</Alert>
               </Col>
             </Row>
-          }
+          )}
 
-          {!session.sendForgotPasswordError &&
+          {!session.sendForgotPasswordError && (
             <Row className="text-center">
               <Col>
                 <p>
-                  Don't worry about it! Enter your email address below and
-                  we'll send you a link to recover it.
+                  Don't worry about it! Enter your email address below and we'll
+                  send you a link to recover it.
                 </p>
               </Col>
             </Row>
-          }
+          )}
 
           <Row className="mt-3 mb-3">
             <Col>
@@ -72,11 +67,14 @@ class ForgotPasswordModal extends React.Component {
                   <Input
                     autoFocus
                     value={this.state.email}
-                    onChange={e => { this.setState({ email: e.target.value }) }}
+                    onChange={e => {
+                      this.setState({ email: e.target.value })
+                    }}
                     type="email"
                     name="email"
                     id="forgotPasswordEmail"
-                    placeholder="Enter your email address..."/>
+                    placeholder="Enter your email address..."
+                  />
                 </FormGroup>
 
                 <FormGroup className="mt-4">
@@ -91,12 +89,11 @@ class ForgotPasswordModal extends React.Component {
       </Modal>
     )
   }
-
 }
 
-const select = (state) => {
+const select = state => {
   return {
-    session: state.session
+    session: state.session,
   }
 }
 

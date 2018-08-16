@@ -1,1 +1,1 @@
-export {default as MapSwitcher} from './MapSwitcher'
+export { default as MapSwitcher } from './MapSwitcher'
