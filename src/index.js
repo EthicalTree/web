@@ -1,7 +1,5 @@
 import './index.css'
 import './globals.css'
-import 'react-phone-number-input/rrui.css'
-import 'react-phone-number-input/style.css'
 import './utils/polyfills.js'
 
 import React from 'react'

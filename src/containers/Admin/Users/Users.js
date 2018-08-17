@@ -56,6 +56,8 @@ export class Users extends React.Component {
           <thead>
             <tr>
               <th>Email</th>
+              <th className="no-stretch">Contact Number</th>
+              <th className="no-stretch">Company Position</th>
               <th className="no-stretch">Verified</th>
               <th className="no-stretch">Admin</th>
             </tr>
@@ -63,7 +65,9 @@ export class Users extends React.Component {
           <tbody>
             {users.map(u => (
               <tr key={u.id}>
-                <td>{u.email}</td>
+                <td>{u.displayNameWithEmail}</td>
+                <td>{u.contactNumber}</td>
+                <td>{u.position}</td>
                 <td>
                   {!!u.confirmedAt ? <Icon iconKey="check" /> : <Icon iconKey="cross" />}
                 </td>

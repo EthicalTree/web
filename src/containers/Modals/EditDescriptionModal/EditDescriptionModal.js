@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from '../Modal'
-import PhoneInput from 'react-phone-number-input'
-import {isValidNumber} from 'libphonenumber-js'
+import { PhoneNumber } from '../../../components/PhoneNumber'
 
 import {
   Label,
@@ -24,7 +23,7 @@ class EditDescriptionModal extends React.Component {
       bio: listing.bio,
       website: listing.website,
       phone: listing.phone,
-      validPhone: true
+      validPhone: true,
     }
   }
 
@@ -39,16 +38,9 @@ class EditDescriptionModal extends React.Component {
     }))
   }
 
-  changePhone = (phone) => {
-    if (isValidNumber(phone)) {
-      this.setState({phone, validPhone: true})
-    } else {
-      this.setState({validPhone: false})
-    }
-  };
-
   render() {
     const { listing, modal } = this.props
+    const { bio, phone, title, validPhone, website } = this.state
 
     return (
       <Modal
@@ -56,14 +48,14 @@ class EditDescriptionModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Edit Listing"
         onSave={this.submit.bind(this)}
-        saveDisabled={!this.state.validPhone}
+        saveDisabled={!validPhone}
         modalName="edit-description"
       >
         <Row>
           <Col className="mb-4" xs={12} md={6}>
             <Label for="listingTitle">Title</Label>
             <Input
-              defaultValue={this.state.title || listing.title}
+              defaultValue={title || listing.title}
               onChange={e => {this.setState({ title: e.target.value })}}
               type="text"
               name="listingTitle"
@@ -74,7 +66,7 @@ class EditDescriptionModal extends React.Component {
           <Col className="mb-4" xs={12} md={6}>
             <Label for="listingWebsite">Website</Label>
             <Input
-              defaultValue={this.state.website || listing.website}
+              defaultValue={website || listing.website}
               onChange={e => {this.setState({ website: e.target.value })}}
               type="text"
               name="listingWebsite"
@@ -86,15 +78,10 @@ class EditDescriptionModal extends React.Component {
         <Row>
           <Col className="mb-4" xs={12} md={6}>
             <Label for="phoneNumber">Phone Number</Label>
-            <PhoneInput
-              placeholder="Enter phone number"
-              country="CA"
-              value={this.state.phone}
-              onChange={this.changePhone}
-              name="phoneNumber"
-              id="phoneNumber"
-              error="Phone Number is invalid"
-              indicateInvalid={!this.state.validPhone}
+            <PhoneNumber
+              value={phone}
+              onChange={phone => this.setState({ phone })}
+              onValidation={validPhone => this.setState({ validPhone })}
             />
           </Col>
         </Row>
@@ -104,7 +91,7 @@ class EditDescriptionModal extends React.Component {
             <Label for="listingDescription">Description</Label>
             <Input
               autoFocus
-              defaultValue={this.state.bio || listing.bio}
+              defaultValue={bio || listing.bio}
               onChange={e => { this.setState({ bio: e.target.value })}}
               type="textarea"
               name="listingDescription"
