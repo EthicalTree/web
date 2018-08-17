@@ -12,8 +12,7 @@ const MapSwitcher = props => {
     <div className="map-switcher">
       <Button
         color="default"
-        onClick={() => dispatch({ type: 'TOGGLE_SEARCH_RESULTS_MODE' })}
-      >
+        onClick={() => dispatch({ type: 'TOGGLE_SEARCH_RESULTS_MODE' })}>
         {mode === 'map' ? 'Show Search Results' : 'Show Map'}
       </Button>
     </div>
@@ -21,16 +20,16 @@ const MapSwitcher = props => {
 }
 
 MapSwitcher.propTypes = {
-  mode: PropTypes.oneOf(['map', 'listing'])
+  mode: PropTypes.oneOf(['map', 'listing']),
 }
 
 MapSwitcher.defaultProps = {
-  mode: 'listing'
+  mode: 'listing',
 }
 
-const select = (state) => {
+const select = state => {
   return {
-    search: state.search
+    search: state.search,
   }
 }
 

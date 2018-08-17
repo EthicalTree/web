@@ -2,19 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from '../Modal'
 import PhoneInput from 'react-phone-number-input'
-import {isValidNumber} from 'libphonenumber-js'
+import { isValidNumber } from 'libphonenumber-js'
 
-import {
-  Label,
-  Input,
-  Row,
-  Col,
-} from 'reactstrap'
+import { Label, Input, Row, Col } from 'reactstrap'
 
 import { editListing } from '../../../actions/listing'
 
 class EditDescriptionModal extends React.Component {
-
   constructor(props) {
     super(props)
     const { listing } = props
@@ -24,7 +18,7 @@ class EditDescriptionModal extends React.Component {
       bio: listing.bio,
       website: listing.website,
       phone: listing.phone,
-      validPhone: true
+      validPhone: true,
     }
   }
 
@@ -33,19 +27,21 @@ class EditDescriptionModal extends React.Component {
 
     const { dispatch, listing } = this.props
 
-    dispatch(editListing({
-      ...this.state,
-      slug: listing.slug
-    }))
+    dispatch(
+      editListing({
+        ...this.state,
+        slug: listing.slug,
+      })
+    )
   }
 
-  changePhone = (phone) => {
+  changePhone = phone => {
     if (isValidNumber(phone)) {
-      this.setState({phone, validPhone: true})
+      this.setState({ phone, validPhone: true })
     } else {
-      this.setState({validPhone: false})
+      this.setState({ validPhone: false })
     }
-  };
+  }
 
   render() {
     const { listing, modal } = this.props
@@ -57,14 +53,15 @@ class EditDescriptionModal extends React.Component {
         contentLabel="Edit Listing"
         onSave={this.submit.bind(this)}
         saveDisabled={!this.state.validPhone}
-        modalName="edit-description"
-      >
+        modalName="edit-description">
         <Row>
           <Col className="mb-4" xs={12} md={6}>
             <Label for="listingTitle">Title</Label>
             <Input
               defaultValue={this.state.title || listing.title}
-              onChange={e => {this.setState({ title: e.target.value })}}
+              onChange={e => {
+                this.setState({ title: e.target.value })
+              }}
               type="text"
               name="listingTitle"
               id="listingTitle"
@@ -75,7 +72,9 @@ class EditDescriptionModal extends React.Component {
             <Label for="listingWebsite">Website</Label>
             <Input
               defaultValue={this.state.website || listing.website}
-              onChange={e => {this.setState({ website: e.target.value })}}
+              onChange={e => {
+                this.setState({ website: e.target.value })
+              }}
               type="text"
               name="listingWebsite"
               id="listingWebsite"
@@ -105,7 +104,9 @@ class EditDescriptionModal extends React.Component {
             <Input
               autoFocus
               defaultValue={this.state.bio || listing.bio}
-              onChange={e => { this.setState({ bio: e.target.value })}}
+              onChange={e => {
+                this.setState({ bio: e.target.value })
+              }}
               type="textarea"
               name="listingDescription"
               id="listingDescription"
@@ -116,13 +117,12 @@ class EditDescriptionModal extends React.Component {
       </Modal>
     )
   }
-
 }
 
-const select = (state) => {
+const select = state => {
   return {
     listing: state.listing,
-    modal: state.modal
+    modal: state.modal,
   }
 }
 

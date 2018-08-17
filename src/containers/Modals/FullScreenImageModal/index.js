@@ -1,1 +1,1 @@
-export {default as FullScreenImageModal} from './FullScreenImageModal'
+export { default as FullScreenImageModal } from './FullScreenImageModal'

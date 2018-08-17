@@ -1,1 +1,1 @@
-export {default as MapControl} from './MapControl'
+export { default as MapControl } from './MapControl'

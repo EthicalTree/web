@@ -1,1 +1,1 @@
-export {default as EthicalityArea} from './EthicalityArea'
+export { default as EthicalityArea } from './EthicalityArea'

@@ -6,9 +6,7 @@ import PasswordStrength from '@fnando/password_strength'
 const Bar = props => {
   const { strength } = props
 
-  return (
-    <div className={`bar ${strength}`}></div>
-  )
+  return <div className={`bar ${strength}`} />
 }
 
 const PasswordStrengthWidget = props => {
@@ -21,7 +19,7 @@ const PasswordStrengthWidget = props => {
     return <Bar key={i} strength={strength.status} />
   })
 
-  const emptyBars = [...Array(5-filled).keys()].map(i => {
+  const emptyBars = [...Array(5 - filled).keys()].map(i => {
     return <Bar key={i + filled} strength="" />
   })
 

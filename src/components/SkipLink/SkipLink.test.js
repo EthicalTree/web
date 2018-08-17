@@ -3,11 +3,5 @@ import { shallow } from 'enzyme'
 import { SkipLink } from './SkipLink'
 
 it('renders without crashing', () => {
-  shallow(
-    <SkipLink
-      t={t => t}
-      handleSkip={() => {}}
-    />
-  )
+  shallow(<SkipLink t={t => t} handleSkip={() => {}} />)
 })
-

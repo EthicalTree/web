@@ -1,1 +1,1 @@
-export {default as ImageManager} from './ImageManager'
+export { default as ImageManager } from './ImageManager'

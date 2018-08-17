@@ -9,12 +9,11 @@ import { Markers, PinMarker } from '../../Maps/Markers'
 import { MapControl } from '../../Maps/MapControl'
 
 export class ResultsMap extends React.Component {
-
   updateMapPosition = () => {
     if (this.mapEl) {
       this.setState({
         mapHeight: this.getInnerHeight(),
-        scrollTop: document.getElementsByTagName('html')[0].scrollTop
+        scrollTop: document.getElementsByTagName('html')[0].scrollTop,
       })
     }
   }
@@ -44,7 +43,7 @@ export class ResultsMap extends React.Component {
       boundsChanged: false,
       mapHeight: this.getInnerHeight(),
       showYouAreHere: false,
-      scrollTop: 0
+      scrollTop: 0,
     }
   }
 
@@ -67,14 +66,9 @@ export class ResultsMap extends React.Component {
 
     if (this.map && boundsChanged) {
       return (
-        <MapControl
-          position={window.google.maps.ControlPosition.TOP_LEFT}
-        >
+        <MapControl position={window.google.maps.ControlPosition.TOP_LEFT}>
           <div className="ml-2 mt-2">
-            <Button
-              onClick={this.handleRedoSearch}
-              color="default"
-            >
+            <Button onClick={this.handleRedoSearch} color="default">
               Redo search in this area
             </Button>
           </div>
@@ -93,19 +87,19 @@ export class ResultsMap extends React.Component {
 
     if (boundsChanged) {
       this.bounds = this.map.getBounds()
-    }
-    else if (nelat && nelng && swlat && swlng) {
+    } else if (nelat && nelng && swlat && swlng) {
       const sw = new window.google.maps.LatLng(swlat, swlng)
       const ne = new window.google.maps.LatLng(nelat, nelng)
       this.bounds = new window.google.maps.LatLngBounds(sw, ne)
-    }
-    else {
+    } else {
       this.bounds = new window.google.maps.LatLngBounds()
       padding = 8
 
       this.getBoundListings().forEach(l => {
         const location = l.location
-        this.bounds.extend(new window.google.maps.LatLng(location.lat, location.lng))
+        this.bounds.extend(
+          new window.google.maps.LatLng(location.lat, location.lng)
+        )
       })
     }
 
@@ -132,13 +126,10 @@ export class ResultsMap extends React.Component {
     const session = store.getState().session
     const location = session.location
 
-    const {
-      mapHeight,
-      scrollTop,
-      showYouAreHere
-    } = this.state
+    const { mapHeight, scrollTop, showYouAreHere } = this.state
 
-    const hiddenClass = search.resultMode === 'listing' ? 'd-none d-xl-block' : ''
+    const hiddenClass =
+      search.resultMode === 'listing' ? 'd-none d-xl-block' : ''
 
     const markers = (
       <Markers
@@ -155,12 +146,11 @@ export class ResultsMap extends React.Component {
       <Col className={`search-map-area ${hiddenClass}`}>
         <div
           className="search-map"
-          ref={map => this.mapEl = map}
+          ref={map => (this.mapEl = map)}
           style={{
             height: mapHeight,
-            marginTop: scrollTop
-          }}
-        >
+            marginTop: scrollTop,
+          }}>
           <Map
             onLoad={this.handleMapLoad}
             onClick={handleMapClick}
@@ -169,22 +159,22 @@ export class ResultsMap extends React.Component {
               maxZoom: 16,
               zoomControl: true,
               draggableCursor: 'pointer',
-              gestureHandling: 'cooperative'
-            }}
-          >
+              gestureHandling: 'cooperative',
+            }}>
             {markers}
             {location.latitude &&
               location.longitude && (
                 <React.Fragment>
                   <PinMarker
                     location={location}
-                    onClick={() => this.setState({ showYouAreHere: !showYouAreHere })}
-                  >
-                    {showYouAreHere &&
+                    onClick={() =>
+                      this.setState({ showYouAreHere: !showYouAreHere })
+                    }>
+                    {showYouAreHere && (
                       <InfoWindow>
                         <span>You are here</span>
                       </InfoWindow>
-                    }
+                    )}
                   </PinMarker>
                 </React.Fragment>
               )}

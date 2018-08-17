@@ -17,12 +17,11 @@ import { getListings, setListingVisibility } from '../../../actions/admin'
 import { blurClick } from '../../../utils/a11y'
 
 export class Listings extends React.Component {
-
   constructor(props) {
     super(props)
 
     this.state = {
-      expandedListings: []
+      expandedListings: [],
     }
   }
 
@@ -44,12 +43,15 @@ export class Listings extends React.Component {
   handleEdit = listing => {
     const { dispatch } = this.props
 
-    dispatch({ type: 'UPDATE_MODAL_DATA', data: {
-      id: listing.id,
-      planType: listing.plan ? listing.plan.planType : '',
-      price: listing.plan ? parseFloat(listing.plan.price) || '' : '',
-      visibility: listing.visibility
-    }})
+    dispatch({
+      type: 'UPDATE_MODAL_DATA',
+      data: {
+        id: listing.id,
+        planType: listing.plan ? listing.plan.planType : '',
+        price: listing.plan ? parseFloat(listing.plan.price) || '' : '',
+        visibility: listing.visibility,
+      },
+    })
 
     dispatch({ type: 'OPEN_MODAL', data: 'admin-edit-listing' })
   }
@@ -58,26 +60,24 @@ export class Listings extends React.Component {
     const { dispatch, admin } = this.props
     const { filters } = admin
 
-    const newFilters = filters.includes(filterType) ? (
-      filters.filter(f => f !== filterType)
-    ) : (
-      [...filters, filterType]
-    )
+    const newFilters = filters.includes(filterType)
+      ? filters.filter(f => f !== filterType)
+      : [...filters, filterType]
 
-    dispatch({type: 'SET_ADMIN_FILTER', data: newFilters})
+    dispatch({ type: 'SET_ADMIN_FILTER', data: newFilters })
     this.getListings({ filters: newFilters })
   }
 
-  getListings(newData={}) {
+  getListings(newData = {}) {
     const { dispatch, admin } = this.props
 
     const currentData = {
       page: 1,
       query: admin.query,
-      filters: admin.filters
+      filters: admin.filters,
     }
 
-    dispatch(getListings({...currentData, ...newData}))
+    dispatch(getListings({ ...currentData, ...newData }))
   }
 
   render() {
@@ -92,27 +92,22 @@ export class Listings extends React.Component {
 
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
           Listings
-
           <div className="d-flex">
-            <ButtonGroup
-              className="mr-4"
-            >
+            <ButtonGroup className="mr-4">
               <Button
                 outline={!admin.filters.includes('pending_claims')}
-                onClick={blurClick(() => this.filter('pending_claims'))}
-              >
+                onClick={blurClick(() => this.filter('pending_claims'))}>
                 Pending Claims
               </Button>
 
               <Button
                 outline={!admin.filters.includes('plans')}
-                onClick={blurClick(() => this.filter('plans'))}
-              >
+                onClick={blurClick(() => this.filter('plans'))}>
                 Plans
               </Button>
             </ButtonGroup>
 
-            <Search handleSearch={() => this.getListings()}/>
+            <Search handleSearch={() => this.getListings()} />
           </div>
         </h4>
 
@@ -136,14 +131,20 @@ export class Listings extends React.Component {
                   <td>{l.id}</td>
                   <td>
                     <div className="d-flex">
-                      <Link to={`/listings/${l.city || '_'}/${l.slug}`} target="_blank">
+                      <Link
+                        to={`/listings/${l.city || '_'}/${l.slug}`}
+                        target="_blank">
                         {l.title}
                       </Link>
                       <ClaimStatus status={l.claimStatus} />
                     </div>
                   </td>
                   <td>{l.plan ? l.plan.type.name : ''}</td>
-                  <td>{l.plan && l.plan.price > 0 ? `$${numeral(l.plan.price).format('0.00')}` : ''}</td>
+                  <td>
+                    {l.plan && l.plan.price > 0
+                      ? `$${numeral(l.plan.price).format('0.00')}`
+                      : ''}
+                  </td>
                   <td>{l.visibility === 'published' ? 'Visible' : 'Hidden'}</td>
                   <td>
                     <div className="d-flex justify-content-center">
@@ -161,13 +162,13 @@ export class Listings extends React.Component {
                         iconKey={expanded ? 'chevron_up' : 'chevron_down'}
                         clickable
                         onClick={() => {
-                          const newExpandedListings = expanded ? (
-                            expandedListings.filter(el => el !== l.id)
-                          ) : (
-                            [...expandedListings, l.id]
-                          )
+                          const newExpandedListings = expanded
+                            ? expandedListings.filter(el => el !== l.id)
+                            : [...expandedListings, l.id]
 
-                          this.setState({ expandedListings: newExpandedListings })
+                          this.setState({
+                            expandedListings: newExpandedListings,
+                          })
                         }}
                       />
                     </div>
@@ -177,19 +178,17 @@ export class Listings extends React.Component {
 
               if (!expanded) {
                 return row
-              }
-              else {
-                return [row, (
-                  <tr
-                    key={`${l.id}-details`}
-                  >
+              } else {
+                return [
+                  row,
+                  <tr key={`${l.id}-details`}>
                     <ListingDetail
                       listing={l}
                       regenerateClaimId={this.regenerateClaimId}
                       setEditingClaimForListing={this.setEditingClaimForListing}
                     />
-                  </tr>
-                )]
+                  </tr>,
+                ]
               }
             })}
           </tbody>
@@ -198,7 +197,9 @@ export class Listings extends React.Component {
           <Paginator
             pageCount={admin.totalPages}
             currentPage={admin.currentPage}
-            onPageChange={data => dispatch(getListings({ page: data.selected }))}
+            onPageChange={data =>
+              dispatch(getListings({ page: data.selected }))
+            }
           />
         </div>
       </Loader>
@@ -206,9 +207,9 @@ export class Listings extends React.Component {
   }
 }
 
-const select = (state) => {
+const select = state => {
   return {
-    admin: state.admin
+    admin: state.admin,
   }
 }
 

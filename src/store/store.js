@@ -8,11 +8,10 @@ let enhancer
 if (process.env.NODE_ENV === 'development') {
   enhancer = compose(
     applyMiddleware(...reduxMiddlewares),
-    DevTools.instrument(),
+    DevTools.instrument()
   )
 } else {
   enhancer = applyMiddleware(...reduxMiddlewares)
 }
 
 export default createStore(rootReducer, {}, enhancer)
-

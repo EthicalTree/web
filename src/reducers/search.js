@@ -27,26 +27,30 @@ const defaultSearch = {
   selectedResult: null,
 }
 
-const search = (state=defaultSearch, {type, data}) => {
-
+const search = (state = defaultSearch, { type, data }) => {
   switch (type) {
     case 'TOGGLE_SEARCH_RESULTS_MODE':
-      return {...state, resultMode: state.resultMode === 'map' ? 'listing' : 'map'}
+      return {
+        ...state,
+        resultMode: state.resultMode === 'map' ? 'listing' : 'map',
+      }
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':
       // set near me as the top result if location exists on the sesssion
       const location = store.getState().session.location
       const hasLocation = !isEmpty(location) && !isNil(location)
-      const suggestedList = hasLocation ? [{ key: 'nearme', name: 'Near Me', city: location.city }].concat(data) : data
+      const suggestedList = hasLocation
+        ? [{ key: 'nearme', name: 'Near Me', city: location.city }].concat(data)
+        : data
 
-      return {...state, locationSuggestions: suggestedList}
+      return { ...state, locationSuggestions: suggestedList }
     case 'SET_DEFAULT_SEARCH_LOCATION':
-      return {...state, location: !state.location ? data : state.location}
+      return { ...state, location: !state.location ? data : state.location }
     case 'SET_SELECTED_SEARCH_RESULT':
-      return {...state, selectedResult: data}
+      return { ...state, selectedResult: data }
     case 'SET_SEARCH_RESULT_HOVER':
-      return {...state, hoveredResult: data}
+      return { ...state, hoveredResult: data }
     case 'SET_SEARCH_PENDING':
-      return {...state, isPending: data}
+      return { ...state, isPending: data }
     case 'SET_SEARCH_QUERY_PARAMS': {
       let ethicalities = data.ethicalities
 
@@ -68,25 +72,19 @@ const search = (state=defaultSearch, {type, data}) => {
       }
     }
     case 'SET_SEARCH_LOADING':
-      return {...state, isSearchLoading: data}
+      return { ...state, isSearchLoading: data }
     case 'SET_FEATURED_LISTINGS': {
       const { listings, location } = data
       return {
         ...state,
         featured: listings,
-        directoryLocation: location
+        directoryLocation: location,
       }
     }
     case 'SET_FEATURED_LISTINGS_LOADING':
-      return {...state, featuredListingsLoading: data}
+      return { ...state, featuredListingsLoading: data }
     case 'SET_SEARCH_RESULTS': {
-      const {
-        listings,
-        located,
-        pageCount,
-        currentPage,
-        matches
-      } = data
+      const { listings, located, pageCount, currentPage, matches } = data
 
       return {
         ...state,

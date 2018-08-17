@@ -1,1 +1,1 @@
-export {default as AllCollectionsPage} from './AllCollectionsPage'
+export { default as AllCollectionsPage } from './AllCollectionsPage'

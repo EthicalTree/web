@@ -1,1 +1,1 @@
-export {default as ResultsMap} from './ResultsMap'
+export { default as ResultsMap } from './ResultsMap'

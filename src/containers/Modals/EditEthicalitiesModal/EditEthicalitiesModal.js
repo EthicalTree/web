@@ -2,22 +2,18 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from '../Modal'
 
-import {
-  Row,
-  Col,
-} from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 
 import { Ethicality } from '../../../components/Ethicality'
 
 import { editEthicalities } from '../../../actions/listing'
 
 class EditEthicalitiesModal extends React.Component {
-
   constructor(props) {
     super(props)
 
     this.state = {
-      selectedEthicalities: props.listing.ethicalities
+      selectedEthicalities: props.listing.ethicalities,
     }
   }
 
@@ -40,9 +36,10 @@ class EditEthicalitiesModal extends React.Component {
       const newEthicalities = selectedEthicalities.filter(e => e.slug !== key)
 
       if (!exists) {
-        this.setState({ selectedEthicalities: [...newEthicalities, ethicality] })
-      }
-      else {
+        this.setState({
+          selectedEthicalities: [...newEthicalities, ethicality],
+        })
+      } else {
         this.setState({ selectedEthicalities: newEthicalities })
       }
     }
@@ -58,8 +55,7 @@ class EditEthicalitiesModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Edit Listing Ethicalities"
         onSave={this.submit.bind(this)}
-        modalName="edit-ethicalities"
-      >
+        modalName="edit-ethicalities">
         <Row className="text-center mb-2">
           <Col>
             <p>Select all that apply</p>
@@ -75,7 +71,11 @@ class EditEthicalitiesModal extends React.Component {
                   name={ethicality.name}
                   slug={ethicality.slug}
                   iconKey={ethicality.iconKey}
-                  selected={!!this.state.selectedEthicalities.find(e => e.slug === ethicality.slug)}
+                  selected={
+                    !!this.state.selectedEthicalities.find(
+                      e => e.slug === ethicality.slug
+                    )
+                  }
                   onSelect={this.selectEthicality.bind(this)}
                 />
               </Col>
@@ -85,14 +85,13 @@ class EditEthicalitiesModal extends React.Component {
       </Modal>
     )
   }
-
 }
 
-const select = (state) => {
+const select = state => {
   return {
     listing: state.listing,
     app: state.app,
-    modal: state.modal
+    modal: state.modal,
   }
 }
 

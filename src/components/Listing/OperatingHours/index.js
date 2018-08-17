@@ -1,1 +1,1 @@
-export {default as OperatingHours} from './OperatingHours'
+export { default as OperatingHours } from './OperatingHours'

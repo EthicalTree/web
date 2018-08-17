@@ -11,7 +11,7 @@ import { Header } from '../../components/Header'
 import { Footer } from '../../components/Footer'
 import { ScrollToTop } from '../../components/ScrollToTop'
 import { FacebookPixel } from '../../components/ThirdParty'
-import { DevTools } from '../../components/DevTools';
+import { DevTools } from '../../components/DevTools'
 
 import Modals from '../Modals'
 
@@ -30,17 +30,22 @@ class InnerApp extends React.Component {
     const { dispatch, location, user } = this.props
     const queryParams = querystring.parse(location.search.slice(1))
 
-    dispatch(initApp({
-      queryParams: {
-        ...queryParams,
-        location: queryParams.location !== user.city ? queryParams.location : null
-      }
-    }))
+    dispatch(
+      initApp({
+        queryParams: {
+          ...queryParams,
+          location:
+            queryParams.location !== user.city ? queryParams.location : null,
+        },
+      })
+    )
   }
 
   shouldComponentUpdate(nextProps) {
-    const appLoadingChanged = this.props.app.isAppLoading !== nextProps.app.isAppLoading
-    const pageChanged = this.props.location.pathname !== nextProps.location.pathname
+    const appLoadingChanged =
+      this.props.app.isAppLoading !== nextProps.app.isAppLoading
+    const pageChanged =
+      this.props.location.pathname !== nextProps.location.pathname
     const userChanged = this.props.session.user !== nextProps.session.user
 
     return appLoadingChanged || pageChanged || userChanged
@@ -52,22 +57,21 @@ class InnerApp extends React.Component {
     return (
       <div className="app">
         <Helmet>
-          <title>{`EthicalTree ${user.city} · Best Local Restaurants, Shops, and More`}</title>
+          <title>{`EthicalTree ${
+            user.city
+          } · Best Local Restaurants, Shops, and More`}</title>
           <meta
             name="description"
-            content={`Best of ${user.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
+            content={`Best of ${
+              user.city
+            }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
           />
         </Helmet>
 
         <Loader loading={app.isAppLoading}>
-          <Header
-            handleSkip={this.handleSkip}
-          />
+          <Header handleSkip={this.handleSkip} />
 
-          <main
-            ref={main => this.main = main}
-            tabIndex="-1"
-          >
+          <main ref={main => (this.main = main)} tabIndex="-1">
             <Switch>
               <Route
                 exact
@@ -78,7 +82,9 @@ class InnerApp extends React.Component {
               <Route
                 exact
                 path="/forgot_password/:token"
-                component={split(() => import('../ForgotPasswordPage/ForgotPasswordPage'))}
+                component={split(() =>
+                  import('../ForgotPasswordPage/ForgotPasswordPage')
+                )}
               />
 
               <Route
@@ -90,25 +96,33 @@ class InnerApp extends React.Component {
               <Route
                 exact
                 path="/s/:query?"
-                component={split(() => import('../SearchResultsPage/SearchResultsPage'))}
+                component={split(() =>
+                  import('../SearchResultsPage/SearchResultsPage')
+                )}
               />
 
               <Route
                 exact
                 path="/collections/:city"
-                component={split(() => import('../AllCollectionsPage/AllCollectionsPage'))}
+                component={split(() =>
+                  import('../AllCollectionsPage/AllCollectionsPage')
+                )}
               />
 
               <Route
                 exact
                 path="/collections/:city/:slug"
-                component={split(() => import('../CollectionPage/CollectionPage'))}
+                component={split(() =>
+                  import('../CollectionPage/CollectionPage')
+                )}
               />
 
               <Route
                 exact
                 path="/account"
-                component={split(() => import('../AccountSettings/AccountSettings'))}
+                component={split(() =>
+                  import('../AccountSettings/AccountSettings')
+                )}
               />
 
               <Route
@@ -120,7 +134,9 @@ class InnerApp extends React.Component {
               <Route
                 exact
                 path="/terms-of-service"
-                component={split(() => import('../TermsOfService/TermsOfService'))}
+                component={split(() =>
+                  import('../TermsOfService/TermsOfService')
+                )}
               />
 
               <Route
@@ -142,9 +158,10 @@ class InnerApp extends React.Component {
 
               <Route
                 path="/"
-                component={split(() => import('../../components/Status/Status404/Status404'))}
+                component={split(() =>
+                  import('../../components/Status/Status404/Status404')
+                )}
               />
-
             </Switch>
           </main>
 
@@ -152,9 +169,7 @@ class InnerApp extends React.Component {
           <Modals />
         </Loader>
 
-        {process.env.NODE_ENV === 'development' &&
-          <DevTools />
-        }
+        {process.env.NODE_ENV === 'development' && <DevTools />}
       </div>
     )
   }
@@ -163,7 +178,7 @@ class InnerApp extends React.Component {
 const select = state => ({
   app: state.app,
   session: state.session,
-  user: state.user
+  user: state.user,
 })
 
 InnerApp = withRouter(connect(select)(InnerApp))
@@ -189,4 +204,3 @@ class App extends React.Component {
 }
 
 export default App
-
