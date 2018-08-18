@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Marker } from 'react-google-maps';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Marker } from 'react-google-maps'
 
 const PinMarker = props => {
-  const { location, children, ...rest } = props;
+  const { location, children, ...rest } = props
 
   return (
     <Marker
@@ -14,15 +14,14 @@ const PinMarker = props => {
 <path d="M12 3v1c0.55 0 1 0.45 1 1h1c0-1.103-0.897-2-2-2z"></path>
 </svg>`,
       }}
-      {...rest}
-    >
+      {...rest}>
       {children}
     </Marker>
-  );
-};
+  )
+}
 
 PinMarker.propTypes = {
   location: PropTypes.object,
-};
+}
 
-export default PinMarker;
+export default PinMarker

@@ -1,1 +1,1 @@
-export {default as EditOperatingHoursModal} from './EditOperatingHoursModal'
+export { default as EditOperatingHoursModal } from './EditOperatingHoursModal'

@@ -1,1 +1,1 @@
-export {default as SelectAreaMap} from './SelectAreaMap'
+export { default as SelectAreaMap } from './SelectAreaMap'

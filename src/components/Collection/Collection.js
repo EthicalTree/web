@@ -8,13 +8,7 @@ import { Result } from '../Search/Result'
 import { trackEvent } from '../../utils/ga'
 
 export const Collection = props => {
-  const {
-    city,
-    listings,
-    name,
-    session,
-    slug
-  } = props
+  const { city, listings, name, session, slug } = props
 
   if (!listings.length > 0) {
     return null
@@ -26,7 +20,7 @@ export const Collection = props => {
     <div className="collection">
       <div className="collection-title-title d-flex align-items-center">
         <h4 className="list-name">
-          {name} ({ city })
+          {name} ({city})
         </h4>
 
         <span className="divider">|</span>
@@ -38,10 +32,9 @@ export const Collection = props => {
             trackEvent({
               action: 'View Collection',
               category: 'Collections',
-              label: name
+              label: name,
             })
-          }}
-        >
+          }}>
           See all
         </Link>
       </div>
@@ -68,7 +61,7 @@ Collection.propTypes = {
   listings: PropTypes.array.isRequired,
   location: PropTypes.object,
   name: PropTypes.string.isRequired,
-  session: PropTypes.object
+  session: PropTypes.object,
 }
 
 export default Collection

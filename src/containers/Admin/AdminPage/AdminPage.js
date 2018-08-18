@@ -12,24 +12,17 @@ import { Export } from '../Export'
 
 import { Route, withRouter, Redirect, Link } from 'react-router-dom'
 
-import {
-  Container,
-  Nav,
-  NavItem,
-  TabContent,
-  TabPane
-} from 'reactstrap'
+import { Container, Nav, NavItem, TabContent, TabPane } from 'reactstrap'
 
 import { isAdmin } from '../../../utils/permissions'
 
 export class AdminPage extends React.Component {
-
   render() {
-    const { location } =  this.props
+    const { location } = this.props
     const { pathname } = location
 
     if (!isAdmin()) {
-      return <Redirect to='/' />
+      return <Redirect to="/" />
     }
 
     return (
@@ -38,41 +31,46 @@ export class AdminPage extends React.Component {
           <Nav pills>
             <NavItem>
               <Link
-                className={cn('nav-link', { active: pathname === '/admin/users' })}
-                to="/admin/users"
-              >
+                className={cn('nav-link', {
+                  active: pathname === '/admin/users',
+                })}
+                to="/admin/users">
                 Users
               </Link>
             </NavItem>
             <NavItem>
               <Link
-                className={cn('nav-link', { active: pathname === '/admin/listings' })}
-                to="/admin/listings"
-              >
+                className={cn('nav-link', {
+                  active: pathname === '/admin/listings',
+                })}
+                to="/admin/listings">
                 Listings
               </Link>
             </NavItem>
             <NavItem>
               <Link
-                className={cn('nav-link', { active: pathname === '/admin/tags' })}
-                to="/admin/tags"
-              >
+                className={cn('nav-link', {
+                  active: pathname === '/admin/tags',
+                })}
+                to="/admin/tags">
                 Tags
               </Link>
             </NavItem>
             <NavItem>
               <Link
-                className={cn('nav-link', { active: pathname === '/admin/collections' })}
-                to="/admin/collections"
-              >
+                className={cn('nav-link', {
+                  active: pathname === '/admin/collections',
+                })}
+                to="/admin/collections">
                 Collections
               </Link>
             </NavItem>
             <NavItem>
               <Link
-                className={cn('nav-link', { active: pathname === '/admin/locations' })}
-                to="/admin/locations"
-              >
+                className={cn('nav-link', {
+                  active: pathname === '/admin/locations',
+                })}
+                to="/admin/locations">
                 Locations
               </Link>
             </NavItem>
@@ -81,9 +79,10 @@ export class AdminPage extends React.Component {
             </NavItem>
             <NavItem>
               <Link
-                className={cn('nav-link', { active: pathname === '/admin/export' })}
-                to="/admin/export"
-              >
+                className={cn('nav-link', {
+                  active: pathname === '/admin/export',
+                })}
+                to="/admin/export">
                 Export
               </Link>
             </NavItem>
@@ -95,8 +94,16 @@ export class AdminPage extends React.Component {
               <Route path="/admin/users" exact={true} component={Users} />
               <Route path="/admin/listings" exact={true} component={Listings} />
               <Route path="/admin/tags" exact={true} component={Tags} />
-              <Route path="/admin/collections" exact={true} component={Collections} />
-              <Route path="/admin/locations" exact={true} component={Locations} />
+              <Route
+                path="/admin/collections"
+                exact={true}
+                component={Collections}
+              />
+              <Route
+                path="/admin/locations"
+                exact={true}
+                component={Locations}
+              />
               <Route path="/admin/export" exact={true} component={Export} />
             </div>
           </TabPane>
@@ -106,9 +113,9 @@ export class AdminPage extends React.Component {
   }
 }
 
-const select = (state) => {
+const select = state => {
   return {
-    session: state.session
+    session: state.session,
   }
 }
 

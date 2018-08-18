@@ -4,20 +4,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from '../../Modal'
 
-import {
-  Form,
-  Label,
-  Input,
-  Row,
-  Col,
-} from 'reactstrap'
+import { Form, Label, Input, Row, Col } from 'reactstrap'
 
 import { SelectAreaMap } from '../../../../components/Maps/SelectAreaMap'
 
 import { editLocation } from '../../../../actions/admin'
 
 class EditLocationModal extends React.Component {
-
   handleBoundsChanged = bounds => {
     const ne = bounds.getNorthEast()
     const sw = bounds.getSouthWest()
@@ -29,7 +22,7 @@ class EditLocationModal extends React.Component {
       boundlat2: sw.lat(),
       boundlng2: sw.lng(),
       lat: center.lat(),
-      lng: center.lng()
+      lng: center.lng(),
     })
   }
 
@@ -57,21 +50,22 @@ class EditLocationModal extends React.Component {
         contentLabel="Edit Location"
         onSave={this.submit.bind(this)}
         modalName="admin-edit-location"
-        saveLabel="Save"
-      >
+        saveLabel="Save">
         <Form onSubmit={this.submit.bind(this)}>
           <Row>
             <Col>
-                <Label for="name">Name</Label>
-                <Input
-                  autoFocus
-                  value={this.state.name}
-                  onChange={e => { this.setState({ name: e.target.value }) }}
-                  type="text"
-                  name="name"
-                  id="name"
-                  placeholder="Ottawa, ON"
-                />
+              <Label for="name">Name</Label>
+              <Input
+                autoFocus
+                value={this.state.name}
+                onChange={e => {
+                  this.setState({ name: e.target.value })
+                }}
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Ottawa, ON"
+              />
             </Col>
           </Row>
 
@@ -87,12 +81,11 @@ class EditLocationModal extends React.Component {
       </Modal>
     )
   }
-
 }
 
-const select = (state) => ({
+const select = state => ({
   admin: state.admin,
-  modal: state.modal
+  modal: state.modal,
 })
 
 export default connect(select)(EditLocationModal)

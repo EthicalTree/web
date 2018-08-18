@@ -12,9 +12,9 @@ const ListingMap = props => {
 
   if (hasLocation) {
     const geocoder = new window.google.maps.Geocoder()
-    const latLng = {lat: location.lat, lng: location.lng}
+    const latLng = { lat: location.lat, lng: location.lng }
 
-    geocoder.geocode({'location': latLng}, function(results, status) {
+    geocoder.geocode({ location: latLng }, function(results, status) {
       if (status === 'OK') {
         dispatch({ type: 'SET_LISTING_LOCATION', data: location })
       }
@@ -26,13 +26,17 @@ const ListingMap = props => {
       <div className="location-title">
         <h3>
           How to get here
-          {canEdit && hasLocation &&
-            <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickLocationEdit}>
-              Edit
-            </a>
-          }
+          {canEdit &&
+            hasLocation && (
+              <a
+                className="btn btn-sm btn-default ml-3"
+                href=""
+                onClick={props.onClickLocationEdit}>
+                Edit
+              </a>
+            )}
         </h3>
-        {hasLocation &&
+        {hasLocation && (
           <a
             href={formatGetDirectionsUrl(location.lat, location.lng)}
             rel="noopener noreferrer"
@@ -41,60 +45,56 @@ const ListingMap = props => {
             onClick={() => {
               trackEvent({
                 action: 'Clicked Get Direction',
-                category: 'Listing'
+                category: 'Listing',
               })
-            }}
-          >
+            }}>
             Get Directions
             <Icon iconKey="extract" />
           </a>
-        }
+        )}
       </div>
 
-      {hasLocation &&
+      {hasLocation && (
         <p className="address-area">
           {formatAddress(location.address, location.city, location.region)}
         </p>
-      }
+      )}
 
       <div className="listing-map-area">
-        {hasLocation &&
+        {hasLocation && (
           <Map
             zoom={16}
             defaultOptions={{
               scrollwheel: false,
-              disableDefaultUI: false
+              disableDefaultUI: false,
             }}
             center={{
               lat: location.lat,
-              lng: location.lng
-            }}
-          >
+              lng: location.lng,
+            }}>
             <Marker
               key={`${location.lat}+${location.lng}`}
               position={{
                 lat: location.lat,
-                lng: location.lng
+                lng: location.lng,
               }}
             />
           </Map>
-        }
+        )}
 
-        {!hasLocation &&
+        {!hasLocation && (
           <div className="no-content">
-            {canEdit &&
+            {canEdit && (
               <a
                 href=""
                 onClick={props.onClickLocationEdit}
                 className="btn btn-default">
                 Add a location
               </a>
-            }
-            {!canEdit &&
-              <p>No location set!</p>
-            }
+            )}
+            {!canEdit && <p>No location set!</p>}
           </div>
-        }
+        )}
       </div>
     </div>
   )

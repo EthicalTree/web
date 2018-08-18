@@ -12,15 +12,13 @@ import { getCollections } from '../../actions/collections'
 import { setSearchLocation } from '../../actions/search'
 
 export class AllCollectionsPage extends React.Component {
-
   componentDidMount() {
     const { dispatch, match, user } = this.props
     const { city } = match.params
 
     if (city.toLowerCase() !== user.city.toLowerCase()) {
       dispatch(setSearchLocation(city, city))
-    }
-    else {
+    } else {
       dispatch(getCollections({}))
     }
   }
@@ -42,12 +40,11 @@ export class AllCollectionsPage extends React.Component {
 
     return (
       <div className="all-collections-page">
-        <Loader
-          loading={collections.isLoading}
-          fixed={true}
-        >
+        <Loader loading={collections.isLoading} fixed={true}>
           <Helmet>
-            <title>{`${user.city} Collections - Best Local Restaurants, Shops and More · EthicalTree`}</title>
+            <title>{`${
+              user.city
+            } Collections - Best Local Restaurants, Shops and More · EthicalTree`}</title>
             <meta
               name="description"
               content={`Discover the best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
@@ -55,7 +52,7 @@ export class AllCollectionsPage extends React.Component {
           </Helmet>
 
           <h2 className="all-collections-title text-center">
-            Collections ({ user.city })
+            Collections ({user.city})
           </h2>
 
           <div className="collections">
@@ -68,7 +65,7 @@ export class AllCollectionsPage extends React.Component {
 
               if (c.coverImage) {
                 extraStyle = {
-                  backgroundImage: `url(${c.coverImage.thumbnailUrl})`
+                  backgroundImage: `url(${c.coverImage.thumbnailUrl})`,
                 }
               }
 
@@ -77,11 +74,8 @@ export class AllCollectionsPage extends React.Component {
                   key={c.id}
                   className="collection"
                   style={extraStyle}
-                  to={`/collections/${user.city.toLowerCase()}/${c.slug}`}
-                >
-                  <span className="collection-label">
-                    {c.name}
-                  </span>
+                  to={`/collections/${user.city.toLowerCase()}/${c.slug}`}>
+                  <span className="collection-label">{c.name}</span>
                 </Link>
               )
             })}
@@ -90,9 +84,13 @@ export class AllCollectionsPage extends React.Component {
               className="text-center"
               pageCount={collections.totalPages}
               currentPage={collections.currentPage}
-              onPageChange={data => dispatch(getCollections({
-                page: data.selected
-              }))}
+              onPageChange={data =>
+                dispatch(
+                  getCollections({
+                    page: data.selected,
+                  })
+                )
+              }
             />
           </div>
         </Loader>
@@ -104,7 +102,7 @@ export class AllCollectionsPage extends React.Component {
 const select = state => ({
   user: state.user,
   collections: state.collections,
-  search: state.search
+  search: state.search,
 })
 
 export default connect(select)(AllCollectionsPage)

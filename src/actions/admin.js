@@ -3,7 +3,6 @@ import { api } from '../utils/api'
 import { success } from '../utils/notifications'
 
 export const download = (type, fields, format) => {
-
   const queryObj = {
     format,
     fields: fields.join(','),
@@ -13,10 +12,11 @@ export const download = (type, fields, format) => {
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 
-    api.download(
-      `/v1/admin/exports?${querystring.stringify(queryObj)}`,
-      `${type}_export.${format}`
-    )
+    api
+      .download(
+        `/v1/admin/exports?${querystring.stringify(queryObj)}`,
+        `${type}_export.${format}`
+      )
       .catch(() => {})
       .then(() => {
         dispatch({ type: 'SET_ADMIN_LOADING', data: false })
@@ -28,11 +28,15 @@ export const getUsers = queryObj => {
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 
-    api.get(`/v1/admin/users?${querystring.stringify(queryObj)}`)
+    api
+      .get(`/v1/admin/users?${querystring.stringify(queryObj)}`)
       .then(({ data }) => {
         const { users, currentPage, totalPages } = data
         dispatch({ type: 'SET_ADMIN_USERS', data: users })
-        dispatch({ type: 'SET_ADMIN_PAGINATION', data: { currentPage, totalPages }})
+        dispatch({
+          type: 'SET_ADMIN_PAGINATION',
+          data: { currentPage, totalPages },
+        })
       })
       .catch(() => {})
       .then(() => {
@@ -45,11 +49,15 @@ export const getTags = queryObj => {
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 
-    api.get(`/v1/admin/tags?${querystring.stringify(queryObj)}`)
+    api
+      .get(`/v1/admin/tags?${querystring.stringify(queryObj)}`)
       .then(({ data }) => {
         const { tags, currentPage, totalPages } = data
         dispatch({ type: 'SET_ADMIN_TAGS', data: tags })
-        dispatch({ type: 'SET_ADMIN_PAGINATION', data: { currentPage, totalPages }})
+        dispatch({
+          type: 'SET_ADMIN_PAGINATION',
+          data: { currentPage, totalPages },
+        })
       })
       .catch(() => {})
       .then(() => {
@@ -59,20 +67,23 @@ export const getTags = queryObj => {
 }
 
 export const getListings = params => {
-
   const queryObj = {
     ...params,
-    filters: params.filters ? params.filters.join(',') : ''
+    filters: params.filters ? params.filters.join(',') : '',
   }
 
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 
-    api.get(`/v1/admin/listings?${querystring.stringify(queryObj)}`)
+    api
+      .get(`/v1/admin/listings?${querystring.stringify(queryObj)}`)
       .then(({ data }) => {
         const { listings, currentPage, totalPages } = data
         dispatch({ type: 'SET_ADMIN_LISTINGS', data: listings })
-        dispatch({ type: 'SET_ADMIN_PAGINATION', data: { currentPage, totalPages } })
+        dispatch({
+          type: 'SET_ADMIN_PAGINATION',
+          data: { currentPage, totalPages },
+        })
       })
       .catch(() => {})
       .then(() => {
@@ -85,11 +96,15 @@ export const getCollections = queryObj => {
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 
-    api.get(`/v1/admin/collections?${querystring.stringify(queryObj)}`)
+    api
+      .get(`/v1/admin/collections?${querystring.stringify(queryObj)}`)
       .then(({ data }) => {
         const { collections, currentPage, totalPages } = data
         dispatch({ type: 'SET_ADMIN_LISTS', data: collections })
-        dispatch({ type: 'SET_ADMIN_PAGINATION', data: { currentPage, totalPages } })
+        dispatch({
+          type: 'SET_ADMIN_PAGINATION',
+          data: { currentPage, totalPages },
+        })
       })
       .catch(() => {})
       .then(() => {
@@ -102,11 +117,15 @@ export const getLocations = queryObj => {
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 
-    api.get(`/v1/admin/locations?${querystring.stringify(queryObj)}`)
+    api
+      .get(`/v1/admin/locations?${querystring.stringify(queryObj)}`)
       .then(({ data }) => {
         const { locations, currentPage, totalPages } = data
         dispatch({ type: 'SET_ADMIN_LOCATIONS', data: locations })
-        dispatch({ type: 'SET_ADMIN_PAGINATION', data: { currentPage, totalPages } })
+        dispatch({
+          type: 'SET_ADMIN_PAGINATION',
+          data: { currentPage, totalPages },
+        })
       })
       .catch(() => {})
       .then(() => {
@@ -117,7 +136,8 @@ export const getLocations = queryObj => {
 
 export const toggleAdmin = userData => {
   return dispatch => {
-    api.put(`/v1/admin/users/${userData.id}`, {user: userData})
+    api
+      .put(`/v1/admin/users/${userData.id}`, { user: userData })
       .then(() => {
         dispatch({ type: 'UPDATE_ADMIN_USER', data: userData })
         success('User successfully saved.')
@@ -128,7 +148,8 @@ export const toggleAdmin = userData => {
 
 export const setListingVisibility = (listingId, visibility) => {
   return dispatch => {
-    api.put(`/v1/admin/listings/${listingId}`, {visibility})
+    api
+      .put(`/v1/admin/listings/${listingId}`, { visibility })
       .then(() => {
         success('Listing successfully updated')
       })
@@ -138,7 +159,8 @@ export const setListingVisibility = (listingId, visibility) => {
 
 export const setTagUseType = (tagId, useType) => {
   return dispatch => {
-    api.put(`/v1/admin/tags/${tagId}`, {useType})
+    api
+      .put(`/v1/admin/tags/${tagId}`, { useType })
       .then(() => {
         success('Tag successfully updated')
       })
@@ -148,7 +170,8 @@ export const setTagUseType = (tagId, useType) => {
 
 export const updateCollection = collection => {
   return dispatch => {
-    api.put(`/v1/admin/collections/${collection.id}`, { collection })
+    api
+      .put(`/v1/admin/collections/${collection.id}`, { collection })
       .then(list => {
         dispatch(getCollections())
         success('List was successfully updated')
@@ -159,7 +182,8 @@ export const updateCollection = collection => {
 
 export const updateListing = listingData => {
   return dispatch => {
-    api.put(`/v1/admin/listings/${listingData.id}`, { listing: listingData })
+    api
+      .put(`/v1/admin/listings/${listingData.id}`, { listing: listingData })
       .then(() => {
         dispatch(getListings({ page: 1 }))
       })
@@ -171,46 +195,48 @@ export const addCollection = ({ name, description, hashtag, location }) => {
   const collection = { name, description, hashtag, location }
 
   return dispatch => {
-    api.post(`/v1/admin/collections`, { collection })
-      .then(({ data }) => {
-        if (data.errors) {
-          dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
-        }
-        else {
-          dispatch({ type: 'CLOSE_MODAL' })
-          success('List created')
-          dispatch(getCollections())
-        }
-      })
+    api.post(`/v1/admin/collections`, { collection }).then(({ data }) => {
+      if (data.errors) {
+        dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
+      } else {
+        dispatch({ type: 'CLOSE_MODAL' })
+        success('List created')
+        dispatch(getCollections())
+      }
+    })
   }
 }
 
-export const editCollection = ({ id, name, description, hashtag, location }) => {
+export const editCollection = ({
+  id,
+  name,
+  description,
+  hashtag,
+  location,
+}) => {
   const collection = { name, description, hashtag, location }
 
   return dispatch => {
-    api.put(`/v1/admin/collections/${id}`, { collection })
-      .then(({ data }) => {
-        if (data.errors) {
-          dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
-        }
-        else {
-          dispatch({ type: 'CLOSE_MODAL' })
-          success('Collection updated')
-          dispatch(getCollections())
-        }
-      })
+    api.put(`/v1/admin/collections/${id}`, { collection }).then(({ data }) => {
+      if (data.errors) {
+        dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
+      } else {
+        dispatch({ type: 'CLOSE_MODAL' })
+        success('Collection updated')
+        dispatch(getCollections())
+      }
+    })
   }
 }
 
 export const editLocation = location => {
   return dispatch => {
-    api.put(`/v1/admin/locations/${location.id}`, { location })
+    api
+      .put(`/v1/admin/locations/${location.id}`, { location })
       .then(({ data }) => {
         if (data.errors) {
           dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
-        }
-        else {
+        } else {
           dispatch({ type: 'CLOSE_MODAL' })
           success('Location updated')
           dispatch(getLocations())
@@ -225,12 +251,12 @@ export const addTag = ({ hashtag, useType }) => {
   return dispatch => {
     dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
-    api.post(`/v1/admin/tags`, { tag })
+    api
+      .post(`/v1/admin/tags`, { tag })
       .then(response => {
         if (response.data.errors) {
           dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
-        }
-        else {
+        } else {
           dispatch({ type: 'CLOSE_MODAL' })
           success('Tag created')
           dispatch(getTags())
@@ -242,7 +268,8 @@ export const addTag = ({ hashtag, useType }) => {
 
 export const deleteCollection = id => {
   return dispatch => {
-    api.delete(`/v1/admin/collections/${id}`)
+    api
+      .delete(`/v1/admin/collections/${id}`)
       .then(() => {
         success('Collection deleted')
         dispatch(getCollections())
@@ -253,7 +280,8 @@ export const deleteCollection = id => {
 
 export const deleteTag = id => {
   return dispatch => {
-    api.delete(`/v1/admin/tags/${id}`)
+    api
+      .delete(`/v1/admin/tags/${id}`)
       .then(() => {
         success('Tag deleted')
         dispatch(getTags())
@@ -261,4 +289,3 @@ export const deleteTag = id => {
       .catch(() => {})
   }
 }
-

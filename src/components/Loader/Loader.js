@@ -5,22 +5,13 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Spinner from 'react-spinkit'
 
-const Loader = (props) => {
-  const {
-    children,
-    className,
-    loading,
-    fixed,
-    progress,
-    render
-  } = props
+const Loader = props => {
+  const { children, className, loading, fixed, progress, render } = props
 
   if (loading || progress >= 0) {
-    const classNames = classnames(
-      'loading',
-      className,
-      { 'loader-fixed': fixed }
-    )
+    const classNames = classnames('loading', className, {
+      'loader-fixed': fixed,
+    })
 
     return (
       <div className={classNames}>
@@ -28,45 +19,37 @@ const Loader = (props) => {
           <Spinner
             color="#526173"
             fadeIn="quarter"
-            name='cube-grid'
-            className="et-spinner"/>
+            name="cube-grid"
+            className="et-spinner"
+          />
 
-          {progress >= 0 &&
+          {progress >= 0 && (
             <span className="loading-progress">{progress}%</span>
-          }
+          )}
         </div>
 
-        <div className="loading-overlay">
-        </div>
+        <div className="loading-overlay" />
 
-        <div className="loading-content">
-        </div>
+        <div className="loading-content" />
       </div>
     )
   }
 
-  const classNames = classnames(
-    'loader',
-    className,
-  )
+  const classNames = classnames('loader', className)
 
-  return (
-    <div className={classNames}>
-      {render ? render() : children}
-    </div>
-  )
+  return <div className={classNames}>{render ? render() : children}</div>
 }
 
 Loader.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   fixed: PropTypes.bool,
-  render: PropTypes.func
+  render: PropTypes.func,
 }
 
 Loader.defaultProps = {
   className: '',
-  fixed: false
+  fixed: false,
 }
 
 export default Loader

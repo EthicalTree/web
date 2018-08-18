@@ -5,7 +5,7 @@ import {
   getSavedCity,
   setSavedCity,
   setSavedSearchLocation,
-  getSavedSearchLocation
+  getSavedSearchLocation,
 } from '../utils/address'
 
 import { trackEvent } from '../utils/ga'
@@ -28,10 +28,11 @@ export const performSearch = (params={}) => {
     trackEvent({
       action: 'Listing Search',
       category: 'Search',
-      label: params.query
+      label: params.query,
     })
 
-    api.get(`/v1/search?${querystring.stringify(queryObj)}`)
+    api
+      .get(`/v1/search?${querystring.stringify(queryObj)}`)
       .then(({ data }) => {
         dispatch({ type: 'SET_SEARCH_RESULTS', data })
       })
@@ -74,15 +75,14 @@ export const toggleSearchEthicalities = (ethicalities, slug) => {
 
   if (ethicalities.includes(slug)) {
     selectedEthicalities = ethicalities.filter(e => e !== slug)
-  }
-  else {
+  } else {
     selectedEthicalities = [...ethicalities, slug]
   }
 
   trackEvent({
     action: 'Select Ethicality',
     category: 'Ethicality',
-    label: slug
+    label: slug,
   })
 
   return selectedEthicalities
@@ -100,7 +100,8 @@ export const getFeaturedListings = ({ count }) => {
   return dispatch => {
     dispatch({ type: 'SET_FEATURED_LISTINGS_LOADING', data: true })
 
-    api.get(`/v1/listings?${querystring.stringify(data)}`)
+    api
+      .get(`/v1/listings?${querystring.stringify(data)}`)
       .then(({ data }) => {
         dispatch({ type: 'SET_FEATURED_LISTINGS', data })
       })
@@ -116,15 +117,17 @@ export const getLocations = query => {
   const queryObj = Object.assign({}, query, latlng ? latlng : {})
 
   return dispatch => {
-    api.get(`/v1/locations?${querystring.stringify(queryObj)}`)
+    api
+      .get(`/v1/locations?${querystring.stringify(queryObj)}`)
       .then(results => {
-        dispatch({ type: 'SET_SEARCH_LOCATION_SUGGESTIONS', data: results.data })
+        dispatch({
+          type: 'SET_SEARCH_LOCATION_SUGGESTIONS',
+          data: results.data,
+        })
       })
   }
 }
 
 export const getCategories = query => {
-  return dispatch => {
-
-  }
+  return dispatch => {}
 }

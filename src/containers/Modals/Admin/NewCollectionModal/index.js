@@ -1,1 +1,1 @@
-export {default as NewCollectionModal} from './NewCollectionModal'
+export { default as NewCollectionModal } from './NewCollectionModal'

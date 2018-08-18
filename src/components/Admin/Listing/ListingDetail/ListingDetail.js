@@ -6,14 +6,15 @@ import { UserDropdown } from '../../../User/UserDropdown'
 import { updateListing } from '../../../../actions/admin'
 
 export class ListingDetail extends React.Component {
-
   changeListingClaim = user => {
     const { dispatch, listing } = this.props
 
-    dispatch(updateListing({
-      id: listing.id,
-      owner_id: user ? user.id : '-1'
-    }))
+    dispatch(
+      updateListing({
+        id: listing.id,
+        owner_id: user ? user.id : '-1',
+      })
+    )
 
     this.setState({ isEditingClaim: false })
   }
@@ -21,10 +22,12 @@ export class ListingDetail extends React.Component {
   regenerateClaimId = listing => {
     const { dispatch } = this.props
 
-    dispatch(updateListing({
-      id: listing.id,
-      regenerateClaimId: true
-    }))
+    dispatch(
+      updateListing({
+        id: listing.id,
+        regenerateClaimId: true,
+      })
+    )
   }
 
   constructor(props) {
@@ -41,11 +44,7 @@ export class ListingDetail extends React.Component {
     const { isEditingClaim } = this.state
 
     if (isEditingClaim) {
-      return (
-        <UserDropdown
-          onUserSelected={this.changeListingClaim}
-        />
-      )
+      return <UserDropdown onUserSelected={this.changeListingClaim} />
     }
 
     if (owner) {
@@ -59,14 +58,12 @@ export class ListingDetail extends React.Component {
               onClick={e => {
                 e.preventDefault()
                 this.changeListingClaim({ id: owner.id })
-              }}
-            >
+              }}>
               Confirm claim
             </a>
           </span>
         )
-      }
-      else {
+      } else {
         return owner.displayNameWithEmail
       }
     }
@@ -79,10 +76,7 @@ export class ListingDetail extends React.Component {
     const { isEditingClaim } = this.state
 
     return (
-      <td
-        className="table-detail"
-        colSpan={9999}
-      >
+      <td className="table-detail" colSpan={9999}>
         <table>
           <tbody>
             <tr>
@@ -93,38 +87,35 @@ export class ListingDetail extends React.Component {
               <th>Claimed By</th>
               <td>
                 <div className="d-flex justify-content-between">
-                  { this.renderClaim() }
+                  {this.renderClaim()}
 
-                  {isEditingClaim &&
+                  {isEditingClaim && (
                     <Button
                       onClick={() => this.setState({ isEditingClaim: false })}
                       color="default"
-                      size="sm"
-                    >
+                      size="sm">
                       Cancel
                     </Button>
-                  }
+                  )}
 
-                  {!isEditingClaim &&
+                  {!isEditingClaim && (
                     <div className="d-flex">
-                      {listing.claimStatus !== 'unclaimed' &&
+                      {listing.claimStatus !== 'unclaimed' && (
                         <Button
                           className="mr-2"
                           color="default"
-                          onClick={() => this.changeListingClaim()}
-                        >
+                          onClick={() => this.changeListingClaim()}>
                           Remove Claim
                         </Button>
-                      }
+                      )}
 
                       <Button
                         onClick={() => this.setState({ isEditingClaim: true })}
-                        size="sm"
-                      >
+                        size="sm">
                         Change Claim
                       </Button>
                     </div>
-                  }
+                  )}
                 </div>
               </td>
             </tr>
@@ -135,8 +126,7 @@ export class ListingDetail extends React.Component {
                   {listing.claimId}
                   <Button
                     onClick={() => this.regenerateClaimId(listing)}
-                    size="sm"
-                  >
+                    size="sm">
                     Regenerate
                   </Button>
                 </div>

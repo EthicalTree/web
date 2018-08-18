@@ -2,9 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 
-import {
-  Table
-} from 'reactstrap'
+import { Table } from 'reactstrap'
 
 import { Search } from '../Search'
 
@@ -15,7 +13,6 @@ import { Paginator } from '../../../components/Paginator'
 import { getUsers, toggleAdmin } from '../../../actions/admin'
 
 export class Users extends React.Component {
-
   componentDidMount() {
     const { dispatch } = this.props
 
@@ -29,10 +26,12 @@ export class Users extends React.Component {
 
     e.preventDefault()
 
-    dispatch(toggleAdmin({
-      id: user_id,
-      admin: checked
-    }))
+    dispatch(
+      toggleAdmin({
+        id: user_id,
+        admin: checked,
+      })
+    )
   }
 
   render() {
@@ -47,9 +46,10 @@ export class Users extends React.Component {
 
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
           Users
-
           <Search
-            handleSearch={() => dispatch(getUsers({ page: 1, query: admin.query }))}
+            handleSearch={() =>
+              dispatch(getUsers({ page: 1, query: admin.query }))
+            }
           />
         </h4>
         <Table bordered responsive>
@@ -65,7 +65,11 @@ export class Users extends React.Component {
               <tr key={u.id}>
                 <td>{u.email}</td>
                 <td>
-                  {!!u.confirmedAt ? <Icon iconKey="check" /> : <Icon iconKey="cross" />}
+                  {!!u.confirmedAt ? (
+                    <Icon iconKey="check" />
+                  ) : (
+                    <Icon iconKey="cross" />
+                  )}
                 </td>
                 <td>
                   <input
@@ -90,9 +94,9 @@ export class Users extends React.Component {
   }
 }
 
-const select = (state) => {
+const select = state => {
   return {
-    admin: state.admin
+    admin: state.admin,
   }
 }
 

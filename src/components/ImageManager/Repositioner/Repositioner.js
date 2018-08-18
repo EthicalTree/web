@@ -11,7 +11,7 @@ import { dragClick } from '../../../utils/a11y'
 export class Repositioner extends React.Component {
   state = {
     isMouseDown: false,
-    startPosition: null
+    startPosition: null,
   }
 
   reposition = dragClick(event => {
@@ -24,7 +24,7 @@ export class Repositioner extends React.Component {
 
       handleReposition({
         diffX,
-        diffY
+        diffY,
       })
     }
   })
@@ -39,8 +39,8 @@ export class Repositioner extends React.Component {
       isMouseDown: true,
       startPosition: {
         x: offsetX + event.screenX,
-        y: offsetY + event.screenY
-      }
+        y: offsetY + event.screenY,
+      },
     })
   })
 
@@ -69,16 +69,12 @@ export class Repositioner extends React.Component {
       <div
         className="repositioner"
         onMouseDown={this.handleMouseDown}
-        onTouchStart={this.handleMouseDown}
-      >
+        onTouchStart={this.handleMouseDown}>
         <p>Click and drag to reposition</p>
 
         <Icon iconKey="move" />
 
-        <Button
-          color="default"
-          onClick={handleFinishReposition}
-        >
+        <Button color="default" onClick={handleFinishReposition}>
           Done
         </Button>
       </div>
@@ -89,7 +85,7 @@ export class Repositioner extends React.Component {
 Repositioner.propTypes = {
   handleReposition: PropTypes.func.isRequired,
   handleFinishReposition: PropTypes.func.isRequired,
-  offset: PropTypes.object
+  offset: PropTypes.object,
 }
 
 export default Repositioner

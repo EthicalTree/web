@@ -3,26 +3,25 @@ const defaultState = {
   isVerifyingEmail: false,
   location: null,
   user: null,
-  userLoading: true
+  userLoading: true,
 }
 
-const session = (state=defaultState, action) => {
-
+const session = (state = defaultState, action) => {
   switch (action.type) {
     case 'SET_SESSION_INFO':
-      return {...state, location: action.data && action.data.location}
+      return { ...state, location: action.data && action.data.location }
     case 'SET_LOGIN_INFO':
-      return {...state, loginInfo: action.data}
+      return { ...state, loginInfo: action.data }
     case 'SET_VERIFY_EMAIL_LOADING':
-      return {...state, verifyEmailLoading: action.data}
+      return { ...state, verifyEmailLoading: action.data }
     case 'SET_CHANGE_PASSWORD_ERROR':
-      return {...state, changePasswordError: action.data}
+      return { ...state, changePasswordError: action.data }
     case 'SET_FORGOT_PASSWORD_ERROR':
-      return {...state, sendForgotPasswordError: action.data}
+      return { ...state, sendForgotPasswordError: action.data }
     case 'SET_FORGOT_PASSWORD_EMAIL':
-      return {...state, forgotPasswordEmail: action.data}
+      return { ...state, forgotPasswordEmail: action.data }
     case 'SET_CHANGE_PASSWORD_LOADING':
-      return {...state, isChangePasswordLoading: action.data}
+      return { ...state, isChangePasswordLoading: action.data }
     case 'LOGIN':
       return {
         ...state,
@@ -39,25 +38,24 @@ const session = (state=defaultState, action) => {
     case 'SIGNUP':
       return {
         ...state,
-        isSigningUp: false
+        isSigningUp: false,
       }
     case 'VERIFY_EMAIL':
       return {
         ...state,
         isVerifyingEmail: false,
-        verifyEmailErrors: null
+        verifyEmailErrors: null,
       }
     case 'SET_USER_LOADING':
-      return {...state, userLoading: action.data}
+      return { ...state, userLoading: action.data }
     case 'SET_CURRENT_USER':
-      return {...state, user: action.data}
+      return { ...state, user: action.data }
     case 'UPDATE_CURRENT_USER':
-      let user = {...state.user, ...action.data}
-      return {...state, user}
+      let user = { ...state.user, ...action.data }
+      return { ...state, user }
     default:
       return state
   }
-
 }
 
 export default session

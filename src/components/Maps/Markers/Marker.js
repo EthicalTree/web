@@ -3,13 +3,7 @@ import PropTypes from 'prop-types'
 import { Marker } from 'react-google-maps'
 
 const ETMarker = props => {
-  const {
-    location,
-    listingSlug,
-    onClick,
-    onMouseOver,
-    onMouseOut
-  } = props
+  const { location, listingSlug, onClick, onMouseOver, onMouseOut } = props
 
   return (
     <Marker
@@ -26,13 +20,13 @@ ETMarker.propTypes = {
   location: PropTypes.object,
   onClick: PropTypes.func,
   onMouseOver: PropTypes.func,
-  onMouseOut: PropTypes.func
+  onMouseOut: PropTypes.func,
 }
 
 ETMarker.defaultProps = {
   onClick: () => {},
   onMouseOver: () => {},
-  onMouseOut: () => {}
+  onMouseOut: () => {},
 }
 
 export default ETMarker

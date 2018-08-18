@@ -18,8 +18,7 @@ import { CustomOverlayView } from '../../components/Maps/CustomOverlayView'
 import { performSearch } from '../../actions/search'
 
 class SearchResultsPage extends React.Component {
-
-  performSearch = (params={}) => {
+  performSearch = (params = {}) => {
     const { dispatch, history, search } = this.props
     const { bounds } = params
 
@@ -37,7 +36,7 @@ class SearchResultsPage extends React.Component {
       swlat: '',
       swlng: '',
       nelat: '',
-      nelng: ''
+      nelng: '',
     }
 
     if (bounds) {
@@ -49,11 +48,11 @@ class SearchResultsPage extends React.Component {
         swlat: sw.lat(),
         swlng: sw.lng(),
         nelat: ne.lat(),
-        nelng: ne.lng()
+        nelng: ne.lng(),
       }
     }
 
-    dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: paramsObj})
+    dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: paramsObj })
     dispatch({ type: 'SET_SEARCH_PENDING', data: true })
 
     history.push(`/s/${query}?${querystring.stringify(paramsObj)}`)
@@ -68,7 +67,9 @@ class SearchResultsPage extends React.Component {
     let search = querystring.parse(location.search.slice(1))
 
     search.page = search.page || 1
-    search.ethicalities = search.ethicalities ? search.ethicalities.split(',') : []
+    search.ethicalities = search.ethicalities
+      ? search.ethicalities.split(',')
+      : []
 
     return search
   }
@@ -77,10 +78,13 @@ class SearchResultsPage extends React.Component {
     const { match, dispatch } = this.props
     const queryParams = this.getQueryParams()
 
-    dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: {
-      query: match.params.query,
-      ...queryParams
-    }})
+    dispatch({
+      type: 'SET_SEARCH_QUERY_PARAMS',
+      data: {
+        query: match.params.query,
+        ...queryParams,
+      },
+    })
 
     dispatch({ type: 'SET_SEARCH_PENDING', data: true })
   }
@@ -117,7 +121,6 @@ class SearchResultsPage extends React.Component {
     }
   }
 
-
   getOverlay() {
     const { session } = this.props
     const { selectedResult, listings, featured } = this.props.search
@@ -142,9 +145,9 @@ class SearchResultsPage extends React.Component {
           getPixelPositionOffset={(width, height) => {
             return {
               x: -(width / 2),
-              y: -(height + 45)}
-          }}
-        >
+              y: -(height + 45),
+            }
+          }}>
           <Result
             className="result-overlay"
             key={listing.slug}
@@ -175,7 +178,9 @@ class SearchResultsPage extends React.Component {
       return (
         <div className="location-not-found">
           <h4>Oh No!</h4>
-          {`The location "${search.location}" could not be found. If you haven't already, try including the city and country as well!`}
+          {`The location "${
+            search.location
+          }" could not be found. If you haven't already, try including the city and country as well!`}
         </div>
       )
     }
@@ -194,12 +199,22 @@ class SearchResultsPage extends React.Component {
           key={`${search.resultMode}_${location.pathname}_${location.search}`}
           selectedResult={selectedResult}
           handleMarkerClick={slug => {
-            const newSlug = !!search.selectedResult && search.selectedResult === slug ? null : slug
+            const newSlug =
+              !!search.selectedResult && search.selectedResult === slug
+                ? null
+                : slug
             dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: newSlug })
             dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: newSlug })
           }}
-          handleMarkerMouseOver={slug => dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: slug })}
-          handleMarkerMouseOut={slug => dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: search.selectedResult })}
+          handleMarkerMouseOver={slug =>
+            dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: slug })
+          }
+          handleMarkerMouseOut={slug =>
+            dispatch({
+              type: 'SET_SEARCH_RESULT_HOVER',
+              data: search.selectedResult,
+            })
+          }
           handleMapClick={() => {
             setTimeout(() => {
               dispatch({ type: 'SET_SELECTED_SEARCH_RESULT', data: null })
@@ -215,34 +230,26 @@ class SearchResultsPage extends React.Component {
   }
 
   render() {
-    const {
-      search,
-      user
-    } = this.props
+    const { search, user } = this.props
 
-    const title = search.query ? (
-      `Search for "${search.query}" in ${user.city} · EthicalTree`
-    ) : (
-      `Search in ${user.city} · EthicalTree`
-    )
+    const title = search.query
+      ? `Search for "${search.query}" in ${user.city} · EthicalTree`
+      : `Search in ${user.city} · EthicalTree`
 
     return (
-      <Loader
-        fixed={true}
-        loading={search.isSearchLoading}
-      >
+      <Loader fixed={true} loading={search.isSearchLoading}>
         <Helmet>
           <title>{title}</title>
           <meta
             name="description"
-            content={`Search for "${search.query}". Best of ${user.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
+            content={`Search for "${search.query}". Best of ${
+              user.city
+            }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
           />
         </Helmet>
 
         <Col className="search-results-page">
-          <Row>
-            {this.renderResults()}
-          </Row>
+          <Row>{this.renderResults()}</Row>
         </Col>
         <MapSwitcher mode={search.resultMode} />
       </Loader>
@@ -255,13 +262,13 @@ const SearchResultsWrapper = props => {
   return <SearchResultsPage key={`${pathname}${search}`} {...props} />
 }
 
-const select = (state) => {
+const select = state => {
   return {
     app: state.app,
     router: state.router,
     search: state.search,
     session: state.session,
-    user: state.user
+    user: state.user,
   }
 }
 

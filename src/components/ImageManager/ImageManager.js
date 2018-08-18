@@ -11,7 +11,6 @@ import { Slider } from '../Slider'
 import { Repositioner } from './Repositioner'
 
 class Action extends React.Component {
-
   render() {
     const { action, noClick, type, icon } = this.props
 
@@ -32,34 +31,27 @@ class Action extends React.Component {
 
     return (
       <span className={`action-${type}`}>
-        <span ref={trigger => this.trigger = trigger}>
-          <Icon
-            id={id}
-            clickable
-            onClick={onClick}
-            iconKey={icon}
-          />
+        <span ref={trigger => (this.trigger = trigger)}>
+          <Icon id={id} clickable onClick={onClick} iconKey={icon} />
         </span>
 
-        {this.trigger &&
+        {this.trigger && (
           <span id={tooltipId} className="tooltip-container">
             <Tooltip
               placement="bottom"
               target={this.trigger}
               container={tooltipId}
-              delay={0}
-            >
+              delay={0}>
               {action.title}
             </Tooltip>
           </span>
-        }
+        )}
       </span>
     )
   }
-
 }
 
-const ImageActions = (props) => {
+const ImageActions = props => {
   const {
     canEdit,
     coverAction,
@@ -70,13 +62,12 @@ const ImageActions = (props) => {
     signingParams,
   } = props
 
-  const hasActions = (
+  const hasActions =
     !!fullScreenAction.handleAction ||
     !!coverAction.handleAction ||
     !!deleteAction.handleAction ||
     !!addAction.handleAction ||
     !!repositionAction.handleAction
-  )
 
   if (!hasActions) {
     return null
@@ -85,15 +76,13 @@ const ImageActions = (props) => {
   return (
     <div>
       <div className="actions">
-        <div><div className="triangle"></div></div>
+        <div>
+          <div className="triangle" />
+        </div>
 
-        <Action
-          type="fullscreen"
-          icon="zoom_in"
-          action={fullScreenAction}
-        />
+        <Action type="fullscreen" icon="zoom_in" action={fullScreenAction} />
 
-        {canEdit &&
+        {canEdit && (
           <React.Fragment>
             <Action
               type="reposition"
@@ -101,24 +90,15 @@ const ImageActions = (props) => {
               action={repositionAction}
             />
 
-            <Action
-              type="cover"
-              icon="cover_photo"
-              action={coverAction}
-            />
+            <Action type="cover" icon="cover_photo" action={coverAction} />
 
-            <Action
-              type="delete"
-              icon="trash"
-              action={deleteAction}
-            />
+            <Action type="delete" icon="trash" action={deleteAction} />
 
             <S3Uploader
               accept="image/*"
               onProgress={props.onImageUploadProgress}
               onFinish={addAction.handleAction}
-              signingUrlQueryParams={signingParams}
-            >
+              signingUrlQueryParams={signingParams}>
               <Action
                 type="add"
                 icon="plus"
@@ -127,7 +107,7 @@ const ImageActions = (props) => {
               />
             </S3Uploader>
           </React.Fragment>
-        }
+        )}
       </div>
     </div>
   )
@@ -139,7 +119,7 @@ ImageActions.propTypes = {
   deleteAction: PropTypes.object,
   addAction: PropTypes.object,
   repositionAction: PropTypes.object,
-  fullScreenAction: PropTypes.object
+  fullScreenAction: PropTypes.object,
 }
 
 ImageActions.defaultProps = {
@@ -148,13 +128,13 @@ ImageActions.defaultProps = {
   deleteAction: {},
   addAction: {},
   repositionAction: {},
-  fullScreenAction: {}
+  fullScreenAction: {},
 }
 
 class ImageManager extends React.Component {
   state = {
     isRepositioning: false,
-    repositionData: null
+    repositionData: null,
   }
 
   handleFinishReposition = () => {
@@ -163,7 +143,7 @@ class ImageManager extends React.Component {
 
     this.setState({
       isRepositioning: false,
-      repositionData: null
+      repositionData: null,
     })
 
     handleReposition(repositionData)
@@ -171,8 +151,7 @@ class ImageManager extends React.Component {
 
   componentDidMount() {
     const { images, onSetCurrentImage } = this.props
-    if (images.length > 0)
-      onSetCurrentImage(images[0])
+    if (images.length > 0) onSetCurrentImage(images[0])
   }
 
   handleSlideChange(index) {
@@ -198,7 +177,7 @@ class ImageManager extends React.Component {
       onImageUploadProgress,
       repositionImages,
       signingParams,
-      imgStyle
+      imgStyle,
     } = this.props
 
     const { isRepositioning, repositionData } = this.state
@@ -208,8 +187,7 @@ class ImageManager extends React.Component {
 
     if (images.length === 1) {
       displayImages = [...images, ...images]
-    }
-    else {
+    } else {
       displayImages = images
     }
 
@@ -217,11 +195,10 @@ class ImageManager extends React.Component {
       <Loader
         className={className}
         loading={isLoading}
-        progress={uploadProgress}
-      >
-        {hasSlides &&
+        progress={uploadProgress}>
+        {hasSlides && (
           <div className="image-manager text-center">
-            {!isRepositioning &&
+            {!isRepositioning && (
               <ImageActions
                 canEdit={canEdit}
                 onImageUploadProgress={onImageUploadProgress}
@@ -230,87 +207,87 @@ class ImageManager extends React.Component {
                 deleteAction={deleteAction}
                 addAction={addAction}
                 repositionAction={{
-                  handleAction: handleReposition && (() => this.setState({ isRepositioning: true })),
-                  title: 'Reposition Photo'
+                  handleAction:
+                    handleReposition &&
+                    (() => this.setState({ isRepositioning: true })),
+                  title: 'Reposition Photo',
                 }}
                 fullScreenAction={fullScreenAction}
                 signingParams={signingParams}
               />
-            }
+            )}
 
-            {hasSlides &&
+            {hasSlides && (
               <Slider
                 key={displayImages.map(image => image.id).join(',')}
                 afterChange={this.handleSlideChange.bind(this)}
                 arrows={!isRepositioning}
-                slides={
-                  displayImages.map((image, i) => {
-                    const key = `${image.url}-${i}`
-                    let repositionStyle = {}
+                slides={displayImages.map((image, i) => {
+                  const key = `${image.url}-${i}`
+                  let repositionStyle = {}
 
-                    if (repositionImages) {
-                      const offsetY = -image.coverOffsetY || 0
-                      const extraOffsetY = repositionData ? repositionData.diffY : 0
+                  if (repositionImages) {
+                    const offsetY = -image.coverOffsetY || 0
+                    const extraOffsetY = repositionData
+                      ? repositionData.diffY
+                      : 0
 
-                      repositionStyle = {
-                        transform: `translateY(${(offsetY - extraOffsetY) / 4}%)`
-                      }
+                    repositionStyle = {
+                      transform: `translateY(${(offsetY - extraOffsetY) / 4}%)`,
                     }
+                  }
 
-                    return (
-                      <div
-                        key={key}
-                        className="image-manager-image"
-                      >
-                        <img
-                          alt="Listing"
-                          src={image.url}
-                          style={{
-                            maxWidth: '100%',
-                            maxHeight: '100%',
-                            ...imgStyle,
-                            ...repositionStyle
-                          }}
-                        />
-                      </div>
-                    )
-                  })
-                }
+                  return (
+                    <div key={key} className="image-manager-image">
+                      <img
+                        alt="Listing"
+                        src={image.url}
+                        style={{
+                          maxWidth: '100%',
+                          maxHeight: '100%',
+                          ...imgStyle,
+                          ...repositionStyle,
+                        }}
+                      />
+                    </div>
+                  )
+                })}
               />
-            }
+            )}
 
-            {isRepositioning &&
+            {isRepositioning && (
               <Repositioner
                 offset={repositionData}
-                handleReposition={data => this.setState({ repositionData: data })}
+                handleReposition={data =>
+                  this.setState({ repositionData: data })
+                }
                 handleFinishReposition={this.handleFinishReposition}
               />
-            }
+            )}
           </div>
-        }
+        )}
 
-        {!hasSlides && canEdit &&
-          <S3Uploader
-            onProgress={onImageUploadProgress}
-            onFinish={addAction.handleAction}
-            signingUrlQueryParams={signingParams}>
-
-            <div className="image-manager text-center no-content uploadable">
-              <div className="upload-wrapper">
-                <Icon iconKey="camera" className="camera" />
-                <span className="add-picture-cta">
-                  {addText}
-                </span>
+        {!hasSlides &&
+          canEdit && (
+            <S3Uploader
+              onProgress={onImageUploadProgress}
+              onFinish={addAction.handleAction}
+              signingUrlQueryParams={signingParams}>
+              <div className="image-manager text-center no-content uploadable">
+                <div className="upload-wrapper">
+                  <Icon iconKey="camera" className="camera" />
+                  <span className="add-picture-cta">{addText}</span>
+                </div>
               </div>
-            </div>
-          </S3Uploader>
-        }
+            </S3Uploader>
+          )}
 
-        {!hasSlides && !canEdit &&
-          <div className="image-manager text-center no-content">
-            {emptyText}
-          </div>
-        }
+        {!hasSlides &&
+          !canEdit && (
+            <div className="image-manager text-center no-content">
+              {emptyText}
+            </div>
+          )}
       </Loader>
     )
   }
@@ -324,7 +301,7 @@ ImageManager.propTypes = {
   addAction: PropTypes.object,
   fullScreenAction: PropTypes.object,
   imgStyle: PropTypes.object,
-  repositionImages: PropTypes.bool
+  repositionImages: PropTypes.bool,
 }
 
 ImageManager.defaultProps = {
@@ -336,8 +313,7 @@ ImageManager.defaultProps = {
   fullScreenAction: {},
   imgStyle: {},
   images: [],
-  repositionImages: false
+  repositionImages: false,
 }
 
 export default ImageManager
-

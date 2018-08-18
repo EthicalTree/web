@@ -1,1 +1,1 @@
-export {default as TagBar} from './TagBar'
+export { default as TagBar } from './TagBar'

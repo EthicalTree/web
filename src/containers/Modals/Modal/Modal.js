@@ -6,13 +6,7 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import ReactModal from 'react-modal'
 
-import {
-  Alert,
-  Button,
-  Container,
-  Col,
-  Row
-} from 'reactstrap'
+import { Alert, Button, Container, Col, Row } from 'reactstrap'
 
 import { Loader } from '../../../components/Loader'
 import { Icon } from '../../../components/Icon'
@@ -32,11 +26,9 @@ const baseStyles = {
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translateX(-50%)'
+    transform: 'translateX(-50%)',
   },
-  overlay: {
-
-  }
+  overlay: {},
 }
 
 const ModalCloser = props => {
@@ -69,10 +61,7 @@ const BottomBar = props => {
 
   if (props.onSave) {
     saveButton = (
-      <Button
-        color="primary"
-        onClick={props.onSave}
-        disabled={saveDisabled}>
+      <Button color="primary" onClick={props.onSave} disabled={saveDisabled}>
         {saveLabel}
       </Button>
     )
@@ -80,10 +69,7 @@ const BottomBar = props => {
 
   return (
     <div className="bottom-bar text-right">
-      <Button
-        className="mr-2"
-        color="default"
-        onClick={props.onClose}>
+      <Button className="mr-2" color="default" onClick={props.onClose}>
         Cancel
       </Button>
 
@@ -93,7 +79,6 @@ const BottomBar = props => {
 }
 
 class Modal extends React.Component {
-
   render() {
     const { props } = this
 
@@ -105,7 +90,7 @@ class Modal extends React.Component {
       modal,
       noDecoration,
       noContain,
-      style
+      style,
     } = props
 
     const isOpen = modal.openModal === modalName
@@ -115,32 +100,30 @@ class Modal extends React.Component {
     const newStyles = {
       content: {
         ...baseStyles.content,
-        ...style.content
+        ...style.content,
       },
       overlay: {
         ...baseStyles.overlay,
-        ...style.overlay
-      }
+        ...style.overlay,
+      },
     }
 
-    const onClose = (e) => {
+    const onClose = e => {
       if (e) {
         e.preventDefault()
       }
 
-      dispatch(closeModal());
+      dispatch(closeModal())
     }
 
-    const classNames = classnames(
-      'et-modal',
-      className,
-      { 'no-contain': noContain }
-    )
+    const classNames = classnames('et-modal', className, {
+      'no-contain': noContain,
+    })
 
     return (
       <div>
         <div className="modal-wrapper" />
-        {isOpen &&
+        {isOpen && (
           <ReactModal
             shouldCloseOnOverlayClick={false}
             onRequestClose={onClose}
@@ -148,26 +131,22 @@ class Modal extends React.Component {
             {...props}
             style={newStyles}
             className={classNames}
-            appElement={document.getElementById('root')}
-          >
-            {noDecoration &&
+            appElement={document.getElementById('root')}>
+            {noDecoration && (
               <div style={{ height: '100%' }}>
                 <ModalCloser onClose={onClose} />
                 {props.children}
               </div>
-            }
+            )}
 
-            {!noDecoration &&
+            {!noDecoration && (
               <Loader loading={props.loading}>
-                <TopBar
-                  onClose={onClose}
-                  title={props.contentLabel}
-                />
+                <TopBar onClose={onClose} title={props.contentLabel} />
 
                 <div className="modal-main">
-                  {isOpen &&
+                  {isOpen && (
                     <Container>
-                      {modal.successMessages &&
+                      {modal.successMessages && (
                         <Row>
                           <Col>
                             <Alert color="success">
@@ -177,9 +156,9 @@ class Modal extends React.Component {
                             </Alert>
                           </Col>
                         </Row>
-                      }
+                      )}
 
-                      {modal.infoMessages &&
+                      {modal.infoMessages && (
                         <Row>
                           <Col>
                             <Alert color="primary">
@@ -189,9 +168,9 @@ class Modal extends React.Component {
                             </Alert>
                           </Col>
                         </Row>
-                      }
+                      )}
 
-                      {modal.errors &&
+                      {modal.errors && (
                         <Row>
                           <Col>
                             <Alert color="danger">
@@ -201,11 +180,11 @@ class Modal extends React.Component {
                             </Alert>
                           </Col>
                         </Row>
-                      }
+                      )}
 
                       {children}
                     </Container>
-                  }
+                  )}
                 </div>
 
                 <BottomBar
@@ -215,9 +194,9 @@ class Modal extends React.Component {
                   onClose={onClose}
                 />
               </Loader>
-            }
+            )}
           </ReactModal>
-        }
+        )}
       </div>
     )
   }
@@ -225,30 +204,29 @@ class Modal extends React.Component {
 
 Modal.propTypes = {
   noDecoration: PropTypes.bool,
-  contentLabel: PropTypes.string
+  contentLabel: PropTypes.string,
 }
 
 Modal.defaultProps = {
   noDecoration: false,
-  contentLabel: ''
+  contentLabel: '',
 }
 
-const select = (state) => {
+const select = state => {
   return {
-    modal: state.modal
+    modal: state.modal,
   }
 }
 
 const ConnectedModal = connect(select)(Modal)
 
-const ConfirmModal = (props) => {
+const ConfirmModal = props => {
   return (
     <ConnectedModal
       onSave={props.onConfirm}
       saveLabel="Yes"
       noContain
       {...props}>
-
       <Container>
         <Row>
           <Col>
@@ -260,9 +238,6 @@ const ConfirmModal = (props) => {
   )
 }
 
-export {
-  ConfirmModal
-}
+export { ConfirmModal }
 
 export default ConnectedModal
-

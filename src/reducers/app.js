@@ -8,25 +8,23 @@ const defaultState = {
   city: getSavedCity(),
 }
 
-const app = (state=defaultState, { type, data }) => {
-
+const app = (state = defaultState, { type, data }) => {
   switch (type) {
     case 'NAVIGATE':
-      return {...state, navToggle: !!state.navToggle}
+      return { ...state, navToggle: !!state.navToggle }
     case 'SET_LOADING':
-      return {...state, isAppLoading: data}
+      return { ...state, isAppLoading: data }
     case 'SET_GET_ETHICALITIES_LOADING':
-      return {...state, areEthicalitiesLoading: data}
+      return { ...state, areEthicalitiesLoading: data }
     case 'SET_ETHICALITIES':
-      return {...state, ethicalities: data}
+      return { ...state, ethicalities: data }
     case 'SET_PLANS':
-      return {...state, plans: data}
+      return { ...state, plans: data }
     case 'SET_LOCATION':
-      return {...state, location: data}
+      return { ...state, location: data }
     default:
       return state
   }
-
 }
 
 export default app

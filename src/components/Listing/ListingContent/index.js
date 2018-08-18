@@ -1,1 +1,1 @@
-export {default as ListingContent} from './ListingContent'
+export { default as ListingContent } from './ListingContent'

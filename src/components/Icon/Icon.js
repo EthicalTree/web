@@ -8,22 +8,11 @@ import icons from './AppIcons'
 import { blurClick, a11yClick } from '../../utils/a11y'
 
 const Icon = props => {
-  const {
-    iconKey,
-    label,
-    className,
-    clickable,
-    onClick,
-    ...rest
-  } = props
+  const { iconKey, label, className, clickable, onClick, ...rest } = props
   const InnerIcon = icons[iconKey]
 
   const tabIndex = clickable ? '0' : '-1'
-  const classNames = classnames(
-    'et-icon',
-    className,
-    { clickable }
-  )
+  const classNames = classnames('et-icon', className, { clickable })
 
   if (!InnerIcon) {
     throw Error(`${iconKey} is not a valid icon`)
@@ -35,12 +24,9 @@ const Icon = props => {
       onClick={blurClick(onClick)}
       onKeyPress={a11yClick(onClick)}
       tabIndex={tabIndex}
-      {...rest}
-    >
+      {...rest}>
       <InnerIcon />
-      {label &&
-        <span className="icon-label">{label}</span>
-      }
+      {label && <span className="icon-label">{label}</span>}
     </span>
   )
 }
@@ -50,12 +36,12 @@ Icon.propTypes = {
   iconKey: PropTypes.string.isRequired,
   label: PropTypes.string,
   clickable: PropTypes.bool,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 }
 
 Icon.defaultProps = {
   className: '',
-  clickable: false
+  clickable: false,
 }
 
 export default Icon

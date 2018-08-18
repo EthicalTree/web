@@ -2,24 +2,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from '../../Modal'
 
-import {
-  Form,
-  Label,
-  Input,
-  Row,
-  Col,
-} from 'reactstrap'
+import { Form, Label, Input, Row, Col } from 'reactstrap'
 
 import { addTag } from '../../../../actions/admin'
 
 class NewTagModal extends React.Component {
-
   constructor(props) {
     super(props)
 
     this.state = {
       hashtag: '',
-      useType: 'category'
+      useType: 'category',
     }
   }
 
@@ -40,22 +33,22 @@ class NewTagModal extends React.Component {
         contentLabel="Add New Tag"
         onSave={this.submit.bind(this)}
         modalName="new-tag"
-        saveLabel="Create"
-      >
-
+        saveLabel="Create">
         <Form onSubmit={this.submit.bind(this)}>
           <Row>
             <Col>
-                <Label for="tag">Hashtag</Label>
-                <Input
-                  autoFocus
-                  value={this.state.hashtag}
-                  onChange={e => { this.setState({ hashtag: e.target.value }) }}
-                  type="text"
-                  name="tag"
-                  id="tag"
-                  placeholder="#restaurant"
-                />
+              <Label for="tag">Hashtag</Label>
+              <Input
+                autoFocus
+                value={this.state.hashtag}
+                onChange={e => {
+                  this.setState({ hashtag: e.target.value })
+                }}
+                type="text"
+                name="tag"
+                id="tag"
+                placeholder="#restaurant"
+              />
             </Col>
           </Row>
 
@@ -63,11 +56,12 @@ class NewTagModal extends React.Component {
             <Col>
               <Label for="tag">Use Type</Label>
               <Input
-                onChange={e => { this.setState({ useType: e.target.value }) }}
+                onChange={e => {
+                  this.setState({ useType: e.target.value })
+                }}
                 type="select"
                 name="useType"
-                id="useType"
-              >
+                id="useType">
                 <option>category</option>
                 <option>admin</option>
               </Input>
@@ -77,12 +71,11 @@ class NewTagModal extends React.Component {
       </Modal>
     )
   }
-
 }
 
-const select = (state) => ({
+const select = state => ({
   admin: state.admin,
-  modal: state.modal
+  modal: state.modal,
 })
 
 export default connect(select)(NewTagModal)

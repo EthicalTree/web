@@ -4,27 +4,19 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from '../../Modal'
 
-import {
-  Form,
-  Label,
-  Input,
-  Row,
-  Col,
-} from 'reactstrap'
+import { Form, Label, Input, Row, Col } from 'reactstrap'
 
 import { ImageManager } from '../../../../components/ImageManager'
-
 
 import {
   makeImageCollectionCover,
   deleteImageFromCollection,
-  addImageToCollection
+  addImageToCollection,
 } from '../../../../actions/collection'
 
 import { addCollection, editCollection } from '../../../../actions/admin'
 
 class NewCollectionModal extends React.Component {
-
   submit(e) {
     e.preventDefault()
     const { dispatch, modal } = this.props
@@ -32,8 +24,7 @@ class NewCollectionModal extends React.Component {
 
     if (collection.id) {
       dispatch(editCollection(collection))
-    }
-    else {
+    } else {
       dispatch(addCollection(collection))
     }
   }
@@ -62,7 +53,8 @@ class NewCollectionModal extends React.Component {
 
     promise.then(({ data }) => {
       if (data.images) {
-        const newCurrentImage = action === 'add' ? data.images.reverse()[0] : data.images[0]
+        const newCurrentImage =
+          action === 'add' ? data.images.reverse()[0] : data.images[0]
 
         this.setState({
           currentImage: newCurrentImage,
@@ -71,7 +63,7 @@ class NewCollectionModal extends React.Component {
       }
 
       this.setState({
-        isImageLoading: false
+        isImageLoading: false,
       })
     })
   }
@@ -83,14 +75,17 @@ class NewCollectionModal extends React.Component {
     this.state = {
       images,
       isImageLoading: false,
-      currentImage: coverImage
+      currentImage: coverImage,
     }
   }
 
   handleChange(obj) {
     const { dispatch, modal } = this.props
     const { collection } = modal.modalData
-    dispatch({ type: 'UPDATE_MODAL_DATA', data: { collection: { ...collection, ...obj }} })
+    dispatch({
+      type: 'UPDATE_MODAL_DATA',
+      data: { collection: { ...collection, ...obj } },
+    })
   }
 
   render() {
@@ -106,8 +101,7 @@ class NewCollectionModal extends React.Component {
         contentLabel={isUpdate ? 'Edit Collection' : 'Add New Collection'}
         onSave={this.submit.bind(this)}
         modalName="new-collection"
-        saveLabel={isUpdate ? 'Save' : 'Create'}
-      >
+        saveLabel={isUpdate ? 'Save' : 'Create'}>
         <Form onSubmit={this.submit.bind(this)}>
           <Row>
             <Col size={6}>
@@ -115,7 +109,7 @@ class NewCollectionModal extends React.Component {
               <Input
                 autoFocus
                 value={collection.name}
-                onChange={e => this.handleChange({ name: e.target.value }) }
+                onChange={e => this.handleChange({ name: e.target.value })}
                 type="text"
                 name="name"
                 id="name"
@@ -125,7 +119,9 @@ class NewCollectionModal extends React.Component {
             <Col size={6}>
               <Label for="description">Hashtag</Label>
               <Input
-                onChange={e => { this.handleChange({ hashtag: e.target.value }) }}
+                onChange={e => {
+                  this.handleChange({ hashtag: e.target.value })
+                }}
                 type="text"
                 name="hashtag"
                 value={collection.hashtag}
@@ -139,7 +135,9 @@ class NewCollectionModal extends React.Component {
             <Col>
               <Label for="description">Description</Label>
               <Input
-                onChange={e => { this.handleChange({ description: e.target.value }) }}
+                onChange={e => {
+                  this.handleChange({ description: e.target.value })
+                }}
                 type="textarea"
                 value={collection.description}
                 name="description"
@@ -149,7 +147,7 @@ class NewCollectionModal extends React.Component {
           </Row>
 
           <Row className="collection-images mt-3">
-            {isUpdate &&
+            {isUpdate && (
               <ImageManager
                 onImageUploadProgress={() => {}}
                 onSetCurrentImage={image => {
@@ -164,7 +162,7 @@ class NewCollectionModal extends React.Component {
                 signingParams={{ slug: collection.slug, type: 'collection' }}
                 coverAction={{
                   handleAction: () => this.performImageAction('cover'),
-                  title: 'Set Cover Photo'
+                  title: 'Set Cover Photo',
                 }}
                 deleteAction={{
                   handleAction: () => this.performImageAction('delete'),
@@ -172,21 +170,20 @@ class NewCollectionModal extends React.Component {
                 }}
                 addAction={{
                   handleAction: image => this.performImageAction('add', image),
-                  title: 'Add Photo'
+                  title: 'Add Photo',
                 }}
               />
-            }
+            )}
           </Row>
         </Form>
       </Modal>
     )
   }
-
 }
 
-const select = (state) => ({
+const select = state => ({
   admin: state.admin,
-  modal: state.modal
+  modal: state.modal,
 })
 
 export default connect(select)(NewCollectionModal)

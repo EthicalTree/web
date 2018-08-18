@@ -1,1 +1,1 @@
-export {default as S3Uploader} from './S3Uploader'
+export { default as S3Uploader } from './S3Uploader'
