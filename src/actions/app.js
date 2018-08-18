@@ -65,7 +65,6 @@ export const initApp = (options = {}) => {
       .then(() => {
         dispatch({ type: 'SET_LOADING', data: false })
       })
-
   }
 }
 

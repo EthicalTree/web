@@ -104,8 +104,10 @@ export class ResultsMap extends React.Component {
 
       const geoLocation = getGeoLocation()
       // set bounds inside of location if "near me" set.
-      if (search.location === "Near Me" && geoLocation) {
-        this.bounds.extend(new window.google.maps.LatLng(geoLocation.lat, geoLocation.lng))
+      if (search.location === 'Near Me' && geoLocation) {
+        this.bounds.extend(
+          new window.google.maps.LatLng(geoLocation.lat, geoLocation.lng)
+        )
       }
     }
 
@@ -168,17 +170,18 @@ export class ResultsMap extends React.Component {
             }}>
             {markers}
             {location && (
-                <PinMarker
-                  location={location}
-                  onClick={() => this.setState({ showYouAreHere: !showYouAreHere })}
-                >
-                  {showYouAreHere &&
-                    <InfoWindow>
-                      <span>You are here</span>
-                    </InfoWindow>
-                  }
-                </PinMarker>
-              )}
+              <PinMarker
+                location={location}
+                onClick={() =>
+                  this.setState({ showYouAreHere: !showYouAreHere })
+                }>
+                {showYouAreHere && (
+                  <InfoWindow>
+                    <span>You are here</span>
+                  </InfoWindow>
+                )}
+              </PinMarker>
+            )}
             {overlay}
             {this.renderSearchTools()}
           </Map>

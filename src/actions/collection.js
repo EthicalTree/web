@@ -8,7 +8,7 @@ export const getCollection = ({ city, slug, page = 1 }) => {
 
   const params = {
     location: processLocation(location),
-    page
+    page,
   }
 
   return dispatch => {

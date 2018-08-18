@@ -34,8 +34,8 @@ const search = (state = defaultSearch, { type, data }) => {
       }
     case 'SET_SEARCH_LOCATION_SUGGESTIONS':
       // set near me as the top result if location exists on the sesssion
-      const suggestedList = [{ key: 'nearme', name: 'Near Me'}].concat(data)
-      return {...state, locationSuggestions: suggestedList}
+      const suggestedList = [{ key: 'nearme', name: 'Near Me' }].concat(data)
+      return { ...state, locationSuggestions: suggestedList }
     case 'SET_DEFAULT_SEARCH_LOCATION':
       return { ...state, location: !state.location ? data : state.location }
     case 'SET_SELECTED_SEARCH_RESULT':

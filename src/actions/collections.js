@@ -8,7 +8,7 @@ export const getCollections = ({ page = 1 }) => {
 
   const data = {
     location: processLocation(location),
-    page
+    page,
   }
 
   return dispatch => {

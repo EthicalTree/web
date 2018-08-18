@@ -105,17 +105,19 @@ class SearchResultsPage extends React.Component {
     } = search
 
     if (search.isPending) {
-      dispatch(performSearch({
-        query,
-        ethicalities: selectedEthicalities,
-        open_now: openNow,
-        location,
-        page: currentPage,
-        nelat,
-        nelng,
-        swlat,
-        swlng
-      }))
+      dispatch(
+        performSearch({
+          query,
+          ethicalities: selectedEthicalities,
+          open_now: openNow,
+          location,
+          page: currentPage,
+          nelat,
+          nelng,
+          swlat,
+          swlng,
+        })
+      )
 
       dispatch({ type: 'SET_SEARCH_PENDING', data: false })
     }

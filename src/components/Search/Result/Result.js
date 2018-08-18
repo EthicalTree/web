@@ -36,12 +36,15 @@ export class Result extends React.Component {
       : {}
     const hoveredClass = hovered ? 'hovered' : ''
 
-    const distance = session && session.location && listing.location ? getDistance(
-      session.location.lat,
-      session.location.lng,
-      listing.location.lat,
-      listing.location.lng
-    ) : null
+    const distance =
+      session && session.location && listing.location
+        ? getDistance(
+            session.location.lat,
+            session.location.lng,
+            listing.location.lat,
+            listing.location.lng
+          )
+        : null
 
     return (
       <Link

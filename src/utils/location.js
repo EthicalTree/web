@@ -29,13 +29,19 @@ export const getDistance = (lat1, lng1, lat2, lng2) => {
 
 export const setGeoLocation = (onSuccess, onError) => {
   if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition(position => {
-      store.set('ETHICALTREE_GEOLOCATION', {lat: position.coords.latitude, lng: position.coords.longitude})
-      onSuccess && onSuccess()
-    }, () => {
-      onError && onError()
-      store.set('ETHICALTREE_GEOLOCATION', false)
-    })
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        store.set('ETHICALTREE_GEOLOCATION', {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        })
+        onSuccess && onSuccess()
+      },
+      () => {
+        onError && onError()
+        store.set('ETHICALTREE_GEOLOCATION', false)
+      }
+    )
   }
 }
 
