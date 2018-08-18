@@ -88,19 +88,29 @@ class SearchResultsPage extends React.Component {
   componentDidUpdate() {
     const { dispatch, search } = this.props
 
+    const {
+      currentPage,
+      selectedEthicalities,
+      location,
+      nelat,
+      nelng,
+      swlat,
+      swlng,
+      openNow,
+      query,
+    } = search
+
     if (search.isPending) {
       dispatch(performSearch({
-        query: search.query,
-        ethicalities: search.selectedEthicalities,
-        open_now: search.openNow,
-        location: search.location,
-        page: search.currentPage,
-        nelat: search.nelat,
-        nelng: search.nelng,
-        swlat: search.swlat,
-        swlng: search.swlng,
-        lat: search.lat,
-        lng: search.lng,
+        query,
+        ethicalities: selectedEthicalities,
+        open_now: openNow,
+        location,
+        page: currentPage,
+        nelat,
+        nelng,
+        swlat,
+        swlng
       }))
 
       dispatch({ type: 'SET_SEARCH_PENDING', data: false })

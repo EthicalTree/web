@@ -1,10 +1,15 @@
 import querystring from 'querystring'
 import { api } from '../utils/api'
 import { getSavedSearchLocation } from '../utils/address'
+import { processLocation } from '../utils/location'
 
 export const getCollection = ({ city, slug, page=1 }) => {
   const location = city ? city : getSavedSearchLocation()
-  const params = { location, page }
+
+  const params = {
+    location: processLocation(location),
+    page
+  }
 
   return dispatch => {
     dispatch({ type: 'SET_GET_COLLECTION_LOADING', data: true })

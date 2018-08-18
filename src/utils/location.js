@@ -1,5 +1,17 @@
 import store from 'store'
 
+export const processLocation = location => {
+  if (location === 'Near Me') {
+    const geolocation = getGeoLocation()
+
+    if (geolocation) {
+      return `${geolocation.lat},${geolocation.lng}`
+    }
+  }
+
+  return location
+}
+
 export const getDistance = (lat1, lng1, lat2, lng2) => {
   if (lat1 && lng1 && lat2 && lng2 && window.google) {
     const latLng1 = new window.google.maps.LatLng(lat1, lng1)
@@ -27,6 +39,6 @@ export const setGeoLocation = (onSuccess, onError) => {
   }
 }
 
-export const getGeoLocation = (onSuccess, onFail) => {
+export const getGeoLocation = () => {
   return store.get('ETHICALTREE_GEOLOCATION')
 }

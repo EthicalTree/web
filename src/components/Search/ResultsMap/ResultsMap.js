@@ -6,7 +6,7 @@ import { InfoWindow } from 'react-google-maps'
 import { Map } from '../../Maps/Map'
 import { Markers, PinMarker } from '../../Maps/Markers'
 import { MapControl } from '../../Maps/MapControl'
-import {getGeoLocation} from '../../../utils/location'
+import { getGeoLocation } from '../../../utils/location'
 
 export class ResultsMap extends React.Component {
 

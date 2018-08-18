@@ -10,12 +10,18 @@ import {
 
 import { trackEvent } from '../utils/ga'
 import { toTitleCase } from '../utils/string'
-import { setGeoLocation, getGeoLocation } from '../utils/location'
+
+import {
+  getGeoLocation,
+  setGeoLocation,
+  processLocation
+} from '../utils/location'
 
 export const performSearch = (params={}) => {
   const queryObj = {
     ...params,
-    ethicalities: params.ethicalities.join(',')
+    ethicalities: params.ethicalities.join(','),
+    location: processLocation(params.location)
   }
 
   return dispatch => {
@@ -87,7 +93,7 @@ export const getFeaturedListings = ({ count }) => {
 
   const data = {
     count,
-    location,
+    location: processLocation(location),
     is_featured: true
   }
 
