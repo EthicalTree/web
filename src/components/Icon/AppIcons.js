@@ -15,6 +15,8 @@ import CrossIcon from './RawIcons/CrossIcon'
 import PlusIcon from './RawIcons/PlusIcon'
 import CheckIcon from './RawIcons/CheckIcon'
 
+import ArrowLeftIcon from './RawIcons/ArrowLeftIcon'
+import ArrowRightIcon from './RawIcons/ArrowRightIcon'
 import ArrowUpIcon from './RawIcons/ArrowUpIcon'
 import ArrowDownIcon from './RawIcons/ArrowDownIcon'
 import ChevronLeftIcon from './RawIcons/ChevronLeftIcon'
@@ -64,6 +66,8 @@ export default {
   chevron_down: ChevronDownIcon,
   chevron_up: ChevronUpIcon,
 
+  arrow_left: ArrowLeftIcon,
+  arrow_right: ArrowRightIcon,
   arrow_up: ArrowUpIcon,
   arrow_down: ArrowDownIcon,
 

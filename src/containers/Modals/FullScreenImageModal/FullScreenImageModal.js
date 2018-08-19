@@ -25,7 +25,7 @@ class FullScreenImageModal extends React.Component {
             right: '0',
             bottom: '0',
             height: '100%',
-            padding: '20px',
+            padding: '40px',
             marginRight: '0',
             transform: 'none',
           },

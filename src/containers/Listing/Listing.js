@@ -14,7 +14,7 @@ import {
   makeImageCover,
   updateListingImage,
   addTagToListing,
-  removeTagFromListing,
+  removeTagFromListing
 } from '../../actions/listing'
 
 import { TagBar } from '../../components/Listing/TagBar'
@@ -56,7 +56,7 @@ class Listing extends React.Component {
       updateListingImage({
         listingSlug: listing.slug,
         imageId: currentImage.id,
-        offset: { y: originalY + diffY },
+        data: { offsetY: originalY + diffY },
       })
     )
   }
@@ -158,6 +158,7 @@ class Listing extends React.Component {
           <div className="listing-detail">
             <ImageManager
               className="listing-image-manager"
+              currentImage={currentImage}
               onImageUploadProgress={progress =>
                 dispatch({ type: 'SET_IMAGE_UPLOAD_PROGRESS', data: progress })
               }
@@ -173,6 +174,26 @@ class Listing extends React.Component {
               canEdit={hasPermission('update', listing)}
               signingParams={{ type: 'listing', slug: listing.slug }}
               repositionImages={true}
+              coverAction={{
+                handleAction: () => dispatch(makeImageCover({ listingSlug: listing.slug, imageId: currentImage.id })),
+                title: 'Set as cover photo',
+              }}
+              shiftPreviousAction={{
+                handleAction: () => dispatch(updateListingImage({
+                  listingSlug: listing.slug,
+                  imageId: currentImage.id,
+                  data: { shift: 'previous' }
+                })),
+                title: 'Switch places with the previous photo',
+              }}
+              shiftNextAction={{
+                handleAction: () => dispatch(updateListingImage({
+                  listingSlug: listing.slug,
+                  imageId: currentImage.id,
+                  data: { shift: 'next' }
+                })),
+                title: 'Switch places with the next photo',
+              }}
               fullScreenAction={{
                 handleAction: () => {
                   dispatch({
@@ -185,23 +206,7 @@ class Listing extends React.Component {
                   })
                   dispatch({ type: 'OPEN_MODAL', data: 'fullscreen-image' })
                 },
-                title: 'Enlarge Photo',
-              }}
-              coverAction={{
-                handleAction: () =>
-                  dispatch(
-                    setConfirm({
-                      title: 'Set Cover Photo',
-                      msg:
-                        'Are you sure you want to make this photo your cover photo?',
-                      action: makeImageCover,
-                      data: {
-                        listingSlug: listing.slug,
-                        imageId: currentImage.id,
-                      },
-                    })
-                  ),
-                title: 'Set Cover Photo',
+                title: 'Enlarge current photo',
               }}
               deleteAction={{
                 handleAction: () =>
@@ -216,7 +221,7 @@ class Listing extends React.Component {
                       },
                     })
                   ),
-                title: 'Delete Photo',
+                title: 'Delete current photo',
               }}
               addAction={{
                 handleAction: image =>
@@ -226,7 +231,7 @@ class Listing extends React.Component {
                       imageKey: image.key,
                     })
                   ),
-                title: 'Add Photo',
+                title: 'Add a new photo',
               }}
               handleReposition={this.handleReposition}
             />
