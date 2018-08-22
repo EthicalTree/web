@@ -10,10 +10,7 @@ const MapSwitcher = props => {
 
   return (
     <div className="map-switcher">
-      <Button
-        color="default"
-        onClick={onClick}
-      >
+      <Button color="default" onClick={onClick}>
         {mode === 'map' ? showText : 'Show Map'}
       </Button>
     </div>
@@ -28,12 +25,12 @@ MapSwitcher.propTypes = {
 
 MapSwitcher.defaultProps = {
   mode: 'listing',
-  onClick: () => {}
+  onClick: () => {},
 }
 
-const select = (state) => {
+const select = state => {
   return {
-    search: state.search
+    search: state.search,
   }
 }
 

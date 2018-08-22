@@ -79,7 +79,8 @@ export class CollectionPage extends React.Component {
       }
     }
 
-    const mobileCollectionHidden = displayMode === 'map' ? 'd-none d-xl-block' : ''
+    const mobileCollectionHidden =
+      displayMode === 'map' ? 'd-none d-xl-block' : ''
 
     return (
       <div className="collection-page">
@@ -117,7 +118,10 @@ export class CollectionPage extends React.Component {
               </div>
 
               <Row>
-                <Col xs="12" xl="8" className={`search-results col-xxl-8 p-4 ${mobileCollectionHidden}`}>
+                <Col
+                  xs="12"
+                  xl="8"
+                  className={`search-results col-xxl-8 p-4 ${mobileCollectionHidden}`}>
                   <Row className="mt-2 no-gutters">
                     <div className="collection-listings">
                       {collection.listings.map(l => {
@@ -199,10 +203,13 @@ export class CollectionPage extends React.Component {
 
               <MapSwitcher
                 mode={displayMode}
-                onClick={() => this.setState({displayMode: displayMode === 'listing' ? 'map' : 'listing'})}
+                onClick={() =>
+                  this.setState({
+                    displayMode: displayMode === 'listing' ? 'map' : 'listing',
+                  })
+                }
                 showText="Show Collection"
               />
-
             </React.Fragment>
           )}
         />

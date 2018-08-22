@@ -28,7 +28,7 @@ class SearchResultsPage extends React.Component {
     return window.innerHeight - 73
   }
 
-  handleMapLoad = (map) => {
+  handleMapLoad = map => {
     if (map) {
       this.map = map
       this.updateMapPosition()
@@ -193,7 +193,7 @@ class SearchResultsPage extends React.Component {
           handleSearch={this.performSearch}
         />
         <ResultsMap
-          mapEl={(el) => this.mapEl = el}
+          mapEl={el => (this.mapEl = el)}
           key={`${search.resultMode}_${location.pathname}_${location.search}`}
           handleMarkerClick={slug => {
             const newSlug =
