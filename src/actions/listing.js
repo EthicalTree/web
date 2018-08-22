@@ -337,22 +337,19 @@ export const makeImageCover = data => {
   }
 }
 
-export const updateListingImage = ({ listingSlug, imageId, offset }) => {
-  const data = {
-    offsetY: offset ? offset.y : undefined,
-    type: 'listing',
-  }
+export const updateListingImage = ({ listingSlug, imageId, data }) => {
+  const { type } = data
+  const setImagesReducer = type === 'menu' ? 'SET_LISTING_MENU_IMAGES' : 'SET_LISTING_IMAGES'
+  const setCurrentImageReducer = type === 'menu' ? 'SET_LISTING_MENU_CURRENT_IMAGE' : 'SET_LISTING_CURRENT_IMAGE'
 
   return dispatch => {
-    dispatch({ type: 'SET_IMAGE_LOADING', data: true })
-
     api
-      .put(`/v1/listings/${listingSlug}/images/${imageId}`, data)
+      .put(`/v1/listings/${listingSlug}/images/${imageId}`, { type: 'listing',...data })
       .then(({ data }) => {
         if (data.images) {
-          dispatch({ type: 'SET_LISTING_IMAGES', data: data.images })
+          dispatch({ type: setImagesReducer, data: data.images })
           dispatch({
-            type: 'SET_LISTING_CURRENT_IMAGE',
+            type: setCurrentImageReducer,
             data: data.images.find(i => i.id === imageId),
           })
 
@@ -364,9 +361,6 @@ export const updateListingImage = ({ listingSlug, imageId, offset }) => {
         }
       })
       .catch(() => {})
-      .then(() => {
-        dispatch({ type: 'SET_IMAGE_LOADING', data: false })
-      })
   }
 }
 

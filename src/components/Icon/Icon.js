@@ -8,7 +8,16 @@ import icons from './AppIcons'
 import { blurClick, a11yClick } from '../../utils/a11y'
 
 const Icon = props => {
-  const { iconKey, label, className, clickable, onClick, ...rest } = props
+  const {
+    className,
+    clickable,
+    iconKey,
+    innerRef,
+    label,
+    onClick,
+    ...rest
+  } = props
+
   const InnerIcon = icons[iconKey]
 
   const tabIndex = clickable ? '0' : '-1'
@@ -23,6 +32,7 @@ const Icon = props => {
       className={classNames}
       onClick={blurClick(onClick)}
       onKeyPress={a11yClick(onClick)}
+      ref={innerRef}
       tabIndex={tabIndex}
       {...rest}>
       <InnerIcon />
