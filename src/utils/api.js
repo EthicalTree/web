@@ -6,7 +6,7 @@ import { error } from '../utils/notifications'
 // Set header for camelcasing keys automatically
 axios.defaults.headers.common['X-Key-Inflection'] = 'camel'
 
-const ERRORS = [500]
+const ERRORS = [400, 401, 500]
 
 const apiRoute = path => {
   return `${process.env.REACT_APP_API_URL}${path}`
@@ -27,12 +27,13 @@ const wrapper = (method, url, config = {}) => {
   return axios({
     method,
     url: apiRoute(url),
-    ...config,
+    ...config
   }).catch(err => {
     const status = err.response && err.response.status
+    const msg = err.response.data.message
 
     if (ERRORS.includes(status)) {
-      error()
+      error(msg)
     }
 
     throw err

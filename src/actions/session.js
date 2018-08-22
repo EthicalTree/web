@@ -136,7 +136,9 @@ export const signup = data => {
         lastName: data.lastName,
         password: data.password,
         passwordConfirmation: data.confirmPassword,
-      },
+        contactNumber: data.contactNumber,
+        position: data.position
+      }
     }
 
     api
@@ -149,8 +151,9 @@ export const signup = data => {
           dispatch({ type: 'CLOSE_MODAL' })
 
           if (data.listingSlug) {
-            dispatch({ type: 'OPEN_MODAL', data: 'login' })
-          } else {
+            dispatch(login(data))
+          }
+          else {
             dispatch({ type: 'OPEN_MODAL', data: 'verify-email' })
           }
         }
@@ -222,7 +225,11 @@ export const getSessionInformation = () => {
 export const openClaimListingSignup = (listingSlug, claimId) => {
   return dispatch => {
     dispatch({ type: 'OPEN_MODAL', data: 'signup' })
-    dispatch({ type: 'UPDATE_MODAL_DATA', data: { claimId, listingSlug } })
+    dispatch({ type: 'UPDATE_MODAL_DATA', data: {
+      claimId,
+      isBusinessOwnerSignup: true,
+      listingSlug,
+    }})
 
     dispatch({
       type: 'SET_MODAL_INFO_MESSAGES',
