@@ -4,20 +4,11 @@ import { Modal } from '../Modal'
 import { PasswordStrength } from '../../../components/PasswordStrength'
 import { PhoneNumber } from '../../../components/PhoneNumber'
 
-import {
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-  Row,
-  Col,
-} from 'reactstrap'
+import { Form, FormGroup, Label, Input, Button, Row, Col } from 'reactstrap'
 
 import { signup } from '../../../actions/session'
 
 class SignupModal extends React.Component {
-
   constructor(props) {
     super(props)
 
@@ -63,8 +54,7 @@ class SignupModal extends React.Component {
         className="signup-modal large-modal"
         loading={modal.isLoading}
         contentLabel="Signup"
-        modalName="signup"
-      >
+        modalName="signup">
         <Row>
           <Col>
             <Form method="post" onSubmit={this.submit.bind(this)}>
@@ -79,7 +69,8 @@ class SignupModal extends React.Component {
                       type="email"
                       name="email"
                       id="signupEmail"
-                      placeholder="Enter email..."/>
+                      placeholder="Enter email..."
+                    />
                   </FormGroup>
                 </Col>
               </Row>
@@ -108,7 +99,8 @@ class SignupModal extends React.Component {
                       type="text"
                       name="lastName"
                       id="lastName"
-                      placeholder="Smith" />
+                      placeholder="Smith"
+                    />
                   </FormGroup>
                 </Col>
               </Row>
@@ -158,14 +150,17 @@ class SignupModal extends React.Component {
 
                 <Col sm="6">
                   <FormGroup>
-                    <Label for="signupPasswordConfirm">Confirm Password *</Label>
+                    <Label for="signupPasswordConfirm">
+                      Confirm Password *
+                    </Label>
                     <Input
                       value={confirmPassword}
                       onChange={e => { this.setState({ confirmPassword: e.target.value }) }}
                       type="password"
                       name="confirmPassword"
                       id="signupConfirmPassword"
-                      placeholder="Enter password again..." />
+                      placeholder="Enter password again..."
+                    />
                   </FormGroup>
                 </Col>
               </Row>
@@ -186,14 +181,12 @@ class SignupModal extends React.Component {
       </Modal>
     )
   }
-
 }
 
-
-const select = (state) => {
+const select = state => {
   return {
     modal: state.modal,
-    session: state.session
+    session: state.session,
   }
 }
 

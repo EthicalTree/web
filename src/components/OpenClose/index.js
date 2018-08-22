@@ -1,1 +1,1 @@
-export {default as OpenClose} from './OpenClose'
+export { default as OpenClose } from './OpenClose'

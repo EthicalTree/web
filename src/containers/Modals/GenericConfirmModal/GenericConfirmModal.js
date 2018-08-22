@@ -13,17 +13,17 @@ const GenericConfirmModal = props => {
       contentLabel={confirm.title || 'Confirm'}
       loading={confirm.isLoading}
       modalName="confirm"
-      onConfirm={e => { dispatch(confirmProxy(confirm)) }}
+      onConfirm={e => {
+        dispatch(confirmProxy(confirm))
+      }}
       msg={confirm.msg}
-    >
-
-    </ConfirmModal>
+    />
   )
 }
 
-const select = (state) => {
+const select = state => {
   return {
-    confirm: state.confirm
+    confirm: state.confirm,
   }
 }
 

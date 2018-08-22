@@ -3,23 +3,16 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Modal } from '../Modal'
 
-import {
-  Form,
-  Label,
-  Input,
-  Row,
-  Col
-} from 'reactstrap'
+import { Form, Label, Input, Row, Col } from 'reactstrap'
 
 import { addListing } from '../../../actions/listing'
 
 class AddListingModal extends React.Component {
-
   constructor(props) {
     super(props)
 
     this.state = {
-      title: ''
+      title: '',
     }
   }
 
@@ -42,8 +35,7 @@ class AddListingModal extends React.Component {
         contentLabel="Add New Listing"
         onSave={this.submit.bind(this)}
         modalName="add-listing"
-        saveLabel="Create"
-      >
+        saveLabel="Create">
         <Row>
           <Col>
             <Form onSubmit={this.submit.bind(this)}>
@@ -51,24 +43,26 @@ class AddListingModal extends React.Component {
               <Input
                 autoFocus
                 value={this.state.title}
-                onChange={e => { this.setState({ title: e.target.value }) }}
+                onChange={e => {
+                  this.setState({ title: e.target.value })
+                }}
                 type="text"
                 name="listingTitle"
                 id="listingTitle"
-                placeholder="What's this place called?"/>
+                placeholder="What's this place called?"
+              />
             </Form>
           </Col>
         </Row>
       </Modal>
     )
   }
-
 }
 
-const select = (state) => {
+const select = state => {
   return {
     listing: state.listing,
-    modal: state.modal
+    modal: state.modal,
   }
 }
 

@@ -12,8 +12,7 @@ const OpenClose = props => {
 
   const status = getOpenCloseStatus(hours, timezone)
 
-  if (status === 'open')
-    icon = <Icon iconKey="stopwatch" label="Open Now" />
+  if (status === 'open') icon = <Icon iconKey="stopwatch" label="Open Now" />
   else if (status === 'closed')
     icon = <Icon iconKey="stopwatch_cross" label="Closed" />
   else if (status === 'closing_soon')
@@ -21,20 +20,16 @@ const OpenClose = props => {
   else if (status === 'opening_soon')
     icon = <Icon iconKey="stopwatch_running" label="Opening Soon" />
 
-  return (
-    <div className={`open-close ${status}`}>
-      {icon}
-    </div>
-  )
+  return <div className={`open-close ${status}`}>{icon}</div>
 }
 
 OpenClose.propTypes = {
   hours: PropTypes.array,
-  timezone: PropTypes.string
+  timezone: PropTypes.string,
 }
 
 OpenClose.defaultProps = {
-  hours: []
+  hours: [],
 }
 
 export default OpenClose

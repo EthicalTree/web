@@ -7,11 +7,7 @@ import middlewares from '../utils/reduxMiddlewares'
 const enhancer = compose(
   applyMiddleware(...middlewares),
   DevTools.instrument(),
-  persistState(
-    window.location.href.match(
-      /[?&]debug_session=([^&#]+)\b/
-    )
-  )
+  persistState(window.location.href.match(/[?&]debug_session=([^&#]+)\b/))
 )
 
 export default function configureStore(initialState) {

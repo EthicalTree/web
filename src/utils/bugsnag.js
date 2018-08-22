@@ -5,7 +5,7 @@ import createPlugin from 'bugsnag-react'
 const client = bugsnag({
   apiKey: process.env.REACT_APP_BUGSNAG_KEY,
   releaseStage: process.env.REACT_APP_ENVIRONMENT,
-  notifyReleaseStages: ['production']
+  notifyReleaseStages: ['production'],
 })
 
 export const assignBugsnagUser = user => {

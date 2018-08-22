@@ -9,7 +9,7 @@ import {
   Container,
   Row,
   Col,
-  Alert
+  Alert,
 } from 'reactstrap'
 
 import { changePassword, checkForgotPassword } from '../../actions/session'
@@ -17,13 +17,12 @@ import { Loader } from '../../components/Loader'
 import { PasswordStrength } from '../../components/PasswordStrength'
 
 class ForgotPasswordPage extends React.Component {
-
   constructor(props) {
     super(props)
 
     this.state = {
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
     }
   }
 
@@ -34,7 +33,7 @@ class ForgotPasswordPage extends React.Component {
 
   submit(e) {
     const { dispatch, match, history } = this.props
-    e.preventDefault();
+    e.preventDefault()
 
     dispatch(changePassword(this.state, match.params.token, history))
   }
@@ -53,22 +52,20 @@ class ForgotPasswordPage extends React.Component {
     return (
       <Loader loading={modal.isLoading}>
         <Container className="mt-5 reset-password-container">
-          {session.changePasswordError &&
+          {session.changePasswordError && (
             <Row>
               <Col>
-                <Alert color="danger">
-                  {session.changePasswordError}
-                </Alert>
+                <Alert color="danger">{session.changePasswordError}</Alert>
               </Col>
             </Row>
-          }
+          )}
 
           <Row className="text-center">
             <Col>
               <p>
                 Looks like you're having a hard time remembering your password.
-                We're not going to tell you how to live your life, but maybe consider
-                using a password manager ;)
+                We're not going to tell you how to live your life, but maybe
+                consider using a password manager ;)
               </p>
             </Col>
           </Row>
@@ -80,21 +77,27 @@ class ForgotPasswordPage extends React.Component {
                   <Input
                     autoFocus
                     value={this.state.email}
-                    onChange={e => { this.setState({ password: e.target.value }) }}
+                    onChange={e => {
+                      this.setState({ password: e.target.value })
+                    }}
                     type="password"
                     name="password"
                     id="password"
-                    placeholder="Enter a new password..."/>
+                    placeholder="Enter a new password..."
+                  />
                 </FormGroup>
 
                 <FormGroup>
                   <Input
                     value={this.state.email}
-                    onChange={e => { this.setState({ confirmPassword: e.target.value }) }}
+                    onChange={e => {
+                      this.setState({ confirmPassword: e.target.value })
+                    }}
                     type="password"
                     name="confirmPassword"
                     id="confirmPassword"
-                    placeholder="Re-enter the same password..."/>
+                    placeholder="Re-enter the same password..."
+                  />
                 </FormGroup>
 
                 <PasswordStrength
@@ -114,13 +117,12 @@ class ForgotPasswordPage extends React.Component {
       </Loader>
     )
   }
-
 }
 
-const select = (state) => {
+const select = state => {
   return {
     modal: state.modal,
-    session: state.session
+    session: state.session,
   }
 }
 

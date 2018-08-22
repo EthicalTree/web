@@ -4,12 +4,12 @@ import { Icon } from '../../Icon'
 const STATUS_MAPPING = {
   pending_verification: {
     iconKey: 'hourglass',
-    label: 'Pending Verification'
+    label: 'Pending Verification',
   },
   claimed: {
     iconKey: 'check',
-    label: 'Claimed'
-  }
+    label: 'Claimed',
+  },
 }
 
 export const ClaimStatus = props => {
@@ -21,12 +21,7 @@ export const ClaimStatus = props => {
 
   const mapping = STATUS_MAPPING[status]
 
-  return (
-    <Icon
-      iconKey={mapping.iconKey}
-      title={mapping.label}
-    />
-  )
+  return <Icon iconKey={mapping.iconKey} title={mapping.label} />
 }
 
 export default ClaimStatus

@@ -1,1 +1,1 @@
-export {default as EditLocationModal} from './EditLocationModal'
+export { default as EditLocationModal } from './EditLocationModal'

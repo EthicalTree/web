@@ -1,6 +1,6 @@
 import store from '../store/store'
 
-export const hasPermission = (permission, object={}) => {
+export const hasPermission = (permission, object = {}) => {
   const permissions = object.permissions || {}
   return permissions[permission]
 }
@@ -14,4 +14,3 @@ export const isAdmin = () => {
   const session = store.getState().session
   return isLoggedIn() && !!session.user.admin
 }
-

@@ -1,1 +1,1 @@
-export {default as VerifyEmailModal} from './VerifyEmailModal'
+export { default as VerifyEmailModal } from './VerifyEmailModal'

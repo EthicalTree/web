@@ -2,17 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import {
-  Button,
-  Input,
-  InputGroup,
-  InputGroupAddon
-} from 'reactstrap'
+import { Button, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 
 import { a11yClick } from '../../../utils/a11y'
 
 export class Search extends React.Component {
-
   componentDidMount() {
     if (this.input) {
       this.input.focus()
@@ -31,18 +25,18 @@ export class Search extends React.Component {
     return (
       <InputGroup className="admin-search">
         <Input
-          innerRef={input => this.input = input}
+          innerRef={input => (this.input = input)}
           type="text"
           value={admin.query || ''}
           placeholder="Search"
-          onChange={e => dispatch({ type: 'SET_ADMIN_SEARCH_QUERY', data: e.target.value })}
+          onChange={e =>
+            dispatch({ type: 'SET_ADMIN_SEARCH_QUERY', data: e.target.value })
+          }
           onKeyPress={a11yClick(onSearch)}
         />
 
         <InputGroupAddon addonType="append">
-          <Button onClick={onSearch}>
-            Search
-          </Button>
+          <Button onClick={onSearch}>Search</Button>
         </InputGroupAddon>
       </InputGroup>
     )
@@ -50,12 +44,11 @@ export class Search extends React.Component {
 }
 
 Search.propTypes = {
-  handleSearch: PropTypes.func.isRequired
+  handleSearch: PropTypes.func.isRequired,
 }
 
 const select = state => ({
-  admin: state.admin
+  admin: state.admin,
 })
 
 export default connect(select)(Search)
-

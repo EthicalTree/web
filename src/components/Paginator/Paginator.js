@@ -6,13 +6,8 @@ import ReactPaginate from 'react-paginate'
 import classnames from 'classnames'
 import { Icon } from '../Icon'
 
-export const Paginator = (props) => {
-  const {
-    className,
-    currentPage,
-    pageCount,
-    onPageChange
-  } = props
+export const Paginator = props => {
+  const { className, currentPage, pageCount, onPageChange } = props
 
   if (pageCount <= 1) {
     return null
@@ -21,10 +16,7 @@ export const Paginator = (props) => {
   const previous = <Icon iconKey="chevron_left" />
   const next = <Icon iconKey="chevron_right" />
 
-    const classNames = classnames(
-      'et-paginator',
-      className
-    )
+  const classNames = classnames('et-paginator', className)
 
   return (
     <ReactPaginate
@@ -45,13 +37,14 @@ export const Paginator = (props) => {
 
 Paginator.propTypes = {
   className: PropTypes.string,
-  currentPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  currentPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
   pageCount: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,
 }
 
 Paginator.defaultProps = {
-  className: ''
+  className: '',
 }
 
 export default Paginator

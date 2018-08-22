@@ -21,7 +21,6 @@ import { editLocation } from '../../../actions/listing'
 const google = window.google
 
 class EditLocationModal extends React.Component {
-
   constructor(props) {
     super(props)
     const { listing } = props
@@ -30,7 +29,7 @@ class EditLocationModal extends React.Component {
     this.state = {
       location,
       center: null,
-      address: ''
+      address: '',
     }
 
     this.geocoder = new google.maps.Geocoder()
@@ -54,19 +53,22 @@ class EditLocationModal extends React.Component {
 
     if (!e.key || e.key === 'Enter') {
       if (this.state.address) {
-        this.geocoder.geocode({ address: this.state.address }, (results, status) => {
-          const { OK, ZERO_RESULTS } = google.maps.GeocoderStatus
+        this.geocoder.geocode(
+          { address: this.state.address },
+          (results, status) => {
+            const { OK, ZERO_RESULTS } = google.maps.GeocoderStatus
 
-          if (status === OK && status !== ZERO_RESULTS) {
-            let {lat, lng} = results[0].geometry.location
-            let location = { lat: lat(), lng: lng() }
+            if (status === OK && status !== ZERO_RESULTS) {
+              let { lat, lng } = results[0].geometry.location
+              let location = { lat: lat(), lng: lng() }
 
-            this.setState({
-              location: location,
-              center: location
-            })
+              this.setState({
+                location: location,
+                center: location,
+              })
+            }
           }
-        })
+        )
       }
     }
   }
@@ -74,10 +76,12 @@ class EditLocationModal extends React.Component {
   onMapClick(e) {
     const { lat, lng } = e.latLng
 
-    this.setState({ location: {
-      lat: lat(),
-      lng: lng()
-    }})
+    this.setState({
+      location: {
+        lat: lat(),
+        lng: lng(),
+      },
+    })
   }
 
   render() {
@@ -99,8 +103,7 @@ class EditLocationModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Edit Location"
         onSave={this.submit.bind(this)}
-        modalName="edit-location"
-      >
+        modalName="edit-location">
         <Row>
           <Col>
             <FormGroup>
@@ -108,13 +111,15 @@ class EditLocationModal extends React.Component {
               <InputGroup>
                 <Input
                   autoFocus
-                  onKeyUp={ this.onAddressChange.bind(this) }
+                  onKeyUp={this.onAddressChange.bind(this)}
                   name="locationAddress"
                   id="locationAddress"
                   placeholder="eg. Ricky's Rockin Restaurant"
                 />
                 <InputGroupAddon addonType="append">
-                  <Button color="default" onClick={this.onAddressChange.bind(this)}>
+                  <Button
+                    color="default"
+                    onClick={this.onAddressChange.bind(this)}>
                     Find
                   </Button>
                 </InputGroupAddon>
@@ -130,15 +135,10 @@ class EditLocationModal extends React.Component {
               zoom={16}
               defaultOptions={{
                 zoomControl: true,
-                draggableCursor: 'pointer'
+                draggableCursor: 'pointer',
               }}
-              containerElement={
-                <div style={{ height: `100%` }} />
-              }
-              mapElement={
-                <div style={{ height: `100%` }} />
-              }
-            >
+              containerElement={<div style={{ height: `100%` }} />}
+              mapElement={<div style={{ height: `100%` }} />}>
               {marker}
             </Map>
           </Col>
@@ -146,13 +146,12 @@ class EditLocationModal extends React.Component {
       </Modal>
     )
   }
-
 }
 
-const select = (state) => {
+const select = state => {
   return {
     listing: state.listing,
-    modal: state.modal
+    modal: state.modal,
   }
 }
 

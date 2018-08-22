@@ -4,7 +4,6 @@ import { MAP } from 'react-google-maps/lib/constants'
 import PropTypes from 'prop-types'
 
 export default class MapControl extends React.Component {
-
   static contextTypes = { [MAP]: PropTypes.object }
 
   componentWillMount() {

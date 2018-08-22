@@ -5,17 +5,13 @@ import { Icon } from '../../Icon'
 import { trackEvent } from '../../../utils/ga'
 
 export const Bio = props => {
-  const {
-    bio,
-    canEdit,
-    phone,
-    title,
-    website
-  } = props
+  const { bio, canEdit, phone, title, website } = props
 
-  let formattedPhone;
+  let formattedPhone
   try {
-    formattedPhone = phone ? formatNumber(parseNumber(phone, 'CA'), 'National') : ''
+    formattedPhone = phone
+      ? formatNumber(parseNumber(phone, 'CA'), 'National')
+      : ''
   } catch (e) {
     formattedPhone = phone
   }
@@ -26,15 +22,19 @@ export const Bio = props => {
         <h3>
           {title}
 
-          {canEdit && bio &&
-            <a className="btn btn-sm btn-default ml-3" href="" onClick={props.onClickDescriptionEdit}>
-              Edit
-            </a>
-          }
+          {canEdit &&
+            bio && (
+              <a
+                className="btn btn-sm btn-default ml-3"
+                href=""
+                onClick={props.onClickDescriptionEdit}>
+                Edit
+              </a>
+            )}
         </h3>
 
         <div className="listing-contact">
-          {phone &&
+          {phone && (
             <React.Fragment>
               <div className="d-none d-md-flex">
                 {formattedPhone}
@@ -47,18 +47,17 @@ export const Bio = props => {
                   onClick={() => {
                     trackEvent({
                       action: 'Clicked Listing Phone Number',
-                      category: 'Listing'
+                      category: 'Listing',
                     })
-                  }}
-                >
+                  }}>
                   {formattedPhone}
                   <Icon iconKey="phone" />
                 </a>
               </div>
             </React.Fragment>
-          }
+          )}
 
-          {website &&
+          {website && (
             <a
               href={website}
               rel="noopener noreferrer"
@@ -67,37 +66,31 @@ export const Bio = props => {
               onClick={() => {
                 trackEvent({
                   action: 'Clicked Listing Website',
-                  category: 'Listing'
+                  category: 'Listing',
                 })
-              }}
-            >
+              }}>
               Website
               <Icon iconKey="extract" />
             </a>
-          }
+          )}
         </div>
       </div>
 
-      {bio &&
-        <p>{bio}</p>
-      }
+      {bio && <p>{bio}</p>}
 
-      {!bio &&
+      {!bio && (
         <div className="no-content">
-          {canEdit &&
+          {canEdit && (
             <a
               href=""
               onClick={props.onClickDescriptionEdit}
-              className="btn btn-default"
-            >
+              className="btn btn-default">
               Add a description
             </a>
-          }
-          {!canEdit &&
-            <p>This listing has no desciption!</p>
-          }
+          )}
+          {!canEdit && <p>This listing has no desciption!</p>}
         </div>
-      }
+      )}
     </div>
   )
 }

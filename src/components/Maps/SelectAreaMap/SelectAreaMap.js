@@ -5,10 +5,9 @@ import { Rectangle } from 'react-google-maps'
 import { Map } from '../Map'
 
 export class SelectAreaMap extends React.Component {
-
   constructor(props) {
     super(props)
-    this.state = {...props}
+    this.state = { ...props }
   }
 
   shouldComponentUpdate() {
@@ -23,14 +22,14 @@ export class SelectAreaMap extends React.Component {
       boundlng2,
       lat,
       lng,
-      handleBoundsChanged
+      handleBoundsChanged,
     } = this.state
 
     const bounds = {
       north: boundlat1,
       east: boundlng1,
       south: boundlat2,
-      west: boundlng2
+      west: boundlng2,
     }
 
     return (
@@ -38,20 +37,21 @@ export class SelectAreaMap extends React.Component {
         zoom={13}
         defaultOptions={{
           scrollwheel: true,
-          disableDefaultUI: false
+          disableDefaultUI: false,
         }}
-        center={{ lat, lng }}
-      >
+        center={{ lat, lng }}>
         <Rectangle
           defaultBounds={bounds}
           draggable={true}
           editable={true}
           options={{
             fillColor: '#526173',
-            strokeColor: '#526173'
+            strokeColor: '#526173',
           }}
-          onBoundsChanged={() => { handleBoundsChanged(this.rect.getBounds()) }}
-          ref={rect => this.rect = rect }
+          onBoundsChanged={() => {
+            handleBoundsChanged(this.rect.getBounds())
+          }}
+          ref={rect => (this.rect = rect)}
         />
       </Map>
     )
@@ -65,7 +65,7 @@ SelectAreaMap.propTypes = {
   boundlng2: PropTypes.number,
   lat: PropTypes.number,
   lng: PropTypes.number,
-  handleBoundsChanged: PropTypes.func.isRequired
+  handleBoundsChanged: PropTypes.func.isRequired,
 }
 
 export default SelectAreaMap

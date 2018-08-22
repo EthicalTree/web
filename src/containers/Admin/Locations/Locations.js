@@ -13,13 +13,12 @@ import { Loader } from '../../../components/Loader'
 import { getLocations } from '../../../actions/admin'
 
 export class Locations extends React.Component {
-
   handleEdit = location => {
     const { dispatch } = this.props
 
     return event => {
       event.preventDefault()
-      dispatch({ type: 'UPDATE_MODAL_DATA', data: {...location} })
+      dispatch({ type: 'UPDATE_MODAL_DATA', data: { ...location } })
       dispatch({ type: 'OPEN_MODAL', data: 'admin-edit-location' })
     }
   }
@@ -43,10 +42,11 @@ export class Locations extends React.Component {
 
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
           Locations
-
           <div className="d-flex">
             <Search
-              handleSearch={() => dispatch(getLocations({ page: 1, query: admin.query }))}
+              handleSearch={() =>
+                dispatch(getLocations({ page: 1, query: admin.query }))
+              }
             />
           </div>
         </h4>
@@ -85,7 +85,9 @@ export class Locations extends React.Component {
           <Paginator
             pageCount={admin.totalPages}
             currentPage={admin.currentPage}
-            onPageChange={data => dispatch(getLocations({ page: data.selected }))}
+            onPageChange={data =>
+              dispatch(getLocations({ page: data.selected }))
+            }
           />
         </div>
       </Loader>
@@ -93,9 +95,9 @@ export class Locations extends React.Component {
   }
 }
 
-const select = (state) => {
+const select = state => {
   return {
-    admin: state.admin
+    admin: state.admin,
   }
 }
 

@@ -3,17 +3,11 @@ import { connect } from 'react-redux'
 import { Modal } from '../Modal'
 import { PhoneNumber } from '../../../components/PhoneNumber'
 
-import {
-  Label,
-  Input,
-  Row,
-  Col,
-} from 'reactstrap'
+import { Label, Input, Row, Col } from 'reactstrap'
 
 import { editListing } from '../../../actions/listing'
 
 class EditDescriptionModal extends React.Component {
-
   constructor(props) {
     super(props)
     const { listing } = props
@@ -32,10 +26,12 @@ class EditDescriptionModal extends React.Component {
 
     const { dispatch, listing } = this.props
 
-    dispatch(editListing({
-      ...this.state,
-      slug: listing.slug
-    }))
+    dispatch(
+      editListing({
+        ...this.state,
+        slug: listing.slug,
+      })
+    )
   }
 
   render() {
@@ -103,13 +99,12 @@ class EditDescriptionModal extends React.Component {
       </Modal>
     )
   }
-
 }
 
-const select = (state) => {
+const select = state => {
   return {
     listing: state.listing,
-    modal: state.modal
+    modal: state.modal,
   }
 }
 

@@ -10,25 +10,24 @@ import {
   Button,
   Row,
   Col,
-  Alert
+  Alert,
 } from 'reactstrap'
 
 import { login } from '../../../actions/session'
 
 class LoginModal extends React.Component {
-
   constructor(props) {
     super(props)
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
     }
   }
 
   submit(e) {
     const { dispatch } = this.props
-    e.preventDefault();
+    e.preventDefault()
 
     dispatch(login(this.state))
     this.setState({ password: '' })
@@ -50,17 +49,14 @@ class LoginModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Login"
         modalName="login"
-        noContain
-      >
-        {session.loginInfo &&
+        noContain>
+        {session.loginInfo && (
           <Row>
             <Col>
-              <Alert color="success">
-                {session.loginInfo}
-              </Alert>
+              <Alert color="success">{session.loginInfo}</Alert>
             </Col>
           </Row>
-        }
+        )}
 
         <Row>
           <Col>
@@ -70,22 +66,28 @@ class LoginModal extends React.Component {
                 <Input
                   autoFocus
                   value={this.state.email}
-                  onChange={e => { this.setState({ email: e.target.value }) }}
+                  onChange={e => {
+                    this.setState({ email: e.target.value })
+                  }}
                   type="email"
                   name="email"
                   id="loginEmail"
-                  placeholder="Enter email..."/>
+                  placeholder="Enter email..."
+                />
               </FormGroup>
 
               <FormGroup>
                 <Label for="loginPassword">Password</Label>
                 <Input
                   value={this.state.password}
-                  onChange={e => { this.setState({ password: e.target.value }) }}
+                  onChange={e => {
+                    this.setState({ password: e.target.value })
+                  }}
                   type="password"
                   name="password"
                   id="loginPassword"
-                  placeholder="Enter password..." />
+                  placeholder="Enter password..."
+                />
               </FormGroup>
 
               <FormGroup className="mt-4">
@@ -95,10 +97,7 @@ class LoginModal extends React.Component {
               </FormGroup>
 
               <div className="text-center mb-3">
-                <a
-                  href=""
-                  onClick={this.openForgotPassword.bind(this)}
-                >
+                <a href="" onClick={this.openForgotPassword.bind(this)}>
                   Forgot your password?
                 </a>
               </div>
@@ -108,13 +107,12 @@ class LoginModal extends React.Component {
       </Modal>
     )
   }
-
 }
 
-const select = (state) => {
+const select = state => {
   return {
     modal: state.modal,
-    session: state.session
+    session: state.session,
   }
 }
 

@@ -8,13 +8,6 @@ import reduxStore from './store/store'
 import App from './containers/App'
 import { Scripts } from './containers/Scripts'
 
-render(
-  <App store={reduxStore} />,
-  document.getElementById('root')
-);
+render(<App store={reduxStore} />, document.getElementById('root'))
 
-render(
-  <Scripts />,
-  document.getElementById('scripts')
-)
-
+render(<Scripts />, document.getElementById('scripts'))

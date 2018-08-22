@@ -7,11 +7,7 @@ import querystring from 'querystring'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import {
-  Button,
-  Col,
-  Row
-} from 'reactstrap'
+import { Button, Col, Row } from 'reactstrap'
 
 import { IconInput } from '../../Icon'
 import { Icon } from '../../Icon'
@@ -19,25 +15,20 @@ import { Icon } from '../../Icon'
 import { getLocations, setSearchLocation } from '../../../actions/search'
 import { getSavedSearchLocation } from '../../../utils/address'
 
-const LocationSuggestion = (suggestion, {query, isHighlighted}) => {
-
+const LocationSuggestion = (suggestion, { query, isHighlighted }) => {
   if (suggestion.key === 'nearme') {
     return (
-      <span className='near-me'>
+      <span className="near-me">
         {suggestion.name}
-        <Icon iconKey='map_marker' />
+        <Icon iconKey="map_marker" />
       </span>
     )
   } else {
-    return (
-      <span>{suggestion.name}</span>
-    )
+    return <span>{suggestion.name}</span>
   }
 }
 
-const CategorySuggestion = props => {
-
-}
+const CategorySuggestion = props => {}
 
 const LocationInput = props => {
   const { onClick, isLocationFocused, value, ...inputProps } = props
@@ -53,13 +44,12 @@ const LocationInput = props => {
       leftIcon="road_sign"
       rightIcon="chevron_down"
       onClick={onClick}
-      inputProps={{...inputProps, value: newValue}}
+      inputProps={{ ...inputProps, value: newValue }}
     />
   )
 }
 
 class Search extends React.Component {
-
   search = event => {
     const { search, history, dispatch } = this.props
     const { query } = this.state
@@ -74,18 +64,23 @@ class Search extends React.Component {
       const paramsObj = {
         ethicalities: search.selectedEthicalities.join(','),
         location: location || getSavedSearchLocation(),
-        page: 1
+        page: 1,
       }
 
-      dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: {
-        query,
-        swlat: '',
-        swlng: '',
-        nelat: '',
-        nelng: ''
-      }})
+      dispatch({
+        type: 'SET_SEARCH_QUERY_PARAMS',
+        data: {
+          query,
+          swlat: '',
+          swlng: '',
+          nelat: '',
+          nelng: '',
+        },
+      })
 
-      history.push(`/s/${encodeURIComponent(query)}?${querystring.stringify(paramsObj)}`)
+      history.push(
+        `/s/${encodeURIComponent(query)}?${querystring.stringify(paramsObj)}`
+      )
       dispatch({ type: 'SET_SEARCH_PENDING', data: true })
     }
   }
@@ -100,7 +95,7 @@ class Search extends React.Component {
       dirty: false,
       city: undefined,
       location: '',
-      isLocationFocused: false
+      isLocationFocused: false,
     }
 
     this.fetchSuggestions = debounce(({ value }) => {
@@ -130,10 +125,10 @@ class Search extends React.Component {
     return true
   }
 
-  onChange(e, {newValue}) {
+  onChange(e, { newValue }) {
     this.setState({
       dirty: true,
-      query: newValue
+      query: newValue,
     })
   }
 
@@ -155,27 +150,37 @@ class Search extends React.Component {
               key="suggest"
               suggestions={search.locationSuggestions}
               onSuggestionsFetchRequested={this.fetchSuggestions}
-              onSuggestionsClearRequested={() => dispatch({ type: 'CLEAR_SEARCH_LOCATIONS' })}
+              onSuggestionsClearRequested={() =>
+                dispatch({ type: 'CLEAR_SEARCH_LOCATIONS' })
+              }
               getSuggestionValue={suggestion => suggestion}
               onSuggestionSelected={this.onLocationSelected.bind(this)}
               renderSuggestion={LocationSuggestion}
               renderInputComponent={LocationInput}
-              shouldRenderSuggestions={this.shouldRenderLocationSelections.bind(this)}
+              shouldRenderSuggestions={this.shouldRenderLocationSelections.bind(
+                this
+              )}
               focusInputOnSuggestionClick={false}
               inputProps={{
                 onClick: this.onLocationClick.bind(this),
                 isLocationFocused: isLocationFocused,
-                innerRef: locationInput => { this.locationInput = locationInput },
+                innerRef: locationInput => {
+                  this.locationInput = locationInput
+                },
                 location: location,
                 value: location,
                 placeholder: 'address, city, postal code...',
-                onFocus: () => { this.setState({ isLocationFocused: true }) },
+                onFocus: () => {
+                  this.setState({ isLocationFocused: true })
+                },
                 onKeyDown: this.search,
                 onBlur: () => {
                   setTimeout(() => {
                     this.setState({ isLocationFocused: false })
                     if (search.location !== this.state.location) {
-                      dispatch(setSearchLocation(this.state.location, this.state.city))
+                      dispatch(
+                        setSearchLocation(this.state.location, this.state.city)
+                      )
                     }
                   }, 0)
                 },
@@ -184,9 +189,9 @@ class Search extends React.Component {
 
                   this.setState({
                     location: name || value.newValue,
-                    city
+                    city,
                   })
-                }
+                },
               }}
             />
           </Col>
@@ -199,14 +204,18 @@ class Search extends React.Component {
               onSuggestionsClearRequested={() => {}}
               getSuggestionValue={suggestion => suggestion}
               renderSuggestion={CategorySuggestion}
-              renderInputComponent={props => (<IconInput leftIcon="search" inputProps={props} />)}
+              renderInputComponent={props => (
+                <IconInput leftIcon="search" inputProps={props} />
+              )}
               inputProps={{
-                innerRef: categoryInput => { this.categoryInput = categoryInput },
-                className: "category-input",
+                innerRef: categoryInput => {
+                  this.categoryInput = categoryInput
+                },
+                className: 'category-input',
                 placeholder: 'eg. burgers, health store, clothing, brunch...',
                 onChange: this.onChange.bind(this),
                 onKeyDown: this.search,
-                value: query
+                value: query,
               }}
             />
           </Col>
@@ -216,8 +225,7 @@ class Search extends React.Component {
               color="danger"
               className="full-height search-button"
               block
-              onClick={this.search}
-            >
+              onClick={this.search}>
               Search
             </Button>
           </Col>
@@ -227,12 +235,11 @@ class Search extends React.Component {
   }
 }
 
-const select = (state) => {
+const select = state => {
   return {
     search: state.search,
-    session: state.session
+    session: state.session,
   }
 }
 
 export default withRouter(connect(select)(Search))
-

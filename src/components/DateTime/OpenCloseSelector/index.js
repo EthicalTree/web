@@ -1,1 +1,1 @@
-export {default as OpenCloseSelector} from './OpenCloseSelector'
+export { default as OpenCloseSelector } from './OpenCloseSelector'

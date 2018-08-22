@@ -11,7 +11,7 @@ import {
   CardBody,
   ButtonGroup,
   Button,
-  Input
+  Input,
 } from 'reactstrap'
 
 import { Icon } from '../../Icon'
@@ -19,7 +19,7 @@ import { Icon } from '../../Icon'
 export const OpenCloseSelector = props => {
   const { setDay, selectedDay, days, addMoreHours, setTime } = props
 
-  const Day = (p) => {
+  const Day = p => {
     let enabledClass
 
     const isActive = selectedDay ? selectedDay.day === p.day : false
@@ -36,7 +36,6 @@ export const OpenCloseSelector = props => {
         className={`day ${enabledClass} ${activeClass}`}
         color={color}
         onClick={() => setDay(p.day)}>
-
         {p.day[0].toUpperCase()}
       </Button>
     )
@@ -62,20 +61,18 @@ export const OpenCloseSelector = props => {
       <Row className="mt-3 mb-3">
         <Col>
           <Col xs={{ size: 10, offset: 1 }}>
-
-            {selectedDay &&
+            {selectedDay && (
               <Card className="ml-3 mr-3 mt-3">
                 <CardHeader className="card-header pl-3 pt-2">
                   {selectedDay.label}
                 </CardHeader>
 
                 <CardBody>
-                  {selectedDay.hours.map((h, i)=> {
+                  {selectedDay.hours.map((h, i) => {
                     return (
                       <div
                         key={`${i}`}
-                        className="d-flex justify-content-between mb-2"
-                      >
+                        className="d-flex justify-content-between mb-2">
                         <Input
                           bsSize="sm"
                           type="time"
@@ -91,7 +88,7 @@ export const OpenCloseSelector = props => {
                           type="time"
                           defaultValue={h.close.format('HH:mm')}
                           onChange={e => {
-                            h.close= moment(e.target.value, 'HH:mm')
+                            h.close = moment(e.target.value, 'HH:mm')
                             setTime(selectedDay.hours)
                           }}
                         />
@@ -115,24 +112,23 @@ export const OpenCloseSelector = props => {
                       onClick={e => {
                         e.preventDefault()
                         addMoreHours()
-                      }}
-                    >
+                      }}>
                       + Add hours
                     </a>
                   </div>
                 </CardBody>
               </Card>
-            }
+            )}
 
-            {!selectedDay &&
+            {!selectedDay && (
               <Row className="text-center">
                 <Col>
                   <p>Click a day above to add hours</p>
                 </Col>
               </Row>
-            }
+            )}
           </Col>
-       </Col>
+        </Col>
       </Row>
     </div>
   )
