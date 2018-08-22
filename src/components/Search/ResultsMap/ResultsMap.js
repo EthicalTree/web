@@ -9,6 +9,15 @@ import { Markers, PinMarker } from '../../Maps/Markers'
 import { MapControl } from '../../Maps/MapControl'
 
 export class ResultsMap extends React.Component {
+  updateMapPosition = () => {
+    if (this.mapEl) {
+      this.setState({
+        mapHeight: this.getInnerHeight(),
+        scrollTop: document.getElementsByTagName('html')[0].scrollTop,
+      })
+    }
+  }
+
   handleBoundsChanged = () => {
     if (this.map) {
       this.setState({ boundsChanged: true })
@@ -35,6 +44,7 @@ export class ResultsMap extends React.Component {
     this.state = {
       boundsChanged: false,
       showYouAreHere: false,
+      scrollTop: 0,
     }
   }
 
@@ -108,9 +118,8 @@ export class ResultsMap extends React.Component {
     const session = store.getState().session
     const location = session.location
 
-    const { showYouAreHere } = this.state
-
     const hiddenClass = resultMode === 'listing' ? 'd-none d-xl-block' : ''
+    const { mapHeight, scrollTop, showYouAreHere } = this.state
 
     const markers = (
       <Markers

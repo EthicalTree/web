@@ -14,25 +14,24 @@ const EXPORT_FIELDS = {
     claim_id: 'Claim ID',
     claim_url: 'Claim URL',
     visibility: 'Visibilty',
-  }
+  },
 }
 
 export class Export extends React.Component {
-
   changeExportField = (field, value) => {
     const { exportFields } = this.state
-    const newExportFields = {...exportFields}
+    const newExportFields = { ...exportFields }
     newExportFields[field] = value
     this.setState({ exportFields: newExportFields })
   }
 
   setSelectedExport = selectedExport => {
-    const exportFields = {...EXPORT_FIELDS[selectedExport]}
-    Object.keys(exportFields).map(k => exportFields[k] = true)
+    const exportFields = { ...EXPORT_FIELDS[selectedExport] }
+    Object.keys(exportFields).map(k => (exportFields[k] = true))
 
     this.setState({
       selectedExport,
-      exportFields
+      exportFields,
     })
   }
 
@@ -50,7 +49,7 @@ export class Export extends React.Component {
     this.state = {
       downloadFormat: 'csv',
       exportFields: {},
-      selectedExport: ''
+      selectedExport: '',
     }
   }
 
@@ -65,12 +64,12 @@ export class Export extends React.Component {
 
         {this.renderStep1()}
 
-        {selectedExport &&
+        {selectedExport && (
           <React.Fragment>
             {this.renderStep2()}
             {this.renderStep3()}
           </React.Fragment>
-        }
+        )}
       </div>
     )
   }
@@ -80,30 +79,19 @@ export class Export extends React.Component {
 
     return (
       <div className="mt-4">
-        <h5>
-          Step 1:
-        </h5>
+        <h5>Step 1:</h5>
 
         <div>
-          <label>
-            Choose the object you would like to export
-          </label>
+          <label>Choose the object you would like to export</label>
 
           <Input
             onChange={e => this.setSelectedExport(e.target.value)}
             type="select"
-            defaultValue={selectedExport}
-          >
-            <option
-              disabled
-              hidden
-              value=""
-            >
+            defaultValue={selectedExport}>
+            <option disabled hidden value="">
               Choose object
             </option>
-            <option value="listings">
-              Listings
-            </option>
+            <option value="listings">Listings</option>
           </Input>
         </div>
       </div>
@@ -118,32 +106,28 @@ export class Export extends React.Component {
       <div className="mt-4">
         <h5>Step 2:</h5>
 
-        <label>
-          Select the fields you would like to include in the export
-        </label>
+        <label>Select the fields you would like to include in the export</label>
 
         <div>
-          {FIELDS && Object.keys(FIELDS).map(field => {
-            const id = `export-field-${field}`
+          {FIELDS &&
+            Object.keys(FIELDS).map(field => {
+              const id = `export-field-${field}`
 
-            return (
-              <div
-                className="ml-4"
-                key={field}
-              >
-                <Input
-                  id={id}
-                  checked={exportFields[field]}
-                  name={id}
-                  onChange={e => this.changeExportField(field, e.target.checked)}
-                  type="checkbox"
-                />
-                <label htmlFor={id}>
-                  {FIELDS[field]}
-                </label>
-              </div>
-            )
-          })}
+              return (
+                <div className="ml-4" key={field}>
+                  <Input
+                    id={id}
+                    checked={exportFields[field]}
+                    name={id}
+                    onChange={e =>
+                      this.changeExportField(field, e.target.checked)
+                    }
+                    type="checkbox"
+                  />
+                  <label htmlFor={id}>{FIELDS[field]}</label>
+                </div>
+              )
+            })}
         </div>
       </div>
     )
@@ -157,9 +141,7 @@ export class Export extends React.Component {
       <div className="mt-4">
         <h5>Step 3:</h5>
 
-        <label>
-          Select download type
-        </label>
+        <label>Select download type</label>
 
         <div>
           <div className="ml-4">
@@ -174,10 +156,7 @@ export class Export extends React.Component {
         </div>
 
         <div className="mt-3">
-          <Button
-            disabled={admin.isAdminLoading}
-            onClick={this.download}
-          >
+          <Button disabled={admin.isAdminLoading} onClick={this.download}>
             {admin.isAdminLoading ? 'Downloading...' : 'Download'}
           </Button>
         </div>

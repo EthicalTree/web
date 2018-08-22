@@ -25,7 +25,7 @@ export const trackPageView = options => {
     ReactGA.set({
       page: window.location.pathname,
       url,
-      user
+      user,
     })
 
     ReactGA.pageview(url)
@@ -44,11 +44,10 @@ export const trackEvent = options => {
     action,
     category,
     label,
-    value
+    value,
   })
 }
 
 history.listen(location => {
   trackPageView()
 })
-

@@ -2,11 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 
-import {
-  Button,
-  Input,
-  Table
-} from 'reactstrap'
+import { Button, Input, Table } from 'reactstrap'
 
 import { Search } from '../Search'
 
@@ -18,18 +14,19 @@ import { setConfirm } from '../../../actions/confirm'
 import { getTags, setTagUseType, deleteTag } from '../../../actions/admin'
 
 export class Tags extends React.Component {
-
   handleDelete = id => {
     const { dispatch } = this.props
 
     return event => {
       event.preventDefault()
-      dispatch(setConfirm({
-        title: 'Delete Tag',
-        msg: 'Are you sure you want to delete this tag?',
-        action: deleteTag,
-        data: id
-      }))
+      dispatch(
+        setConfirm({
+          title: 'Delete Tag',
+          msg: 'Are you sure you want to delete this tag?',
+          action: deleteTag,
+          data: id,
+        })
+      )
     }
   }
 
@@ -60,18 +57,18 @@ export class Tags extends React.Component {
 
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
           Tags
-
           <div className="d-flex">
             <Button
               className="mr-4"
               color="default"
-              onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'new-tag' })}
-            >
+              onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'new-tag' })}>
               + New Tag
             </Button>
 
             <Search
-              handleSearch={() => dispatch(getTags({ page: 1, query: admin.query }))}
+              handleSearch={() =>
+                dispatch(getTags({ page: 1, query: admin.query }))
+              }
             />
           </div>
         </h4>
@@ -96,8 +93,7 @@ export class Tags extends React.Component {
                       type="select"
                       name="use_type"
                       onChange={this.handleUseTypeChange(t.id)}
-                      defaultValue={t.useType}
-                    >
+                      defaultValue={t.useType}>
                       <option>category</option>
                       <option>admin</option>
                     </Input>
@@ -128,9 +124,9 @@ export class Tags extends React.Component {
   }
 }
 
-const select = (state) => {
+const select = state => {
   return {
-    admin: state.admin
+    admin: state.admin,
   }
 }
 

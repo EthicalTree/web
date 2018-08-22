@@ -1,1 +1,1 @@
-export {default as NewTagModal} from './NewTagModal'
+export { default as NewTagModal } from './NewTagModal'

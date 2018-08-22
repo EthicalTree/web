@@ -1,2 +1,2 @@
-export {default as CustomOverlayView} from './CustomOverlayView'
-export {default as ListingOverlay} from './ListingOverlay'
+export { default as CustomOverlayView } from './CustomOverlayView'
+export { default as ListingOverlay } from './ListingOverlay'

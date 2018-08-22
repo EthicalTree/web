@@ -1,1 +1,1 @@
-export {default as EditEthicalitiesModal} from './EditEthicalitiesModal'
+export { default as EditEthicalitiesModal } from './EditEthicalitiesModal'

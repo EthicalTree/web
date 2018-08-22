@@ -22,27 +22,27 @@ import {
   NewTagModal,
   NewCollectionModal,
   EditListingModal as EditAdminListingModal,
-  EditLocationModal as EditAdminLocationModal
+  EditLocationModal as EditAdminLocationModal,
 } from './Admin'
 
 const modals = {
-  'login': LoginModal,
-  'logout': LogoutModal,
-  'signup': SignupModal,
+  login: LoginModal,
+  logout: LogoutModal,
+  signup: SignupModal,
   'verify-email': VerifyEmailModal,
   'add-listing': AddListingModal,
   'edit-description': EditDescriptionModal,
   'edit-location': EditLocationModal,
   'edit-operating-hours': EditOperatingHoursModal,
   'edit-ethicalities': EditEthicalitiesModal,
-  'confirm': GenericConfirmModal,
+  confirm: GenericConfirmModal,
   'fullscreen-image': FullScreenImageModal,
   'forgot-password': ForgotPasswordModal,
   'new-tag': NewTagModal,
   'new-collection': NewCollectionModal,
   'admin-edit-listing': EditAdminListingModal,
   'admin-edit-location': EditAdminLocationModal,
-  'feedback': FeedbackModal
+  feedback: FeedbackModal,
 }
 
 const Modals = props => {
@@ -61,7 +61,7 @@ const Modals = props => {
 }
 
 const select = state => ({
-  modal: state.modal
+  modal: state.modal,
 })
 
 export default connect(select)(Modals)

@@ -1,1 +1,1 @@
-export {default as Repositioner} from './Repositioner'
+export { default as Repositioner } from './Repositioner'

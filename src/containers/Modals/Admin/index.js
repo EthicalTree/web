@@ -1,4 +1,4 @@
-export {NewCollectionModal} from './NewCollectionModal'
-export {NewTagModal} from './NewTagModal'
-export {EditListingModal} from './EditListingModal'
-export {EditLocationModal} from './EditLocationModal'
+export { NewCollectionModal } from './NewCollectionModal'
+export { NewTagModal } from './NewTagModal'
+export { EditListingModal } from './EditListingModal'
+export { EditLocationModal } from './EditLocationModal'

@@ -16,7 +16,7 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from 'reactstrap'
 
 import AccountIcon from '../Session/AccountIcon'
@@ -43,7 +43,7 @@ const Header = props => {
   } = props
 
   const isFixed = isCurrentPath('/s/')
-  const hasSubHeaderSearch = !isCurrentPath('/s/') && (location.pathname !== '/')
+  const hasSubHeaderSearch = !isCurrentPath('/s/') && location.pathname !== '/'
   const hasHeaderSearch = isCurrentPath('/s/')
 
   const fixedHeader = isFixed ? 'fixed-top' : ''
@@ -51,11 +51,8 @@ const Header = props => {
 
   return (
     <header className={fixedHeaderWrapper}>
-
       <Navbar light expand="xl" className={fixedHeader}>
-        <SkipLink
-          handleSkip={handleSkip}
-        />
+        <SkipLink handleSkip={handleSkip} />
 
         <Link
           className="navbar-brand"
@@ -63,26 +60,26 @@ const Header = props => {
           onClick={() => {
             trackEvent({
               action: 'Clicked Home Button',
-              category: 'General'
+              category: 'General',
             })
-          }}
-        >
+          }}>
           <span className="sr-only">EthicalTree</span>
           <img className="ml-4 mr-2" src={etLogo} alt="EthicalTree Logo" />
         </Link>
 
-        {hasHeaderSearch &&
+        {hasHeaderSearch && (
           <Col lg="7" className="d-none d-lg-block">
             <Search />
           </Col>
-        }
+        )}
 
         <NavbarToggler
-          onClick={e => { dispatch({ type: 'TOGGLE_HEADER_ACCESSIBLE' }) }}
+          onClick={e => {
+            dispatch({ type: 'TOGGLE_HEADER_ACCESSIBLE' })
+          }}
         />
 
         <Collapse isOpen={header.isOpen} navbar>
-
           <Nav navbar className="ml-auto">
             <div className="mr-3 d-flex">
               <NavItem>
@@ -92,27 +89,29 @@ const Header = props => {
                   onClick={e => {
                     e.preventDefault()
                     dispatch({ type: 'OPEN_MODAL', data: 'feedback' })
-                  }}
-                >
+                  }}>
                   Feedback
                 </a>
               </NavItem>
 
               <NavItem>
-                <Link to={`/collections/${user.city.toLowerCase()}`} className="nav-link">
+                <Link
+                  to={`/collections/${user.city.toLowerCase()}`}
+                  className="nav-link">
                   Collections
                 </Link>
               </NavItem>
             </div>
 
-            {session.user &&
+            {session.user && (
               <React.Fragment>
                 <NavItem>
                   <Button
                     color="success"
                     block
-                    onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'add-listing' }) }}
-                  >
+                    onClick={e => {
+                      dispatch({ type: 'OPEN_MODAL', data: 'add-listing' })
+                    }}>
                     Add Listing
                   </Button>
                 </NavItem>
@@ -121,40 +120,42 @@ const Header = props => {
                   nav
                   className="account-dropdown"
                   isOpen={header.isAccountDropdownOpen}
-                  toggle={() => dispatch({ type: 'TOGGLE_HEADER_ACCOUNT_DROPDOWN' })}
-                >
+                  toggle={() =>
+                    dispatch({ type: 'TOGGLE_HEADER_ACCOUNT_DROPDOWN' })
+                  }>
                   <DropdownToggle nav caret>
                     <AccountIcon email={session.user.email} />
                   </DropdownToggle>
                   <DropdownMenu right>
-                    {session.user.admin &&
+                    {session.user.admin && (
                       <Link to="/admin/users">
-                        <DropdownItem>
-                          Admin
-                        </DropdownItem>
+                        <DropdownItem>Admin</DropdownItem>
                       </Link>
-                    }
+                    )}
 
                     <Link to="/account">
-                      <DropdownItem>
-                        Account Settings
-                      </DropdownItem>
+                      <DropdownItem>Account Settings</DropdownItem>
                     </Link>
 
-                    <DropdownItem onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'logout' }) }}>
+                    <DropdownItem
+                      onClick={e => {
+                        dispatch({ type: 'OPEN_MODAL', data: 'logout' })
+                      }}>
                       Logout
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </React.Fragment>
-            }
+            )}
 
-            {!session.user &&
+            {!session.user && (
               <React.Fragment>
                 <NavItem>
                   <NavLink
                     href="#"
-                    onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'signup' }) }}>
+                    onClick={e => {
+                      dispatch({ type: 'OPEN_MODAL', data: 'signup' })
+                    }}>
                     Signup
                   </NavLink>
                 </NavItem>
@@ -162,17 +163,19 @@ const Header = props => {
                 <NavItem className="mr-4">
                   <NavLink
                     href="#"
-                    onClick={e => { dispatch({ type: 'OPEN_MODAL', data: 'login' }) }}>
+                    onClick={e => {
+                      dispatch({ type: 'OPEN_MODAL', data: 'login' })
+                    }}>
                     Login
                   </NavLink>
                 </NavItem>
               </React.Fragment>
-            }
+            )}
           </Nav>
         </Collapse>
       </Navbar>
 
-      {hasSubHeaderSearch &&
+      {hasSubHeaderSearch && (
         <React.Fragment>
           <Col className="global-ethicality-bar pt-2 pb-2">
             <Col lg="7" xl="5" className="">
@@ -190,8 +193,11 @@ const Header = props => {
                   dispatch({
                     type: 'SET_SEARCH_QUERY_PARAMS',
                     data: {
-                      ethicalities: toggleSearchEthicalities(search.selectedEthicalities, slug)
-                    }
+                      ethicalities: toggleSearchEthicalities(
+                        search.selectedEthicalities,
+                        slug
+                      ),
+                    },
                   })
                 }}
                 selectedEthicalities={search.selectedEthicalities}
@@ -199,21 +205,19 @@ const Header = props => {
             </Col>
           </Col>
         </React.Fragment>
-      }
-
+      )}
     </header>
   )
 }
 
-const select = (state) => {
+const select = state => {
   return {
     app: state.app,
     session: state.session,
     search: state.search,
     header: state.header,
-    user: state.user
+    user: state.user,
   }
 }
 
 export default withRouter(connect(select)(Header))
-

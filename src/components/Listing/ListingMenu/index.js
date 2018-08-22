@@ -1,1 +1,1 @@
-export {default as ListingMenu} from './ListingMenu'
+export { default as ListingMenu } from './ListingMenu'

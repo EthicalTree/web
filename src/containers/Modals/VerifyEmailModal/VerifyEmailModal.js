@@ -2,25 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from '../Modal'
 
-import {
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-  Row,
-  Col,
-} from 'reactstrap'
+import { Form, FormGroup, Label, Input, Button, Row, Col } from 'reactstrap'
 
 import { verifyEmail } from '../../../actions/session'
 
 class VerifyEmailModal extends React.Component {
-
   constructor(props) {
     super(props)
 
     this.state = {
-      token: ''
+      token: '',
     }
   }
 
@@ -39,13 +30,12 @@ class VerifyEmailModal extends React.Component {
         className="verify-email small-modal"
         loading={session.verifyEmailLoading}
         contentLabel="Verify Email"
-        modalName="verify-email"
-      >
+        modalName="verify-email">
         <Row>
           <Col>
             <p>
-              Almost there! We sent a 6 digit token to your email address.
-              Enter that token here to verify your account!
+              Almost there! We sent a 6 digit token to your email address. Enter
+              that token here to verify your account!
             </p>
           </Col>
         </Row>
@@ -57,11 +47,14 @@ class VerifyEmailModal extends React.Component {
                 <Label for="verifyEmailToken">Token</Label>
                 <Input
                   value={this.state.token}
-                  onChange={e => { this.setState({ token: e.target.value }) }}
+                  onChange={e => {
+                    this.setState({ token: e.target.value })
+                  }}
                   type="text"
                   name="verifyEmailToken"
                   id="verifyEmailToken"
-                  placeholder="- - - - - -" />
+                  placeholder="- - - - - -"
+                />
               </FormGroup>
 
               <FormGroup className="mt-4">
@@ -75,12 +68,11 @@ class VerifyEmailModal extends React.Component {
       </Modal>
     )
   }
-
 }
 
-const select = (state) => {
+const select = state => {
   return {
-    session: state.session
+    session: state.session,
   }
 }
 

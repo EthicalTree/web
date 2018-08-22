@@ -4,12 +4,7 @@ import uniqBy from 'lodash/uniqBy'
 import Marker from './Marker'
 
 const Markers = props => {
-  const {
-    listings,
-    onMarkerClick,
-    onMarkerMouseOver,
-    onMarkerMouseOut
-  } = props
+  const { listings, onMarkerClick, onMarkerMouseOver, onMarkerMouseOut } = props
 
   return (
     <div>
@@ -36,7 +31,7 @@ Markers.propTypes = {
   addBounds: PropTypes.func,
   onMarkerClick: PropTypes.func,
   onMarkerMouseOver: PropTypes.func,
-  onMarkerMouseOut: PropTypes.func
+  onMarkerMouseOut: PropTypes.func,
 }
 
 Markers.defaultProps = {
@@ -44,7 +39,7 @@ Markers.defaultProps = {
   addBounds: () => {},
   onMarkerClick: () => {},
   onMarkerMouseOver: () => {},
-  onMarkerMouseOut: () => {}
+  onMarkerMouseOut: () => {},
 }
 
 export default Markers

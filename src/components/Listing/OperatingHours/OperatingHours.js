@@ -6,13 +6,13 @@ import { OpenClose } from '../../OpenClose'
 import { localizedDates } from '../../../models/hours'
 
 const DAY_LABELS = {
-  'sunday': 'Sunday',
-  'monday': 'Monday',
-  'tuesday': 'Tuesday',
-  'wednesday': 'Wednesday',
-  'thursday': 'Thursday',
-  'friday': 'Friday',
-  'saturday': 'Saturday'
+  sunday: 'Sunday',
+  monday: 'Monday',
+  tuesday: 'Tuesday',
+  wednesday: 'Wednesday',
+  thursday: 'Thursday',
+  friday: 'Friday',
+  saturday: 'Saturday',
 }
 
 const DailyHours = props => {
@@ -30,13 +30,11 @@ const DailyHours = props => {
         )
       })}
 
-      {hours.length <= 0 &&
+      {hours.length <= 0 && (
         <p className="hours">
-          <span className="closed">
-            CLOSED
-          </span>
+          <span className="closed">CLOSED</span>
         </p>
-      }
+      )}
     </div>
   )
 }
@@ -51,27 +49,25 @@ class OperatingHours extends React.PureComponent {
 
     return (
       <div className="card operating-hours">
-        <div className="card-header">
-          Operating Hours
-        </div>
+        <div className="card-header">Operating Hours</div>
 
         <div className="mt-4">
-          <OpenClose
-            hours={localHours}
-            timezone={timezone}
-          />
+          <OpenClose hours={localHours} timezone={timezone} />
         </div>
 
         <div className="card-body pt-3">
-          {canEdit && hasHours &&
-            <button
-              onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit-operating-hours' })}
-              className="btn btn-sm btn-default btn-block">
-              Edit
-            </button>
-          }
+          {canEdit &&
+            hasHours && (
+              <button
+                onClick={() =>
+                  dispatch({ type: 'OPEN_MODAL', data: 'edit-operating-hours' })
+                }
+                className="btn btn-sm btn-default btn-block">
+                Edit
+              </button>
+            )}
 
-          {hasHours &&
+          {hasHours && (
             <div>
               {Object.keys(DAY_LABELS).map(day => {
                 return (
@@ -83,20 +79,25 @@ class OperatingHours extends React.PureComponent {
                 )
               })}
             </div>
-          }
+          )}
 
-          {!hasHours &&
+          {!hasHours && (
             <div className="daily-hours">
               <p>No operating hours set!</p>
-              {canEdit &&
+              {canEdit && (
                 <button
-                  onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'edit-operating-hours' })}
+                  onClick={() =>
+                    dispatch({
+                      type: 'OPEN_MODAL',
+                      data: 'edit-operating-hours',
+                    })
+                  }
                   className="btn btn-default btn-block">
                   Add
                 </button>
-              }
+              )}
             </div>
-          }
+          )}
         </div>
       </div>
     )
@@ -106,13 +107,13 @@ class OperatingHours extends React.PureComponent {
 OperatingHours.propTypes = {
   status: PropTypes.oneOf(['opening_soon', 'open', 'closing_soon', 'closed']),
   hours: PropTypes.array,
-  canEdit: PropTypes.bool
+  canEdit: PropTypes.bool,
 }
 
 OperatingHours.defaultProps = {
   status: 'closed',
   hours: [],
-  canEdit: false
+  canEdit: false,
 }
 
 export default OperatingHours

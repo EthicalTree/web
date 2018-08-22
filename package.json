@@ -18,7 +18,8 @@
     "build": "npm-run-all -p build-css build-js",
     "simulate-prod": "env $(cat .env.development | xargs) npm run build && docker-compose up",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettify": "prettier --write \"src/**/*.js\""
   },
   "dependencies": {
     "@fnando/password_strength": "^1.1.4",

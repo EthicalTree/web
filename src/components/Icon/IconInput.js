@@ -24,11 +24,11 @@ IconInput.propTypes = {
   leftIcon: PropTypes.string,
   rightIcon: PropTypes.string,
   inputProps: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
 }
 
 IconInput.defaultProps = {
-  className: ''
+  className: '',
 }
 
 export default IconInput

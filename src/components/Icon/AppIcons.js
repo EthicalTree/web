@@ -86,5 +86,5 @@ export default {
 
   facebook: Facebook,
   twitter: Twitter,
-  instagram: Instagram
+  instagram: Instagram,
 }

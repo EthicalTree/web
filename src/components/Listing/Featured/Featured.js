@@ -4,14 +4,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { Col, Row, } from 'reactstrap'
+import { Col, Row } from 'reactstrap'
 import { Result } from '../../Search/Result'
 import { Loader } from '../../Loader'
 
 import { getFeaturedListings } from '../../../actions/search'
 
 export class Featured extends React.Component {
-
   componentDidMount() {
     const { count, dispatch } = this.props
 
@@ -19,22 +18,15 @@ export class Featured extends React.Component {
   }
 
   render() {
-    const {
-      dispatch,
-      search,
-      session,
-      xxl,
-      ...rest
-    } = this.props
+    const { dispatch, search, session, xxl, ...rest } = this.props
 
     return (
       <Loader
         className="featured-listings"
-        loading={search.featured.length === 0 && search.featuredListingsLoading}
-      >
-        <h5 className="featured-listings-header pt-3 pb-3">
-          Featured
-        </h5>
+        loading={
+          search.featured.length === 0 && search.featuredListingsLoading
+        }>
+        <h5 className="featured-listings-header pt-3 pb-3">Featured</h5>
 
         <Row>
           {search.featured.map(l => {
@@ -56,7 +48,7 @@ export class Featured extends React.Component {
 
 const select = state => ({
   search: state.search,
-  session: state.session
+  session: state.session,
 })
 
 Featured.propTypes = {
@@ -68,7 +60,7 @@ Featured.propTypes = {
 Featured.defaultProps = {
   count: 4,
   xs: 12,
-  md: 6
+  md: 6,
 }
 
 export default connect(select)(Featured)

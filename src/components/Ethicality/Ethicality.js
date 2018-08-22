@@ -5,9 +5,7 @@ import React from 'react'
 import classnames from 'classnames'
 import icons from '../Icon/AppIcons'
 
-import {
-  UncontrolledTooltip as Tooltip
-} from 'reactstrap'
+import { UncontrolledTooltip as Tooltip } from 'reactstrap'
 
 import { a11yClick } from '../../utils/a11y'
 
@@ -19,7 +17,7 @@ export const EthicalityBar = props => {
     onEthicalitySelect,
     showLabels,
     showTooltips,
-    showIcons
+    showIcons,
   } = props
 
   const classNames = classnames(
@@ -52,7 +50,7 @@ export const EthicalityBar = props => {
   )
 }
 
-export const Ethicality = (props) => {
+export const Ethicality = props => {
   const {
     onSelect,
     slug,
@@ -62,7 +60,7 @@ export const Ethicality = (props) => {
     selected,
     showLabel,
     showTooltip,
-    showIcon
+    showIcon,
   } = props
 
   const selectable = !!onSelect
@@ -74,10 +72,10 @@ export const Ethicality = (props) => {
     className,
     slug,
     { selectable },
-    { selected },
+    { selected }
   )
 
-  const clickWrapper = (e) => {
+  const clickWrapper = e => {
     e.preventDefault()
 
     if (onSelect) {
@@ -91,25 +89,16 @@ export const Ethicality = (props) => {
       className={classNames}
       onClick={clickWrapper}
       onKeyPress={a11yClick(clickWrapper)}
-      tabIndex={selectable ? '0' : '-1'}
-    >
-      {showIcon !== false &&
-        <EthicalityIcon
-          ethicalityKey={iconKey}
-          name={name}
-          uuid={uuid}
-        />
-      }
-      {showLabel !== false &&
-        <div className="name">
-          {name}
-        </div>
-      }
+      tabIndex={selectable ? '0' : '-1'}>
+      {showIcon !== false && (
+        <EthicalityIcon ethicalityKey={iconKey} name={name} uuid={uuid} />
+      )}
+      {showLabel !== false && <div className="name">{name}</div>}
     </div>
   )
 }
 
-export const EthicalityIcon = (props) => {
+export const EthicalityIcon = props => {
   const { name, uuid, className } = props
   const Icon = icons[props.ethicalityKey]
   const id = !!uuid ? `id-${uuid}` : undefined
@@ -118,10 +107,11 @@ export const EthicalityIcon = (props) => {
   return (
     <span id={id} className="ethicality-icon">
       <Icon className={`${newClassName}`} />
-      {uuid &&
-        <Tooltip placement="top" target={id} delay={0}>{name}</Tooltip>
-      }
+      {uuid && (
+        <Tooltip placement="top" target={id} delay={0}>
+          {name}
+        </Tooltip>
+      )}
     </span>
   )
 }
-

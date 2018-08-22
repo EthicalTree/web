@@ -14,33 +14,24 @@ import { trackEvent } from '../../utils/ga'
 
 class Footer extends React.PureComponent {
   render() {
-    const classNames = classnames(
-      { 'has-fixed-header': isCurrentPath('/s/') }
-    )
+    const classNames = classnames({ 'has-fixed-header': isCurrentPath('/s/') })
 
     return (
       <footer className={classNames}>
         <Container>
           <div>
-            Copyright © 2016-{moment().format('YYYY')} | EthicalTree Inc.
+            Copyright © 2016-
+            {moment().format('YYYY')} | EthicalTree Inc.
           </div>
 
           <div>
-            <Link to="/about-us">
-              About Us
-            </Link>
+            <Link to="/about-us">About Us</Link>
 
-            <Link to="/faq">
-              FAQ
-            </Link>
+            <Link to="/faq">FAQ</Link>
 
-            <Link to="/contact-us">
-              Contact Us
-            </Link>
+            <Link to="/contact-us">Contact Us</Link>
 
-            <Link to="/terms-of-service">
-              Terms of Service
-            </Link>
+            <Link to="/terms-of-service">Terms of Service</Link>
 
             <div className="social">
               <a
@@ -51,10 +42,9 @@ class Footer extends React.PureComponent {
                   trackEvent({
                     action: 'Clicked Social Media',
                     category: 'Social Media',
-                    label: 'Instagram'
+                    label: 'Instagram',
                   })
-                }}
-              >
+                }}>
                 <Icon iconKey="instagram" />
               </a>
 
@@ -66,10 +56,9 @@ class Footer extends React.PureComponent {
                   trackEvent({
                     action: 'Clicked Social Media',
                     category: 'Social Media',
-                    label: 'Facebook'
+                    label: 'Facebook',
                   })
-                }}
-              >
+                }}>
                 <Icon iconKey="facebook" />
               </a>
 
@@ -81,10 +70,9 @@ class Footer extends React.PureComponent {
                   trackEvent({
                     action: 'Clicked Social Media',
                     category: 'Social Media',
-                    label: 'Twitter'
+                    label: 'Twitter',
                   })
-                }}
-              >
+                }}>
                 <Icon iconKey="twitter" />
               </a>
             </div>
@@ -100,4 +88,3 @@ const select = state => ({
 })
 
 export default withRouter(connect(select)(Footer))
-

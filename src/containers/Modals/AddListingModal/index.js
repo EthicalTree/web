@@ -1,1 +1,1 @@
-export {default as AddListingModal} from './AddListingModal'
+export { default as AddListingModal } from './AddListingModal'

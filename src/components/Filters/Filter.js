@@ -25,11 +25,13 @@ export const FilterBar = props => {
             })
             dispatch({ type: 'SET_SEARCH_PENDING', data: true })
 
-            const label = !openNow ? 'Start filtering by Open Now' : 'Stop filtering by Open Now'
+            const label = !openNow
+              ? 'Start filtering by Open Now'
+              : 'Stop filtering by Open Now'
             trackEvent({
               action: 'Clicked Open Now',
               category: 'Search',
-              label: label
+              label: label,
             })
           }}
         />

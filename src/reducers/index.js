@@ -29,7 +29,7 @@ const rootReducer = combineReducers({
   search,
   session,
   user,
-  router: routerReducer
+  router: routerReducer,
 })
 
 export default rootReducer

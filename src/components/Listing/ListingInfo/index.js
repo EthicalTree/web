@@ -1,1 +1,1 @@
-export {default as ListingInfo} from './ListingInfo'
+export { default as ListingInfo } from './ListingInfo'

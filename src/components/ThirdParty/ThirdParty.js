@@ -5,7 +5,7 @@ export class ThirdParty extends React.Component {
     const { content } = this.props
 
     if (process.env.NODE_ENV === 'production') {
-      const script = document.createElement("script")
+      const script = document.createElement('script')
       script.innerHTML = content
       document.body.appendChild(script)
     }

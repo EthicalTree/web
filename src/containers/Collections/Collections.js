@@ -6,7 +6,6 @@ import { Collection } from '../../components/Collection'
 import { getCollections } from '../../actions/collections'
 
 export class Collections extends React.Component {
-
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(getCollections({ where: 'front_page' }))
@@ -24,10 +23,7 @@ export class Collections extends React.Component {
     const { collections, session, user } = this.props
 
     return (
-      <Loader
-        loading={collections.isLoading}
-        className="collections"
-      >
+      <Loader loading={collections.isLoading} className="collections">
         {collections.collections.map(cl => {
           return (
             <Collection
@@ -46,7 +42,7 @@ export class Collections extends React.Component {
 const select = state => ({
   collections: state.collections,
   session: state.session,
-  user: state.user
+  user: state.user,
 })
 
 export default connect(select)(Collections)

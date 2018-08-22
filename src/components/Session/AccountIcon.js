@@ -7,14 +7,8 @@ const AccountIcon = props => {
 
   return (
     <span>
-      <Gravatar
-        size={size}
-        email={email}
-        default="mm"
-      />
-      {showName &&
-        (name || email)
-      }
+      <Gravatar size={size} email={email} default="mm" />
+      {showName && (name || email)}
     </span>
   )
 }
@@ -23,13 +17,13 @@ AccountIcon.propTypes = {
   email: PropTypes.string,
   name: PropTypes.string,
   showName: PropTypes.bool,
-  size: PropTypes.number
+  size: PropTypes.number,
 }
 
 AccountIcon.defaultProps = {
   size: 42,
   showName: false,
-  name: ''
+  name: '',
 }
 
 export default AccountIcon
