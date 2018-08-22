@@ -1,12 +1,13 @@
 import querystring from 'querystring'
 import { api } from '../utils/api'
 import { getSavedSearchLocation } from '../utils/address'
+import { processLocation } from '../utils/location'
 
 export const getCollections = ({ page = 1 }) => {
   const location = getSavedSearchLocation()
 
   const data = {
-    location,
+    location: processLocation(location),
     page,
   }
 

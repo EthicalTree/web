@@ -39,8 +39,8 @@ export class Result extends React.Component {
     const distance =
       session && session.location && listing.location
         ? getDistance(
-            session.location.latitude,
-            session.location.longitude,
+            session.location.lat,
+            session.location.lng,
             listing.location.lat,
             listing.location.lng
           )

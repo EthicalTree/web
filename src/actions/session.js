@@ -211,8 +211,10 @@ export const getCurrentUser = () => {
 
 export const getSessionInformation = () => {
   return dispatch => {
+    dispatch({ type: 'SET_LOADING', data: true })
     api.get('/sessions').then(response => {
       dispatch({ type: 'SET_SESSION_INFO', data: response.data })
+      dispatch({ type: 'SET_LOADING', data: false })
     })
   }
 }
