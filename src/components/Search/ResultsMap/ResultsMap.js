@@ -116,10 +116,10 @@ export class ResultsMap extends React.Component {
     } = this.props
 
     const session = store.getState().session
-    const location = session.location
+    const location = session.location || {}
 
     const hiddenClass = resultMode === 'listing' ? 'd-none d-xl-block' : ''
-    const { mapHeight, scrollTop, showYouAreHere } = this.state
+    const { showYouAreHere } = this.state
 
     const markers = (
       <Markers
