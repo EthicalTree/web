@@ -262,7 +262,6 @@ class Listing extends React.Component {
 const select = state => ({
   listing: state.listing,
   session: state.session,
-  user: state.user,
 })
 
 export default connect(select)(Listing)

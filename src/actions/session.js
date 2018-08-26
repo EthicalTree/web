@@ -152,9 +152,10 @@ export const signup = data => {
 
           if (data.listingSlug) {
             dispatch(login(data))
+            setTimeout(() => { window.location = window.location.pathname }, 0)
           }
           else {
-            dispatch({ type: 'OPEN_MODAL', data: 'verify-email' })
+            dispatch({ type: 'SET_MODAL_LOADING', data: false })
           }
         }
       })
