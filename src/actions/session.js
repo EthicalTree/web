@@ -22,11 +22,6 @@ export const login = data => {
           dispatch({ type: 'LOGIN', data: response.data })
           dispatch({ type: 'CLOSE_MODAL' })
 
-          // Refresh page after claim
-          if (data.listingSlug) {
-            setTimeout(() => { window.location = window.location.pathname }, 0)
-          }
-
           dispatch(getCurrentUser())
         }
       })

@@ -2,7 +2,6 @@ import './Listing.css'
 
 import React from 'react'
 import querystring from 'querystring'
-import { Redirect } from 'react-router'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { Container } from 'reactstrap'
@@ -119,7 +118,13 @@ class Listing extends React.Component {
   }
 
   render() {
-    const { dispatch, listing, location, match } = this.props
+    const {
+      dispatch,
+      history,
+      listing,
+      location,
+      match
+    } = this.props
 
     const { claim } = this.getClaimParams()
     const { currentImage } = listing
@@ -141,7 +146,7 @@ class Listing extends React.Component {
     }
 
     if (claim && listing.claimStatus === 'claimed') {
-      return <Redirect to={location.pathname} />
+      history.push(location.pathname)
     }
 
     return (
