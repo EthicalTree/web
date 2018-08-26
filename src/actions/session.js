@@ -21,6 +21,7 @@ export const login = data => {
 
           dispatch({ type: 'LOGIN', data: response.data })
           dispatch({ type: 'CLOSE_MODAL' })
+
           dispatch(getCurrentUser())
         }
       })
@@ -154,7 +155,7 @@ export const signup = data => {
             dispatch(login(data))
           }
           else {
-            dispatch({ type: 'OPEN_MODAL', data: 'verify-email' })
+            dispatch({ type: 'SET_MODAL_LOADING', data: false })
           }
         }
       })

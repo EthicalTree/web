@@ -109,7 +109,7 @@ class SignupModal extends React.Component {
                 <Row>
                   <Col sm="6">
                     <FormGroup>
-                      <Label for="contactNumber">Contact Number</Label>
+                      <Label for="contactNumber">Contact Number *</Label>
                       <PhoneNumber
                         value={contactNumber}
                         onChange={contactNumber => this.setState({ contactNumber })}

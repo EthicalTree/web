@@ -2,10 +2,11 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import rootReducer from '../reducers'
 import { DevTools } from '../components/DevTools'
 import reduxMiddlewares from '../utils/reduxMiddlewares'
+import { isToolbarEnabled } from '../utils/config'
 
 let enhancer
 
-if (process.env.NODE_ENV === 'development') {
+if (isToolbarEnabled()) {
   enhancer = compose(
     applyMiddleware(...reduxMiddlewares),
     DevTools.instrument()
