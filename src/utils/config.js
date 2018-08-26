@@ -3,5 +3,5 @@ import store from 'store'
 const config = store.get('ET_CONFIG')
 
 export const isToolbarEnabled = () => {
-  return false && process.env.NODE_ENV === 'development' || !!config
+  return process.env.NODE_ENV === 'development' || !!config
 }
