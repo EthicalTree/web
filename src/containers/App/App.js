@@ -20,6 +20,7 @@ import { initApp } from '../../actions/app'
 import history from '../../utils/history'
 import { split } from '../../utils/codesplitting'
 import BugsnagErrorBoundary from '../../utils/bugsnag'
+import { isToolbarEnabled } from '../../utils/config'
 
 class InnerApp extends React.Component {
   handleSkip = () => {
@@ -169,7 +170,7 @@ class InnerApp extends React.Component {
           <Modals />
         </Loader>
 
-        {process.env.NODE_ENV === 'development' && <DevTools />}
+        {isToolbarEnabled() && <DevTools />}
       </div>
     )
   }
