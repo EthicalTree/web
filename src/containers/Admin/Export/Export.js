@@ -8,12 +8,20 @@ import { download } from '../../../actions/admin'
 const EXPORT_FIELDS = {
   listings: {
     id: 'ID',
+    description: 'Description',
     slug: 'Slug',
     title: 'Title',
     plan_info: 'Plan Information',
-    claim_id: 'Claim ID',
-    claim_url: 'Claim URL',
     visibility: 'Visibilty',
+    claim: 'Claim Info',
+    website: 'Website',
+    phone_number: 'Phone Number',
+    tags: 'Tags',
+    address: 'Address',
+    city: 'City',
+    images: 'Images',
+    menu_images: 'Menu Images',
+    facebook_uri: 'Facebook URI',
   },
 }
 
@@ -159,6 +167,12 @@ export class Export extends React.Component {
           <Button disabled={admin.isAdminLoading} onClick={this.download}>
             {admin.isAdminLoading ? 'Downloading...' : 'Download'}
           </Button>
+
+          <p className="mt-3">
+            <i>
+              NOTE: Try to limit the use of this download as it's hard on the servers right now :)
+            </i>
+          </p>
         </div>
       </div>
     )
