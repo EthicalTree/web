@@ -17,6 +17,7 @@ const EXPORT_FIELDS = {
     website: 'Website',
     phone_number: 'Phone Number',
     tags: 'Tags',
+    ethicalities: 'Ethicalities',
     address: 'Address',
     city: 'City',
     images: 'Images',
