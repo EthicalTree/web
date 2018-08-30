@@ -12,7 +12,6 @@ import { trackEvent } from '../utils/ga'
 import { toTitleCase } from '../utils/string'
 
 import {
-  getGeoLocation,
   setGeoLocation,
   processLocation,
 } from '../utils/location'
@@ -113,8 +112,7 @@ export const getFeaturedListings = ({ count }) => {
 }
 
 export const getLocations = query => {
-  const latlng = getGeoLocation()
-  const queryObj = Object.assign({}, query, latlng ? latlng : {})
+  const queryObj = { query }
 
   return dispatch => {
     api
