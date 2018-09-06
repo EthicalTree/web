@@ -25,7 +25,7 @@ class SearchResultsPage extends React.Component {
     const query = search.query
     const ethicalities = params.ethicalities || search.selectedEthicalities
     const openNow = search.openNow
-    const location = params.location || search.location
+    const location = params.location || search.location.name
     const page = params.page || search.currentPage
 
     let paramsObj = {
@@ -181,7 +181,7 @@ class SearchResultsPage extends React.Component {
         <div className="location-not-found">
           <h4>Oh No!</h4>
           {`The location "${
-            search.location
+            search.location.name
           }" could not be found. If you haven't already, try including the city and country as well!`}
         </div>
       )
@@ -232,11 +232,15 @@ class SearchResultsPage extends React.Component {
   }
 
   render() {
-    const { search, user } = this.props
+    const { search } = this.props
 
     const title = search.query
-      ? `Search for "${search.query}" in ${user.city} · EthicalTree`
-      : `Search in ${user.city} · EthicalTree`
+      ? `Search for "${search.query}" in ${search.location.city} · EthicalTree`
+      : `Search in ${search.location.city} · EthicalTree`
+
+    const description = search.query
+      ? `Search for "${search.query}". Best of ${search.location.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
+      : `Best of ${search.location.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
 
     return (
       <Loader fixed={true} loading={search.isSearchLoading}>
@@ -244,9 +248,7 @@ class SearchResultsPage extends React.Component {
           <title>{title}</title>
           <meta
             name="description"
-            content={`Search for "${search.query}". Best of ${
-              user.city
-            }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
+            content={description}
           />
         </Helmet>
 

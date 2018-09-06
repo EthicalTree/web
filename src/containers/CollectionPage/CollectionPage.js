@@ -16,19 +16,17 @@ import { setSearchLocation } from '../../actions/search'
 
 export class CollectionPage extends React.Component {
   componentDidMount() {
-    const { dispatch, match, user } = this.props
+    const { dispatch, match } = this.props
     const { city } = match.params
 
-    if (city.toLowerCase() !== user.city.toLowerCase()) {
-      dispatch(setSearchLocation(city, city))
-    }
+    dispatch(setSearchLocation({ location: city }))
 
     this.fetchCollection()
   }
 
   componentDidUpdate(prevProps) {
-    const { user } = this.props
-    const didLocationChange = user.location !== prevProps.user.location
+    const { search } = this.props
+    const didLocationChange = search.location !== prevProps.search.location
 
     if (didLocationChange) {
       this.fetchCollection()
@@ -36,10 +34,11 @@ export class CollectionPage extends React.Component {
   }
 
   fetchCollection() {
-    const { dispatch, match } = this.props
+    const { dispatch, match, search } = this.props
 
     dispatch(
       getCollection({
+        location: search.location,
         slug: match.params.slug,
         page: 1,
       })
@@ -47,7 +46,13 @@ export class CollectionPage extends React.Component {
   }
 
   render() {
-    const { dispatch, collection, session, user } = this.props
+    const { dispatch, collection, session, search } = this.props
+
+    const title = search.location ?
+      `${search.location.city}'s ${collection.name} - Best Local Restaurants, Shops and More · EthicalTree` :
+      `${collection.name} - Best Local Restaurants, Shops and More · EthicalTree`
+
+    const collectionTitle = search.location ? `${collection.name} (${search.location.city})` : `${collection.name}`
     let headerStyles
 
     if (collection.coverImage) {
@@ -64,9 +69,7 @@ export class CollectionPage extends React.Component {
           render={() => (
             <React.Fragment>
               <Helmet>
-                <title>{`${user.city}'s ${
-                  collection.name
-                } - Best Local Restaurants, Shops and More · EthicalTree`}</title>
+                <title>{title}</title>
                 <meta
                   name="description"
                   content={`${collection.description}`}
@@ -80,7 +83,7 @@ export class CollectionPage extends React.Component {
                 style={headerStyles}>
                 <div className="collection-banner">
                   <h2 className="collection-title">
-                    {collection.name} ({user.city})
+                    {collectionTitle}
                   </h2>
 
                   {collection.description && (
@@ -140,7 +143,7 @@ export class CollectionPage extends React.Component {
 const select = state => ({
   collection: state.collection,
   session: state.session,
-  user: state.user,
+  search: state.search
 })
 
 export default connect(select)(CollectionPage)

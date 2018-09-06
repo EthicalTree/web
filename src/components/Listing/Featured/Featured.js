@@ -12,9 +12,20 @@ import { getFeaturedListings } from '../../../actions/search'
 
 export class Featured extends React.Component {
   componentDidMount() {
-    const { count, dispatch } = this.props
+    this.fetchListings()
+  }
 
-    dispatch(getFeaturedListings({ count }))
+  componentDidUpdate(prevProps) {
+    const { search } = this.props
+
+    if (search.location.name !== prevProps.search.location.name) {
+      this.fetchListings()
+    }
+  }
+
+  fetchListings() {
+    const { count, dispatch, search } = this.props
+    dispatch(getFeaturedListings({ count, location: search.location }))
   }
 
   render() {

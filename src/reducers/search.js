@@ -1,7 +1,6 @@
 import { getGeoLocation } from '../utils/location'
 
 const defaultSearch = {
-  categorySuggestions: [],
   currentPage: 1,
   featured: [],
   featuredListingsLoading: true,
@@ -9,13 +8,12 @@ const defaultSearch = {
   isSearchLoading: true,
   isSearchPending: false,
   listings: [],
-  location: '',
+  location: {},
   nelat: null,
   nelng: null,
   swlat: null,
   swlng: null,
   located: false,
-  locationSuggestions: [],
   matches: 0,
   pageCount: 0,
   query: '',
@@ -32,18 +30,14 @@ const search = (state = defaultSearch, { type, data }) => {
         ...state,
         resultMode: state.resultMode === 'map' ? 'listing' : 'map',
       }
-    case 'SET_SEARCH_LOCATION_SUGGESTIONS':
-      // set near me as the top result if location exists on the sesssion
-      const suggestedList = [{ key: 'nearme', name: 'Near Me' }].concat(data)
-      return { ...state, locationSuggestions: suggestedList }
-    case 'SET_DEFAULT_SEARCH_LOCATION':
-      return { ...state, location: !state.location ? data : state.location }
     case 'SET_SELECTED_SEARCH_RESULT':
       return { ...state, selectedResult: data }
     case 'SET_SEARCH_RESULT_HOVER':
       return { ...state, hoveredResult: data }
     case 'SET_SEARCH_PENDING':
       return { ...state, isPending: data }
+    case 'SET_SEARCH_LOCATION':
+      return { ...state, location: data }
     case 'SET_SEARCH_QUERY_PARAMS': {
       let ethicalities = data.ethicalities
 
@@ -57,7 +51,6 @@ const search = (state = defaultSearch, { type, data }) => {
         ...state,
         query: data.query === undefined ? state.query : data.query,
         currentPage: data.page || state.currentPage,
-        location: data.location || state.location,
         selectedEthicalities: ethicalities || state.selectedEthicalities,
         openNow: data.openNow || false,
         nelat: data.nelat === undefined ? state.nelat : data.nelat,
@@ -71,11 +64,11 @@ const search = (state = defaultSearch, { type, data }) => {
     case 'SET_SEARCH_LOADING':
       return { ...state, isSearchLoading: data }
     case 'SET_FEATURED_LISTINGS': {
-      const { listings, location } = data
+      const { listings } = data
+
       return {
         ...state,
-        featured: listings,
-        directoryLocation: location,
+        featured: listings
       }
     }
     case 'SET_FEATURED_LISTINGS_LOADING':

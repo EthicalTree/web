@@ -39,7 +39,6 @@ const Header = props => {
     location,
     search,
     session,
-    user,
   } = props
 
   const isFixed = isCurrentPath('/s/')
@@ -96,7 +95,7 @@ const Header = props => {
 
               <NavItem>
                 <Link
-                  to={`/collections/${user.city.toLowerCase()}`}
+                  to={search.location ? `/collections/${search.location.city}` : `/collections`}
                   className="nav-link">
                   Collections
                 </Link>

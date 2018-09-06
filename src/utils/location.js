@@ -1,15 +1,34 @@
 import store from 'store'
 
-export const processLocation = location => {
-  if (location === 'Near Me') {
-    const geolocation = getGeoLocation()
+export const DEFAULT_LOCATION = {
+  name: 'Toronto, ON',
+  city: 'Toronto',
+  id: null
+}
 
-    if (geolocation) {
-      return `${geolocation.lat},${geolocation.lng}`
+export const NEAR_ME_LOCATION = {
+  name: 'Near Me',
+  id: 'nearme',
+  nearMe: true
+}
+
+export const processLocation = location => {
+  console.log(location)
+
+  if (location) {
+    if (location.nearMe) {
+      const geolocation = getGeoLocation()
+
+      if (geolocation) {
+        return `${geolocation.lat},${geolocation.lng}`
+      }
+    }
+    else {
+      return location.id
     }
   }
 
-  return location
+  return ''
 }
 
 export const getDistance = (lat1, lng1, lat2, lng2) => {
@@ -47,4 +66,12 @@ export const setGeoLocation = (onSuccess, onError) => {
 
 export const getGeoLocation = () => {
   return store.get('ETHICALTREE_GEOLOCATION')
+}
+
+export const setSavedSearchLocation = locationId => {
+  store.set('ET_LOCATION', locationId)
+}
+
+export const getSavedSearchLocation = () => {
+  return store.get('ET_LOCATION')
 }

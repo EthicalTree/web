@@ -13,38 +13,46 @@ import { setSearchLocation } from '../../actions/search'
 
 export class AllCollectionsPage extends React.Component {
   componentDidMount() {
-    const { dispatch, match, user } = this.props
+    const { dispatch, match, search } = this.props
     const { city } = match.params
 
-    if (city.toLowerCase() !== user.city.toLowerCase()) {
-      dispatch(setSearchLocation(city, city))
+    if (city.toLowerCase() !== search.location.city.toLowerCase()) {
+      dispatch(setSearchLocation({ location: city }))
     } else {
-      dispatch(getCollections({}))
+      dispatch(getCollections({ location: search.location }))
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { dispatch, history, search, user } = this.props
+    const { dispatch, history, search } = this.props
+    const { location } = search
 
-    if (search.location !== prevProps.search.location) {
-      dispatch(getCollections({}))
+    if (location !== prevProps.search.location) {
+      dispatch(getCollections({ location }))
     }
 
-    if (user.city !== prevProps.user.city) {
-      history.push(`/collections/${user.city.toLowerCase()}`)
+    if (location.city !== prevProps.search.location.city) {
+      history.push(`/collections/${location.city}`)
     }
   }
 
   render() {
-    const { dispatch, user, collections } = this.props
+    const { dispatch, collections, search } = this.props
+    const city = search.location ? search.location.city : ''
+
+    const title = city
+      ? `${city} Collections - Best Local Restaurants, Shops and More · EthicalTree`
+      : 'Collections - Best Local Restaurants, Shops and More · EthicalTree'
+
+    const collectionsTitle = city
+      ? `Collections (${city})`
+      : 'Collections'
 
     return (
       <div className="all-collections-page">
         <Loader loading={collections.isLoading} fixed={true}>
           <Helmet>
-            <title>{`${
-              user.city
-            } Collections - Best Local Restaurants, Shops and More · EthicalTree`}</title>
+            <title>{title}</title>
             <meta
               name="description"
               content={`Discover the best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
@@ -52,7 +60,7 @@ export class AllCollectionsPage extends React.Component {
           </Helmet>
 
           <h2 className="all-collections-title text-center">
-            Collections ({user.city})
+            {collectionsTitle}
           </h2>
 
           <div className="collections">
@@ -74,7 +82,7 @@ export class AllCollectionsPage extends React.Component {
                   key={c.id}
                   className="collection"
                   style={extraStyle}
-                  to={`/collections/${user.city.toLowerCase()}/${c.slug}`}>
+                  to={city ? `/collections/${city}/${c.slug}` : `/collections/_/${c.slug}`}>
                   <span className="collection-label">{c.name}</span>
                 </Link>
               )
@@ -100,7 +108,6 @@ export class AllCollectionsPage extends React.Component {
 }
 
 const select = state => ({
-  user: state.user,
   collections: state.collections,
   search: state.search,
 })
