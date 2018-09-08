@@ -13,8 +13,6 @@ export const NEAR_ME_LOCATION = {
 }
 
 export const processLocation = location => {
-  console.log(location)
-
   if (location) {
     if (location.nearMe) {
       const geolocation = getGeoLocation()
