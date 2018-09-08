@@ -28,44 +28,47 @@ class InnerApp extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch, location, user } = this.props
+    const { dispatch, location } = this.props
     const queryParams = querystring.parse(location.search.slice(1))
 
     dispatch(
       initApp({
         queryParams: {
           ...queryParams,
-          location:
-            queryParams.location !== user.city ? queryParams.location : null,
+          location: queryParams.location,
         },
       })
     )
   }
 
   shouldComponentUpdate(nextProps) {
-    const appLoadingChanged =
-      this.props.app.isAppLoading !== nextProps.app.isAppLoading
-    const pageChanged =
-      this.props.location.pathname !== nextProps.location.pathname
-    const userChanged = this.props.session.user !== nextProps.session.user
+    const { app, location, session } = this.props
+
+    const appLoadingChanged = app.isAppLoading !== nextProps.app.isAppLoading
+    const pageChanged = location.pathname !== nextProps.location.pathname
+    const userChanged = session.user !== nextProps.session.user
 
     return appLoadingChanged || pageChanged || userChanged
   }
 
   render() {
-    const { app, user } = this.props
+    const { app, search } = this.props
+
+    const title = search.location ?
+      `EthicalTree ${search.location.city} · Best Local Restaurants, Shops, and More` :
+      "EthicalTree · Best Local Restaurants, Shops, and More"
+
+    const description = search.location ?
+      `Best of ${search.location.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.` :
+      "Best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian."
 
     return (
       <div className="app">
         <Helmet>
-          <title>{`EthicalTree ${
-            user.city
-          } · Best Local Restaurants, Shops, and More`}</title>
+          <title>{title}</title>
           <meta
             name="description"
-            content={`Best of ${
-              user.city
-            }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
+            content={description}
           />
         </Helmet>
 
@@ -179,7 +182,7 @@ class InnerApp extends React.Component {
 const select = state => ({
   app: state.app,
   session: state.session,
-  user: state.user,
+  search: state.search,
 })
 
 InnerApp = withRouter(connect(select)(InnerApp))

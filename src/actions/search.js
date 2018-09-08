@@ -2,19 +2,14 @@ import querystring from 'querystring'
 import { api } from '../utils/api'
 
 import {
-  getSavedCity,
-  setSavedCity,
-  setSavedSearchLocation,
-  getSavedSearchLocation,
-} from '../utils/address'
+  DEFAULT_LOCATION,
+  NEAR_ME_LOCATION,
+  getGeoLocation,
+  processLocation,
+  setSavedSearchLocation
+} from '../utils/location'
 
 import { trackEvent } from '../utils/ga'
-import { toTitleCase } from '../utils/string'
-
-import {
-  setGeoLocation,
-  processLocation,
-} from '../utils/location'
 
 export const performSearch = (params = {}) => {
   const queryObj = {
@@ -42,30 +37,45 @@ export const performSearch = (params = {}) => {
   }
 }
 
-const actualSetSearchLocation = (dispatch, location, city) => {
-  setSavedSearchLocation(location)
-  setSavedCity(city)
+export const updateWithSearchLocation = location => {
+  return dispatch => {
+    if (location) {
+      const searchLocation = location.nearMe ? {...location, ...NEAR_ME_LOCATION} : location
 
-  dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: { location } })
-  dispatch({ type: 'SET_USER_LOCATION', data: { location, city } })
-  dispatch({ type: 'SET_SEARCH_PENDING', data: true })
+      setSavedSearchLocation(location.id)
+      dispatch({ type: 'SET_SEARCH_LOCATION', data: searchLocation })
+    }
+    else {
+      dispatch({ type: 'SET_SEARCH_LOCATION', data: DEFAULT_LOCATION })
+    }
+  }
 }
 
-export const setSearchLocation = (l, c) => {
-  let location = l ? l : getSavedSearchLocation()
-  let city = c ? c : getSavedCity()
-
-  location = toTitleCase(location)
-  city = toTitleCase(city)
+export const setSearchLocation = ({ id, location, nearMe }) => {
+  let url = id ? `/v1/locations/${id}` : `/v1/locations?name=${location}`
 
   return dispatch => {
-    if (location === 'Near Me') {
-      setGeoLocation(() => {
-        actualSetSearchLocation(dispatch, location, city)
-      })
-    } else {
-      actualSetSearchLocation(dispatch, location, city)
+    const latlng = getGeoLocation()
+
+    if (nearMe && latlng) {
+      url = `/v1/locations?name=${latlng.lat},${latlng.lng}`
     }
+
+    api.get(url)
+      .then(({ data }) => {
+        if (nearMe && latlng) {
+          dispatch(updateWithSearchLocation({
+            ...data,
+            ...latlng,
+            ...NEAR_ME_LOCATION
+          }))
+        }
+        else {
+          dispatch(updateWithSearchLocation(data))
+        }
+
+        dispatch({ type: 'SET_SEARCH_PENDING', data: true })
+      })
   }
 }
 
@@ -87,9 +97,7 @@ export const toggleSearchEthicalities = (ethicalities, slug) => {
   return selectedEthicalities
 }
 
-export const getFeaturedListings = ({ count }) => {
-  const location = getSavedSearchLocation()
-
+export const getFeaturedListings = ({ count, location }) => {
   const data = {
     count,
     location: processLocation(location),
@@ -111,20 +119,6 @@ export const getFeaturedListings = ({ count }) => {
   }
 }
 
-export const getLocations = query => {
-  const queryObj = { query }
-
-  return dispatch => {
-    api
-      .get(`/v1/locations?${querystring.stringify(queryObj)}`)
-      .then(results => {
-        dispatch({
-          type: 'SET_SEARCH_LOCATION_SUGGESTIONS',
-          data: results.data,
-        })
-      })
-  }
-}
 
 export const getCategories = query => {
   return dispatch => {}

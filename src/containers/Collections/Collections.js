@@ -7,27 +7,28 @@ import { getCollections } from '../../actions/collections'
 
 export class Collections extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(getCollections({ where: 'front_page' }))
+    const { dispatch, search } = this.props
+    dispatch(getCollections({ where: 'front_page', location: search.location }))
   }
 
   componentDidUpdate(prevProps) {
-    const { dispatch, user } = this.props
+    const { dispatch, search } = this.props
 
-    if (user.location !== prevProps.user.location) {
-      dispatch(getCollections({ where: 'front_page' }))
+    if (search.location !== prevProps.search.location) {
+      dispatch(getCollections({ where: 'front_page', location: search.location }))
     }
   }
 
   render() {
-    const { collections, session, user } = this.props
+    const { collections, session, search } = this.props
+    const { location } = search
 
     return (
       <Loader loading={collections.isLoading} className="collections">
         {collections.collections.map(cl => {
           return (
             <Collection
-              city={user.city}
+              city={location ? location.city : null}
               key={cl.id}
               session={session}
               {...cl}
@@ -42,7 +43,7 @@ export class Collections extends React.Component {
 const select = state => ({
   collections: state.collections,
   session: state.session,
-  user: state.user,
+  search: state.search,
 })
 
 export default connect(select)(Collections)

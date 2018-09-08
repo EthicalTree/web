@@ -2,7 +2,6 @@ import './Search.css'
 
 import React from 'react'
 import Autosuggest from 'react-autosuggest'
-import debounce from 'lodash/debounce'
 import querystring from 'querystring'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -10,60 +9,42 @@ import { withRouter } from 'react-router-dom'
 import { Button, Col, Row } from 'reactstrap'
 
 import { IconInput } from '../../Icon'
-import { Icon } from '../../Icon'
+import { LocationSuggestion } from '../LocationSuggestion'
+import { LocationInput } from '../LocationInput'
 
-import { getLocations, setSearchLocation } from '../../../actions/search'
-import { getSavedSearchLocation } from '../../../utils/address'
-
-const LocationSuggestion = (suggestion, { query, isHighlighted }) => {
-  if (suggestion.key === 'nearme') {
-    return (
-      <span className="near-me">
-        {suggestion.name}
-        <Icon iconKey="map_marker" />
-      </span>
-    )
-  } else {
-    return <span>{suggestion.name}</span>
-  }
-}
-
-const CategorySuggestion = props => {}
-
-const LocationInput = props => {
-  const { onClick, isLocationFocused, value, ...inputProps } = props
-  let newValue = value
-
-  if (!newValue && !isLocationFocused) {
-    newValue = getSavedSearchLocation()
-  }
-
-  return (
-    <IconInput
-      className="location-input"
-      leftIcon="road_sign"
-      rightIcon="chevron_down"
-      onClick={onClick}
-      inputProps={{ ...inputProps, value: newValue }}
-    />
-  )
-}
+import { api } from '../../../utils/api'
+import { setSearchLocation } from '../../../actions/search'
+import { setGeoLocation, DEFAULT_LOCATION, NEAR_ME_LOCATION } from '../../../utils/location'
 
 class Search extends React.Component {
+
+  fetchLocations = queryObj => {
+    const cached = this.locationCache[queryObj.query]
+
+    if (cached) {
+      this.setState({ locationSuggestions: cached })
+      return
+    }
+
+    return api
+      .get(`/v1/locations?${querystring.stringify(queryObj)}`)
+      .then(results => {
+        const locationSuggestions = [NEAR_ME_LOCATION].concat(results.data)
+
+        this.locationCache[queryObj.query] = locationSuggestions
+        this.setState({ locationSuggestions })
+      })
+  }
+
   search = event => {
     const { search, history, dispatch } = this.props
     const { query } = this.state
-    let location = search.location
+    const { location } = search
 
     if ((event.key && event.key === 'Enter') || !event.key) {
-      if (location && location !== this.state.location) {
-        location = this.state.location
-        dispatch(setSearchLocation(this.state.location, this.state.city))
-      }
-
       const paramsObj = {
         ethicalities: search.selectedEthicalities.join(','),
-        location: location || getSavedSearchLocation(),
+        location: location ? location.name : '',
         page: 1,
       }
 
@@ -85,47 +66,50 @@ class Search extends React.Component {
     }
   }
 
-  constructor(props) {
-    super(props)
+  finalizeSearchLocation = () => {
+    const { dispatch } = this.props
+    const { location, nearMe } = this.state
 
-    const { dispatch, search } = props
-
-    this.state = {
-      query: search.query || '',
-      dirty: false,
-      city: undefined,
-      location: '',
-      isLocationFocused: false,
+    if (nearMe) {
+      setGeoLocation()
     }
 
-    this.fetchSuggestions = debounce(({ value }) => {
-      if (this.isLocationFocused()) {
-        dispatch(getLocations(value))
-      }
-    }, 100)
-  }
-
-  isLocationFocused() {
-    return this.state.isLocationFocused
-  }
-
-  onLocationClick(e) {
-    e.preventDefault()
-    const { dispatch } = this.props
-    this.setState({ location: '' })
-    dispatch(getLocations(''))
-    this.locationInput.focus()
-  }
-
-  onLocationSelected(thing) {
+    dispatch(setSearchLocation({ location, nearMe }))
     this.categoryInput.focus()
   }
 
-  shouldRenderLocationSelections(thing) {
-    return true
+  constructor(props) {
+    super(props)
+
+    const { search } = props
+    const location = search.location || DEFAULT_LOCATION
+
+    this.state = {
+      dirty: false,
+      isLocationFocused: false,
+      location: location.name,
+      locationSuggestions: [],
+      nearMe: location.nearMe,
+      query: search.query || '',
+    }
+
+    this.locationCache = {}
   }
 
-  onChange(e, { newValue }) {
+  focusLocation = e => {
+    this.setState({ location: '' })
+    this.locationInput.focus()
+    this.fetchLocations({ query: '' })
+  }
+
+  handleLocationChange = location => {
+    this.setState({
+      location,
+      nearMe: location === 'Near Me'
+    })
+  }
+
+  handleQueryChange = (e, { newValue }) => {
     this.setState({
       dirty: true,
       query: newValue,
@@ -133,9 +117,14 @@ class Search extends React.Component {
   }
 
   render() {
-    const { search, dispatch } = this.props
+    const { search } = this.props
 
-    const { isLocationFocused, location } = this.state
+    const {
+      isLocationFocused,
+      location,
+      locationSuggestions,
+    } = this.state
+
     let { query, dirty } = this.state
 
     if (!dirty && search.query) {
@@ -148,49 +137,38 @@ class Search extends React.Component {
           <Col xs="12" md="5" lg="4">
             <Autosuggest
               key="suggest"
-              suggestions={search.locationSuggestions}
-              onSuggestionsFetchRequested={this.fetchSuggestions}
-              onSuggestionsClearRequested={() =>
-                dispatch({ type: 'CLEAR_SEARCH_LOCATIONS' })
-              }
-              getSuggestionValue={suggestion => suggestion}
-              onSuggestionSelected={this.onLocationSelected.bind(this)}
+              suggestions={locationSuggestions}
+              onSuggestionsFetchRequested={({ value, reason }) => {
+                if (reason !== 'input-focused') {
+                  this.fetchLocations({ query: value })
+                }
+              }}
+              onSuggestionsClearRequested={() => {}}
+              getSuggestionValue={suggestion => suggestion.name}
+              onSuggestionSelected={this.finalizeSearchLocation}
+              onSuggestionHighlighted={({ suggestion }) => {
+                if (suggestion) {
+                  this.handleLocationChange(suggestion.name)
+                }
+              }}
+              shouldRenderSuggestions={() => true}
               renderSuggestion={LocationSuggestion}
               renderInputComponent={LocationInput}
-              shouldRenderSuggestions={this.shouldRenderLocationSelections.bind(
-                this
-              )}
               focusInputOnSuggestionClick={false}
               inputProps={{
-                onClick: this.onLocationClick.bind(this),
+                onMouseDown: this.focusLocation,
+                onFocus: this.focusLocation,
                 isLocationFocused: isLocationFocused,
                 innerRef: locationInput => {
                   this.locationInput = locationInput
                 },
-                location: location,
-                value: location,
+                value: location || '',
                 placeholder: 'address, city, postal code...',
-                onFocus: () => {
-                  this.setState({ isLocationFocused: true })
-                },
-                onKeyDown: this.search,
                 onBlur: () => {
-                  setTimeout(() => {
-                    this.setState({ isLocationFocused: false })
-                    if (search.location !== this.state.location) {
-                      dispatch(
-                        setSearchLocation(this.state.location, this.state.city)
-                      )
-                    }
-                  }, 0)
+                  this.finalizeSearchLocation()
                 },
-                onChange: (e, value) => {
-                  const { city, name } = value.newValue
-
-                  this.setState({
-                    location: name || value.newValue,
-                    city,
-                  })
+                onChange: (e, { newValue }) => {
+                  this.handleLocationChange(newValue)
                 },
               }}
             />
@@ -199,11 +177,11 @@ class Search extends React.Component {
           <Col xs="12" md="5" lg="6">
             <Autosuggest
               key="query"
-              suggestions={search.categorySuggestions}
+              suggestions={[]}
               onSuggestionsFetchRequested={() => {}}
               onSuggestionsClearRequested={() => {}}
               getSuggestionValue={suggestion => suggestion}
-              renderSuggestion={CategorySuggestion}
+              renderSuggestion={() => {}}
               renderInputComponent={props => (
                 <IconInput leftIcon="search" inputProps={props} />
               )}
@@ -213,7 +191,7 @@ class Search extends React.Component {
                 },
                 className: 'category-input',
                 placeholder: 'eg. burgers, health store, clothing, brunch...',
-                onChange: this.onChange.bind(this),
+                onChange: this.handleQueryChange,
                 onKeyDown: this.search,
                 value: query,
               }}
