@@ -51,7 +51,7 @@ class InnerApp extends React.Component {
   }
 
   render() {
-    const { app, search } = this.props
+    const { app } = this.props
 
     return (
       <div className="app">
@@ -165,7 +165,6 @@ class InnerApp extends React.Component {
 const select = state => ({
   app: state.app,
   session: state.session,
-  search: state.search,
 })
 
 InnerApp = withRouter(connect(select)(InnerApp))
