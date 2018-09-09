@@ -39,7 +39,7 @@ export const performSearch = (params = {}) => {
 
 export const updateWithSearchLocation = location => {
   return dispatch => {
-    if (location) {
+    if (location && location.id) {
       const searchLocation = location.nearMe ? {...location, ...NEAR_ME_LOCATION} : location
 
       setSavedSearchLocation(location.id)

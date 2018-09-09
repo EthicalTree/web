@@ -1,7 +1,6 @@
 import React from 'react'
 import querystring from 'querystring'
 import { Provider, connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
 
 import { ConnectedRouter } from 'react-router-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
@@ -54,24 +53,8 @@ class InnerApp extends React.Component {
   render() {
     const { app, search } = this.props
 
-    const title = search.location ?
-      `EthicalTree ${search.location.city} · Best Local Restaurants, Shops, and More` :
-      "EthicalTree · Best Local Restaurants, Shops, and More"
-
-    const description = search.location ?
-      `Best of ${search.location.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.` :
-      "Best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian."
-
     return (
       <div className="app">
-        <Helmet>
-          <title>{title}</title>
-          <meta
-            name="description"
-            content={description}
-          />
-        </Helmet>
-
         <Loader loading={app.isAppLoading}>
           <Header handleSkip={this.handleSkip} />
 
