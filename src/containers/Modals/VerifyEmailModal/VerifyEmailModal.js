@@ -7,19 +7,23 @@ import { Form, FormGroup, Label, Input, Button, Row, Col } from 'reactstrap'
 import { verifyEmail } from '../../../actions/session'
 
 class VerifyEmailModal extends React.Component {
+
+  submit = e => {
+    const { dispatch, modal } = this.props
+    const { modalData } = modal
+    const { token } = this.state
+
+    e.preventDefault()
+
+    dispatch(verifyEmail({ email: modalData.email, token }))
+  }
+
   constructor(props) {
     super(props)
 
     this.state = {
       token: '',
     }
-  }
-
-  submit(e) {
-    const { dispatch } = this.props
-    e.preventDefault()
-
-    dispatch(verifyEmail(this.state))
   }
 
   render() {
@@ -42,7 +46,7 @@ class VerifyEmailModal extends React.Component {
 
         <Row>
           <Col>
-            <Form method="post" onSubmit={this.submit.bind(this)}>
+            <Form method="post" onSubmit={this.submit}>
               <FormGroup>
                 <Label for="verifyEmailToken">Token</Label>
                 <Input
@@ -73,6 +77,7 @@ class VerifyEmailModal extends React.Component {
 const select = state => {
   return {
     session: state.session,
+    modal: state.modal
   }
 }
 

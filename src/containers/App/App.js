@@ -11,6 +11,7 @@ import { Footer } from '../../components/Footer'
 import { ScrollToTop } from '../../components/ScrollToTop'
 import { FacebookPixel } from '../../components/ThirdParty'
 import { DevTools } from '../../components/DevTools'
+import { VerifyEmail } from '../../containers/VerifyEmail'
 
 import Modals from '../Modals'
 
@@ -64,6 +65,12 @@ class InnerApp extends React.Component {
                 exact
                 path="/"
                 component={split(() => import('../FrontPage/FrontPage'))}
+              />
+
+              <Route
+                exact
+                path="/verify-email"
+                component={VerifyEmail}
               />
 
               <Route
