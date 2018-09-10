@@ -1,5 +1,27 @@
 import moment from 'moment-timezone'
 
+// get minuts from the moment datetime
+const minutesOfDay = m => {
+  return m.minutes() + m.hours() * 60
+}
+
+// pass in three moment datetimes and return whether or not
+// the middle time is in between the two times regardless of date
+const isBetween = (start, test, stop) => {
+  const s1 = minutesOfDay(start)
+  const s2 = minutesOfDay(stop)
+  const t = minutesOfDay(test)
+
+  if (t >= s1 && t <= s2) {
+    return true
+  } else if (s2 < s1 && t >= s1) {
+    // if the end time is less than the start, as long as it's
+    // past the start, then it's open
+    return true
+  }
+  return false
+}
+
 export const localizedDates = (operatingHours, timezone) => {
   return operatingHours.map(oh => {
     const open = moment.tz(oh.openAt24Hour, 'HH:mm', 'UTC').tz(timezone)
@@ -11,8 +33,8 @@ export const localizedDates = (operatingHours, timezone) => {
   })
 }
 
-export const getOpenCloseStatus = (hours, timezone) => {
-  const now = moment.tz(timezone)
+export const getOpenCloseStatus = (hours, timezone, now) => {
+  now = now ? now : moment.tz(timezone)
   const todaysHours = hours.filter(
     h => h.day === now.format('dddd').toLowerCase()
   )
@@ -29,11 +51,11 @@ export const getOpenCloseStatus = (hours, timezone) => {
       const openingSoonTime = openTime.clone().add(-30, 'minutes')
       const closingSoonTime = closeTime.clone().add(-30, 'minutes')
 
-      if (now.isBetween(openingSoonTime, openTime)) {
+      if (isBetween(openingSoonTime, now, openTime)) {
         return 'opening_soon'
-      } else if (now.isBetween(closingSoonTime, closeTime)) {
+      } else if (isBetween(closingSoonTime, now, closeTime)) {
         return 'closing_soon'
-      } else if (now.isBetween(openTime, closeTime)) {
+      } else if (isBetween(openTime, now, closeTime)) {
         return 'open'
       }
 
