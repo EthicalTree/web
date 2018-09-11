@@ -1,0 +1,39 @@
+@import 'variables.sass'
+
+.react-phone-number-input
+  .rrui__select__selected-label
+    overflow: visible
+
+  .rrui__select--collapsed
+    position: absolute
+    left: $space-2
+    z-index: 1
+
+  .rrui__input-element
+    border: none
+
+  .react-phone-number-input__icon
+    border: none
+    display: flex
+
+    img
+      vertical-align: inherit
+
+  .react-phone-number-input__phone
+    border: 1px solid #ced4da
+    border-radius: 5px
+    padding: 0.375rem 0.75rem
+    padding-left: 50px
+    font-size: 1rem
+    line-height: 1.5
+    height: inherit
+    font-weight: $font-light
+
+    &:focus
+      border: 1px solid $color-inverse
+
+    &::placeholder
+      font-weight: $font-light
+      opacity: 0.3
+
+

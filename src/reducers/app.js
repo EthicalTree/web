@@ -1,11 +1,8 @@
-import { getSavedCity } from '../utils/address'
-
 const defaultState = {
   isAppLoading: false,
   areEthicalitiesLoading: false,
   ethicalities: [],
   plans: [],
-  city: getSavedCity(),
 }
 
 const app = (state = defaultState, { type, data }) => {

@@ -1,22 +1,25 @@
 import store from 'store'
 
-import { setSearchLocation } from './search'
-
+import { updateWithSearchLocation } from './search'
 import { api, authenticate } from '../utils/api'
 import { trackPageView } from '../utils/ga'
-import { hasSavedLocation } from '../utils/address'
 import { assignBugsnagUser } from '../utils/bugsnag'
+
+import {
+  getGeoLocation,
+  getSavedSearchLocation,
+} from '../utils/location'
 
 export const initApp = (options = {}) => {
   const token = store.get('ETHICALTREE_AUTH_TOKEN')
   const { location } = options.queryParams
 
+  const savedLocation = getSavedSearchLocation()
+  const latlng = getGeoLocation()
+  const nearMe = savedLocation === 'nearme'
+
   return dispatch => {
     dispatch({ type: 'SET_LOADING', data: true })
-
-    if (location) {
-      dispatch(setSearchLocation(location, location))
-    }
 
     const requests = [
       api.get('/sessions'),
@@ -24,6 +27,7 @@ export const initApp = (options = {}) => {
       api.get('/v1/plans'),
     ]
 
+    // Set user
     if (token) {
       authenticate(token)
       requests.push(api.get('/users/current'))
@@ -32,19 +36,30 @@ export const initApp = (options = {}) => {
       trackPageView()
     }
 
+    // Set location
+    if (location) {
+      requests.push(api.get(`/v1/locations?name=${location}`))
+    } else if (savedLocation && latlng && nearMe) {
+      requests.push(api.get(`/v1/locations?name=${latlng.lat},${latlng.lng}`))
+    } else if (savedLocation && !nearMe) {
+      requests.push(api.get(`/v1/locations/${savedLocation}`))
+    } else {
+      requests.push(new Promise(resolve => resolve({ data: null })))
+    }
+
     Promise.all(requests)
       .then(
-        api.spread((s, e, p, u) => {
+        api.spread((s, e, p, u, l) => {
           const sessionData = s.data
           const ethicalitiesData = e.data
           const plans = p.data
           const { user } = u.data
-          const { location } = sessionData
+          const location = l.data
 
-          if (!hasSavedLocation() && location && location.directoryLocation) {
-            const { city, directoryLocation } = location
-            dispatch(setSearchLocation(directoryLocation, city))
-          }
+          dispatch(updateWithSearchLocation({
+            ...location,
+            nearMe
+          }))
 
           dispatch({ type: 'SET_SESSION_INFO', data: sessionData })
           dispatch({ type: 'SET_ETHICALITIES', data: ethicalitiesData })

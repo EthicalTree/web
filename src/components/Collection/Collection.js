@@ -14,13 +14,14 @@ export const Collection = props => {
     return null
   }
 
-  const collectionLink = `/collections/${city.toLowerCase()}/${slug}`
+  const collectionLink = city ? `/collections/${city.toLowerCase()}/${slug}` : `/collections/_/${slug}`
+  const title = city ? `${name} (${city})` : name
 
   return (
     <div className="collection">
       <div className="collection-title-title d-flex align-items-center">
         <h4 className="list-name">
-          {name} ({city})
+          {title}
         </h4>
 
         <span className="divider">|</span>
@@ -56,7 +57,7 @@ export const Collection = props => {
 }
 
 Collection.propTypes = {
-  city: PropTypes.string.isRequired,
+  city: PropTypes.string,
   id: PropTypes.number.isRequired,
   listings: PropTypes.array.isRequired,
   location: PropTypes.object,

@@ -51,7 +51,7 @@ class SearchResultsPage extends React.Component {
     const query = search.query
     const ethicalities = params.ethicalities || search.selectedEthicalities
     const openNow = search.openNow
-    const location = params.location || search.location
+    const location = params.location || search.location.name
     const page = params.page || search.currentPage
 
     let paramsObj = {
@@ -126,18 +126,30 @@ class SearchResultsPage extends React.Component {
   componentDidUpdate() {
     const { dispatch, search } = this.props
 
+    const {
+      currentPage,
+      selectedEthicalities,
+      location,
+      nelat,
+      nelng,
+      swlat,
+      swlng,
+      openNow,
+      query,
+    } = search
+
     if (search.isPending) {
       dispatch(
         performSearch({
-          query: search.query,
-          ethicalities: search.selectedEthicalities,
-          open_now: search.openNow,
-          location: search.location,
-          page: search.currentPage,
-          nelat: search.nelat,
-          nelng: search.nelng,
-          swlat: search.swlat,
-          swlng: search.swlng,
+          query,
+          ethicalities: selectedEthicalities,
+          open_now: openNow,
+          location,
+          page: currentPage,
+          nelat,
+          nelng,
+          swlat,
+          swlng,
         })
       )
 
@@ -176,7 +188,7 @@ class SearchResultsPage extends React.Component {
         <div className="location-not-found">
           <h4>Oh No!</h4>
           {`The location "${
-            search.location
+            search.location.name
           }" could not be found. If you haven't already, try including the city and country as well!`}
         </div>
       )
@@ -206,7 +218,7 @@ class SearchResultsPage extends React.Component {
           handleMarkerMouseOver={slug =>
             dispatch({ type: 'SET_SEARCH_RESULT_HOVER', data: slug })
           }
-          handleMarkerMouseOut={slug =>
+          handleMarkerMouseOut={() =>
             dispatch({
               type: 'SET_SEARCH_RESULT_HOVER',
               data: search.selectedResult,
@@ -230,17 +242,22 @@ class SearchResultsPage extends React.Component {
           overlay={this.getOverlay()}
           mapHeight={mapHeight}
           scrollTop={scrollTop}
+          session={session}
         />
       </React.Fragment>
     )
   }
 
   render() {
-    const { dispatch, search, user } = this.props
+    const { dispatch, search } = this.props
 
     const title = search.query
-      ? `Search for "${search.query}" in ${user.city} · EthicalTree`
-      : `Search in ${user.city} · EthicalTree`
+      ? `Search for "${search.query}" in ${search.location.city} · EthicalTree`
+      : `Search in ${search.location.city} · EthicalTree`
+
+    const description = search.query
+      ? `Search for "${search.query}". Best of ${search.location.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
+      : `Best of ${search.location.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
 
     return (
       <Loader fixed={true} loading={search.isSearchLoading}>
@@ -248,9 +265,7 @@ class SearchResultsPage extends React.Component {
           <title>{title}</title>
           <meta
             name="description"
-            content={`Search for "${search.query}". Best of ${
-              user.city
-            }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
+            content={description}
           />
         </Helmet>
 

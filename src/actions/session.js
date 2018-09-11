@@ -10,7 +10,9 @@ export const login = data => {
     api
       .post('/login', { auth: data })
       .then(response => {
-        if (!response.data.jwt) {
+        if (response.data.error === 'user-not-confirmed') {
+          history.push(`/verify-email?email=${data.email}`)
+        } else if (!response.data.jwt) {
           const errors = response.data.errors || [
             'Invalid email/password combination',
           ]
@@ -21,6 +23,7 @@ export const login = data => {
 
           dispatch({ type: 'LOGIN', data: response.data })
           dispatch({ type: 'CLOSE_MODAL' })
+
           dispatch(getCurrentUser())
         }
       })
@@ -136,7 +139,9 @@ export const signup = data => {
         lastName: data.lastName,
         password: data.password,
         passwordConfirmation: data.confirmPassword,
-      },
+        contactNumber: data.contactNumber,
+        position: data.position
+      }
     }
 
     api
@@ -149,9 +154,10 @@ export const signup = data => {
           dispatch({ type: 'CLOSE_MODAL' })
 
           if (data.listingSlug) {
-            dispatch({ type: 'OPEN_MODAL', data: 'login' })
-          } else {
-            dispatch({ type: 'OPEN_MODAL', data: 'verify-email' })
+            dispatch(login(data))
+          }
+          else {
+            history.push(`/verify-email?email=${data.email}`)
           }
         }
       })
@@ -166,7 +172,7 @@ export const verifyEmail = data => {
     dispatch({ type: 'SET_VERIFY_EMAIL_LOADING', data: true })
 
     api
-      .post('/confirm_email', { token: data.token })
+      .post('/confirm_email', { email: data.email, token: data.token })
       .then(response => {
         if (response.data.errors) {
           dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })
@@ -174,6 +180,7 @@ export const verifyEmail = data => {
           dispatch({ type: 'VERIFY_EMAIL' })
           dispatch({ type: 'OPEN_MODAL', data: 'login' })
           dispatch({ type: 'SET_MODAL_ERRORS', data: null })
+          history.push('/')
           dispatch({
             type: 'SET_LOGIN_INFO',
             data:
@@ -211,8 +218,10 @@ export const getCurrentUser = () => {
 
 export const getSessionInformation = () => {
   return dispatch => {
+    dispatch({ type: 'SET_LOADING', data: true })
     api.get('/sessions').then(response => {
       dispatch({ type: 'SET_SESSION_INFO', data: response.data })
+      dispatch({ type: 'SET_LOADING', data: false })
     })
   }
 }
@@ -220,7 +229,11 @@ export const getSessionInformation = () => {
 export const openClaimListingSignup = (listingSlug, claimId) => {
   return dispatch => {
     dispatch({ type: 'OPEN_MODAL', data: 'signup' })
-    dispatch({ type: 'UPDATE_MODAL_DATA', data: { claimId, listingSlug } })
+    dispatch({ type: 'UPDATE_MODAL_DATA', data: {
+      claimId,
+      isBusinessOwnerSignup: true,
+      listingSlug,
+    }})
 
     dispatch({
       type: 'SET_MODAL_INFO_MESSAGES',

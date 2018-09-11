@@ -43,10 +43,11 @@ const Slider = props => {
 
   return (
     <SlickSlider
+      key={initialSlide}
       afterChange={props.afterChange}
       nextArrow={<Next />}
       prevArrow={<Prev />}
-      dots={false}
+      dots={true}
       infinite={true}
       initialSlide={initialSlide >= 0 ? initialSlide : 0}
       slidesToShow={1}

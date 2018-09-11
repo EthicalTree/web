@@ -3,6 +3,7 @@ import './FrontPage.css'
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 import { Container, Col } from 'reactstrap'
 
@@ -19,8 +20,24 @@ export class FrontPage extends React.Component {
     const ethicalities = app.ethicalities || []
     const selectedEthicalities = search.selectedEthicalities || []
 
+    const title = search.location ?
+      `EthicalTree ${search.location.city} · Best Local Restaurants, Shops, and More` :
+      "EthicalTree · Best Local Restaurants, Shops, and More"
+
+    const description = search.location ?
+      `Best of ${search.location.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.` :
+      "Best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian."
+
     return (
       <div className="front-page">
+        <Helmet>
+          <title>{title}</title>
+          <meta
+            name="description"
+            content={description}
+          />
+        </Helmet>
+
         <Container className="text-center">
           <Col className="headline" xs="12">
             <h1>

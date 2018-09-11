@@ -1,5 +1,4 @@
 import React from 'react'
-import store from '../../../store/store'
 import { withRouter } from 'react-router-dom'
 import { Button, Col } from 'reactstrap'
 import { InfoWindow } from 'react-google-maps'
@@ -7,6 +6,7 @@ import { InfoWindow } from 'react-google-maps'
 import { Map } from '../../Maps/Map'
 import { Markers, PinMarker } from '../../Maps/Markers'
 import { MapControl } from '../../Maps/MapControl'
+import { getGeoLocation } from '../../../utils/location'
 
 export class ResultsMap extends React.Component {
   updateMapPosition = () => {
@@ -115,11 +115,9 @@ export class ResultsMap extends React.Component {
       mapEl,
     } = this.props
 
-    const session = store.getState().session
-    const location = session.location || {}
-
-    const hiddenClass = resultMode === 'listing' ? 'd-none d-xl-block' : ''
     const { showYouAreHere } = this.state
+    const location = getGeoLocation()
+    const hiddenClass = resultMode === 'listing' ? 'd-none d-xl-block' : ''
 
     const markers = (
       <Markers
@@ -150,22 +148,19 @@ export class ResultsMap extends React.Component {
               gestureHandling: 'cooperative',
             }}>
             {markers}
-            {location.latitude &&
-              location.longitude && (
-                <React.Fragment>
-                  <PinMarker
-                    location={location}
-                    onClick={() =>
-                      this.setState({ showYouAreHere: !showYouAreHere })
-                    }>
-                    {showYouAreHere && (
-                      <InfoWindow>
-                        <span>You are here</span>
-                      </InfoWindow>
-                    )}
-                  </PinMarker>
-                </React.Fragment>
-              )}
+            {location && (
+              <PinMarker
+                location={location}
+                onClick={() =>
+                  this.setState({ showYouAreHere: !showYouAreHere })
+                }>
+                {showYouAreHere && (
+                  <InfoWindow>
+                    <span>You are here</span>
+                  </InfoWindow>
+                )}
+              </PinMarker>
+            )}
             {overlay}
             {this.renderSearchTools()}
           </Map>

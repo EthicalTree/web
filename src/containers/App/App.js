@@ -1,7 +1,6 @@
 import React from 'react'
 import querystring from 'querystring'
 import { Provider, connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
 
 import { ConnectedRouter } from 'react-router-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
@@ -12,6 +11,7 @@ import { Footer } from '../../components/Footer'
 import { ScrollToTop } from '../../components/ScrollToTop'
 import { FacebookPixel } from '../../components/ThirdParty'
 import { DevTools } from '../../components/DevTools'
+import { VerifyEmail } from '../../containers/VerifyEmail'
 
 import Modals from '../Modals'
 
@@ -20,6 +20,7 @@ import { initApp } from '../../actions/app'
 import history from '../../utils/history'
 import { split } from '../../utils/codesplitting'
 import BugsnagErrorBoundary from '../../utils/bugsnag'
+import { isToolbarEnabled } from '../../utils/config'
 
 class InnerApp extends React.Component {
   handleSkip = () => {
@@ -27,47 +28,34 @@ class InnerApp extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch, location, user } = this.props
+    const { dispatch, location } = this.props
     const queryParams = querystring.parse(location.search.slice(1))
 
     dispatch(
       initApp({
         queryParams: {
           ...queryParams,
-          location:
-            queryParams.location !== user.city ? queryParams.location : null,
+          location: queryParams.location,
         },
       })
     )
   }
 
   shouldComponentUpdate(nextProps) {
-    const appLoadingChanged =
-      this.props.app.isAppLoading !== nextProps.app.isAppLoading
-    const pageChanged =
-      this.props.location.pathname !== nextProps.location.pathname
-    const userChanged = this.props.session.user !== nextProps.session.user
+    const { app, location, session } = this.props
+
+    const appLoadingChanged = app.isAppLoading !== nextProps.app.isAppLoading
+    const pageChanged = location.pathname !== nextProps.location.pathname
+    const userChanged = session.user !== nextProps.session.user
 
     return appLoadingChanged || pageChanged || userChanged
   }
 
   render() {
-    const { app, user } = this.props
+    const { app } = this.props
 
     return (
       <div className="app">
-        <Helmet>
-          <title>{`EthicalTree ${
-            user.city
-          } · Best Local Restaurants, Shops, and More`}</title>
-          <meta
-            name="description"
-            content={`Best of ${
-              user.city
-            }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
-          />
-        </Helmet>
-
         <Loader loading={app.isAppLoading}>
           <Header handleSkip={this.handleSkip} />
 
@@ -77,6 +65,12 @@ class InnerApp extends React.Component {
                 exact
                 path="/"
                 component={split(() => import('../FrontPage/FrontPage'))}
+              />
+
+              <Route
+                exact
+                path="/verify-email"
+                component={VerifyEmail}
               />
 
               <Route
@@ -169,7 +163,7 @@ class InnerApp extends React.Component {
           <Modals />
         </Loader>
 
-        {process.env.NODE_ENV === 'development' && <DevTools />}
+        {isToolbarEnabled() && <DevTools />}
       </div>
     )
   }
@@ -178,7 +172,6 @@ class InnerApp extends React.Component {
 const select = state => ({
   app: state.app,
   session: state.session,
-  user: state.user,
 })
 
 InnerApp = withRouter(connect(select)(InnerApp))
