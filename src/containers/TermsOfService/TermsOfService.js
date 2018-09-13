@@ -5,15 +5,15 @@ import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 import { Container } from 'reactstrap'
 
-export const TermsOfService = props => {
+export const TermsOfService = () => {
   return (
     <div className="terms-of-service">
       <Helmet>
-        <title>{`Terms of Service · EthicalTree`}</title>
-        <meta name="description" content={`EthicalTree Terms of Service`} />
+        <title>{'Terms of Service · EthicalTree'}</title>
+        <meta name="description" content={'EthicalTree Terms of Service'} />
       </Helmet>
       <Container>
-        <h1 className="mt-5">Terms of Service ("Terms")</h1>
+        <h1 className="mt-5">Terms of Service</h1>
 
         <small>Last updated: October 21, 2017</small>
 

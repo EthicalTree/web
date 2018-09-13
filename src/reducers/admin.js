@@ -12,7 +12,7 @@ const defaultState = {
 
 const admin = (state = defaultState, { type, data }) => {
   switch (type) {
-    case 'UPDATE_ADMIN_USER':
+    case 'UPDATE_ADMIN_USER': {
       const user = {
         ...state.users.find(u => u.id === data.id),
         ...data,
@@ -22,6 +22,7 @@ const admin = (state = defaultState, { type, data }) => {
         ...state,
         users: [...state.users.filter(u => u.id !== data.id), user],
       }
+    }
     case 'SET_ADMIN_FILTER':
       return { ...state, filters: data }
     case 'SET_ADMIN_SEARCH_QUERY':

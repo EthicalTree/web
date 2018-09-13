@@ -29,7 +29,7 @@ export class Featured extends React.Component {
   }
 
   render() {
-    const { dispatch, search, session, xxl, ...rest } = this.props
+    const { search, session, xxl, ...rest } = this.props
 
     return (
       <Loader

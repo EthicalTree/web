@@ -28,7 +28,6 @@ const Markers = props => {
 
 Markers.propTypes = {
   listings: PropTypes.array,
-  addBounds: PropTypes.func,
   onMarkerClick: PropTypes.func,
   onMarkerMouseOver: PropTypes.func,
   onMarkerMouseOut: PropTypes.func,

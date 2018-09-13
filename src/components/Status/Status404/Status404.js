@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Status404 = props => {
+export const Status404 = () => {
   return (
     <div className="status-404 mt-5 text-center">
       <h2>Oh No!</h2>

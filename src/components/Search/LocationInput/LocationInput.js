@@ -2,7 +2,7 @@ import React from 'react'
 import { IconInput } from '../../Icon'
 
 const LocationInput = props => {
-  const { onClick, isLocationFocused, value, ...inputProps } = props
+  const { onClick, value, ...inputProps } = props
 
   return (
     <IconInput
@@ -12,7 +12,7 @@ const LocationInput = props => {
       onClick={onClick}
       inputProps={{
         ...inputProps,
-        value: value || ''
+        value: value || '',
       }}
     />
   )

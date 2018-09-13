@@ -48,6 +48,6 @@ export const trackEvent = options => {
   })
 }
 
-history.listen(location => {
+history.listen(() => {
   trackPageView()
 })

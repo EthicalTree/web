@@ -120,7 +120,7 @@ class AccountSettings extends React.Component {
                       <Button
                         block
                         color="default"
-                        onClick={e =>
+                        onClick={() =>
                           dispatch({
                             type: 'RESET_PERSONAL_DETAILS',
                             data: session.user,
@@ -229,7 +229,7 @@ class AccountSettings extends React.Component {
                         <Button
                           block
                           color="default"
-                          onClick={e =>
+                          onClick={() =>
                             dispatch({
                               type: 'SET_EDITING_ACCOUNT_PASSWORD',
                               data: false,

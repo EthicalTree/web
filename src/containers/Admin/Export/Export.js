@@ -171,7 +171,8 @@ export class Export extends React.Component {
 
           <p className="mt-3">
             <i>
-              NOTE: Try to limit the use of this download as it's hard on the servers right now :)
+              NOTE: Try to limit the use of this download as it's hard on the
+              servers right now :)
             </i>
           </p>
         </div>

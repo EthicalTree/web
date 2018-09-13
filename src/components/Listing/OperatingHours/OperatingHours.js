@@ -105,7 +105,6 @@ class OperatingHours extends React.PureComponent {
 }
 
 OperatingHours.propTypes = {
-  status: PropTypes.oneOf(['opening_soon', 'open', 'closing_soon', 'closed']),
   hours: PropTypes.array,
   canEdit: PropTypes.bool,
 }
