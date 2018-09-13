@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Twitter = props => {
+const Twitter = () => {
   return (
     <svg
       version="1.1"

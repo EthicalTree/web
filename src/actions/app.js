@@ -5,10 +5,7 @@ import { api, authenticate } from '../utils/api'
 import { trackPageView } from '../utils/ga'
 import { assignBugsnagUser } from '../utils/bugsnag'
 
-import {
-  getGeoLocation,
-  getSavedSearchLocation,
-} from '../utils/location'
+import { getGeoLocation, getSavedSearchLocation } from '../utils/location'
 
 export const initApp = (options = {}) => {
   const token = store.get('ETHICALTREE_AUTH_TOKEN')
@@ -56,10 +53,12 @@ export const initApp = (options = {}) => {
           const { user } = u.data
           const location = l.data
 
-          dispatch(updateWithSearchLocation({
-            ...location,
-            nearMe
-          }))
+          dispatch(
+            updateWithSearchLocation({
+              ...location,
+              nearMe,
+            })
+          )
 
           dispatch({ type: 'SET_SESSION_INFO', data: sessionData })
           dispatch({ type: 'SET_ETHICALITIES', data: ethicalitiesData })

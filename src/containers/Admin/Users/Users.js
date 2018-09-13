@@ -69,7 +69,7 @@ export class Users extends React.Component {
                 <td>{u.contactNumber}</td>
                 <td>{u.position}</td>
                 <td>
-                  {!!u.confirmedAt ? (
+                  {u.confirmedAt ? (
                     <Icon iconKey="check" />
                   ) : (
                     <Icon iconKey="cross" />

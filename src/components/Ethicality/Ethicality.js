@@ -101,7 +101,7 @@ export const Ethicality = props => {
 export const EthicalityIcon = props => {
   const { name, uuid, className } = props
   const Icon = icons[props.ethicalityKey]
-  const id = !!uuid ? `id-${uuid}` : undefined
+  const id = uuid ? `id-${uuid}` : undefined
   const newClassName = className ? className : ''
 
   return (

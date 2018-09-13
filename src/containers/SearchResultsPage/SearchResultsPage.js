@@ -158,8 +158,8 @@ class SearchResultsPage extends React.Component {
   }
 
   getOverlay() {
-    const { session } = this.props
-    const { selectedResult, listings, featured } = this.props.search
+    const { session, search } = this.props
+    const { selectedResult, listings, featured } = search
 
     if (selectedResult) {
       let listing = listings.find(r => r.slug === selectedResult)
@@ -256,17 +256,18 @@ class SearchResultsPage extends React.Component {
       : `Search in ${search.location.city} · EthicalTree`
 
     const description = search.query
-      ? `Search for "${search.query}". Best of ${search.location.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
-      : `Best of ${search.location.city}'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
+      ? `Search for "${search.query}". Best of ${
+          search.location.city
+        }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
+      : `Best of ${
+          search.location.city
+        }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
 
     return (
       <Loader fixed={true} loading={search.isSearchLoading}>
         <Helmet>
           <title>{title}</title>
-          <meta
-            name="description"
-            content={description}
-          />
+          <meta name="description" content={description} />
         </Helmet>
 
         <Col className="search-results-page">

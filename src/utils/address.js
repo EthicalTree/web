@@ -8,4 +8,3 @@ export const formatGetDirectionsUrl = (lat, lng) => {
 export const formatAddress = (street, city, province) => {
   return `${street}, ${city}, ${province}`
 }
-

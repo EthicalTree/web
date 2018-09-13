@@ -9,15 +9,6 @@ import { MapControl } from '../../Maps/MapControl'
 import { getGeoLocation } from '../../../utils/location'
 
 export class ResultsMap extends React.Component {
-  updateMapPosition = () => {
-    if (this.mapEl) {
-      this.setState({
-        mapHeight: this.getInnerHeight(),
-        scrollTop: document.getElementsByTagName('html')[0].scrollTop,
-      })
-    }
-  }
-
   handleBoundsChanged = () => {
     if (this.map) {
       this.setState({ boundsChanged: true })
@@ -44,7 +35,6 @@ export class ResultsMap extends React.Component {
     this.state = {
       boundsChanged: false,
       showYouAreHere: false,
-      scrollTop: 0,
     }
   }
 

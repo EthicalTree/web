@@ -68,7 +68,7 @@ const search = (state = defaultSearch, { type, data }) => {
 
       return {
         ...state,
-        featured: listings
+        featured: listings,
       }
     }
     case 'SET_FEATURED_LISTINGS_LOADING':

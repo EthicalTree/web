@@ -10,7 +10,7 @@ export default class CustomOverlayView extends OverlayView {
     const { mapPaneName } = this.props
     invariant(
       !!mapPaneName,
-      `OverlayView requires either props.mapPaneName or props.defaultMapPaneName but got %s`,
+      'OverlayView requires either props.mapPaneName or props.defaultMapPaneName but got %s',
       mapPaneName
     )
     // https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapPanes

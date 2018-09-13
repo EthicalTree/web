@@ -15,7 +15,7 @@ class Action extends React.Component {
     super(props)
 
     this.state = {
-      tooltipOpen: false
+      tooltipOpen: false,
     }
   }
 
@@ -45,7 +45,7 @@ class Action extends React.Component {
           onFocus={() => this.setState({ tooltipOpen: true })}
           onBlur={() => this.setState({ tooltipOpen: false })}
           iconKey={icon}
-          innerRef={target => this.target = target}
+          innerRef={target => (this.target = target)}
         />
 
         <span className="tooltip-container">
@@ -54,12 +54,10 @@ class Action extends React.Component {
               placement="bottom"
               isOpen={tooltipOpen}
               delay={0}
-              target={this.target}
-            >
+              target={this.target}>
               {action.title}
             </Tooltip>
           )}
-
         </span>
       </span>
     )
@@ -101,11 +99,7 @@ const ImageActions = props => {
 
         {canEdit && (
           <React.Fragment>
-            <Action
-              type="cover"
-              icon="cover_photo"
-              action={coverAction}
-            />
+            <Action type="cover" icon="cover_photo" action={coverAction} />
 
             <Action
               type="shift_previous"
@@ -121,11 +115,7 @@ const ImageActions = props => {
           </React.Fragment>
         )}
 
-        <Action
-          type="fullscreen"
-          icon="zoom_in"
-          action={fullScreenAction}
-        />
+        <Action type="fullscreen" icon="zoom_in" action={fullScreenAction} />
 
         {canEdit && (
           <React.Fragment>
@@ -135,12 +125,7 @@ const ImageActions = props => {
               action={repositionAction}
             />
 
-
-            <Action
-              type="delete"
-              icon="trash"
-              action={deleteAction}
-            />
+            <Action type="delete" icon="trash" action={deleteAction} />
 
             <S3Uploader
               accept="image/*"
@@ -358,7 +343,7 @@ ImageManager.propTypes = {
   imgStyle: PropTypes.object,
   repositionImages: PropTypes.bool,
   shiftPreviousAction: PropTypes.object,
-  shiftNextAction: PropTypes.object
+  shiftNextAction: PropTypes.object,
 }
 
 ImageManager.defaultProps = {
@@ -373,7 +358,7 @@ ImageManager.defaultProps = {
   images: [],
   repositionImages: false,
   shiftPreviousAction: {},
-  shiftNextAction: {}
+  shiftNextAction: {},
 }
 
 export default ImageManager

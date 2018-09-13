@@ -20,7 +20,6 @@ import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
 export class CollectionPage extends React.Component {
   state = {
     selectedResult: '',
-    hoveredResult: '',
     displayMode: 'listing',
   }
 
@@ -71,11 +70,17 @@ export class CollectionPage extends React.Component {
     const { dispatch, collection, session, search } = this.props
     const { selectedResult, displayMode } = this.state
 
-    const title = search.location ?
-      `${search.location.city}'s ${collection.name} - Best Local Restaurants, Shops and More · EthicalTree` :
-      `${collection.name} - Best Local Restaurants, Shops and More · EthicalTree`
+    const title = search.location
+      ? `${search.location.city}'s ${
+          collection.name
+        } - Best Local Restaurants, Shops and More · EthicalTree`
+      : `${
+          collection.name
+        } - Best Local Restaurants, Shops and More · EthicalTree`
 
-    const collectionTitle = search.location ? `${collection.name} (${search.location.city})` : `${collection.name}`
+    const collectionTitle = search.location
+      ? `${collection.name} (${search.location.city})`
+      : `${collection.name}`
 
     let headerStyles
 
@@ -109,9 +114,7 @@ export class CollectionPage extends React.Component {
                 })}
                 style={headerStyles}>
                 <div className="collection-banner">
-                  <h2 className="collection-title">
-                    {collectionTitle}
-                  </h2>
+                  <h2 className="collection-title">{collectionTitle}</h2>
 
                   {collection.description && (
                     <h5 className="collection-description">
@@ -183,15 +186,8 @@ export class CollectionPage extends React.Component {
                       !!selectedResult && selectedResult === slug ? null : slug
                     this.setState({
                       selectedResult: newSlug,
-                      hoveredResult: newSlug,
                     })
                   }}
-                  handleMarkerMouseOver={slug =>
-                    this.setState({ hoveredResult: slug })
-                  }
-                  handleMarkerMouseOut={() =>
-                    this.setState({ hoveredResult: '' })
-                  }
                   handleMapClick={() => {
                     setTimeout(() => {
                       this.setState({ selectedResult: '' })
@@ -225,7 +221,7 @@ export class CollectionPage extends React.Component {
 const select = state => ({
   collection: state.collection,
   session: state.session,
-  search: state.search
+  search: state.search,
 })
 
 export default connect(select)(CollectionPage)

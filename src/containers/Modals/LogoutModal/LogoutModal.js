@@ -12,7 +12,7 @@ const LogoutModal = props => {
       className="logout-modal small-modal"
       contentLabel="Logout"
       loading={false}
-      onConfirm={e => {
+      onConfirm={() => {
         dispatch(logout())
       }}
       modalName="logout"
@@ -21,6 +21,6 @@ const LogoutModal = props => {
   )
 }
 
-const select = state => ({})
+const select = () => ({})
 
 export default connect(select)(LogoutModal)

@@ -6,7 +6,7 @@ import {
   NEAR_ME_LOCATION,
   getGeoLocation,
   processLocation,
-  setSavedSearchLocation
+  setSavedSearchLocation,
 } from '../utils/location'
 
 import { trackEvent } from '../utils/ga'
@@ -40,12 +40,13 @@ export const performSearch = (params = {}) => {
 export const updateWithSearchLocation = location => {
   return dispatch => {
     if (location && location.id) {
-      const searchLocation = location.nearMe ? {...location, ...NEAR_ME_LOCATION} : location
+      const searchLocation = location.nearMe
+        ? { ...location, ...NEAR_ME_LOCATION }
+        : location
 
       setSavedSearchLocation(location.id)
       dispatch({ type: 'SET_SEARCH_LOCATION', data: searchLocation })
-    }
-    else {
+    } else {
       dispatch({ type: 'SET_SEARCH_LOCATION', data: DEFAULT_LOCATION })
     }
   }
@@ -61,21 +62,21 @@ export const setSearchLocation = ({ id, location, nearMe }) => {
       url = `/v1/locations?name=${latlng.lat},${latlng.lng}`
     }
 
-    api.get(url)
-      .then(({ data }) => {
-        if (nearMe && latlng) {
-          dispatch(updateWithSearchLocation({
+    api.get(url).then(({ data }) => {
+      if (nearMe && latlng) {
+        dispatch(
+          updateWithSearchLocation({
             ...data,
             ...latlng,
-            ...NEAR_ME_LOCATION
-          }))
-        }
-        else {
-          dispatch(updateWithSearchLocation(data))
-        }
+            ...NEAR_ME_LOCATION,
+          })
+        )
+      } else {
+        dispatch(updateWithSearchLocation(data))
+      }
 
-        dispatch({ type: 'SET_SEARCH_PENDING', data: true })
-      })
+      dispatch({ type: 'SET_SEARCH_PENDING', data: true })
+    })
   }
 }
 
@@ -119,7 +120,6 @@ export const getFeaturedListings = ({ count, location }) => {
   }
 }
 
-
-export const getCategories = query => {
-  return dispatch => {}
+export const getCategories = () => {
+  return () => {}
 }

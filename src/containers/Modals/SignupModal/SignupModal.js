@@ -65,7 +65,9 @@ class SignupModal extends React.Component {
                     <Input
                       autoFocus
                       value={email}
-                      onChange={e => { this.setState({ email: e.target.value }) }}
+                      onChange={e => {
+                        this.setState({ email: e.target.value })
+                      }}
                       type="email"
                       name="email"
                       id="signupEmail"
@@ -81,7 +83,9 @@ class SignupModal extends React.Component {
                     <Label for="firstName">First Name</Label>
                     <Input
                       value={firstName}
-                      onChange={e => { this.setState({ firstName: e.target.value }) }}
+                      onChange={e => {
+                        this.setState({ firstName: e.target.value })
+                      }}
                       type="text"
                       name="firstName"
                       id="firstName"
@@ -95,7 +99,9 @@ class SignupModal extends React.Component {
                     <Label for="lastName">Last Name</Label>
                     <Input
                       value={lastName}
-                      onChange={e => { this.setState({ lastName: e.target.value }) }}
+                      onChange={e => {
+                        this.setState({ lastName: e.target.value })
+                      }}
                       type="text"
                       name="lastName"
                       id="lastName"
@@ -105,14 +111,16 @@ class SignupModal extends React.Component {
                 </Col>
               </Row>
 
-              {modalData.isBusinessOwnerSignup &&
+              {modalData.isBusinessOwnerSignup && (
                 <Row>
                   <Col sm="6">
                     <FormGroup>
                       <Label for="contactNumber">Contact Number *</Label>
                       <PhoneNumber
                         value={contactNumber}
-                        onChange={contactNumber => this.setState({ contactNumber })}
+                        onChange={contactNumber =>
+                          this.setState({ contactNumber })
+                        }
                       />
                     </FormGroup>
                   </Col>
@@ -122,7 +130,9 @@ class SignupModal extends React.Component {
                       <Label for="position">Position</Label>
                       <Input
                         value={position}
-                        onChange={e => { this.setState({ position: e.target.value }) }}
+                        onChange={e => {
+                          this.setState({ position: e.target.value })
+                        }}
                         type="text"
                         name="position"
                         id="position"
@@ -131,7 +141,7 @@ class SignupModal extends React.Component {
                     </FormGroup>
                   </Col>
                 </Row>
-              }
+              )}
 
               <Row>
                 <Col sm="6">
@@ -139,7 +149,9 @@ class SignupModal extends React.Component {
                     <Label for="signupPassword">Password *</Label>
                     <Input
                       value={password}
-                      onChange={e => { this.setState({ password: e.target.value }) }}
+                      onChange={e => {
+                        this.setState({ password: e.target.value })
+                      }}
                       type="password"
                       name="password"
                       id="signupPassword"
@@ -155,7 +167,9 @@ class SignupModal extends React.Component {
                     </Label>
                     <Input
                       value={confirmPassword}
-                      onChange={e => { this.setState({ confirmPassword: e.target.value }) }}
+                      onChange={e => {
+                        this.setState({ confirmPassword: e.target.value })
+                      }}
                       type="password"
                       name="confirmPassword"
                       id="signupConfirmPassword"
@@ -165,10 +179,7 @@ class SignupModal extends React.Component {
                 </Col>
               </Row>
 
-              <PasswordStrength
-                email={email}
-                password={password}
-              />
+              <PasswordStrength email={email} password={password} />
 
               <FormGroup className="mt-4">
                 <Button block color="primary" role="button" type="submit">
