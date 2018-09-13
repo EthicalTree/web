@@ -14,7 +14,7 @@ const account = (state = defaultState, action) => {
       return { ...state, editPersonalDetailsErrors: action.data }
     case 'SET_EDIT_ACCOUNT_PASSWORD_ERRORS':
       return { ...state, editPasswordErrors: action.data }
-    case 'RESET_PERSONAL_DETAILS':
+    case 'RESET_PERSONAL_DETAILS': {
       const { firstName, lastName } = action.data
 
       return {
@@ -23,6 +23,7 @@ const account = (state = defaultState, action) => {
         lastName,
         isPersonalDetailsDirty: false,
       }
+    }
     case 'SET_EDITING_ACCOUNT_PASSWORD':
       return {
         ...state,

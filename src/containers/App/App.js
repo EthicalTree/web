@@ -67,11 +67,7 @@ class InnerApp extends React.Component {
                 component={split(() => import('../FrontPage/FrontPage'))}
               />
 
-              <Route
-                exact
-                path="/verify-email"
-                component={VerifyEmail}
-              />
+              <Route exact path="/verify-email" component={VerifyEmail} />
 
               <Route
                 exact

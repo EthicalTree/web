@@ -45,14 +45,15 @@ class EditDescriptionModal extends React.Component {
         contentLabel="Edit Listing"
         onSave={this.submit.bind(this)}
         saveDisabled={!validPhone}
-        modalName="edit-description"
-      >
+        modalName="edit-description">
         <Row>
           <Col className="mb-4" xs={12} md={6}>
             <Label for="listingTitle">Title</Label>
             <Input
               defaultValue={title || listing.title}
-              onChange={e => {this.setState({ title: e.target.value })}}
+              onChange={e => {
+                this.setState({ title: e.target.value })
+              }}
               type="text"
               name="listingTitle"
               id="listingTitle"
@@ -63,7 +64,9 @@ class EditDescriptionModal extends React.Component {
             <Label for="listingWebsite">Website</Label>
             <Input
               defaultValue={website || listing.website}
-              onChange={e => {this.setState({ website: e.target.value })}}
+              onChange={e => {
+                this.setState({ website: e.target.value })
+              }}
               type="text"
               name="listingWebsite"
               id="listingWebsite"
@@ -88,7 +91,9 @@ class EditDescriptionModal extends React.Component {
             <Input
               autoFocus
               defaultValue={bio || listing.bio}
-              onChange={e => { this.setState({ bio: e.target.value })}}
+              onChange={e => {
+                this.setState({ bio: e.target.value })
+              }}
               type="textarea"
               name="listingDescription"
               id="listingDescription"

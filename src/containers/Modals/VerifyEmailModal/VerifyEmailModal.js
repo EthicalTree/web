@@ -7,7 +7,6 @@ import { Form, FormGroup, Label, Input, Button, Row, Col } from 'reactstrap'
 import { verifyEmail } from '../../../actions/session'
 
 class VerifyEmailModal extends React.Component {
-
   submit = e => {
     const { dispatch, modal } = this.props
     const { modalData } = modal
@@ -77,7 +76,7 @@ class VerifyEmailModal extends React.Component {
 const select = state => {
   return {
     session: state.session,
-    modal: state.modal
+    modal: state.modal,
   }
 }
 

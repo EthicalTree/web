@@ -9,7 +9,7 @@ export const changePersonalDetails = details => {
     dispatch({ type: 'SET_LOADING', data: true })
 
     api
-      .put(`/users/current`, user)
+      .put('/users/current', user)
       .then(response => {
         if (response.data.errors) {
           dispatch({

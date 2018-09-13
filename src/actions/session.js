@@ -42,7 +42,7 @@ export const logout = () => {
     dispatch({ type: 'SET_USER_LOADING', data: true })
     dispatch({ type: 'LOGOUT' })
     dispatch({ type: 'CLOSE_MODAL' })
-    history.push(`/`)
+    history.push('/')
     setTimeout(() => {
       dispatch({ type: 'SET_USER_LOADING', data: false })
     }, 500)
@@ -112,7 +112,7 @@ export const changePassword = (data, token, history) => {
             data: response.data.errors,
           })
         } else {
-          history.push(`/`)
+          history.push('/')
           dispatch({
             type: 'SET_LOGIN_INFO',
             data: 'Your password has been successfully reset!',
@@ -140,8 +140,8 @@ export const signup = data => {
         password: data.password,
         passwordConfirmation: data.confirmPassword,
         contactNumber: data.contactNumber,
-        position: data.position
-      }
+        position: data.position,
+      },
     }
 
     api
@@ -155,8 +155,7 @@ export const signup = data => {
 
           if (data.listingSlug) {
             dispatch(login(data))
-          }
-          else {
+          } else {
             history.push(`/verify-email?email=${data.email}`)
           }
         }
@@ -229,11 +228,14 @@ export const getSessionInformation = () => {
 export const openClaimListingSignup = (listingSlug, claimId) => {
   return dispatch => {
     dispatch({ type: 'OPEN_MODAL', data: 'signup' })
-    dispatch({ type: 'UPDATE_MODAL_DATA', data: {
-      claimId,
-      isBusinessOwnerSignup: true,
-      listingSlug,
-    }})
+    dispatch({
+      type: 'UPDATE_MODAL_DATA',
+      data: {
+        claimId,
+        isBusinessOwnerSignup: true,
+        listingSlug,
+      },
+    })
 
     dispatch({
       type: 'SET_MODAL_INFO_MESSAGES',

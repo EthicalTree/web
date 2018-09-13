@@ -50,9 +50,10 @@ const session = (state = defaultState, action) => {
       return { ...state, userLoading: action.data }
     case 'SET_CURRENT_USER':
       return { ...state, user: action.data }
-    case 'UPDATE_CURRENT_USER':
-      let user = { ...state.user, ...action.data }
+    case 'UPDATE_CURRENT_USER': {
+      const user = { ...state.user, ...action.data }
       return { ...state, user }
+    }
     default:
       return state
   }

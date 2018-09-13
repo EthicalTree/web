@@ -14,10 +14,13 @@ import { LocationInput } from '../LocationInput'
 
 import { api } from '../../../utils/api'
 import { setSearchLocation } from '../../../actions/search'
-import { setGeoLocation, DEFAULT_LOCATION, NEAR_ME_LOCATION } from '../../../utils/location'
+import {
+  setGeoLocation,
+  DEFAULT_LOCATION,
+  NEAR_ME_LOCATION,
+} from '../../../utils/location'
 
 class Search extends React.Component {
-
   fetchLocations = queryObj => {
     const cached = this.locationCache[queryObj.query]
 
@@ -96,7 +99,7 @@ class Search extends React.Component {
     this.locationCache = {}
   }
 
-  focusLocation = e => {
+  focusLocation = () => {
     this.setState({ location: '' })
     this.locationInput.focus()
     this.fetchLocations({ query: '' })
@@ -105,7 +108,7 @@ class Search extends React.Component {
   handleLocationChange = location => {
     this.setState({
       location,
-      nearMe: location === 'Near Me'
+      nearMe: location === 'Near Me',
     })
   }
 
@@ -119,11 +122,7 @@ class Search extends React.Component {
   render() {
     const { search } = this.props
 
-    const {
-      isLocationFocused,
-      location,
-      locationSuggestions,
-    } = this.state
+    const { isLocationFocused, location, locationSuggestions } = this.state
 
     let { query, dirty } = this.state
 

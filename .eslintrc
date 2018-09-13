@@ -1,0 +1,51 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+  ],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "impliedStrict": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "rules": {
+    "arrow-spacing": [2, {"before": true, "after": true}],
+    "keyword-spacing": [2, { "before": true, "after": true}],
+    "no-trailing-spaces": 2,
+    "no-unused-vars": 2,
+    "no-class-assign": 0,
+    "react/destructuring-assignment": 1,
+    "react/jsx-key": 2,
+    "react/display-name": 0,
+    "react/no-deprecated": 2,
+    "react/no-direct-mutation-state": 2,
+    "react/no-multi-comp": 1,
+    "react/no-unused-prop-types": 2,
+    "react/no-unused-state": 2,
+    "react/no-unescaped-entities": 0,
+    "react/prop-types": 0,
+    "react/self-closing-comp": 2,
+    "semi": [2, "never"],
+  },
+  "plugins": [
+    "react",
+    "babel",
+    "prettier"
+  ],
+  "settings": {
+    "react": {
+      "version": "16.0.0"
+    }
+  }
+}

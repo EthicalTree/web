@@ -137,8 +137,8 @@ class EditLocationModal extends React.Component {
                 zoomControl: true,
                 draggableCursor: 'pointer',
               }}
-              containerElement={<div style={{ height: `100%` }} />}
-              mapElement={<div style={{ height: `100%` }} />}>
+              containerElement={<div style={{ height: '100%' }} />}
+              mapElement={<div style={{ height: '100%' }} />}>
               {marker}
             </Map>
           </Col>

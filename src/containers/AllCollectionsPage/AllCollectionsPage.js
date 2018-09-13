@@ -44,9 +44,7 @@ export class AllCollectionsPage extends React.Component {
       ? `${city} Collections - Best Local Restaurants, Shops and More · EthicalTree`
       : 'Collections - Best Local Restaurants, Shops and More · EthicalTree'
 
-    const collectionsTitle = city
-      ? `Collections (${city})`
-      : 'Collections'
+    const collectionsTitle = city ? `Collections (${city})` : 'Collections'
 
     return (
       <div className="all-collections-page">
@@ -55,7 +53,9 @@ export class AllCollectionsPage extends React.Component {
             <title>{title}</title>
             <meta
               name="description"
-              content={`Discover the best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`}
+              content={
+                'Discover the best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.'
+              }
             />
           </Helmet>
 
@@ -82,7 +82,11 @@ export class AllCollectionsPage extends React.Component {
                   key={c.id}
                   className="collection"
                   style={extraStyle}
-                  to={city ? `/collections/${city}/${c.slug}` : `/collections/_/${c.slug}`}>
+                  to={
+                    city
+                      ? `/collections/${city}/${c.slug}`
+                      : `/collections/_/${c.slug}`
+                  }>
                   <span className="collection-label">{c.name}</span>
                 </Link>
               )

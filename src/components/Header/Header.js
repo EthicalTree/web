@@ -31,15 +31,7 @@ import { trackEvent } from '../../utils/ga'
 import { toggleSearchEthicalities } from '../../actions/search'
 
 const Header = props => {
-  const {
-    dispatch,
-    app,
-    handleSkip,
-    header,
-    location,
-    search,
-    session,
-  } = props
+  const { dispatch, app, handleSkip, header, location, search, session } = props
 
   const isFixed = isCurrentPath('/s/')
   const hasSubHeaderSearch = !isCurrentPath('/s/') && location.pathname !== '/'
@@ -73,7 +65,7 @@ const Header = props => {
         )}
 
         <NavbarToggler
-          onClick={e => {
+          onClick={() => {
             dispatch({ type: 'TOGGLE_HEADER_ACCESSIBLE' })
           }}
         />
@@ -95,7 +87,11 @@ const Header = props => {
 
               <NavItem>
                 <Link
-                  to={search.location ? `/collections/${search.location.city}` : `/collections`}
+                  to={
+                    search.location
+                      ? `/collections/${search.location.city}`
+                      : '/collections'
+                  }
                   className="nav-link">
                   Collections
                 </Link>
@@ -108,7 +104,7 @@ const Header = props => {
                   <Button
                     color="success"
                     block
-                    onClick={e => {
+                    onClick={() => {
                       dispatch({ type: 'OPEN_MODAL', data: 'add-listing' })
                     }}>
                     Add Listing
@@ -137,7 +133,7 @@ const Header = props => {
                     </Link>
 
                     <DropdownItem
-                      onClick={e => {
+                      onClick={() => {
                         dispatch({ type: 'OPEN_MODAL', data: 'logout' })
                       }}>
                       Logout
@@ -152,7 +148,7 @@ const Header = props => {
                 <NavItem>
                   <NavLink
                     href="#"
-                    onClick={e => {
+                    onClick={() => {
                       dispatch({ type: 'OPEN_MODAL', data: 'signup' })
                     }}>
                     Signup
@@ -162,7 +158,7 @@ const Header = props => {
                 <NavItem className="mr-4">
                   <NavLink
                     href="#"
-                    onClick={e => {
+                    onClick={() => {
                       dispatch({ type: 'OPEN_MODAL', data: 'login' })
                     }}>
                     Login

@@ -15,7 +15,9 @@ export class Collections extends React.Component {
     const { dispatch, search } = this.props
 
     if (search.location !== prevProps.search.location) {
-      dispatch(getCollections({ where: 'front_page', location: search.location }))
+      dispatch(
+        getCollections({ where: 'front_page', location: search.location })
+      )
     }
   }
 

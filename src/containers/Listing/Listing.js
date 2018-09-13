@@ -13,7 +13,7 @@ import {
   makeImageCover,
   updateListingImage,
   addTagToListing,
-  removeTagFromListing
+  removeTagFromListing,
 } from '../../actions/listing'
 
 import { TagBar } from '../../components/Listing/TagBar'
@@ -118,13 +118,7 @@ class Listing extends React.Component {
   }
 
   render() {
-    const {
-      dispatch,
-      history,
-      listing,
-      location,
-      match
-    } = this.props
+    const { dispatch, history, listing, location, match } = this.props
 
     const { claim } = this.getClaimParams()
     const { currentImage } = listing
@@ -180,23 +174,35 @@ class Listing extends React.Component {
               signingParams={{ type: 'listing', slug: listing.slug }}
               repositionImages={true}
               coverAction={{
-                handleAction: () => dispatch(makeImageCover({ listingSlug: listing.slug, imageId: currentImage.id })),
+                handleAction: () =>
+                  dispatch(
+                    makeImageCover({
+                      listingSlug: listing.slug,
+                      imageId: currentImage.id,
+                    })
+                  ),
                 title: 'Set as cover photo',
               }}
               shiftPreviousAction={{
-                handleAction: () => dispatch(updateListingImage({
-                  listingSlug: listing.slug,
-                  imageId: currentImage.id,
-                  data: { shift: 'previous' }
-                })),
+                handleAction: () =>
+                  dispatch(
+                    updateListingImage({
+                      listingSlug: listing.slug,
+                      imageId: currentImage.id,
+                      data: { shift: 'previous' },
+                    })
+                  ),
                 title: 'Switch places with the previous photo',
               }}
               shiftNextAction={{
-                handleAction: () => dispatch(updateListingImage({
-                  listingSlug: listing.slug,
-                  imageId: currentImage.id,
-                  data: { shift: 'next' }
-                })),
+                handleAction: () =>
+                  dispatch(
+                    updateListingImage({
+                      listingSlug: listing.slug,
+                      imageId: currentImage.id,
+                      data: { shift: 'next' },
+                    })
+                  ),
                 title: 'Switch places with the next photo',
               }}
               fullScreenAction={{

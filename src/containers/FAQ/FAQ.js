@@ -4,14 +4,14 @@ import React from 'react'
 import { Container } from 'reactstrap'
 import { Helmet } from 'react-helmet'
 
-export const FAQ = props => {
+export const FAQ = () => {
   return (
     <div className="faq">
       <Helmet>
-        <title>{`FAQ · EthicalTree`}</title>
+        <title>{'FAQ · EthicalTree'}</title>
         <meta
           name="description"
-          content={`EthicalTree Frequently Asked Questions`}
+          content={'EthicalTree Frequently Asked Questions'}
         />
       </Helmet>
 
