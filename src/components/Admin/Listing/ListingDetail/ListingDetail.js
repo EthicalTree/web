@@ -143,6 +143,6 @@ export class ListingDetail extends React.Component {
   }
 }
 
-const select = state => ({})
+const select = () => ({})
 
 export default connect(select)(ListingDetail)

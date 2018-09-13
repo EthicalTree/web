@@ -26,9 +26,10 @@ class ForgotPasswordModal extends React.Component {
 
   submit(e) {
     const { dispatch } = this.props
+    const { email } = this.state
     e.preventDefault()
 
-    dispatch(sendForgotPasswordRequest(this.state.email))
+    dispatch(sendForgotPasswordRequest(email))
   }
 
   render() {

@@ -3,13 +3,13 @@ import store from 'store'
 export const DEFAULT_LOCATION = {
   name: 'Toronto, ON',
   city: 'Toronto',
-  id: null
+  id: null,
 }
 
 export const NEAR_ME_LOCATION = {
   name: 'Near Me',
   id: 'nearme',
-  nearMe: true
+  nearMe: true,
 }
 
 export const processLocation = location => {
@@ -20,8 +20,7 @@ export const processLocation = location => {
       if (geolocation) {
         return `${geolocation.lat},${geolocation.lng}`
       }
-    }
-    else {
+    } else {
       return location.id
     }
   }

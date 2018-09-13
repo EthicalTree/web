@@ -48,11 +48,17 @@ export class CollectionPage extends React.Component {
   render() {
     const { dispatch, collection, session, search } = this.props
 
-    const title = search.location ?
-      `${search.location.city}'s ${collection.name} - Best Local Restaurants, Shops and More · EthicalTree` :
-      `${collection.name} - Best Local Restaurants, Shops and More · EthicalTree`
+    const title = search.location
+      ? `${search.location.city}'s ${
+          collection.name
+        } - Best Local Restaurants, Shops and More · EthicalTree`
+      : `${
+          collection.name
+        } - Best Local Restaurants, Shops and More · EthicalTree`
 
-    const collectionTitle = search.location ? `${collection.name} (${search.location.city})` : `${collection.name}`
+    const collectionTitle = search.location
+      ? `${collection.name} (${search.location.city})`
+      : `${collection.name}`
     let headerStyles
 
     if (collection.coverImage) {
@@ -82,9 +88,7 @@ export class CollectionPage extends React.Component {
                 })}
                 style={headerStyles}>
                 <div className="collection-banner">
-                  <h2 className="collection-title">
-                    {collectionTitle}
-                  </h2>
+                  <h2 className="collection-title">{collectionTitle}</h2>
 
                   {collection.description && (
                     <h5 className="collection-description">
@@ -143,7 +147,7 @@ export class CollectionPage extends React.Component {
 const select = state => ({
   collection: state.collection,
   session: state.session,
-  search: state.search
+  search: state.search,
 })
 
 export default connect(select)(CollectionPage)

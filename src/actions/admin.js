@@ -147,7 +147,7 @@ export const toggleAdmin = userData => {
 }
 
 export const setListingVisibility = (listingId, visibility) => {
-  return dispatch => {
+  return () => {
     api
       .put(`/v1/admin/listings/${listingId}`, { visibility })
       .then(() => {
@@ -158,7 +158,7 @@ export const setListingVisibility = (listingId, visibility) => {
 }
 
 export const setTagUseType = (tagId, useType) => {
-  return dispatch => {
+  return () => {
     api
       .put(`/v1/admin/tags/${tagId}`, { useType })
       .then(() => {
@@ -172,7 +172,7 @@ export const updateCollection = collection => {
   return dispatch => {
     api
       .put(`/v1/admin/collections/${collection.id}`, { collection })
-      .then(list => {
+      .then(() => {
         dispatch(getCollections())
         success('List was successfully updated')
       })
@@ -195,7 +195,7 @@ export const addCollection = ({ name, description, hashtag, location }) => {
   const collection = { name, description, hashtag, location }
 
   return dispatch => {
-    api.post(`/v1/admin/collections`, { collection }).then(({ data }) => {
+    api.post('/v1/admin/collections', { collection }).then(({ data }) => {
       if (data.errors) {
         dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
       } else {
@@ -252,7 +252,7 @@ export const addTag = ({ hashtag, useType }) => {
     dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
     api
-      .post(`/v1/admin/tags`, { tag })
+      .post('/v1/admin/tags', { tag })
       .then(response => {
         if (response.data.errors) {
           dispatch({ type: 'SET_MODAL_ERRORS', data: response.data.errors })

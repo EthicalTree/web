@@ -27,7 +27,7 @@ const wrapper = (method, url, config = {}) => {
   return axios({
     method,
     url: apiRoute(url),
-    ...config
+    ...config,
   }).catch(err => {
     const status = err.response && err.response.status
     const msg = err.response.data.message

@@ -16,7 +16,7 @@ export const FilterBar = props => {
           type="checkbox"
           id="openNow"
           checked={openNow || false}
-          onChange={e => {
+          onChange={() => {
             dispatch({
               type: 'SET_SEARCH_QUERY_PARAMS',
               data: {

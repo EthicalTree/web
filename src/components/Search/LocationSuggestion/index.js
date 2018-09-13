@@ -1,1 +1,1 @@
-export {default as LocationSuggestion} from './LocationSuggestion'
+export { default as LocationSuggestion } from './LocationSuggestion'

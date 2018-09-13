@@ -35,8 +35,8 @@ InnerMap = withGoogleMap(InnerMap)
 export const Map = props => {
   return (
     <InnerMap
-      containerElement={<div style={{ height: `100%` }} />}
-      mapElement={<div style={{ height: `100%` }} />}
+      containerElement={<div style={{ height: '100%' }} />}
+      mapElement={<div style={{ height: '100%' }} />}
       {...props}
     />
   )

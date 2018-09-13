@@ -20,7 +20,7 @@ export const getListing = slug => {
 }
 
 export const gotoListing = ({ city, slug }) => {
-  return dispatch => {
+  return () => {
     history.push(`/listings/${city}/${slug}`)
   }
 }
@@ -157,20 +157,18 @@ export const editLocation = (listingSlug, data) => {
     api
       .post(`/v1/listings/${listingSlug}/locations`, { location })
       .then(response => {
-        if (response.data.errors) {
-        } else {
-          dispatch({
-            type: 'SET_LISTING_LOCATION',
-            data: response.data.locations,
-          })
-          dispatch({ type: 'CLOSE_MODAL' })
+        dispatch({
+          type: 'SET_LISTING_LOCATION',
+          data: response.data.locations,
+        })
 
-          trackEvent({
-            action: 'Edit Listing Location',
-            category: 'Listing',
-            label: listingSlug,
-          })
-        }
+        dispatch({ type: 'CLOSE_MODAL' })
+
+        trackEvent({
+          action: 'Edit Listing Location',
+          category: 'Listing',
+          label: listingSlug,
+        })
       })
       .catch(error => {
         if (error.response.status === 400) {
@@ -339,12 +337,19 @@ export const makeImageCover = data => {
 
 export const updateListingImage = ({ listingSlug, imageId, data }) => {
   const { type } = data
-  const setImagesReducer = type === 'menu' ? 'SET_LISTING_MENU_IMAGES' : 'SET_LISTING_IMAGES'
-  const setCurrentImageReducer = type === 'menu' ? 'SET_LISTING_MENU_CURRENT_IMAGE' : 'SET_LISTING_CURRENT_IMAGE'
+  const setImagesReducer =
+    type === 'menu' ? 'SET_LISTING_MENU_IMAGES' : 'SET_LISTING_IMAGES'
+  const setCurrentImageReducer =
+    type === 'menu'
+      ? 'SET_LISTING_MENU_CURRENT_IMAGE'
+      : 'SET_LISTING_CURRENT_IMAGE'
 
   return dispatch => {
     api
-      .put(`/v1/listings/${listingSlug}/images/${imageId}`, { type: 'listing',...data })
+      .put(`/v1/listings/${listingSlug}/images/${imageId}`, {
+        type: 'listing',
+        ...data,
+      })
       .then(({ data }) => {
         if (data.images) {
           dispatch({ type: setImagesReducer, data: data.images })

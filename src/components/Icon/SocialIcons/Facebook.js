@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Facebook = props => {
+const Facebook = () => {
   return (
     <svg
       version="1.1"

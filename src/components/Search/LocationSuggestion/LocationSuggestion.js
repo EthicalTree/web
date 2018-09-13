@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon } from '../../Icon'
 
-const LocationSuggestion = (suggestion, { query, isHighlighted }) => {
+const LocationSuggestion = suggestion => {
   if (suggestion.id === 'nearme') {
     return (
       <span className="near-me">

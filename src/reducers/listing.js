@@ -40,7 +40,7 @@ const listing = (state = defaultState, { type, data }) => {
       return { ...state, tags: [...state.tags, data] }
     case 'REMOVE_TAG_FROM_LISTING':
       return { ...state, tags: [...state.tags.filter(t => t.id !== data)] }
-    case 'SET_LISTING_MENU_CURRENT_IMAGE':
+    case 'SET_LISTING_MENU_CURRENT_IMAGE': {
       const menu = state.menus[0] || {}
 
       if (!data && menu.images && menu.images.length > 0) {
@@ -48,6 +48,7 @@ const listing = (state = defaultState, { type, data }) => {
       }
 
       return { ...state, currentMenuImage: data }
+    }
     case 'SET_LISTING_CURRENT_IMAGE':
       if (!data && state.images && state.images.length > 0) {
         return { ...state, currentImage: state.images[0] }

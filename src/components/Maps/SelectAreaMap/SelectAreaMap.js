@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Rectangle } from 'react-google-maps'
 
 import { Map } from '../Map'
@@ -56,16 +55,6 @@ export class SelectAreaMap extends React.Component {
       </Map>
     )
   }
-}
-
-SelectAreaMap.propTypes = {
-  boundlat1: PropTypes.number,
-  boundlng1: PropTypes.number,
-  boundlat2: PropTypes.number,
-  boundlng2: PropTypes.number,
-  lat: PropTypes.number,
-  lng: PropTypes.number,
-  handleBoundsChanged: PropTypes.func.isRequired,
 }
 
 export default SelectAreaMap
