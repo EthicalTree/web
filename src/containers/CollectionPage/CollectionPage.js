@@ -3,7 +3,7 @@ import './CollectionPage.css'
 import React from 'react'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
-import { Col, Row } from 'reactstrap'
+import { Col, Row, Container } from 'reactstrap'
 import { Helmet } from 'react-helmet'
 
 import { Loader } from '../../components/Loader'
@@ -124,11 +124,27 @@ export class CollectionPage extends React.Component {
                 </div>
               </div>
 
-              <Row>
-                <Col
-                  xs="12"
-                  xl="8"
-                  className={`search-results col-xxl-8 p-4 ${mobileCollectionHidden}`}>
+              <Container>
+
+                <ResultsMap
+                  handleMarkerClick={slug => {
+                    const newSlug =
+                      !!selectedResult && selectedResult === slug ? null : slug
+                    this.setState({
+                      selectedResult: newSlug,
+                    })
+                  }}
+                  handleMapClick={() => {
+                    setTimeout(() => {
+                      this.setState({ selectedResult: '' })
+                    }, 0)
+                  }}
+                  listings={collection.listings}
+                  resultMode={displayMode}
+                  overlay={this.getOverlay()}
+                  mapHeight={500}
+                />
+                <div className={`search-results ${mobileCollectionHidden}`}>
                   <Row className="mt-2 no-gutters">
                     <div className="collection-listings">
                       {collection.listings.map(l => {
@@ -156,13 +172,13 @@ export class CollectionPage extends React.Component {
                         </i>
                       )}
                     </div>
-                    <Col xs="12" lg="3" xl="12" className="col-xxl-3">
+                    <Col xs="12" lg="12" xl="12" className="col-xxl-12">
                       <div className="d-flex flex-wrap flex-direction-column">
-                        <Featured sm={6} lg={12} xl={6} xxl={12} />
+                        <Featured sm={6} lg={4} xl={6} xxl={4} />
                       </div>
                     </Col>
                   </Row>
-                </Col>
+                </div>
 
                 <Row className="text-center">
                   <Paginator
@@ -178,28 +194,8 @@ export class CollectionPage extends React.Component {
                       )
                     }
                   />
-                </Row>
-
-                <ResultsMap
-                  handleMarkerClick={slug => {
-                    const newSlug =
-                      !!selectedResult && selectedResult === slug ? null : slug
-                    this.setState({
-                      selectedResult: newSlug,
-                    })
-                  }}
-                  handleMapClick={() => {
-                    setTimeout(() => {
-                      this.setState({ selectedResult: '' })
-                    }, 0)
-                  }}
-                  listings={collection.listings}
-                  resultMode={displayMode}
-                  overlay={this.getOverlay()}
-                  mapHeight={800}
-                  scrollTop={86}
-                />
-              </Row>
+                  </Row>
+                </Container>
 
               <MapSwitcher
                 mode={displayMode}
