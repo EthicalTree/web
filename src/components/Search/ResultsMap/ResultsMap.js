@@ -9,15 +9,6 @@ import { MapControl } from '../../Maps/MapControl'
 import { getGeoLocation } from '../../../utils/location'
 
 export class ResultsMap extends React.Component {
-  updateMapPosition = () => {
-    if (this.mapEl) {
-      this.setState({
-        mapHeight: this.getInnerHeight(),
-        scrollTop: document.getElementsByTagName('html')[0].scrollTop,
-      })
-    }
-  }
-
   handleBoundsChanged = () => {
     if (this.map) {
       this.setState({ boundsChanged: true })
@@ -30,10 +21,12 @@ export class ResultsMap extends React.Component {
   }
 
   handleMapLoad = map => {
-    if (map) {
+    const { handleMapLoad } = this.props
+    if (!this.map) {
       this.map = map
-      this.updateMapPosition()
     }
+    this.calculateBounds()
+    handleMapLoad && handleMapLoad(map)
   }
 
   constructor(props) {
@@ -41,30 +34,15 @@ export class ResultsMap extends React.Component {
 
     this.state = {
       boundsChanged: false,
-      mapHeight: this.getInnerHeight(),
       showYouAreHere: false,
-      scrollTop: 0,
     }
   }
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.updateMapPosition)
-    window.addEventListener('resize', this.updateMapPosition)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.updateMapPosition)
-    window.removeEventListener('resize', this.updateMapPosition)
-  }
-
-  getInnerHeight() {
-    return window.innerHeight - 73
-  }
-
   renderSearchTools() {
+    const { handleRedoSearch } = this.props
     const { boundsChanged } = this.state
 
-    if (this.map && boundsChanged) {
+    if (this.map && boundsChanged && handleRedoSearch) {
       return (
         <MapControl position={window.google.maps.ControlPosition.TOP_LEFT}>
           <div className="ml-2 mt-2">
@@ -81,9 +59,9 @@ export class ResultsMap extends React.Component {
 
   calculateBounds() {
     let padding = 0
-    const { search } = this.props
+    const { bounds } = this.props
     const { boundsChanged } = this.state
-    const { nelat, nelng, swlat, swlng } = search
+    const { nelat, nelng, swlat, swlng } = bounds || {}
 
     if (boundsChanged) {
       this.bounds = this.map.getBounds()
@@ -101,14 +79,6 @@ export class ResultsMap extends React.Component {
           new window.google.maps.LatLng(location.lat, location.lng)
         )
       })
-
-      const geoLocation = getGeoLocation()
-      // set bounds inside of location if "near me" set.
-      if (search.location === 'Near Me' && geoLocation) {
-        this.bounds.extend(
-          new window.google.maps.LatLng(geoLocation.lat, geoLocation.lng)
-        )
-      }
     }
 
     if (this.map && this.bounds) {
@@ -117,8 +87,10 @@ export class ResultsMap extends React.Component {
   }
 
   getBoundListings() {
-    const { search } = this.props
-    return [...search.listings, ...search.featured]
+    let { listings, featured } = this.props
+    listings = listings || []
+    featured = featured || []
+    return [...listings, ...featured]
   }
 
   render() {
@@ -128,15 +100,15 @@ export class ResultsMap extends React.Component {
       handleMarkerMouseOut,
       handleMapClick,
       overlay,
-      search,
+      resultMode,
+      mapHeight,
+      scrollTop,
+      mapEl,
     } = this.props
 
+    const { showYouAreHere } = this.state
     const location = getGeoLocation()
-
-    const { mapHeight, scrollTop, showYouAreHere } = this.state
-
-    const hiddenClass =
-      search.resultMode === 'listing' ? 'd-none d-xl-block' : ''
+    const hiddenClass = resultMode === 'listing' ? 'd-none d-xl-block' : ''
 
     const markers = (
       <Markers
@@ -147,13 +119,11 @@ export class ResultsMap extends React.Component {
       />
     )
 
-    this.calculateBounds()
-
     return (
       <Col className={`search-map-area ${hiddenClass}`}>
         <div
           className="search-map"
-          ref={map => (this.mapEl = map)}
+          ref={mapEl}
           style={{
             height: mapHeight,
             marginTop: scrollTop,
