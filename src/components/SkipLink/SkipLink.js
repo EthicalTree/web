@@ -14,7 +14,8 @@ export class SkipLink extends React.PureComponent {
         onClick={e => {
           e.preventDefault()
           handleSkip()
-        }}>
+        }}
+      >
         Skip to main
       </a>
     )

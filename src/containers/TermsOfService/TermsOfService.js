@@ -3,21 +3,24 @@ import './TermsOfService.css'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
-import { Container } from 'reactstrap'
+import { Container, Jumbotron } from 'reactstrap'
 
 export const TermsOfService = () => {
   return (
-    <div className="terms-of-service">
+    <div className="terms-of-service public-content">
       <Helmet>
         <title>{'Terms of Service · EthicalTree'}</title>
         <meta name="description" content={'EthicalTree Terms of Service'} />
       </Helmet>
-      <Container>
-        <h1 className="mt-5">Terms of Service</h1>
 
+      <Jumbotron>
+        <h1>Terms of Service</h1>
         <small>Last updated: October 21, 2017</small>
+      </Jumbotron>
 
-        <div className="pt-4 pb-4">
+      <Container>
+        <div>
+          <h4>Overview</h4>
           <p>
             Please read these Terms of Service (“Terms”, “Terms of Service”)
             carefully before using the https://ethicaltree.com/ website and its
@@ -37,7 +40,7 @@ export const TermsOfService = () => {
             access the Service.
           </p>
 
-          <h5>Links To Other Web Sites</h5>
+          <h4>Links To Other Web Sites</h4>
 
           <p>
             Our Service may contain links to third-party web sites or services
@@ -56,7 +59,7 @@ export const TermsOfService = () => {
             policies of any third-party web sites or services that you visit.
           </p>
 
-          <h5>Termination</h5>
+          <h4>Termination</h4>
 
           <p>
             We may terminate or suspend access to our Service immediately,
@@ -71,7 +74,7 @@ export const TermsOfService = () => {
             and limitations of liability.
           </p>
 
-          <h5>Governing Law</h5>
+          <h4>Governing Law</h4>
 
           <p>
             These Terms shall be governed and construed in accordance with the
@@ -85,7 +88,7 @@ export const TermsOfService = () => {
             agreements we might have between us regarding the Service.
           </p>
 
-          <h5>Changes</h5>
+          <h4>Changes</h4>
 
           <p>
             We reserve the right, at our sole discretion, to modify or replace
@@ -98,7 +101,7 @@ export const TermsOfService = () => {
             using the Service.
           </p>
 
-          <h5>Contact Us</h5>
+          <h4>Contact Us</h4>
 
           <p>
             If you have any questions about these Terms, please&nbsp;

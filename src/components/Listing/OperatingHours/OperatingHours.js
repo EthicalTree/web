@@ -62,7 +62,8 @@ class OperatingHours extends React.PureComponent {
                 onClick={() =>
                   dispatch({ type: 'OPEN_MODAL', data: 'edit-operating-hours' })
                 }
-                className="btn btn-sm btn-default btn-block">
+                className="btn btn-sm btn-default btn-block"
+              >
                 Edit
               </button>
             )}
@@ -92,7 +93,8 @@ class OperatingHours extends React.PureComponent {
                       data: 'edit-operating-hours',
                     })
                   }
-                  className="btn btn-default btn-block">
+                  className="btn btn-default btn-block"
+                >
                   Add
                 </button>
               )}

@@ -4,6 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import { Jumbotron } from 'reactstrap'
 
 import { Loader } from '../../components/Loader'
 import { Paginator } from '../../components/Paginator'
@@ -44,7 +45,7 @@ export class AllCollectionsPage extends React.Component {
       ? `${city} Collections - Best Local Restaurants, Shops and More · EthicalTree`
       : 'Collections - Best Local Restaurants, Shops and More · EthicalTree'
 
-    const collectionsTitle = city ? `Collections (${city})` : 'Collections'
+    const collectionsTitle = city ? `${city} Collections` : 'Collections'
 
     return (
       <div className="all-collections-page">
@@ -59,9 +60,9 @@ export class AllCollectionsPage extends React.Component {
             />
           </Helmet>
 
-          <h2 className="all-collections-title text-center">
-            {collectionsTitle}
-          </h2>
+          <Jumbotron>
+            <h1>{collectionsTitle}</h1>
+          </Jumbotron>
 
           <div className="collections">
             {collections.collections.map(c => {
@@ -86,7 +87,8 @@ export class AllCollectionsPage extends React.Component {
                     city
                       ? `/collections/${city}/${c.slug}`
                       : `/collections/_/${c.slug}`
-                  }>
+                  }
+                >
                   <span className="collection-label">{c.name}</span>
                 </Link>
               )

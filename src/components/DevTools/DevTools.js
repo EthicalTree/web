@@ -10,7 +10,8 @@ export default createDevTools(
     defaultPosition="left"
     changeMonitorKey="ctrl-m"
     toggleVisibilityKey="ctrl-h"
-    changePositionKey="ctrl-q">
+    changePositionKey="ctrl-q"
+  >
     <LogMonitor />
   </DockMonitor>
 )

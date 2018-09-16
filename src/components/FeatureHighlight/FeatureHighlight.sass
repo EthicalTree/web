@@ -1,0 +1,22 @@
+@import 'variables.sass'
+
+.feature-highlight
+  display: flex
+  align-items: center
+  flex-direction: column
+  padding: 0 $space-3
+
+  .graphic-container
+    padding-top: $space-5
+
+  @media (min-width: $screen-md-min)
+    width: 75%
+    margin: auto
+    flex-direction: row
+    justify-content: center
+
+    &.alternate
+      flex-direction: row-reverse
+
+    & > div
+      padding: $space-5

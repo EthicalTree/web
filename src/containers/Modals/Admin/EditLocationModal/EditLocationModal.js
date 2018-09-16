@@ -50,7 +50,8 @@ class EditLocationModal extends React.Component {
         contentLabel="Edit Location"
         onSave={this.submit.bind(this)}
         modalName="admin-edit-location"
-        saveLabel="Save">
+        saveLabel="Save"
+      >
         <Form onSubmit={this.submit.bind(this)}>
           <Row>
             <Col>

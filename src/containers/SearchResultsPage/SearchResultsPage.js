@@ -149,7 +149,8 @@ class SearchResultsPage extends React.Component {
               x: -(width / 2),
               y: -(height + 45),
             }
-          }}>
+          }}
+        >
           <Result
             className="result-overlay"
             key={listing.slug}
@@ -247,7 +248,11 @@ class SearchResultsPage extends React.Component {
         }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
 
     return (
-      <Loader fixed={true} loading={search.isSearchLoading}>
+      <Loader
+        fixed={true}
+        className="search-results-page-loader"
+        loading={search.isSearchLoading}
+      >
         <Helmet>
           <title>{title}</title>
           <meta name="description" content={description} />

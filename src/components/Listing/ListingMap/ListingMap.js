@@ -31,7 +31,8 @@ const ListingMap = props => {
               <a
                 className="btn btn-sm btn-default ml-3"
                 href=""
-                onClick={props.onClickLocationEdit}>
+                onClick={props.onClickLocationEdit}
+              >
                 Edit
               </a>
             )}
@@ -47,7 +48,8 @@ const ListingMap = props => {
                 action: 'Clicked Get Direction',
                 category: 'Listing',
               })
-            }}>
+            }}
+          >
             Get Directions
             <Icon iconKey="extract" />
           </a>
@@ -71,7 +73,8 @@ const ListingMap = props => {
             center={{
               lat: location.lat,
               lng: location.lng,
-            }}>
+            }}
+          >
             <Marker
               key={`${location.lat}+${location.lng}`}
               position={{
@@ -88,7 +91,8 @@ const ListingMap = props => {
               <a
                 href=""
                 onClick={props.onClickLocationEdit}
-                className="btn btn-default">
+                className="btn btn-default"
+              >
                 Add a location
               </a>
             )}

@@ -27,7 +27,8 @@ export const Bio = props => {
               <a
                 className="btn btn-sm btn-default ml-3"
                 href=""
-                onClick={props.onClickDescriptionEdit}>
+                onClick={props.onClickDescriptionEdit}
+              >
                 Edit
               </a>
             )}
@@ -49,7 +50,8 @@ export const Bio = props => {
                       action: 'Clicked Listing Phone Number',
                       category: 'Listing',
                     })
-                  }}>
+                  }}
+                >
                   {formattedPhone}
                   <Icon iconKey="phone" />
                 </a>
@@ -68,7 +70,8 @@ export const Bio = props => {
                   action: 'Clicked Listing Website',
                   category: 'Listing',
                 })
-              }}>
+              }}
+            >
               Website
               <Icon iconKey="extract" />
             </a>
@@ -84,7 +87,8 @@ export const Bio = props => {
             <a
               href=""
               onClick={props.onClickDescriptionEdit}
-              className="btn btn-default">
+              className="btn btn-default"
+            >
               Add a description
             </a>
           )}

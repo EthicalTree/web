@@ -1,5 +1,7 @@
-import './index.css'
-import './globals.css'
+import './styles/index.css'
+import './styles/globals.css'
+import './styles/autosuggest.css'
+import './styles/content.css'
 import './utils/polyfills.js'
 
 import React from 'react'

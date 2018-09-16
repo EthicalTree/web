@@ -38,7 +38,8 @@ export class SelectAreaMap extends React.Component {
           scrollwheel: true,
           disableDefaultUI: false,
         }}
-        center={{ lat, lng }}>
+        center={{ lat, lng }}
+      >
         <Rectangle
           defaultBounds={bounds}
           draggable={true}

@@ -38,12 +38,12 @@ export class SearchResults extends React.Component {
         <React.Fragment>
           <div className="no-matches">Oh no, nothing matched your search!</div>
 
-          <h5 className="p-3">Places you might like</h5>
+          <h5 className="results-header">Places you might like</h5>
         </React.Fragment>
       )
     }
 
-    return <h5 className="p-3">Search Results</h5>
+    return <h5 className="results-header">Search Results</h5>
   }
 
   render() {
@@ -77,7 +77,8 @@ export class SearchResults extends React.Component {
         xs="12"
         xl="6"
         className={`search-results col-xxl-8 p-4 ${mobileHidden}`}
-        style={{ minHeight }}>
+        style={{ minHeight }}
+      >
         <Col className="d-lg-none d-xl-none mb-3">
           <Search />
         </Col>
@@ -109,7 +110,8 @@ export class SearchResults extends React.Component {
                       sm="6"
                       lg="4"
                       xl="6"
-                      className="col-xxl-4">
+                      className="col-xxl-4"
+                    >
                       <Result
                         listing={listing}
                         hovered={listing.slug === search.hoveredResult}

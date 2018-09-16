@@ -35,7 +35,8 @@ export const OpenCloseSelector = props => {
       <Button
         className={`day ${enabledClass} ${activeClass}`}
         color={color}
-        onClick={() => setDay(p.day)}>
+        onClick={() => setDay(p.day)}
+      >
         {p.day[0].toUpperCase()}
       </Button>
     )
@@ -72,7 +73,8 @@ export const OpenCloseSelector = props => {
                     return (
                       <div
                         key={`${i}`}
-                        className="d-flex justify-content-between mb-2">
+                        className="d-flex justify-content-between mb-2"
+                      >
                         <Input
                           bsSize="sm"
                           type="time"
@@ -112,7 +114,8 @@ export const OpenCloseSelector = props => {
                       onClick={e => {
                         e.preventDefault()
                         addMoreHours()
-                      }}>
+                      }}
+                    >
                       + Add hours
                     </a>
                   </div>

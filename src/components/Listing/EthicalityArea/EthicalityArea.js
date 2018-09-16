@@ -14,7 +14,8 @@ const AddEthicalityButton = props => {
         color="default"
         onClick={() =>
           dispatch({ type: 'OPEN_MODAL', data: 'edit-ethicalities' })
-        }>
+        }
+      >
         Edit
       </Button>
     )
@@ -26,7 +27,8 @@ const AddEthicalityButton = props => {
       color="default"
       onClick={() =>
         dispatch({ type: 'OPEN_MODAL', data: 'edit-ethicalities' })
-      }>
+      }
+    >
       Add
     </Button>
   )

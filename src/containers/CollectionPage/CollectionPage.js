@@ -3,7 +3,7 @@ import './CollectionPage.css'
 import React from 'react'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
-import { Container } from 'reactstrap'
+import { Container, Jumbotron } from 'reactstrap'
 import { Helmet } from 'react-helmet'
 
 import { Loader } from '../../components/Loader'
@@ -56,10 +56,14 @@ export class CollectionPage extends React.Component {
           collection.name
         } - Best Local Restaurants, Shops and More · EthicalTree`
 
-    const collectionTitle = search.location
-      ? `${collection.name} (${search.location.city})`
-      : `${collection.name}`
+    const jumbotronClasses = classnames({
+      'has-image': collection.coverImage,
+    })
+
     let headerStyles
+    const collectionTitle = search.location
+      ? `${search.location.city} ${collection.name}`
+      : `${collection.name}`
 
     if (collection.coverImage) {
       headerStyles = {
@@ -82,13 +86,9 @@ export class CollectionPage extends React.Component {
                 />
               </Helmet>
 
-              <div
-                className={classnames('collection-header', 'text-center', {
-                  'has-image': collection.coverImage,
-                })}
-                style={headerStyles}>
+              <Jumbotron className={jumbotronClasses} style={headerStyles}>
                 <div className="collection-banner">
-                  <h2 className="collection-title">{collectionTitle}</h2>
+                  <h1 className="collection-title">{collectionTitle}</h1>
 
                   {collection.description && (
                     <h5 className="collection-description">
@@ -96,7 +96,7 @@ export class CollectionPage extends React.Component {
                     </h5>
                   )}
                 </div>
-              </div>
+              </Jumbotron>
 
               <div className="collection-listings">
                 {collection.listings.map(l => {

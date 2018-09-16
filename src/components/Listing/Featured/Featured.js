@@ -29,20 +29,27 @@ export class Featured extends React.Component {
   }
 
   render() {
-    const { search, session, xxl, ...rest } = this.props
+    const { search, session, xs, sm, md, lg, xl, xxl } = this.props
 
     return (
       <Loader
         className="featured-listings"
-        loading={
-          search.featured.length === 0 && search.featuredListingsLoading
-        }>
-        <h5 className="featured-listings-header pt-3 pb-3">Featured</h5>
+        loading={search.featured.length === 0 && search.featuredListingsLoading}
+      >
+        <h5 className="featured-listings-header">Featured</h5>
 
         <Row>
           {search.featured.map(l => {
             return (
-              <Col className={`col-xxl-${xxl}`} {...rest} key={l.id}>
+              <Col
+                className={`col-xxl-${xxl}`}
+                xs={xs}
+                sm={sm}
+                md={md}
+                lg={lg}
+                xl={xl}
+                key={l.id}
+              >
                 <Result
                   listing={l}
                   location="Featured Listing"

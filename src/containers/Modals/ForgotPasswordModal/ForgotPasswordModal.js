@@ -40,7 +40,8 @@ class ForgotPasswordModal extends React.Component {
         className="forgot-password-modal small-modal"
         loading={session.forgotPasswordLoading}
         contentLabel="Forgot Passord"
-        modalName="forgot-password">
+        modalName="forgot-password"
+      >
         <Container>
           {session.sendForgotPasswordError && (
             <Row>

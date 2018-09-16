@@ -44,7 +44,8 @@ class Footer extends React.PureComponent {
                     category: 'Social Media',
                     label: 'Instagram',
                   })
-                }}>
+                }}
+              >
                 <Icon iconKey="instagram" />
               </a>
 
@@ -58,7 +59,8 @@ class Footer extends React.PureComponent {
                     category: 'Social Media',
                     label: 'Facebook',
                   })
-                }}>
+                }}
+              >
                 <Icon iconKey="facebook" />
               </a>
 
@@ -72,7 +74,8 @@ class Footer extends React.PureComponent {
                     category: 'Social Media',
                     label: 'Twitter',
                   })
-                }}>
+                }}
+              >
                 <Icon iconKey="twitter" />
               </a>
             </div>

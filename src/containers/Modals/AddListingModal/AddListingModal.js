@@ -35,7 +35,8 @@ class AddListingModal extends React.Component {
         contentLabel="Add New Listing"
         onSave={this.submit.bind(this)}
         modalName="add-listing"
-        saveLabel="Create">
+        saveLabel="Create"
+      >
         <Row>
           <Col>
             <Form onSubmit={this.submit.bind(this)}>

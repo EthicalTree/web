@@ -21,7 +21,7 @@ $font-weight-bold: 700 !default
 
 $headings-font-family: inherit !default
 $headings-font-weight: 300 !default
-$headings-line-height: 1.5 !default
+$headings-line-height: 1.8 !default
 $headings-color: $color-inverse !default
 
 $input-btn-focus-box-shadow: none
@@ -29,7 +29,7 @@ $enable-rounded: true
 
 $grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1600px)
 
-@import "../node_modules/bootstrap/scss/bootstrap.scss"
+@import "../../node_modules/bootstrap/scss/bootstrap.scss"
 
 html
   overflow-x: hidden
@@ -46,25 +46,6 @@ html, body, #root, .app
 body
   margin: 0
   color: $color-inverse
-
-  a
-    font-weight: $font-normal
-    color: $color-link
-
-    .et-icon
-      display: inline-block
-
-  p
-    font-weight: $font-light
-    font-family: $font-family-2
-
-  main
-    min-height: 100%
-
-  .container
-    @media (max-width: $screen-xs-max)//{}
-      padding-left: 0
-      padding-right: 0
 
   .inverse
     color: $color-white

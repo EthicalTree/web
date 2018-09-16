@@ -58,7 +58,8 @@ export class ListingDetail extends React.Component {
               onClick={e => {
                 e.preventDefault()
                 this.changeListingClaim({ id: owner.id })
-              }}>
+              }}
+            >
               Confirm claim
             </a>
           </span>
@@ -93,7 +94,8 @@ export class ListingDetail extends React.Component {
                     <Button
                       onClick={() => this.setState({ isEditingClaim: false })}
                       color="default"
-                      size="sm">
+                      size="sm"
+                    >
                       Cancel
                     </Button>
                   )}
@@ -104,14 +106,16 @@ export class ListingDetail extends React.Component {
                         <Button
                           className="mr-2"
                           color="default"
-                          onClick={() => this.changeListingClaim()}>
+                          onClick={() => this.changeListingClaim()}
+                        >
                           Remove Claim
                         </Button>
                       )}
 
                       <Button
                         onClick={() => this.setState({ isEditingClaim: true })}
-                        size="sm">
+                        size="sm"
+                      >
                         Change Claim
                       </Button>
                     </div>
@@ -126,7 +130,8 @@ export class ListingDetail extends React.Component {
                   {listing.claimId}
                   <Button
                     onClick={() => this.regenerateClaimId(listing)}
-                    size="sm">
+                    size="sm"
+                  >
                     Regenerate
                   </Button>
                 </div>

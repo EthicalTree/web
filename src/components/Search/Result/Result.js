@@ -56,7 +56,8 @@ export class Result extends React.Component {
             category: 'Listing',
             label: location,
           })
-        }}>
+        }}
+      >
         <Card className={`hoverable ${hoveredClass} ${className}`}>
           <div className="card-img" style={extraStyle}>
             {listing.plan && (
