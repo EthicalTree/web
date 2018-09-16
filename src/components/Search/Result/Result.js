@@ -13,7 +13,6 @@ import { OpenClose } from '../../OpenClose'
 import { listingProps } from '../../../utils/types'
 import { trackEvent } from '../../../utils/ga'
 import { getDistance } from '../../../utils/location'
-import { localizedDates } from '../../../models/hours'
 
 export class Result extends React.Component {
   constructor(props) {
@@ -84,7 +83,7 @@ export class Result extends React.Component {
 
             <div className="d-flex justify-content-between">
               <OpenClose
-                hours={localizedDates(listing.operatingHours, listing.timezone)}
+                hours={listing.operatingHours}
                 timezone={listing.timezone}
               />
               {distance && `${numeral(distance).format('0.0')} km`}

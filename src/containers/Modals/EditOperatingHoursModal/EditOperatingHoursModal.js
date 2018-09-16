@@ -1,12 +1,10 @@
 import React from 'react'
-import moment from 'moment'
 import { connect } from 'react-redux'
 
 import { Modal } from '../Modal'
 import { OpenCloseSelector } from '../../../components/DateTime/OpenCloseSelector'
 
 import { saveOperatingHours } from '../../../actions/listing'
-import { localizedDates } from '../../../models/hours'
 
 class EditOperatingHoursModal extends React.Component {
   constructor(props) {
@@ -14,8 +12,6 @@ class EditOperatingHoursModal extends React.Component {
 
     const { listing } = props
     let operatingHours = listing.operatingHours ? listing.operatingHours : []
-
-    operatingHours = localizedDates(operatingHours, listing.timezone)
 
     let hours = {
       sunday: { label: 'Sunday', hours: [] },
@@ -59,8 +55,8 @@ class EditOperatingHoursModal extends React.Component {
     let operatingHours = { ...this.state.operatingHours }
 
     const newHours = {
-      open: moment('12:00', 'HH:mm'),
-      close: moment('22:00', 'HH:mm'),
+      openAt24Hour: '08:00',
+      closedAt24Hour: '18:00',
     }
 
     operatingHours[day] = {

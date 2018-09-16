@@ -67,6 +67,7 @@
     "react-spinkit": "^3.0.0",
     "react-toggle": "^4.0.2",
     "react-transition-group": "^2.2.1",
+    "react-wufoo-embed": "^1.0.0",
     "reactstrap": "^5.0.0-alpha.4",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",

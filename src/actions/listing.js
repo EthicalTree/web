@@ -370,23 +370,15 @@ export const updateListingImage = ({ listingSlug, imageId, data }) => {
 }
 
 export const saveOperatingHours = (listing, operatingHours) => {
-  const utcHours = {}
+  const hours = {}
 
   Object.keys(operatingHours).forEach(day => {
-    utcHours[day] = {
+    hours[day] = {
       ...operatingHours[day],
       hours: operatingHours[day].hours.map(h => {
         return {
-          open_24_hour: h.open
-            .clone()
-            .tz(listing.timezone)
-            .utc()
-            .format('HH:mm'),
-          close_24_hour: h.close
-            .clone()
-            .tz(listing.timezone)
-            .utc()
-            .format('HH:mm'),
+          open_24_hour: h.openAt24Hour,
+          close_24_hour: h.closedAt24Hour,
         }
       }),
     }
@@ -396,7 +388,7 @@ export const saveOperatingHours = (listing, operatingHours) => {
     dispatch({ type: 'SET_MODAL_LOADING', data: true })
 
     api
-      .post(`/v1/listings/${listing.slug}/operating_hours`, utcHours)
+      .post(`/v1/listings/${listing.slug}/operating_hours`, hours)
       .then(response => {
         const operatingHours = response.data.operatingHours
 

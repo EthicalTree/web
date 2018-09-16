@@ -89,7 +89,6 @@ class Search extends React.Component {
 
     this.state = {
       dirty: false,
-      isLocationFocused: false,
       location: location.name,
       locationSuggestions: [],
       nearMe: location.nearMe,
@@ -122,7 +121,7 @@ class Search extends React.Component {
   render() {
     const { search } = this.props
 
-    const { isLocationFocused, location, locationSuggestions } = this.state
+    const { location, locationSuggestions } = this.state
 
     let { query, dirty } = this.state
 
@@ -157,7 +156,6 @@ class Search extends React.Component {
               inputProps={{
                 onMouseDown: this.focusLocation,
                 onFocus: this.focusLocation,
-                isLocationFocused: isLocationFocused,
                 innerRef: locationInput => {
                   this.locationInput = locationInput
                 },

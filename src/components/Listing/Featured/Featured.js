@@ -29,7 +29,7 @@ export class Featured extends React.Component {
   }
 
   render() {
-    const { search, session, xxl, ...rest } = this.props
+    const { search, session, xxl, xs, md } = this.props
 
     return (
       <Loader
@@ -42,7 +42,7 @@ export class Featured extends React.Component {
         <Row>
           {search.featured.map(l => {
             return (
-              <Col className={`col-xxl-${xxl}`} {...rest} key={l.id}>
+              <Col className={`col-xxl-${xxl}`} xs={xs} md={md} key={l.id}>
                 <Result
                   listing={l}
                   location="Featured Listing"

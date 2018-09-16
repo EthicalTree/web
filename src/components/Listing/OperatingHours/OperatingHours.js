@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import groupBy from 'lodash/groupBy'
 
 import { OpenClose } from '../../OpenClose'
-import { localizedDates } from '../../../models/hours'
 
 const DAY_LABELS = {
   sunday: 'Sunday',
@@ -44,15 +43,14 @@ class OperatingHours extends React.PureComponent {
     const { canEdit, dispatch, hours, timezone } = this.props
     const hasHours = hours && hours.length > 0
 
-    const localHours = localizedDates(hours, timezone)
-    const groupedHours = groupBy(localHours, h => h.day)
+    const groupedHours = groupBy(hours, h => h.day)
 
     return (
       <div className="card operating-hours">
         <div className="card-header">Operating Hours</div>
 
         <div className="mt-4">
-          <OpenClose hours={localHours} timezone={timezone} />
+          <OpenClose hours={hours} timezone={timezone} />
         </div>
 
         <div className="card-body pt-3">

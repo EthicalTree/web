@@ -1,7 +1,6 @@
 import './OpenCloseSelector.css'
 
 import React from 'react'
-import moment from 'moment'
 
 import {
   Row,
@@ -76,9 +75,9 @@ export const OpenCloseSelector = props => {
                         <Input
                           bsSize="sm"
                           type="time"
-                          defaultValue={h.open.format('HH:mm')}
+                          defaultValue={h.openAt24Hour}
                           onChange={e => {
-                            h.open = moment(e.target.value, 'HH:mm')
+                            h.openAt24Hour = e.target.value
                             setTime(selectedDay.hours)
                           }}
                         />
@@ -86,9 +85,9 @@ export const OpenCloseSelector = props => {
                         <Input
                           bsSize="sm"
                           type="time"
-                          defaultValue={h.close.format('HH:mm')}
+                          defaultValue={h.closedAt24Hour}
                           onChange={e => {
-                            h.close = moment(e.target.value, 'HH:mm')
+                            h.closedAt24Hour = e.target.value
                             setTime(selectedDay.hours)
                           }}
                         />

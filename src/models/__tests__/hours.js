@@ -1,6 +1,5 @@
 import moment from 'moment-timezone'
 import { localizedDates, getOpenCloseStatus } from '../hours.js'
-import { est, normalHours, endOfDayHours, endOfDayESTHours } from './constants'
 
 describe('test that operating hours convenience functions return as expected', () => {
   test('localizedDates basic', () => {
@@ -63,3 +62,38 @@ describe('test that operating hours convenience functions return as expected', (
     expect(openCloseStatus).toEqual('closing_soon')
   })
 })
+
+/*
+ * constants
+ */
+const est = 'America/Toronto'
+
+const normalHours = [
+  {
+    day: 'monday',
+    open: '2000-01-01T13:00:00.000Z',
+    close: '2000-01-01T21:00:00.000Z',
+    openAt24Hour: '13:00',
+    closedAt24Hour: '21:00',
+  },
+]
+
+const endOfDayHours = [
+  {
+    day: 'monday',
+    open: '2000-01-01T22:00:00.000Z',
+    close: '2000-01-01T02:00:00.000Z',
+    openAt24Hour: '22:00',
+    closedAt24Hour: '02:00',
+  },
+]
+
+const endOfDayESTHours = [
+  {
+    day: 'monday',
+    open: '2000-01-01T02:00:00.000Z',
+    close: '2000-01-01T006:00:00.000Z',
+    openAt24Hour: '02:00', // 10pm EST
+    closedAt24Hour: '04:00', // 12:00am EST
+  },
+]
