@@ -6,15 +6,12 @@ import { connect } from 'react-redux'
 import { Button } from 'reactstrap'
 
 const MapSwitcher = props => {
-  const { dispatch, mode } = props
+  const { mode, onClick, showText } = props
 
   return (
     <div className="map-switcher">
-      <Button
-        color="default"
-        onClick={() => dispatch({ type: 'TOGGLE_SEARCH_RESULTS_MODE' })}
-      >
-        {mode === 'map' ? 'Show Search Results' : 'Show Map'}
+      <Button color="default" onClick={onClick}>
+        {mode === 'map' ? showText : 'Show Map'}
       </Button>
     </div>
   )
@@ -22,10 +19,13 @@ const MapSwitcher = props => {
 
 MapSwitcher.propTypes = {
   mode: PropTypes.oneOf(['map', 'listing']),
+  onClick: PropTypes.func,
+  showText: PropTypes.string.isRequired,
 }
 
 MapSwitcher.defaultProps = {
   mode: 'listing',
+  onClick: () => {},
 }
 
 const select = state => {

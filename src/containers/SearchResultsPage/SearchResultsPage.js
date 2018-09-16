@@ -3,21 +3,47 @@ import './SearchResultsPage.css'
 import React from 'react'
 import querystring from 'querystring'
 import { connect } from 'react-redux'
-import { OverlayView } from 'react-google-maps'
 import { Row, Col } from 'reactstrap'
 import { Helmet } from 'react-helmet'
 
 import { SearchResults } from '../../components/Search/SearchResults'
 import { ResultsMap } from '../../components/Search/ResultsMap'
-import { Result } from '../../components/Search/Result'
 import { MapSwitcher } from '../../components/Search/MapSwitcher'
 
 import { Loader } from '../../components/Loader'
-import { CustomOverlayView } from '../../components/Maps/CustomOverlayView'
+import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
 
 import { performSearch } from '../../actions/search'
 
 class SearchResultsPage extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      mapHeight: this.getInnerHeight(),
+      scrollTop: 0,
+    }
+  }
+
+  getInnerHeight() {
+    return window.innerHeight - 73
+  }
+
+  handleMapLoad = map => {
+    if (map) {
+      this.map = map
+      this.updateMapPosition()
+    }
+  }
+
+  updateMapPosition = () => {
+    if (this.mapEl) {
+      this.setState({
+        mapHeight: this.getInnerHeight(),
+        scrollTop: document.getElementsByTagName('html')[0].scrollTop,
+      })
+    }
+  }
+
   performSearch = (params = {}) => {
     const { dispatch, history, search } = this.props
     const { bounds } = params
@@ -78,6 +104,9 @@ class SearchResultsPage extends React.Component {
     const { match, dispatch } = this.props
     const queryParams = this.getQueryParams()
 
+    window.addEventListener('scroll', this.updateMapPosition)
+    window.addEventListener('resize', this.updateMapPosition)
+
     dispatch({
       type: 'SET_SEARCH_QUERY_PARAMS',
       data: {
@@ -87,6 +116,11 @@ class SearchResultsPage extends React.Component {
     })
 
     dispatch({ type: 'SET_SEARCH_PENDING', data: true })
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.updateMapPosition)
+    window.removeEventListener('resize', this.updateMapPosition)
   }
 
   componentDidUpdate() {
@@ -138,44 +172,16 @@ class SearchResultsPage extends React.Component {
         return null
       }
 
-      const location = listing.location
-
-      return (
-        <CustomOverlayView
-          position={location}
-          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-          getPixelPositionOffset={(width, height) => {
-            return {
-              x: -(width / 2),
-              y: -(height + 45),
-            }
-          }}
-        >
-          <Result
-            className="result-overlay"
-            key={listing.slug}
-            listing={listing}
-            location="Search Results Map"
-            smallView={true}
-            session={session}
-          />
-        </CustomOverlayView>
-      )
+      return <ListingOverlay listing={listing} session={session} />
     }
 
     return null
   }
 
   renderResults() {
-    const {
-      app,
-      dispatch,
-      history,
-      location,
-      search,
-      selectedResult,
-      session,
-    } = this.props
+    const { app, dispatch, history, location, search, session } = this.props
+
+    const { mapHeight, scrollTop } = this.state
 
     if (!search.located) {
       return (
@@ -199,8 +205,8 @@ class SearchResultsPage extends React.Component {
           handleSearch={this.performSearch}
         />
         <ResultsMap
+          mapEl={el => (this.mapEl = el)}
           key={`${search.resultMode}_${location.pathname}_${location.search}`}
-          selectedResult={selectedResult}
           handleMarkerClick={slug => {
             const newSlug =
               !!search.selectedResult && search.selectedResult === slug
@@ -224,8 +230,18 @@ class SearchResultsPage extends React.Component {
             }, 0)
           }}
           handleRedoSearch={this.handleRedoSearch}
-          search={search}
+          bounds={{
+            nelat: search.nelat,
+            nelng: search.nelng,
+            swlat: search.swlat,
+            swlng: search.swlng,
+          }}
+          listings={search.listings}
+          featured={search.featured}
+          resultMode={search.resultMode}
           overlay={this.getOverlay()}
+          mapHeight={mapHeight}
+          scrollTop={scrollTop}
           session={session}
         />
       </React.Fragment>
@@ -233,7 +249,7 @@ class SearchResultsPage extends React.Component {
   }
 
   render() {
-    const { search } = this.props
+    const { dispatch, search } = this.props
 
     const title = search.query
       ? `Search for "${search.query}" in ${search.location.city} · EthicalTree`
@@ -261,7 +277,11 @@ class SearchResultsPage extends React.Component {
         <Col className="search-results-page">
           <Row>{this.renderResults()}</Row>
         </Col>
-        <MapSwitcher mode={search.resultMode} />
+        <MapSwitcher
+          mode={search.resultMode}
+          onClick={() => dispatch({ type: 'TOGGLE_SEARCH_RESULTS_MODE' })}
+          showText="Show Search Results"
+        />
       </Loader>
     )
   }

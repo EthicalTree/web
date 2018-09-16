@@ -134,12 +134,12 @@ export const getLocations = queryObj => {
   }
 }
 
-export const toggleAdmin = userData => {
+export const editUser = userData => {
   return dispatch => {
     api
       .put(`/v1/admin/users/${userData.id}`, { user: userData })
       .then(() => {
-        dispatch({ type: 'UPDATE_ADMIN_USER', data: userData })
+        dispatch(getUsers())
         success('User successfully saved.')
       })
       .catch(() => {})
