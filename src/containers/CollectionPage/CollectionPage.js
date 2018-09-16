@@ -125,7 +125,6 @@ export class CollectionPage extends React.Component {
               </div>
 
               <Container>
-
                 <ResultsMap
                   handleMarkerClick={slug => {
                     const newSlug =
@@ -155,7 +154,7 @@ export class CollectionPage extends React.Component {
                             xs="12"
                             sm="6"
                             lg="4"
-                            xl="6">
+                            xl="3">
                             <Result
                               listing={l}
                               location="Collection Page"
@@ -174,7 +173,7 @@ export class CollectionPage extends React.Component {
                     </div>
                     <Col xs="12" lg="12" xl="12" className="col-xxl-12">
                       <div className="d-flex flex-wrap flex-direction-column">
-                        <Featured sm={6} lg={4} xl={6} xxl={4} />
+                        <Featured sm={6} lg={4} xl={3} xxl={3} />
                       </div>
                     </Col>
                   </Row>
@@ -194,8 +193,8 @@ export class CollectionPage extends React.Component {
                       )
                     }
                   />
-                  </Row>
-                </Container>
+                </Row>
+              </Container>
 
               <MapSwitcher
                 mode={displayMode}

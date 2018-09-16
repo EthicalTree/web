@@ -39,9 +39,10 @@ export class ResultsMap extends React.Component {
   }
 
   renderSearchTools() {
+    const { handleRedoSearch } = this.props
     const { boundsChanged } = this.state
 
-    if (this.map && boundsChanged) {
+    if (this.map && boundsChanged && handleRedoSearch) {
       return (
         <MapControl position={window.google.maps.ControlPosition.TOP_LEFT}>
           <div className="ml-2 mt-2">
