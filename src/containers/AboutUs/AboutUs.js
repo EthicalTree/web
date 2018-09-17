@@ -59,6 +59,46 @@ export const AboutUs = () => {
         <ul className="et-mentions">
           <li>
             <a
+              href="https://www.uottawa.ca/gazette/en/news/creativity-display-startup-garage-rally"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              uOttawa Gazette (September 11, 2018)
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="http://www.obj.ca/techopia-university-ottawa-startup-garage-rally"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ottawa Business Journal (August 7, 2018)
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="http://www.obj.ca/article/ottawa-based-ethical-tree-simplifying-search-vegan-and-ethical-restaurants"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ottawa Business Journal (June 15, 2018)
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://globalnews.ca/news/4155690/vegan-dining-restaurants-canada/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Global News (April 19, 2018)
+            </a>
+          </li>
+
+          <li>
+            <a
               href="http://glueottawa.com/2018/02/12/no-need-to-call-the-ethics-commissioner-on-this-ottawa-startup/"
               target="_blank"
               rel="noopener noreferrer"
