@@ -24,8 +24,8 @@ const isBetween = (start, test, stop) => {
 
 export const localizedDates = (operatingHours, timezone) => {
   return operatingHours.map(oh => {
-    const open = moment.tz(oh.openAt24Hour, 'HH:mm', 'UTC').tz(timezone)
-    const close = moment.tz(oh.closedAt24Hour, 'HH:mm', 'UTC').tz(timezone)
+    const open = moment.tz(oh.openAt24Hour, 'HH:mm', timezone)
+    const close = moment.tz(oh.closedAt24Hour, 'HH:mm', timezone)
     let result = { open, close }
     return { ...oh, ...result }
   })
