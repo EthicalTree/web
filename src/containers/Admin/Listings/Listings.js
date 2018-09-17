@@ -96,13 +96,15 @@ export class Listings extends React.Component {
             <ButtonGroup className="mr-4">
               <Button
                 outline={!admin.filters.includes('pending_claims')}
-                onClick={blurClick(() => this.filter('pending_claims'))}>
+                onClick={blurClick(() => this.filter('pending_claims'))}
+              >
                 Pending Claims
               </Button>
 
               <Button
                 outline={!admin.filters.includes('plans')}
-                onClick={blurClick(() => this.filter('plans'))}>
+                onClick={blurClick(() => this.filter('plans'))}
+              >
                 Plans
               </Button>
             </ButtonGroup>
@@ -133,7 +135,8 @@ export class Listings extends React.Component {
                     <div className="d-flex">
                       <Link
                         to={`/listings/${l.city || '_'}/${l.slug}`}
-                        target="_blank">
+                        target="_blank"
+                      >
                         {l.title}
                       </Link>
                       <ClaimStatus status={l.claimStatus} />

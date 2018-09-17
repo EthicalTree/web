@@ -41,7 +41,8 @@ const ListingInfo = props => {
               })
 
               dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'location' })
-            }}>
+            }}
+          >
             Location
           </NavLink>
         </NavItem>
@@ -56,7 +57,8 @@ const ListingInfo = props => {
               })
 
               dispatch({ type: 'CHANGE_LISTING_INFO_TAB', data: 'menu' })
-            }}>
+            }}
+          >
             {isStore && 'More Info'}
             {!isStore && 'Menu'}
           </NavLink>

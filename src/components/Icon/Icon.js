@@ -34,7 +34,8 @@ const Icon = props => {
       onKeyPress={a11yClick(onClick)}
       ref={innerRef}
       tabIndex={tabIndex}
-      {...rest}>
+      {...rest}
+    >
       <InnerIcon />
       {label && <span className="icon-label">{label}</span>}
     </span>

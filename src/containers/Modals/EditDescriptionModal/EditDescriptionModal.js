@@ -45,7 +45,8 @@ class EditDescriptionModal extends React.Component {
         contentLabel="Edit Listing"
         onSave={this.submit.bind(this)}
         saveDisabled={!validPhone}
-        modalName="edit-description">
+        modalName="edit-description"
+      >
         <Row>
           <Col className="mb-4" xs={12} md={6}>
             <Label for="listingTitle">Title</Label>

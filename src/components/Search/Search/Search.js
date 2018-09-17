@@ -120,7 +120,6 @@ class Search extends React.Component {
 
   render() {
     const { search } = this.props
-
     const { location, locationSuggestions } = this.state
 
     let { query, dirty } = this.state
@@ -200,7 +199,8 @@ class Search extends React.Component {
               color="danger"
               className="full-height search-button"
               block
-              onClick={this.search}>
+              onClick={this.search}
+            >
               Search
             </Button>
           </Col>

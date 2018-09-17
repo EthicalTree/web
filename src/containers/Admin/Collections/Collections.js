@@ -81,7 +81,8 @@ const CollectionTable = props => {
                 <Input
                   value={l.location || ''}
                   onChange={e => changeLocation(l, e.target.value)}
-                  type="select">
+                  type="select"
+                >
                   <option value="">None</option>
                   <option value="front_page">Front Page</option>
                 </Input>

@@ -25,17 +25,23 @@ import { SkipLink } from '../SkipLink'
 import { EthicalityBar } from '../Ethicality/Ethicality'
 
 import etLogo from './images/et-logo.svg'
-import { isCurrentPath } from '../../utils/url'
+import { isCurrentPath, urlOneOf } from '../../utils/url'
 import { trackEvent } from '../../utils/ga'
 
 import { toggleSearchEthicalities } from '../../actions/search'
+
+const SUBHEADER_SEARCH_EXCLUDES = ['/', /^\/business\/.*/, /^\/s\/.*/]
 
 const Header = props => {
   const { dispatch, app, handleSkip, header, location, search, session } = props
 
   const isFixed = isCurrentPath('/s/')
-  const hasSubHeaderSearch = !isCurrentPath('/s/') && location.pathname !== '/'
   const hasHeaderSearch = isCurrentPath('/s/')
+
+  const hasSubHeaderSearch = !urlOneOf(
+    location.pathname,
+    SUBHEADER_SEARCH_EXCLUDES
+  )
 
   const fixedHeader = isFixed ? 'fixed-top' : ''
   const fixedHeaderWrapper = isFixed ? 'fixed-header-wrapper' : ''
@@ -53,7 +59,8 @@ const Header = props => {
               action: 'Clicked Home Button',
               category: 'General',
             })
-          }}>
+          }}
+        >
           <span className="sr-only">EthicalTree</span>
           <img className="ml-4 mr-2" src={etLogo} alt="EthicalTree Logo" />
         </Link>
@@ -80,7 +87,8 @@ const Header = props => {
                   onClick={e => {
                     e.preventDefault()
                     dispatch({ type: 'OPEN_MODAL', data: 'feedback' })
-                  }}>
+                  }}
+                >
                   Feedback
                 </a>
               </NavItem>
@@ -92,7 +100,8 @@ const Header = props => {
                       ? `/collections/${search.location.city}`
                       : '/collections'
                   }
-                  className="nav-link">
+                  className="nav-link"
+                >
                   Collections
                 </Link>
               </NavItem>
@@ -106,7 +115,8 @@ const Header = props => {
                     block
                     onClick={() => {
                       dispatch({ type: 'OPEN_MODAL', data: 'add-listing' })
-                    }}>
+                    }}
+                  >
                     Add Listing
                   </Button>
                 </NavItem>
@@ -117,7 +127,8 @@ const Header = props => {
                   isOpen={header.isAccountDropdownOpen}
                   toggle={() =>
                     dispatch({ type: 'TOGGLE_HEADER_ACCOUNT_DROPDOWN' })
-                  }>
+                  }
+                >
                   <DropdownToggle nav caret>
                     <AccountIcon email={session.user.email} />
                   </DropdownToggle>
@@ -135,7 +146,8 @@ const Header = props => {
                     <DropdownItem
                       onClick={() => {
                         dispatch({ type: 'OPEN_MODAL', data: 'logout' })
-                      }}>
+                      }}
+                    >
                       Logout
                     </DropdownItem>
                   </DropdownMenu>
@@ -150,7 +162,8 @@ const Header = props => {
                     href="#"
                     onClick={() => {
                       dispatch({ type: 'OPEN_MODAL', data: 'signup' })
-                    }}>
+                    }}
+                  >
                     Signup
                   </NavLink>
                 </NavItem>
@@ -160,7 +173,8 @@ const Header = props => {
                     href="#"
                     onClick={() => {
                       dispatch({ type: 'OPEN_MODAL', data: 'login' })
-                    }}>
+                    }}
+                  >
                     Login
                   </NavLink>
                 </NavItem>

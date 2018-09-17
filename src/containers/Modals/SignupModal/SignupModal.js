@@ -54,7 +54,8 @@ class SignupModal extends React.Component {
         className="signup-modal large-modal"
         loading={modal.isLoading}
         contentLabel="Signup"
-        modalName="signup">
+        modalName="signup"
+      >
         <Row>
           <Col>
             <Form method="post" onSubmit={this.submit.bind(this)}>

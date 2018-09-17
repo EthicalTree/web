@@ -2,21 +2,23 @@ import './AboutUs.css'
 
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { Container } from 'reactstrap'
+import { Container, Jumbotron } from 'reactstrap'
+import { ContactInfo } from '../../components/ContactInfo'
 
 export const AboutUs = () => {
   return (
-    <div className="about-us">
+    <div className="about-us public-content">
       <Helmet>
         <title>{'About Us · EthicalTree'}</title>
         <meta name="description" content={'EthicalTree About Us'} />
       </Helmet>
-      <Container>
-        <h1 className="mt-5 mb-5">About Us</h1>
 
-        <h4 className="mb-4">
-          Welcome to EthicalTree – Ethical business directory!
-        </h4>
+      <Jumbotron>
+        <h1>About Us</h1>
+      </Jumbotron>
+
+      <Container>
+        <h2>Welcome to EthicalTree – Ethical business directory!</h2>
 
         <p>
           Here you can find thousands of restaurants, cafés, shops, and other
@@ -46,88 +48,135 @@ export const AboutUs = () => {
           door, please contact us and we’ll get back to you quickly!
         </p>
 
-        <p>
-          Email: <a href="mailto:info@ethicaltree.com">info@ethicaltree.com</a>
-        </p>
-        <p>Phone: 613-413-0063</p>
+        <hr />
 
-        <h4 className="mt-5 mb-4">Mentions of EthicalTree in the Media</h4>
+        <ContactInfo />
 
-        <p>
-          Check out some of the following links for mentions of EthicalTree!
-        </p>
+        <hr />
 
-        <div className="et-mentions">
-          <a
-            href="http://glueottawa.com/2018/02/12/no-need-to-call-the-ethics-commissioner-on-this-ottawa-startup/"
-            target="_blank"
-            rel="noopener noreferrer">
-            Glue Magazine (February 12, 2018)
-          </a>
+        <h3>EthicalTree in the Media</h3>
 
-          <br />
+        <ul className="et-mentions">
+          <li>
+            <a
+              href="https://www.uottawa.ca/gazette/en/news/creativity-display-startup-garage-rally"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              uOttawa Gazette (September 11, 2018)
+            </a>
+          </li>
 
-          <a
-            href="https://issuu.com/kingstonheritage/docs/kingston_110817"
-            target="_blank"
-            rel="noopener noreferrer">
-            Frontenac Gazette / Kingston Heritage (October 27, 2017)
-          </a>
+          <li>
+            <a
+              href="http://www.obj.ca/techopia-university-ottawa-startup-garage-rally"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ottawa Business Journal (August 7, 2018)
+            </a>
+          </li>
 
-          <br />
+          <li>
+            <a
+              href="http://www.obj.ca/article/ottawa-based-ethical-tree-simplifying-search-vegan-and-ethical-restaurants"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ottawa Business Journal (June 15, 2018)
+            </a>
+          </li>
 
-          <a
-            href="https://thegreenpages.ca/2017/07/25/ethicaltree-hopes-to-connect-ethically-oriented-consumers-and-businesses/"
-            target="_blank"
-            rel="noopener noreferrer">
-            The Green Pages (July 25, 2017)
-          </a>
+          <li>
+            <a
+              href="https://globalnews.ca/news/4155690/vegan-dining-restaurants-canada/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Global News (April 19, 2018)
+            </a>
+          </li>
 
-          <br />
+          <li>
+            <a
+              href="http://glueottawa.com/2018/02/12/no-need-to-call-the-ethics-commissioner-on-this-ottawa-startup/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Glue Magazine (February 12, 2018)
+            </a>
+          </li>
 
-          <a
-            href="http://www.larotonde.ca/entreprises-ethiques-dottawa-a-portee-de-main/"
-            target="_blank"
-            rel="noopener noreferrer">
-            La Rotonde (July 4, 2017)
-          </a>
+          <li>
+            <a
+              href="https://issuu.com/kingstonheritage/docs/kingston_110817"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Frontenac Gazette / Kingston Heritage (October 27, 2017)
+            </a>
+          </li>
 
-          <br />
+          <li>
+            <a
+              href="https://thegreenpages.ca/2017/07/25/ethicaltree-hopes-to-connect-ethically-oriented-consumers-and-businesses/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              The Green Pages (July 25, 2017)
+            </a>
+          </li>
 
-          <a
-            href="http://apt613.ca/ethicaltree/"
-            target="_blank"
-            rel="noopener noreferrer">
-            Apt 613 (May 23, 2017)
-          </a>
+          <li>
+            <a
+              href="http://www.larotonde.ca/entreprises-ethiques-dottawa-a-portee-de-main/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              La Rotonde (July 4, 2017)
+            </a>
+          </li>
 
-          <br />
+          <li>
+            <a
+              href="http://apt613.ca/ethicaltree/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Apt 613 (May 23, 2017)
+            </a>
+          </li>
 
-          <a
-            href="http://www.justchange.ca/april-2017-ethicaltree/"
-            target="_blank"
-            rel="noopener noreferrer">
-            JustChange (April 3, 2017)
-          </a>
+          <li>
+            <a
+              href="http://www.justchange.ca/april-2017-ethicaltree/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              JustChange (April 3, 2017)
+            </a>
+          </li>
 
-          <br />
+          <li>
+            <a
+              href="http://thesustainabilitree.blogspot.ca/2017/03/impacts-impact-sustainability-for.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Sustainabilitree Blog (March 29, 2017)
+            </a>
+          </li>
 
-          <a
-            href="http://thesustainabilitree.blogspot.ca/2017/03/impacts-impact-sustainability-for.html"
-            target="_blank"
-            rel="noopener noreferrer">
-            Sustainabilitree Blog (March 29, 2017)
-          </a>
-
-          <br />
-
-          <a
-            href="http://ottawa.impacthub.net/2017/02/21/impact-academy-2016-2017-meet-the-impacters/"
-            target="_blank"
-            rel="noopener noreferrer">
-            ImpactHub Ottawa (February 21, 2017)
-          </a>
-        </div>
+          <li>
+            <a
+              href="http://ottawa.impacthub.net/2017/02/21/impact-academy-2016-2017-meet-the-impacters/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ImpactHub Ottawa (February 21, 2017)
+            </a>
+          </li>
+        </ul>
       </Container>
     </div>
   )

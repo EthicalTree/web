@@ -15,7 +15,8 @@ const Prev = props => {
       onClick={props.onClick}
       onKeyPress={a11yClick(props.onClick)}
       className="slider-prev"
-      tabIndex="0">
+      tabIndex="0"
+    >
       <div className="slider-navigation">
         <Icon iconKey="chevron_left" className="icon-button-overlay" />
       </div>
@@ -30,7 +31,8 @@ const Next = props => {
       onClick={props.onClick}
       onKeyPress={a11yClick(props.onClick)}
       className="slider-next"
-      tabIndex="0">
+      tabIndex="0"
+    >
       <div className="slider-navigation">
         <Icon iconKey="chevron_right" className="icon-button-overlay" />
       </div>
@@ -51,7 +53,8 @@ const Slider = props => {
       infinite={true}
       initialSlide={initialSlide >= 0 ? initialSlide : 0}
       slidesToShow={1}
-      {...rest}>
+      {...rest}
+    >
       {slides}
     </SlickSlider>
   )

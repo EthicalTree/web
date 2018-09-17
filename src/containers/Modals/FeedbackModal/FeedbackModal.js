@@ -14,7 +14,8 @@ class FeedbackModal extends React.Component {
         className="feedback-modal medium-modal"
         loading={false}
         contentLabel="Feedback"
-        modalName="feedback">
+        modalName="feedback"
+      >
         <Row className="feedback-form">
           <Wufoo
             userName="ethicaltree"

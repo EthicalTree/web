@@ -96,7 +96,8 @@ export class Export extends React.Component {
           <Input
             onChange={e => this.setSelectedExport(e.target.value)}
             type="select"
-            defaultValue={selectedExport}>
+            defaultValue={selectedExport}
+          >
             <option disabled hidden value="">
               Choose object
             </option>

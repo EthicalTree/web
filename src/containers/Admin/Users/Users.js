@@ -10,9 +10,17 @@ import { Icon } from '../../../components/Icon'
 import { Loader } from '../../../components/Loader'
 import { Paginator } from '../../../components/Paginator'
 
-import { getUsers, toggleAdmin } from '../../../actions/admin'
+import { getUsers, editUser } from '../../../actions/admin'
 
 export class Users extends React.Component {
+  verifyUser = (id, verified) => {
+    const { dispatch } = this.props
+
+    return () => {
+      dispatch(editUser({ id, verified }))
+    }
+  }
+
   componentDidMount() {
     const { dispatch } = this.props
 
@@ -20,15 +28,15 @@ export class Users extends React.Component {
     dispatch(getUsers({ page: 1, query: '' }))
   }
 
-  toggleAdmin(user_id, e) {
+  toggleAdmin(userId, e) {
     const { dispatch } = this.props
     const checked = e.target.checked
 
     e.preventDefault()
 
     dispatch(
-      toggleAdmin({
-        id: user_id,
+      editUser({
+        id: userId,
         admin: checked,
       })
     )
@@ -70,9 +78,19 @@ export class Users extends React.Component {
                 <td>{u.position}</td>
                 <td>
                   {u.confirmedAt ? (
-                    <Icon iconKey="check" />
+                    <Icon
+                      iconKey="check"
+                      title="Verified (click to un-verify)"
+                      clickable
+                      onClick={this.verifyUser(u.id, false)}
+                    />
                   ) : (
-                    <Icon iconKey="cross" />
+                    <Icon
+                      iconKey="cross"
+                      title="Not Verified (click to verify)"
+                      clickable
+                      onClick={this.verifyUser(u.id, true)}
+                    />
                   )}
                 </td>
                 <td>
@@ -89,7 +107,7 @@ export class Users extends React.Component {
         <div className="text-center">
           <Paginator
             pageCount={admin.totalPages}
-            currentPage={admin.currentPage}
+            currentPage={admin.currentPage || 1}
             onPageChange={data => dispatch(getUsers({ page: data.selected }))}
           />
         </div>

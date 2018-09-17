@@ -55,7 +55,8 @@ class EditEthicalitiesModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Edit Listing Ethicalities"
         onSave={this.submit.bind(this)}
-        modalName="edit-ethicalities">
+        modalName="edit-ethicalities"
+      >
         <Row className="text-center mb-2">
           <Col>
             <p>Select all that apply</p>

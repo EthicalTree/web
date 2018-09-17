@@ -89,7 +89,8 @@ export const Ethicality = props => {
       className={classNames}
       onClick={clickWrapper}
       onKeyPress={a11yClick(clickWrapper)}
-      tabIndex={selectable ? '0' : '-1'}>
+      tabIndex={selectable ? '0' : '-1'}
+    >
       {showIcon !== false && (
         <EthicalityIcon ethicalityKey={iconKey} name={name} uuid={uuid} />
       )}

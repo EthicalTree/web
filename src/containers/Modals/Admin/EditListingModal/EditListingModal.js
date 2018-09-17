@@ -31,7 +31,8 @@ class EditListingModal extends React.Component {
         contentLabel="Edit Listing"
         onSave={this.submit.bind(this)}
         modalName="admin-edit-listing"
-        saveLabel="Save">
+        saveLabel="Save"
+      >
         <Form onSubmit={this.submit.bind(this)}>
           <Col className="mt-3 mb-3">
             <Label for="name">Plan Type</Label>
@@ -42,7 +43,8 @@ class EditListingModal extends React.Component {
               type="select"
               name="name"
               id="name"
-              placeholder="Enter a name">
+              placeholder="Enter a name"
+            >
               <option value="">Free</option>
               {app.plans.map(p => {
                 return (
@@ -76,7 +78,8 @@ class EditListingModal extends React.Component {
               type="select"
               name="visibility"
               onChange={e => this.handleChange({ visibility: e.target.value })}
-              value={visibility || 'unpublished'}>
+              value={visibility || 'unpublished'}
+            >
               <option value="published">Visible</option>
               <option value="unpublished">Hidden</option>
             </Input>

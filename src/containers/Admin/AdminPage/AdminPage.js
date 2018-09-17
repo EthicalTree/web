@@ -34,7 +34,8 @@ export class AdminPage extends React.Component {
                 className={cn('nav-link', {
                   active: pathname === '/admin/users',
                 })}
-                to="/admin/users">
+                to="/admin/users"
+              >
                 Users
               </Link>
             </NavItem>
@@ -43,7 +44,8 @@ export class AdminPage extends React.Component {
                 className={cn('nav-link', {
                   active: pathname === '/admin/listings',
                 })}
-                to="/admin/listings">
+                to="/admin/listings"
+              >
                 Listings
               </Link>
             </NavItem>
@@ -52,7 +54,8 @@ export class AdminPage extends React.Component {
                 className={cn('nav-link', {
                   active: pathname === '/admin/tags',
                 })}
-                to="/admin/tags">
+                to="/admin/tags"
+              >
                 Tags
               </Link>
             </NavItem>
@@ -61,7 +64,8 @@ export class AdminPage extends React.Component {
                 className={cn('nav-link', {
                   active: pathname === '/admin/collections',
                 })}
-                to="/admin/collections">
+                to="/admin/collections"
+              >
                 Collections
               </Link>
             </NavItem>
@@ -70,7 +74,8 @@ export class AdminPage extends React.Component {
                 className={cn('nav-link', {
                   active: pathname === '/admin/locations',
                 })}
-                to="/admin/locations">
+                to="/admin/locations"
+              >
                 Locations
               </Link>
             </NavItem>
@@ -82,7 +87,8 @@ export class AdminPage extends React.Component {
                 className={cn('nav-link', {
                   active: pathname === '/admin/export',
                 })}
-                to="/admin/export">
+                to="/admin/export"
+              >
                 Export
               </Link>
             </NavItem>

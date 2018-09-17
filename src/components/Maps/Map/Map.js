@@ -23,7 +23,8 @@ class InnerMap extends React.Component {
           ],
           ...defaultOptions,
         }}
-        defaultCenter={center}>
+        defaultCenter={center}
+      >
         {children}
       </GoogleMap>
     )

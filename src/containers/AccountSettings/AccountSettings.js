@@ -72,7 +72,8 @@ class AccountSettings extends React.Component {
                   dispatch({ type: 'SET_PERSONAL_DETAILS_DIRTY', data: true })
                 }
                 className="pb-3"
-                onSubmit={this.submitPersonalDetails}>
+                onSubmit={this.submitPersonalDetails}
+              >
                 <h5>Personal Details</h5>
 
                 {account.editPersonalDetailsErrors && (
@@ -125,7 +126,8 @@ class AccountSettings extends React.Component {
                             type: 'RESET_PERSONAL_DETAILS',
                             data: session.user,
                           })
-                        }>
+                        }
+                      >
                         Cancel
                       </Button>
                     </Col>
@@ -153,7 +155,8 @@ class AccountSettings extends React.Component {
                           type: 'SET_EDITING_ACCOUNT_PASSWORD',
                           data: true,
                         })
-                      }>
+                      }
+                    >
                       Change
                     </Button>
                   )}
@@ -234,7 +237,8 @@ class AccountSettings extends React.Component {
                               type: 'SET_EDITING_ACCOUNT_PASSWORD',
                               data: false,
                             })
-                          }>
+                          }
+                        >
                           Cancel
                         </Button>
                       </Col>

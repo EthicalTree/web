@@ -33,7 +33,8 @@ class NewTagModal extends React.Component {
         contentLabel="Add New Tag"
         onSave={this.submit.bind(this)}
         modalName="new-tag"
-        saveLabel="Create">
+        saveLabel="Create"
+      >
         <Form onSubmit={this.submit.bind(this)}>
           <Row>
             <Col>
@@ -61,7 +62,8 @@ class NewTagModal extends React.Component {
                 }}
                 type="select"
                 name="useType"
-                id="useType">
+                id="useType"
+              >
                 <option>category</option>
                 <option>admin</option>
               </Input>
