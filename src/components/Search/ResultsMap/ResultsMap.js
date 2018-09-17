@@ -127,7 +127,8 @@ export class ResultsMap extends React.Component {
           style={{
             height: mapHeight,
             marginTop: scrollTop,
-          }}>
+          }}
+        >
           <Map
             onLoad={this.handleMapLoad}
             onClick={handleMapClick}
@@ -137,14 +138,16 @@ export class ResultsMap extends React.Component {
               zoomControl: true,
               draggableCursor: 'pointer',
               gestureHandling: 'cooperative',
-            }}>
+            }}
+          >
             {markers}
             {location && (
               <PinMarker
                 location={location}
                 onClick={() =>
                   this.setState({ showYouAreHere: !showYouAreHere })
-                }>
+                }
+              >
                 {showYouAreHere && (
                   <InfoWindow>
                     <span>You are here</span>

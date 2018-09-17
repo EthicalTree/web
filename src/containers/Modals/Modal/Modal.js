@@ -131,7 +131,8 @@ class Modal extends React.Component {
             {...props}
             style={newStyles}
             className={classNames}
-            appElement={document.getElementById('root')}>
+            appElement={document.getElementById('root')}
+          >
             {noDecoration && (
               <div style={{ height: '100%' }}>
                 <ModalCloser onClose={onClose} />
@@ -226,7 +227,8 @@ const ConfirmModal = props => {
       onSave={props.onConfirm}
       saveLabel="Yes"
       noContain
-      {...props}>
+      {...props}
+    >
       <Container>
         <Row>
           <Col>

@@ -101,7 +101,8 @@ class NewCollectionModal extends React.Component {
         contentLabel={isUpdate ? 'Edit Collection' : 'Add New Collection'}
         onSave={this.submit.bind(this)}
         modalName="new-collection"
-        saveLabel={isUpdate ? 'Save' : 'Create'}>
+        saveLabel={isUpdate ? 'Save' : 'Create'}
+      >
         <Form onSubmit={this.submit.bind(this)}>
           <Row>
             <Col size={6}>

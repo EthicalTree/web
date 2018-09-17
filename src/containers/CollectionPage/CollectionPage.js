@@ -3,7 +3,7 @@ import './CollectionPage.css'
 import React from 'react'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
-import { Col, Row, Container } from 'reactstrap'
+import { Col, Row, Container, Jumbotron } from 'reactstrap'
 import { Helmet } from 'react-helmet'
 
 import { Loader } from '../../components/Loader'
@@ -78,11 +78,15 @@ export class CollectionPage extends React.Component {
           collection.name
         } - Best Local Restaurants, Shops and More · EthicalTree`
 
-    const collectionTitle = search.location
-      ? `${collection.name} (${search.location.city})`
-      : `${collection.name}`
+    const jumbotronClasses = classnames({
+      'has-image': collection.coverImage,
+    })
 
     let headerStyles
+
+    const collectionTitle = search.location
+      ? `${search.location.city} ${collection.name}`
+      : `${collection.name}`
 
     if (collection.coverImage) {
       headerStyles = {
@@ -108,13 +112,9 @@ export class CollectionPage extends React.Component {
                 />
               </Helmet>
 
-              <div
-                className={classnames('collection-header', 'text-center', {
-                  'has-image': collection.coverImage,
-                })}
-                style={headerStyles}>
+              <Jumbotron className={jumbotronClasses} style={headerStyles}>
                 <div className="collection-banner">
-                  <h2 className="collection-title">{collectionTitle}</h2>
+                  <h1 className="collection-title">{collectionTitle}</h1>
 
                   {collection.description && (
                     <h5 className="collection-description">
@@ -122,7 +122,7 @@ export class CollectionPage extends React.Component {
                     </h5>
                   )}
                 </div>
-              </div>
+              </Jumbotron>
 
               <Container>
                 <ResultsMap
@@ -154,7 +154,8 @@ export class CollectionPage extends React.Component {
                             xs="12"
                             sm="6"
                             lg="4"
-                            xl="3">
+                            xl="3"
+                          >
                             <Result
                               listing={l}
                               location="Collection Page"

@@ -1,22 +1,25 @@
 import './ContactUs.css'
 
 import React from 'react'
-import { Container } from 'reactstrap'
+import { Container, Jumbotron } from 'reactstrap'
 import { Helmet } from 'react-helmet'
-import { Icon } from '../../components/Icon'
+import { ContactInfo } from '../../components/ContactInfo'
 
 export const ContactUs = () => {
   return (
-    <div className="contact-us">
+    <div className="contact-us public-content">
       <Helmet>
         <title>{'Contact Us · EthicalTree'}</title>
         <meta name="description" content={'Contact EthicalTree'} />
       </Helmet>
-      <Container>
-        <h1 className="mt-5">Contact Us</h1>
 
-        <div className="pt-4 pb-4">
-          <p>Thanks for visiting EthicalTree.com!</p>
+      <Jumbotron>
+        <h1>Contact Us</h1>
+      </Jumbotron>
+
+      <Container>
+        <div>
+          <h4>Thanks for visiting EthicalTree.com!</h4>
 
           <p>
             We’re a small team but we’re constantly looking for ways to grow and
@@ -33,17 +36,7 @@ export const ContactUs = () => {
           </p>
         </div>
 
-        <div className="info-group">
-          <div className="d-flex mb-3">
-            <Icon iconKey="email" />
-            <a href="mailto: info@ethicaltree.com">info@ethicaltree.com</a>
-          </div>
-
-          <div className="d-flex">
-            <Icon iconKey="phone" />
-            613-413-0063
-          </div>
-        </div>
+        <ContactInfo />
       </Container>
     </div>
   )

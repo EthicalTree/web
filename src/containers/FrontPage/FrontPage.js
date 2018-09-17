@@ -40,11 +40,11 @@ export class FrontPage extends React.Component {
         </Helmet>
 
         <Container className="text-center">
-          <Col className="headline" xs="12">
-            <h1>
+          <Col xs="12">
+            <h2 className="headline">
               Find local places that <span className="text-info">care</span>{' '}
               about what you care about.
-            </h1>
+            </h2>
           </Col>
 
           <Col xs="12">

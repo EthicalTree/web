@@ -17,7 +17,7 @@ export const Collection = props => {
   const collectionLink = city
     ? `/collections/${city.toLowerCase()}/${slug}`
     : `/collections/_/${slug}`
-  const title = city ? `${name} (${city})` : name
+  const title = city ? `${city} ${name}` : name
 
   return (
     <div className="collection">
@@ -35,7 +35,8 @@ export const Collection = props => {
               category: 'Collections',
               label: name,
             })
-          }}>
+          }}
+        >
           See all
         </Link>
       </div>

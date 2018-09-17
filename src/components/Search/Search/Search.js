@@ -199,7 +199,8 @@ class Search extends React.Component {
               color="danger"
               className="full-height search-button"
               block
-              onClick={this.search}>
+              onClick={this.search}
+            >
               Search
             </Button>
           </Col>

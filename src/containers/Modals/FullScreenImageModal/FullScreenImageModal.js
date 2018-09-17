@@ -30,7 +30,8 @@ class FullScreenImageModal extends React.Component {
             transform: 'none',
           },
           overlay: {},
-        }}>
+        }}
+      >
         <ImageManager
           className="full-height d-flex flex-column justify-content-center"
           onSetCurrentImage={image =>

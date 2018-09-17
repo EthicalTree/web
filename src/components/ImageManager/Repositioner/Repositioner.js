@@ -69,7 +69,8 @@ export class Repositioner extends React.Component {
       <div
         className="repositioner"
         onMouseDown={this.handleMouseDown}
-        onTouchStart={this.handleMouseDown}>
+        onTouchStart={this.handleMouseDown}
+      >
         <p>Click and drag to reposition</p>
 
         <Icon iconKey="move" />

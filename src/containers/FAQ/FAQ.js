@@ -1,12 +1,13 @@
 import './FAQ.css'
 
 import React from 'react'
-import { Container } from 'reactstrap'
+import { Container, Jumbotron } from 'reactstrap'
 import { Helmet } from 'react-helmet'
+import { ContactInfo } from '../../components/ContactInfo'
 
 export const FAQ = () => {
   return (
-    <div className="faq">
+    <div className="faq public-content">
       <Helmet>
         <title>{'FAQ · EthicalTree'}</title>
         <meta
@@ -15,9 +16,11 @@ export const FAQ = () => {
         />
       </Helmet>
 
-      <Container>
-        <h1 className="mt-5 mb-5">Frequently Asked Questions</h1>
+      <Jumbotron>
+        <h1>Frequently Asked Questions</h1>
+      </Jumbotron>
 
+      <Container>
         <p>
           <b>Q:</b> <i>Why did you choose these ethical preferences?</i>
         </p>
@@ -117,14 +120,11 @@ export const FAQ = () => {
           development of mobile apps in the near future.
         </p>
 
-        <h4 className="mt-5 mb-3">Got a question?</h4>
+        <h4>Got a question?</h4>
 
-        <p>
-          Please email us at{' '}
-          <a href="mailto:info@ethicaltree.com">info@ethicaltree.com</a>
-        </p>
+        <ContactInfo />
 
-        <p className="mb-5">We always respond to your feedback!</p>
+        <p>We always respond to your feedback!</p>
       </Container>
     </div>
   )

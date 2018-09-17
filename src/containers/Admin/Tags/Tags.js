@@ -61,7 +61,8 @@ export class Tags extends React.Component {
             <Button
               className="mr-4"
               color="default"
-              onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'new-tag' })}>
+              onClick={() => dispatch({ type: 'OPEN_MODAL', data: 'new-tag' })}
+            >
               + New Tag
             </Button>
 
@@ -93,7 +94,8 @@ export class Tags extends React.Component {
                       type="select"
                       name="use_type"
                       onChange={this.handleUseTypeChange(t.id)}
-                      defaultValue={t.useType}>
+                      defaultValue={t.useType}
+                    >
                       <option>category</option>
                       <option>admin</option>
                     </Input>

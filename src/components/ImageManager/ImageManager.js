@@ -54,7 +54,8 @@ class Action extends React.Component {
               placement="bottom"
               isOpen={tooltipOpen}
               delay={0}
-              target={this.target}>
+              target={this.target}
+            >
               {action.title}
             </Tooltip>
           )}
@@ -131,7 +132,8 @@ const ImageActions = props => {
               accept="image/*"
               onProgress={props.onImageUploadProgress}
               onFinish={addAction.handleAction}
-              signingUrlQueryParams={signingParams}>
+              signingUrlQueryParams={signingParams}
+            >
               <Action
                 type="add"
                 icon="plus"
@@ -231,7 +233,8 @@ class ImageManager extends React.Component {
       <Loader
         className={className}
         loading={isLoading}
-        progress={uploadProgress}>
+        progress={uploadProgress}
+      >
         {hasSlides && (
           <div className="image-manager text-center">
             {!isRepositioning && (
@@ -311,7 +314,8 @@ class ImageManager extends React.Component {
             <S3Uploader
               onProgress={onImageUploadProgress}
               onFinish={addAction.handleAction}
-              signingUrlQueryParams={signingParams}>
+              signingUrlQueryParams={signingParams}
+            >
               <div className="image-manager text-center no-content uploadable">
                 <div className="upload-wrapper">
                   <Icon iconKey="camera" className="camera" />

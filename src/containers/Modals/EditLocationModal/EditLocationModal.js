@@ -103,7 +103,8 @@ class EditLocationModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Edit Location"
         onSave={this.submit.bind(this)}
-        modalName="edit-location">
+        modalName="edit-location"
+      >
         <Row>
           <Col>
             <FormGroup>
@@ -119,7 +120,8 @@ class EditLocationModal extends React.Component {
                 <InputGroupAddon addonType="append">
                   <Button
                     color="default"
-                    onClick={this.onAddressChange.bind(this)}>
+                    onClick={this.onAddressChange.bind(this)}
+                  >
                     Find
                   </Button>
                 </InputGroupAddon>
@@ -138,7 +140,8 @@ class EditLocationModal extends React.Component {
                 draggableCursor: 'pointer',
               }}
               containerElement={<div style={{ height: '100%' }} />}
-              mapElement={<div style={{ height: '100%' }} />}>
+              mapElement={<div style={{ height: '100%' }} />}
+            >
               {marker}
             </Map>
           </Col>

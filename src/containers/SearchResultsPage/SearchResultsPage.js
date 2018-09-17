@@ -264,7 +264,11 @@ class SearchResultsPage extends React.Component {
         }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
 
     return (
-      <Loader fixed={true} loading={search.isSearchLoading}>
+      <Loader
+        fixed={true}
+        className="search-results-page-loader"
+        loading={search.isSearchLoading}
+      >
         <Helmet>
           <title>{title}</title>
           <meta name="description" content={description} />

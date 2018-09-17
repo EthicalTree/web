@@ -97,7 +97,8 @@ class EditOperatingHoursModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Edit Hours"
         modalName="edit-operating-hours"
-        onSave={this.submit.bind(this)}>
+        onSave={this.submit.bind(this)}
+      >
         <OpenCloseSelector
           selectedDay={selectedDay}
           days={this.state.operatingHours}

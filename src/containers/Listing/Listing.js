@@ -147,7 +147,8 @@ class Listing extends React.Component {
       <Loader
         key={match.params.slug}
         loading={listing.isListingLoading}
-        fixed={true}>
+        fixed={true}
+      >
         <Helmet key={listing.id}>
           <title>{title}</title>
           <meta name="description" content={`${listing.bio}`} />

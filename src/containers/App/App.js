@@ -142,6 +142,13 @@ class InnerApp extends React.Component {
               />
 
               <Route
+                path="/business"
+                component={split(() =>
+                  import('../Business/BusinessHome/BusinessHome')
+                )}
+              />
+
+              <Route
                 path="/admin"
                 component={split(() => import('../Admin/AdminPage/AdminPage'))}
               />

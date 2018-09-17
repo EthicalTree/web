@@ -49,7 +49,8 @@ class LoginModal extends React.Component {
         loading={modal.isLoading}
         contentLabel="Login"
         modalName="login"
-        noContain>
+        noContain
+      >
         {session.loginInfo && (
           <Row>
             <Col>
