@@ -13,7 +13,8 @@ const ListingOverlay = ({ listing, session }) => {
           x: -(width / 2),
           y: -(height + 45),
         }
-      }}>
+      }}
+    >
       <Result
         className="result-overlay"
         key={listing.slug}

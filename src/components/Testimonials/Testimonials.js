@@ -6,8 +6,8 @@ import { FeatureHighlight } from '../FeatureHighlight'
 
 import nostalgica from './images/nostalgica.png'
 import rainbowFoods from './images/rainbow-foods.png'
-import growYourRoots from './images/grow-your-roots.png'
-import sustainableKingston from './images/sustainable-kingston.jpg'
+import growYourRoots from './images/grow-your-roots2.png'
+import sustainableKingston from './images/sustainable-kingston.png'
 
 const TESTIMONIALS = [
   {

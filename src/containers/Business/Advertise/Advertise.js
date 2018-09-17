@@ -1,6 +1,7 @@
 import './Advertise.css'
 
 import React from 'react'
+import Wufoo from 'react-wufoo-embed'
 import { Helmet } from 'react-helmet'
 import { Col, Container, Jumbotron, Row } from 'reactstrap'
 
@@ -158,9 +159,18 @@ export class Advertise extends React.Component {
 
         <Testimonials />
 
-        <h5 className="pt-5 mt-5 text-center">
-          Join the EthicalTree family today :)
-        </h5>
+        <Container>
+          <h3>
+            Leave us your contact info and we’ll get in touch to set up your
+            free account within 24 hours!
+          </h3>
+
+          <Wufoo
+            userName="ethicaltree"
+            formHash="w1t4xiny191sh0c"
+            header="hide"
+          />
+        </Container>
       </div>
     )
   }
