@@ -146,6 +146,18 @@ export const editUser = userData => {
   }
 }
 
+export const deleteUser = id => {
+  return dispatch => {
+    api
+      .delete(`/v1/admin/users/${id}`)
+      .then(() => {
+        success('User deleted')
+        dispatch(getUsers())
+      })
+      .catch(() => {})
+  }
+}
+
 export const setListingVisibility = (listingId, visibility) => {
   return () => {
     api

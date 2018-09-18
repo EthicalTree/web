@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import moment from 'moment'
 
 import { Table } from 'reactstrap'
 
@@ -10,14 +11,33 @@ import { Icon } from '../../../components/Icon'
 import { Loader } from '../../../components/Loader'
 import { Paginator } from '../../../components/Paginator'
 
-import { getUsers, editUser } from '../../../actions/admin'
+import { setConfirm } from '../../../actions/confirm'
+import { getUsers, editUser, deleteUser } from '../../../actions/admin'
 
 export class Users extends React.Component {
   verifyUser = (id, verified) => {
     const { dispatch } = this.props
 
+    const confirmed_at = verified ? moment.tz('UTC') : null
+
     return () => {
-      dispatch(editUser({ id, verified }))
+      dispatch(editUser({ id, confirmed_at }))
+    }
+  }
+
+  handleDelete = id => {
+    const { dispatch } = this.props
+
+    return event => {
+      event.preventDefault()
+      dispatch(
+        setConfirm({
+          title: 'Delete User',
+          msg: 'Are you sure you want to delete this user?',
+          action: deleteUser,
+          data: id,
+        })
+      )
     }
   }
 
@@ -68,6 +88,7 @@ export class Users extends React.Component {
               <th className="no-stretch">Company Position</th>
               <th className="no-stretch">Verified</th>
               <th className="no-stretch">Admin</th>
+              <th className="no-stretch">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -98,6 +119,15 @@ export class Users extends React.Component {
                     type="checkbox"
                     checked={!!u.admin}
                     onChange={e => this.toggleAdmin(u.id, e)}
+                  />
+                </td>
+                <td>
+                  <Icon
+                    iconKey="trash"
+                    title="Delete User"
+                    className="delete-user"
+                    clickable
+                    onClick={this.handleDelete(u.id)}
                   />
                 </td>
               </tr>
