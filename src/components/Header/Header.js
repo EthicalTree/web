@@ -81,15 +81,8 @@ const Header = props => {
           <Nav navbar className="ml-auto">
             <div className="mr-3 d-flex">
               <NavItem>
-                <a
-                  className="nav-link"
-                  href=""
-                  onClick={e => {
-                    e.preventDefault()
-                    dispatch({ type: 'OPEN_MODAL', data: 'feedback' })
-                  }}
-                >
-                  Feedback
+                <a className="nav-link" href="https://blog.ethicaltree.com">
+                  Blog
                 </a>
               </NavItem>
 
