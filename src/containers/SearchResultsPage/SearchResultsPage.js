@@ -19,18 +19,22 @@ class SearchResultsPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      mapHeight: this.getInnerHeight(),
-      scrollTop: 0,
+      mapHeight: 0,
+      mapWidth: 0,
     }
   }
 
-  getInnerHeight() {
+  getMapHeight() {
     return window.innerHeight - 73
+  }
+
+  getMapWidth() {
+    return this.mapEl ? this.mapEl.parentNode.offsetWidth : 0
   }
 
   handleMapLoad = map => {
     if (map) {
-      this.map = map
+      this.mapEl = map
       this.updateMapPosition()
     }
   }
@@ -38,8 +42,8 @@ class SearchResultsPage extends React.Component {
   updateMapPosition = () => {
     if (this.mapEl) {
       this.setState({
-        mapHeight: this.getInnerHeight(),
-        scrollTop: document.getElementsByTagName('html')[0].scrollTop,
+        mapHeight: this.getMapHeight(),
+        mapWidth: this.getMapWidth(),
       })
     }
   }
@@ -104,7 +108,6 @@ class SearchResultsPage extends React.Component {
     const { match, dispatch } = this.props
     const queryParams = this.getQueryParams()
 
-    window.addEventListener('scroll', this.updateMapPosition)
     window.addEventListener('resize', this.updateMapPosition)
 
     dispatch({
@@ -116,10 +119,10 @@ class SearchResultsPage extends React.Component {
     })
 
     dispatch({ type: 'SET_SEARCH_PENDING', data: true })
+    this.updateMapPosition()
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.updateMapPosition)
     window.removeEventListener('resize', this.updateMapPosition)
   }
 
@@ -181,7 +184,15 @@ class SearchResultsPage extends React.Component {
   renderResults() {
     const { app, dispatch, history, location, search, session } = this.props
 
-    const { mapHeight, scrollTop } = this.state
+    const { mapHeight, mapWidth } = this.state
+
+    const style = {
+      height: mapHeight,
+      width: mapWidth,
+      left: window.innerWidth - mapWidth,
+      right: 0,
+      position: 'fixed',
+    }
 
     if (!search.located) {
       return (
@@ -205,7 +216,7 @@ class SearchResultsPage extends React.Component {
           handleSearch={this.performSearch}
         />
         <ResultsMap
-          mapEl={el => (this.mapEl = el)}
+          mapEl={this.handleMapLoad}
           key={`${search.resultMode}_${location.pathname}_${location.search}`}
           handleMarkerClick={slug => {
             const newSlug =
@@ -240,9 +251,8 @@ class SearchResultsPage extends React.Component {
           featured={search.featured}
           resultMode={search.resultMode}
           overlay={this.getOverlay()}
-          mapHeight={mapHeight}
-          scrollTop={scrollTop}
           session={session}
+          style={style}
         />
       </React.Fragment>
     )
