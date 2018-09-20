@@ -22,7 +22,7 @@ export const AboutUs = () => {
 
         <p>
           Here you can find thousands of restaurants, cafés, shops, and other
-          businesses in the Toronto, Ottawa, Gatineau, and Kingston area that
+          businesses in the Toronto, Ottawa, Gatineau, and Kingston areas that
           sell products or services based on the ethical preferences that matter
           to you. Try a search by selecting your preferences for businesses you
           wish to support, whether that means Veg-Friendly, Fair Trade, Organic,
@@ -32,20 +32,26 @@ export const AboutUs = () => {
         </p>
 
         <p>
-          EthicalTree.com is an entirely free service for consumers, operated by
-          three friends – Willy, Siavash, and Frank. Our vision is to make it
-          easier for consumers to make buying decisions based on their ethical
-          values, and ultimately to encourage and support more businesses in
-          offering goods and services that align with the ethical values of
-          their customers.
+          EthicalTree.com is an entirely free service for consumers, founded in
+          2016 by three friends – Willy, Siavash, and Frank. Our vision is to
+          make it easier for consumers to make buying decisions based on their
+          ethical values, and ultimately to encourage and support more
+          businesses in offering goods and services that align with the ethical
+          values of their customers.
         </p>
 
         <p>
-          EthicalTree also works with local businesses who target
-          ethically-oriented consumers. If you are a business owner looking to
-          promote your business through EthicalTree, or if you are interested in
-          learning more about how we can help you drive more consumers to your
-          door, please contact us and we’ll get back to you quickly!
+          EthicalTree also works with local businesses who want to grow their
+          customer base by targetting the growing ethical consumer markets. If
+          you are a business owner,{' '}
+          <a
+            href="https://ethicaltree.com/business/advertise"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            click here to learn about EthicalTree's free and paid options
+          </a>{' '}
+          to grow your business on our platform and reach new customer segments.
         </p>
 
         <hr />
