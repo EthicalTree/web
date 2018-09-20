@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import moment from 'moment'
 
 import { Table } from 'reactstrap'
 
@@ -18,10 +17,8 @@ export class Users extends React.Component {
   verifyUser = (id, verified) => {
     const { dispatch } = this.props
 
-    const confirmed_at = verified ? moment.tz('UTC') : null
-
     return () => {
-      dispatch(editUser({ id, confirmed_at }))
+      dispatch(editUser({ id, verified }))
     }
   }
 
