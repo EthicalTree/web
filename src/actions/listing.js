@@ -3,7 +3,7 @@ import { error, success } from '../utils/notifications'
 import { trackEvent } from '../utils/ga'
 import history from '../utils/history'
 
-import { head } from 'lodash'
+import { head } from 'lodash/head'
 
 export const getListing = slug => {
   return dispatch => {
