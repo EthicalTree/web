@@ -182,6 +182,16 @@ export const AboutUs = () => {
               ImpactHub Ottawa (February 21, 2017)
             </a>
           </li>
+
+          <li>
+            <a
+              href="http://www.larotonde.ca/entrepreneuriat-a-uottawa/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              La Rotonde (Sept 17, 2018)
+            </a>
+          </li>
         </ul>
       </Container>
     </div>
