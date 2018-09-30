@@ -38,6 +38,10 @@ export class ResultsMap extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    this.calculateBounds()
+  }
+
   renderSearchTools() {
     const { handleRedoSearch } = this.props
     const { boundsChanged } = this.state

@@ -20,3 +20,7 @@ export const urlOneOf = (url, pathList = []) => {
 export const getSitePath = path => {
   return `${process.env.REACT_APP_URL}${path}`
 }
+
+export const stringToBool = param => {
+  return param === 'true' || param === true
+}

@@ -13,12 +13,19 @@ import { MapSwitcher } from '../../components/Search/MapSwitcher'
 import { Loader } from '../../components/Loader'
 import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
 
-import { performSearch } from '../../actions/search'
+import { deserializeEthicalities } from '../../utils/ethicalities'
+
+import {
+  setSearchUrl,
+  performSearchApiCall,
+  setHistoryFromSearch,
+} from '../../actions/search'
 
 class SearchResultsPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      dontUpdateHistoryOnApiFetch: false,
       mapHeight: 0,
       mapWidth: 0,
     }
@@ -48,48 +55,28 @@ class SearchResultsPage extends React.Component {
     }
   }
 
-  performSearch = (params = {}) => {
-    const { dispatch, history, search } = this.props
+  changeBounds = (params = {}) => {
+    const { dispatch, search } = this.props
     const { bounds } = params
-
-    const query = search.query
-    const ethicalities = params.ethicalities || search.selectedEthicalities
-    const openNow = search.openNow
-    const location = params.location || search.location.name
-    const page = params.page || search.currentPage
-
-    let paramsObj = {
-      ethicalities: ethicalities.join(','),
-      location: location,
-      open_now: openNow,
-      page,
-      swlat: '',
-      swlng: '',
-      nelat: '',
-      nelng: '',
-    }
 
     if (bounds) {
       const sw = bounds.getSouthWest()
       const ne = bounds.getNorthEast()
 
-      paramsObj = {
-        ...paramsObj,
-        swlat: sw.lat(),
-        swlng: sw.lng(),
-        nelat: ne.lat(),
-        nelng: ne.lng(),
-      }
+      dispatch(
+        setSearchUrl(search, {
+          swlat: sw.lat(),
+          swlng: sw.lng(),
+          nelat: ne.lat(),
+          nelng: ne.lng(),
+        })
+      )
     }
-
-    dispatch({ type: 'SET_SEARCH_QUERY_PARAMS', data: paramsObj })
     dispatch({ type: 'SET_SEARCH_PENDING', data: true })
-
-    history.push(`/s/${query}?${querystring.stringify(paramsObj)}`)
   }
 
   handleRedoSearch = bounds => {
-    this.performSearch({ bounds })
+    this.changeBounds({ bounds })
   }
 
   getQueryParams() {
@@ -97,11 +84,21 @@ class SearchResultsPage extends React.Component {
     let search = querystring.parse(location.search.slice(1))
 
     search.page = search.page || 1
-    search.ethicalities = search.ethicalities
-      ? search.ethicalities.split(',')
-      : []
+    search.ethicalities = deserializeEthicalities(search.ethicalities)
 
     return search
+  }
+
+  componentWillMount() {
+    const { history } = this.props
+    if (
+      history.location.state &&
+      history.location.state.dontUpdateHistoryOnApiFetch
+    ) {
+      this.setState({
+        dontUpdateHistoryOnApiFetch: true,
+      })
+    }
   }
 
   componentDidMount() {
@@ -128,35 +125,17 @@ class SearchResultsPage extends React.Component {
 
   componentDidUpdate() {
     const { dispatch, search } = this.props
-
-    const {
-      currentPage,
-      selectedEthicalities,
-      location,
-      nelat,
-      nelng,
-      swlat,
-      swlng,
-      openNow,
-      query,
-    } = search
+    const { dontUpdateHistoryOnApiFetch } = this.state
 
     if (search.isPending) {
-      dispatch(
-        performSearch({
-          query,
-          ethicalities: selectedEthicalities,
-          open_now: openNow,
-          location,
-          page: currentPage,
-          nelat,
-          nelng,
-          swlat,
-          swlng,
-        })
-      )
-
+      if (!dontUpdateHistoryOnApiFetch) {
+        setHistoryFromSearch(search)
+      }
+      dispatch(performSearchApiCall(search))
       dispatch({ type: 'SET_SEARCH_PENDING', data: false })
+      this.setState({
+        dontUpdateHistoryOnApiFetch: false,
+      })
     }
   }
 
@@ -182,7 +161,7 @@ class SearchResultsPage extends React.Component {
   }
 
   renderResults() {
-    const { app, dispatch, history, location, search, session } = this.props
+    const { app, dispatch, history, search, session } = this.props
 
     const { mapHeight, mapWidth } = this.state
 
@@ -213,11 +192,9 @@ class SearchResultsPage extends React.Component {
           history={history}
           search={search}
           session={session}
-          handleSearch={this.performSearch}
         />
         <ResultsMap
           mapEl={this.handleMapLoad}
-          key={`${search.resultMode}_${location.pathname}_${location.search}`}
           handleMarkerClick={slug => {
             const newSlug =
               !!search.selectedResult && search.selectedResult === slug
@@ -247,6 +224,7 @@ class SearchResultsPage extends React.Component {
             swlat: search.swlat,
             swlng: search.swlng,
           }}
+          locationName={search.location.name}
           listings={search.listings}
           featured={search.featured}
           resultMode={search.resultMode}
@@ -277,7 +255,7 @@ class SearchResultsPage extends React.Component {
       <Loader
         fixed={true}
         className="search-results-page-loader"
-        loading={search.isSearchLoading}
+        loading={search.isLoading}
       >
         <Helmet>
           <title>{title}</title>

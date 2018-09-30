@@ -13,7 +13,7 @@ import { LocationSuggestion } from '../LocationSuggestion'
 import { LocationInput } from '../LocationInput'
 
 import { api } from '../../../utils/api'
-import { setSearchLocation } from '../../../actions/search'
+import { setSearchLocation, setSearchUrl } from '../../../actions/search'
 import {
   setGeoLocation,
   DEFAULT_LOCATION,
@@ -40,32 +40,20 @@ class Search extends React.Component {
   }
 
   search = event => {
-    const { search, history, dispatch } = this.props
+    const { dispatch, search } = this.props
     const { query } = this.state
-    const { location } = search
 
     if ((event.key && event.key === 'Enter') || !event.key) {
-      const paramsObj = {
-        ethicalities: search.selectedEthicalities.join(','),
-        location: location ? location.name : '',
-        page: 1,
-      }
-
-      dispatch({
-        type: 'SET_SEARCH_QUERY_PARAMS',
-        data: {
+      dispatch(
+        setSearchUrl(search, {
           query,
           swlat: '',
           swlng: '',
           nelat: '',
           nelng: '',
-        },
-      })
-
-      history.push(
-        `/s/${encodeURIComponent(query)}?${querystring.stringify(paramsObj)}`
+          page: 1,
+        })
       )
-      dispatch({ type: 'SET_SEARCH_PENDING', data: true })
     }
   }
 
