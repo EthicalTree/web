@@ -3,6 +3,8 @@ import { error, success } from '../utils/notifications'
 import { trackEvent } from '../utils/ga'
 import history from '../utils/history'
 
+import { head } from 'lodash/head'
+
 export const getListing = slug => {
   return dispatch => {
     dispatch({ type: 'SET_GET_LISTING_LOADING', data: true })
@@ -159,7 +161,7 @@ export const editLocation = (listingSlug, data) => {
       .then(response => {
         dispatch({
           type: 'SET_LISTING_LOCATION',
-          data: response.data.locations,
+          data: head(response.data.locations),
         })
 
         dispatch({ type: 'CLOSE_MODAL' })

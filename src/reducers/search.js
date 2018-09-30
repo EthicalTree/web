@@ -1,12 +1,14 @@
 import { getGeoLocation } from '../utils/location'
+import { stringToBool } from '../utils/url'
+import { deserializeEthicalities } from '../utils/ethicalities'
 
 const defaultSearch = {
   currentPage: 1,
   featured: [],
   featuredListingsLoading: true,
   hoveredResult: null,
-  isSearchLoading: true,
-  isSearchPending: false,
+  isLoading: true,
+  isPending: false,
   listings: [],
   location: {},
   nelat: null,
@@ -37,22 +39,32 @@ const search = (state = defaultSearch, { type, data }) => {
     case 'SET_SEARCH_PENDING':
       return { ...state, isPending: data }
     case 'SET_SEARCH_LOCATION':
-      return { ...state, location: data }
-    case 'SET_SEARCH_QUERY_PARAMS': {
-      let ethicalities = data.ethicalities
-
-      if (ethicalities && !Array.isArray(ethicalities)) {
-        ethicalities = ethicalities.split(',')
+      if (data !== state.location) {
+        return {
+          ...state,
+          location: data,
+          page: 1,
+          nelat: '',
+          nelng: '',
+          swlat: '',
+          swlng: '',
+        }
       }
 
+      return { ...state, location: data }
+    case 'SET_SEARCH_QUERY_PARAMS': {
+      let ethicalities = deserializeEthicalities(data.ethicalities)
       const latlng = getGeoLocation()
 
       return {
         ...state,
         query: data.query === undefined ? state.query : data.query,
-        currentPage: data.page || state.currentPage,
+        currentPage: parseInt(data.page, 10) || state.currentPage,
         selectedEthicalities: ethicalities || state.selectedEthicalities,
-        openNow: data.openNow || false,
+        openNow:
+          data.openNow === undefined
+            ? state.openNow
+            : stringToBool(data.openNow),
         nelat: data.nelat === undefined ? state.nelat : data.nelat,
         nelng: data.nelng === undefined ? state.nelng : data.nelng,
         swlat: data.swlat === undefined ? state.swlat : data.swlat,
@@ -62,7 +74,7 @@ const search = (state = defaultSearch, { type, data }) => {
       }
     }
     case 'SET_SEARCH_LOADING':
-      return { ...state, isSearchLoading: data }
+      return { ...state, isLoading: data }
     case 'SET_FEATURED_LISTINGS': {
       const { listings } = data
 
