@@ -32,10 +32,8 @@ export const setSearchUrl = (search, params) => {
     // set the state flag so that the SearchResultsPage knows not to update the
     // history which would make the whole page re-render
     history.push({
-      pathname: '/s/',
-      search: `${encodeURIComponent(query || '')}?${querystring.stringify(
-        restOfMergedParams
-      )}`,
+      pathname: `/s/${encodeURIComponent(query || '')}`,
+      search: `${querystring.stringify(restOfMergedParams)}`,
       state: { dontUpdateHistoryOnApiFetch: true },
     })
   }
@@ -45,12 +43,14 @@ const parseSearchParams = search => {
   const params = {
     ethicalities: serializeEthicalities(search.selectedEthicalities),
     page: search.currentPage,
+    query: search.query,
     open_now: search.openNow,
     nelat: search.nelat,
     nelng: search.nelng,
     swlat: search.swlng,
     swlng: search.swlng,
   }
+
   const apiParams = {
     ...params,
     location: processLocation(search.location),
