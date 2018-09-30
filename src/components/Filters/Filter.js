@@ -1,31 +1,25 @@
 import './Filter.css'
 import React from 'react'
 import classnames from 'classnames'
+import { Input } from 'reactstrap'
 import { trackEvent } from '../../utils/ga'
+import { setSearchUrl } from '../../actions/search'
 
 export const FilterBar = props => {
-  const { className, openNow, dispatch } = props
+  const { className, dispatch, search } = props
 
   const classNames = classnames('filter-bar', className)
 
   return (
     <div className={classNames}>
       <div className="form-check">
-        <input
+        <Input
           className="form-check-input"
           type="checkbox"
           id="openNow"
-          checked={openNow || false}
+          checked={search.openNow || false}
           onChange={() => {
-            dispatch({
-              type: 'SET_SEARCH_QUERY_PARAMS',
-              data: {
-                openNow: !openNow,
-              },
-            })
-            dispatch({ type: 'SET_SEARCH_PENDING', data: true })
-
-            const label = !openNow
+            const label = !search.openNow
               ? 'Start filtering by Open Now'
               : 'Stop filtering by Open Now'
             trackEvent({
@@ -33,6 +27,11 @@ export const FilterBar = props => {
               category: 'Search',
               label: label,
             })
+            dispatch(
+              setSearchUrl(search, {
+                openNow: !search.openNow,
+              })
+            )
           }}
         />
         <label className="form-check-label" htmlFor="openNow">
