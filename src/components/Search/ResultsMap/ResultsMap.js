@@ -101,9 +101,8 @@ export class ResultsMap extends React.Component {
       handleMapClick,
       overlay,
       resultMode,
-      mapHeight,
-      scrollTop,
       mapEl,
+      style,
     } = this.props
 
     const { showYouAreHere } = this.state
@@ -121,14 +120,7 @@ export class ResultsMap extends React.Component {
 
     return (
       <Col className={`search-map-area ${hiddenClass}`}>
-        <div
-          className="search-map"
-          ref={mapEl}
-          style={{
-            height: mapHeight,
-            marginTop: scrollTop,
-          }}
-        >
+        <div className="search-map" ref={mapEl} style={style}>
           <Map
             onLoad={this.handleMapLoad}
             onClick={handleMapClick}

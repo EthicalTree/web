@@ -141,7 +141,9 @@ export class CollectionPage extends React.Component {
                   listings={collection.listings}
                   resultMode={displayMode}
                   overlay={this.getOverlay()}
-                  mapHeight={500}
+                  style={{
+                    height: 400,
+                  }}
                 />
                 <div className={`search-results ${mobileCollectionHidden}`}>
                   <Row className="mt-2 no-gutters">
