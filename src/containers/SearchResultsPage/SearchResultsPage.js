@@ -161,7 +161,7 @@ class SearchResultsPage extends React.Component {
   }
 
   renderResults() {
-    const { app, dispatch, history, location, search, session } = this.props
+    const { app, dispatch, history, search, session } = this.props
 
     const { mapHeight, mapWidth } = this.state
 
@@ -195,7 +195,6 @@ class SearchResultsPage extends React.Component {
         />
         <ResultsMap
           mapEl={this.handleMapLoad}
-          key={`${search.resultMode}_${location.pathname}_${location.search}`}
           handleMarkerClick={slug => {
             const newSlug =
               !!search.selectedResult && search.selectedResult === slug
@@ -225,6 +224,7 @@ class SearchResultsPage extends React.Component {
             swlat: search.swlat,
             swlng: search.swlng,
           }}
+          locationName={search.location.name}
           listings={search.listings}
           featured={search.featured}
           resultMode={search.resultMode}

@@ -1,6 +1,7 @@
 import './Filter.css'
 import React from 'react'
 import classnames from 'classnames'
+import { Input } from 'reactstrap'
 import { trackEvent } from '../../utils/ga'
 import { setSearchUrl } from '../../actions/search'
 
@@ -12,7 +13,7 @@ export const FilterBar = props => {
   return (
     <div className={classNames}>
       <div className="form-check">
-        <input
+        <Input
           className="form-check-input"
           type="checkbox"
           id="openNow"

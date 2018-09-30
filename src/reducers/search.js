@@ -1,4 +1,5 @@
 import { getGeoLocation } from '../utils/location'
+import { stringToBool } from '../utils/url'
 import { deserializeEthicalities } from '../utils/ethicalities'
 
 const defaultSearch = {
@@ -53,7 +54,6 @@ const search = (state = defaultSearch, { type, data }) => {
       return { ...state, location: data }
     case 'SET_SEARCH_QUERY_PARAMS': {
       let ethicalities = deserializeEthicalities(data.ethicalities)
-
       const latlng = getGeoLocation()
 
       return {
@@ -61,7 +61,10 @@ const search = (state = defaultSearch, { type, data }) => {
         query: data.query === undefined ? state.query : data.query,
         currentPage: parseInt(data.page, 10) || state.currentPage,
         selectedEthicalities: ethicalities || state.selectedEthicalities,
-        openNow: data.openNow === undefined ? state.openNow : data.openNow,
+        openNow:
+          data.openNow === undefined
+            ? state.openNow
+            : stringToBool(data.openNow),
         nelat: data.nelat === undefined ? state.nelat : data.nelat,
         nelng: data.nelng === undefined ? state.nelng : data.nelng,
         swlat: data.swlat === undefined ? state.swlat : data.swlat,
