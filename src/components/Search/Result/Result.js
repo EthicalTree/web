@@ -89,7 +89,9 @@ export class Result extends React.Component {
                 hours={localizedDates(listing.operatingHours, listing.timezone)}
                 timezone={listing.timezone}
               />
-              {distance && `${numeral(distance).format('0.0')} km`}
+              <span className="listing-distance">
+                {distance && `${numeral(distance).format('0.0')} km`}
+              </span>
             </div>
           </CardBody>
         </Card>
