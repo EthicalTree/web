@@ -9,7 +9,7 @@ import { EthicalityBar } from '../../Ethicality/Ethicality'
 import { FilterBar } from '../../Filters/Filter'
 import { Paginator } from '../../Paginator'
 
-import { toggleSearchEthicalities } from '../../../actions/search'
+import { toggleSearchEthicalities, setSearchUrl } from '../../../actions/search'
 
 export class SearchResults extends React.Component {
   handleResize = () => {
@@ -47,7 +47,7 @@ export class SearchResults extends React.Component {
   }
 
   render() {
-    const { app, search, session, dispatch, handleSearch } = this.props
+    const { app, search, session, dispatch } = this.props
     const { minHeight } = this.state
 
     const ethicalities = app.ethicalities
@@ -57,19 +57,15 @@ export class SearchResults extends React.Component {
     const mobileHidden = search.resultMode === 'map' ? 'd-none d-xl-block' : ''
 
     const onEthicalitySelect = slug => {
-      const newSelectedEthicalities = toggleSearchEthicalities(
-        selectedEthicalities,
-        slug
+      dispatch(
+        setSearchUrl(search, {
+          ethicalities: toggleSearchEthicalities(
+            search.selectedEthicalities,
+            slug
+          ),
+          page: 1,
+        })
       )
-
-      dispatch({
-        type: 'SET_SEARCH_QUERY_PARAMS',
-        data: { ethicalities: newSelectedEthicalities },
-      })
-      handleSearch({
-        page: 0,
-        ethicalities: newSelectedEthicalities,
-      })
     }
 
     return (
@@ -93,7 +89,7 @@ export class SearchResults extends React.Component {
             onEthicalitySelect={onEthicalitySelect}
             selectedEthicalities={selectedEthicalities}
           />
-          <FilterBar openNow={search.openNow} dispatch={dispatch} />
+          <FilterBar search={search} dispatch={dispatch} />
         </div>
 
         <Row className="mt-2 no-gutters">
@@ -148,7 +144,11 @@ export class SearchResults extends React.Component {
                 pageCount={search.pageCount}
                 currentPage={search.currentPage}
                 onPageChange={data => {
-                  handleSearch({ page: data.selected })
+                  dispatch(
+                    setSearchUrl(search, {
+                      page: data.selected,
+                    })
+                  )
                 }}
               />
             </Row>
