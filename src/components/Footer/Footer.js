@@ -14,6 +14,7 @@ import { trackEvent } from '../../utils/ga'
 
 class Footer extends React.PureComponent {
   render() {
+    const { dispatch } = this.props
     const classNames = classnames({ 'has-fixed-header': isCurrentPath('/s/') })
 
     return (
@@ -25,6 +26,18 @@ class Footer extends React.PureComponent {
           </div>
 
           <div>
+            <a
+              href=""
+              onClick={e => {
+                e.preventDefault()
+                dispatch({ type: 'OPEN_MODAL', data: 'feedback' })
+              }}
+            >
+              Feedback
+            </a>
+
+            <Link to="/business/advertise">Business Owners</Link>
+
             <Link to="/about-us">About Us</Link>
 
             <Link to="/faq">FAQ</Link>
