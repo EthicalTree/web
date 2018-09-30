@@ -63,16 +63,6 @@ const search = (state = defaultSearch, { type, data }) => {
     }
     case 'SET_SEARCH_LOADING':
       return { ...state, isSearchLoading: data }
-    case 'SET_FEATURED_LISTINGS': {
-      const { listings } = data
-
-      return {
-        ...state,
-        featured: listings,
-      }
-    }
-    case 'SET_FEATURED_LISTINGS_LOADING':
-      return { ...state, featuredListingsLoading: data }
     case 'SET_SEARCH_RESULTS': {
       const { listings, located, pageCount, currentPage, matches } = data
 
