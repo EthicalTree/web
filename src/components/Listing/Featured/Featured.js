@@ -23,8 +23,10 @@ export class Featured extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { location } = this.props
+    const oldName = location ? location.name : ''
+    const newName = prevProps.location ? prevProps.location.name : ''
 
-    if (location.name !== prevProps.location.name) {
+    if (oldName !== newName) {
       this.fetchListings()
     }
   }

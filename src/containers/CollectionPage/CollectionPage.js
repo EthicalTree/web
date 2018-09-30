@@ -179,15 +179,13 @@ export class CollectionPage extends React.Component {
                     </div>
                     <Col xs="12" lg="12" xl="12" className="col-xxl-12">
                       <div className="d-flex flex-wrap flex-direction-column">
-                        {location && (
-                          <Featured
-                            location={location}
-                            sm={6}
-                            lg={4}
-                            xl={3}
-                            xxl={3}
-                          />
-                        )}
+                        <Featured
+                          location={location}
+                          sm={6}
+                          lg={4}
+                          xl={3}
+                          xxl={3}
+                        />
                       </div>
                     </Col>
                   </Row>
