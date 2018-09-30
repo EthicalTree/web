@@ -9,7 +9,6 @@ import { Col, Row } from 'reactstrap'
 import { Result } from '../../Search/Result'
 import { Loader } from '../../Loader'
 import { api } from '../../../utils/api'
-import { processLocation } from '../../../utils/location'
 
 export class Featured extends React.Component {
   state = {
@@ -23,10 +22,8 @@ export class Featured extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { location } = this.props
-    const oldName = location ? location.name : ''
-    const newName = prevProps.location ? prevProps.location.name : ''
 
-    if (oldName !== newName) {
+    if (location !== prevProps.location) {
       this.fetchListings()
     }
   }
@@ -35,7 +32,7 @@ export class Featured extends React.Component {
     const { count, location } = this.props
     const data = {
       count,
-      location: processLocation(location),
+      location: location.city,
       is_featured: true,
     }
 
