@@ -29,7 +29,17 @@ export class Featured extends React.Component {
   }
 
   render() {
-    const { search, session, xs, sm, md, lg, xl, xxl } = this.props
+    const {
+      search,
+      session,
+      xs,
+      sm,
+      md,
+      lg,
+      xl,
+      xxl,
+      hoveredResult,
+    } = this.props
 
     return (
       <Loader
@@ -52,6 +62,7 @@ export class Featured extends React.Component {
               >
                 <Result
                   listing={l}
+                  hovered={l.slug === hoveredResult}
                   location="Featured Listing"
                   session={session}
                 />
@@ -73,6 +84,8 @@ Featured.propTypes = {
   count: PropTypes.number,
   xs: PropTypes.number,
   md: PropTypes.number,
+  hoveredResult: PropTypes.string,
+  location: PropTypes.object,
 }
 
 Featured.defaultProps = {

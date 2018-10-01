@@ -126,6 +126,7 @@ export class SearchResults extends React.Component {
           <Col xs="12" lg="3" xl="12" className="col-xxl-3">
             <div className="d-flex flex-wrap flex-direction-column">
               <Featured
+                hoveredResult={search.hoveredResult}
                 key="search-results-featured"
                 sm={6}
                 lg={12}
