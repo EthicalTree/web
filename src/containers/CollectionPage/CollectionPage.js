@@ -35,19 +35,22 @@ export class CollectionPage extends React.Component {
 
     api.get(`/v1/locations?query=${city}`).then(results => {
       const location = head(results.data)
-      this.setState({ location: location })
-      this.fetchCollection(location)
+
+      this.setState({ location }, () => {
+        this.fetchCollection()
+      })
     })
   }
 
-  fetchCollection(location) {
+  fetchCollection(page = 1) {
     const { dispatch, match } = this.props
+    const { location } = this.state
 
     dispatch(
       getCollection({
-        location: location,
+        location,
         slug: match.params.slug,
-        page: 1,
+        page,
       })
     )
   }
@@ -66,7 +69,7 @@ export class CollectionPage extends React.Component {
   }
 
   render() {
-    const { dispatch, collection, session } = this.props
+    const { collection, session } = this.props
     const { selectedResult, displayMode, location } = this.state
 
     const title = location
@@ -196,13 +199,8 @@ export class CollectionPage extends React.Component {
                     className="text-center"
                     pageCount={collection.totalPages}
                     currentPage={collection.currentPage}
-                    onPageChange={data =>
-                      dispatch(
-                        getCollection({
-                          slug: collection.slug,
-                          page: data.selected,
-                        })
-                      )
+                    onPageChange={({ selected }) =>
+                      this.fetchCollection(selected)
                     }
                   />
                 </Row>

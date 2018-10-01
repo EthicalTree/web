@@ -30,6 +30,11 @@ export class Featured extends React.Component {
 
   fetchListings() {
     const { count, location } = this.props
+
+    if (!location) {
+      return
+    }
+
     const data = {
       count,
       location: location.city,
