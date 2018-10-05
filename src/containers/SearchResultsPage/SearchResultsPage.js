@@ -268,10 +268,7 @@ class SearchResultsPage extends React.Component {
         </Col>
         <MapSwitcher
           mode={search.resultMode}
-          onClick={() => {
-            dispatch({ type: 'TOGGLE_SEARCH_RESULTS_MODE' })
-            this.updateMapPosition()
-          }}
+          onClick={() => dispatch({ type: 'TOGGLE_SEARCH_RESULTS_MODE' })}
           showText="Show Search Results"
         />
       </Loader>
