@@ -38,8 +38,12 @@ export class ResultsMap extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(nextProps) {
+    const { onUpdate, resultMode } = this.props
     this.calculateBounds()
+    if (resultMode !== nextProps.resultMode) {
+      onUpdate && onUpdate()
+    }
   }
 
   renderSearchTools() {

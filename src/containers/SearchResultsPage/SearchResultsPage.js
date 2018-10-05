@@ -231,6 +231,7 @@ class SearchResultsPage extends React.Component {
           overlay={this.getOverlay()}
           session={session}
           style={style}
+          onUpdate={this.updateMapPosition}
         />
       </React.Fragment>
     )
@@ -267,7 +268,10 @@ class SearchResultsPage extends React.Component {
         </Col>
         <MapSwitcher
           mode={search.resultMode}
-          onClick={() => dispatch({ type: 'TOGGLE_SEARCH_RESULTS_MODE' })}
+          onClick={() => {
+            dispatch({ type: 'TOGGLE_SEARCH_RESULTS_MODE' })
+            this.updateMapPosition()
+          }}
           showText="Show Search Results"
         />
       </Loader>
