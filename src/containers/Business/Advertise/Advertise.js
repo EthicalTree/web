@@ -13,12 +13,14 @@ import map from './images/map.svg'
 import analytics from './images/analytics.svg'
 import placement from './images/placement.svg'
 
+import { getSeoText } from '../../../utils/seo'
+
 export class Advertise extends React.Component {
   render() {
     return (
       <div className="advertise public-content">
         <Helmet>
-          <title>{'For Business · EthicalTree'}</title>
+          <title>{getSeoText('title', 'For Business · EthicalTree')}</title>
         </Helmet>
 
         <Jumbotron>

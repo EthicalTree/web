@@ -24,6 +24,7 @@ import { ImageManager } from '../../components/ImageManager'
 
 import { hasPermission, isAdmin } from '../../utils/permissions'
 import { toTitleCase } from '../../utils/string'
+import { getSeoText } from '../../utils/seo'
 
 import { setConfirm } from '../../actions/confirm'
 import { openClaimListingSignup } from '../../actions/session'
@@ -150,8 +151,11 @@ class Listing extends React.Component {
         fixed={true}
       >
         <Helmet key={listing.id}>
-          <title>{title}</title>
-          <meta name="description" content={`${listing.bio}`} />
+          <title>{getSeoText('title', title)}</title>
+          <meta
+            name="description"
+            content={getSeoText('description', listing.bio)}
+          />
         </Helmet>
 
         <Container>

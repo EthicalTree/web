@@ -18,6 +18,8 @@ import { setSearchLocation } from '../../actions/search'
 import { ResultsMap } from '../../components/Search/ResultsMap'
 import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
 
+import { getSeoText } from '../../utils/seo'
+
 import head from 'lodash/head'
 
 export class CollectionPage extends React.Component {
@@ -107,16 +109,18 @@ export class CollectionPage extends React.Component {
           render={() => (
             <React.Fragment>
               <Helmet>
-                <title>{title}</title>
+                <title>{getSeoText('title', title)}</title>
                 <meta
                   name="description"
-                  content={`${collection.description}`}
+                  content={getSeoText('description', collection.description)}
                 />
               </Helmet>
 
               <Jumbotron className={jumbotronClasses} style={headerStyles}>
                 <div className="collection-banner">
-                  <h1 className="collection-title">{collectionTitle}</h1>
+                  <h1 className="collection-title">
+                    {getSeoText('header', collectionTitle)}
+                  </h1>
 
                   {collection.description && (
                     <h5 className="collection-description">

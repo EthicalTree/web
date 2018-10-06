@@ -4,13 +4,17 @@ import React from 'react'
 import { Container, Jumbotron } from 'reactstrap'
 import { Helmet } from 'react-helmet'
 import { ContactInfo } from '../../components/ContactInfo'
+import { getSeoText } from '../../utils/seo'
 
 export const ContactUs = () => {
   return (
     <div className="contact-us public-content">
       <Helmet>
-        <title>{'Contact Us · EthicalTree'}</title>
-        <meta name="description" content={'Contact EthicalTree'} />
+        <title>{getSeoText('title', 'Contact Us · EthicalTree')}</title>
+        <meta
+          name="description"
+          content={getSeoText('description', 'Contact EthicalTree')}
+        />
       </Helmet>
 
       <Jumbotron>

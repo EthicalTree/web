@@ -22,6 +22,7 @@ export const initApp = (options = {}) => {
       api.get('/sessions'),
       api.get('/v1/ethicalities'),
       api.get('/v1/plans'),
+      api.get('/v1/seo_paths'),
     ]
 
     // Set user
@@ -46,10 +47,11 @@ export const initApp = (options = {}) => {
 
     Promise.all(requests)
       .then(
-        api.spread((s, e, p, u, l) => {
+        api.spread((s, e, p, sp, u, l) => {
           const sessionData = s.data
           const ethicalitiesData = e.data
           const plans = p.data
+          const seoPaths = sp.data
           const { user } = u.data
           const location = l.data
 
@@ -63,6 +65,7 @@ export const initApp = (options = {}) => {
           dispatch({ type: 'SET_SESSION_INFO', data: sessionData })
           dispatch({ type: 'SET_ETHICALITIES', data: ethicalitiesData })
           dispatch({ type: 'SET_PLANS', data: plans })
+          dispatch({ type: 'SET_SEO_PATHS', data: seoPaths })
 
           if (user) {
             dispatch({ type: 'SET_CURRENT_USER', data: user })
