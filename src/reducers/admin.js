@@ -1,13 +1,14 @@
 const defaultState = {
-  users: [],
-  tags: [],
-  listings: [],
   collections: [],
-  locations: [],
   currentPage: 1,
-  totalPages: 1,
-  query: '',
   filters: [],
+  listings: [],
+  locations: [],
+  query: '',
+  seoPaths: [],
+  tags: [],
+  totalPages: 1,
+  users: [],
 }
 
 const admin = (state = defaultState, { type, data }) => {
@@ -39,6 +40,8 @@ const admin = (state = defaultState, { type, data }) => {
       return { ...state, collections: data }
     case 'SET_ADMIN_LOCATIONS':
       return { ...state, locations: data }
+    case 'SET_ADMIN_SEO_PATHS':
+      return { ...state, seoPaths: data }
     case 'SET_ADMIN_PAGINATION':
       return {
         ...state,

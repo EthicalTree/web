@@ -2,6 +2,7 @@ const defaultState = {
   isAppLoading: false,
   areEthicalitiesLoading: false,
   ethicalities: [],
+  seoPaths: {},
   plans: [],
 }
 
@@ -19,6 +20,15 @@ const app = (state = defaultState, { type, data }) => {
       return { ...state, plans: data }
     case 'SET_LOCATION':
       return { ...state, location: data }
+    case 'SET_SEO_PATHS': {
+      const newSeoPaths = {}
+
+      data.forEach(sp => {
+        newSeoPaths[sp.path] = sp
+      })
+
+      return { ...state, seoPaths: newSeoPaths }
+    }
     default:
       return state
   }

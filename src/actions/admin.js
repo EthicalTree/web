@@ -24,6 +24,29 @@ export const download = (type, fields, format) => {
   }
 }
 
+export const upload = (type, fields, file) => {
+  const formData = new FormData()
+  formData.append('csv', file)
+  formData.append('type', type)
+  formData.append('fields', fields)
+
+  return dispatch => {
+    dispatch({ type: 'SET_ADMIN_LOADING', data: true })
+
+    api
+      .post(`/v1/admin/imports`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then(() => {
+        success('Items created/updated')
+      })
+      .catch(() => {})
+      .then(() => {
+        dispatch({ type: 'SET_ADMIN_LOADING', data: false })
+      })
+  }
+}
+
 export const getUsers = queryObj => {
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
@@ -134,6 +157,27 @@ export const getLocations = queryObj => {
   }
 }
 
+export const getSeoPaths = queryObj => {
+  return dispatch => {
+    dispatch({ type: 'SET_ADMIN_LOADING', data: true })
+
+    api
+      .get(`/v1/admin/seo_paths?${querystring.stringify(queryObj)}`)
+      .then(({ data }) => {
+        const { seoPaths, currentPage, totalPages } = data
+        dispatch({ type: 'SET_ADMIN_SEO_PATHS', data: seoPaths })
+        dispatch({
+          type: 'SET_ADMIN_PAGINATION',
+          data: { currentPage, totalPages },
+        })
+      })
+      .catch(() => {})
+      .then(() => {
+        dispatch({ type: 'SET_ADMIN_LOADING', data: false })
+      })
+  }
+}
+
 export const editUser = userData => {
   return dispatch => {
     api
@@ -212,8 +256,24 @@ export const addCollection = ({ name, description, hashtag, location }) => {
         dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
       } else {
         dispatch({ type: 'CLOSE_MODAL' })
-        success('List created')
+        success('Collection created')
         dispatch(getCollections())
+      }
+    })
+  }
+}
+
+export const addSeoPath = ({ path, title, description, header }) => {
+  const seoPath = { path, title, description, header }
+
+  return dispatch => {
+    api.post('/v1/admin/seo_paths', { seoPath }).then(({ data }) => {
+      if (data.errors) {
+        dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
+      } else {
+        dispatch({ type: 'CLOSE_MODAL' })
+        success('Seo Path created')
+        dispatch(getSeoPaths())
       }
     })
   }
@@ -252,6 +312,22 @@ export const editLocation = location => {
           dispatch({ type: 'CLOSE_MODAL' })
           success('Location updated')
           dispatch(getLocations())
+        }
+      })
+  }
+}
+
+export const editSeoPath = seoPath => {
+  return dispatch => {
+    api
+      .put(`/v1/admin/seo_paths/${seoPath.id}`, { seoPath })
+      .then(({ data }) => {
+        if (data.errors) {
+          dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
+        } else {
+          dispatch({ type: 'CLOSE_MODAL' })
+          success('Seo Path updated')
+          dispatch(getSeoPaths())
         }
       })
   }
@@ -297,6 +373,18 @@ export const deleteTag = id => {
       .then(() => {
         success('Tag deleted')
         dispatch(getTags())
+      })
+      .catch(() => {})
+  }
+}
+
+export const deleteSeoPath = id => {
+  return dispatch => {
+    api
+      .delete(`/v1/admin/seo_paths/${id}`)
+      .then(() => {
+        success('Seo Path deleted')
+        dispatch(getSeoPaths())
       })
       .catch(() => {})
   }

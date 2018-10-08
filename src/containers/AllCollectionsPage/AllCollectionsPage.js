@@ -12,6 +12,8 @@ import { Paginator } from '../../components/Paginator'
 import { getCollections } from '../../actions/collections'
 import { setSearchLocation } from '../../actions/search'
 
+import { getSeoText } from '../../utils/seo'
+
 export class AllCollectionsPage extends React.Component {
   componentDidMount() {
     const { dispatch, match, search } = this.props
@@ -51,17 +53,18 @@ export class AllCollectionsPage extends React.Component {
       <div className="all-collections-page">
         <Loader loading={collections.isLoading} fixed={true}>
           <Helmet>
-            <title>{title}</title>
+            <title>{getSeoText('title', title)}</title>
             <meta
               name="description"
-              content={
+              content={getSeoText(
+                'description',
                 'Discover the best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.'
-              }
+              )}
             />
           </Helmet>
 
           <Jumbotron>
-            <h1>{collectionsTitle}</h1>
+            <h1>{getSeoText('header', collectionsTitle)}</h1>
           </Jumbotron>
 
           <div className="collections">

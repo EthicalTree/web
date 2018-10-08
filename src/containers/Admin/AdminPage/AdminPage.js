@@ -8,7 +8,8 @@ import { Listings } from '../Listings'
 import { Tags } from '../Tags'
 import { Collections } from '../Collections'
 import { Locations } from '../Locations'
-import { Export } from '../Export'
+import { ImportExport } from '../ImportExport'
+import { Seo } from '../Seo'
 
 import { Route, withRouter, Redirect, Link } from 'react-router-dom'
 
@@ -80,16 +81,28 @@ export class AdminPage extends React.Component {
               </Link>
             </NavItem>
             <NavItem>
+              <Link
+                className={cn('nav-link', {
+                  active: pathname === '/admin/seo',
+                })}
+                to="/admin/seo"
+              >
+                SEO
+              </Link>
+            </NavItem>
+
+            <NavItem>
               <div className="vertical-separator" />
             </NavItem>
+
             <NavItem>
               <Link
                 className={cn('nav-link', {
-                  active: pathname === '/admin/export',
+                  active: pathname === '/admin/import-export',
                 })}
-                to="/admin/export"
+                to="/admin/import-export"
               >
-                Export
+                Import/Export
               </Link>
             </NavItem>
           </Nav>
@@ -110,7 +123,12 @@ export class AdminPage extends React.Component {
                 exact={true}
                 component={Locations}
               />
-              <Route path="/admin/export" exact={true} component={Export} />
+              <Route path="/admin/seo" exact={true} component={Seo} />
+              <Route
+                path="/admin/import-export"
+                exact={true}
+                component={ImportExport}
+              />
             </div>
           </TabPane>
         </TabContent>

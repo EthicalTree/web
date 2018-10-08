@@ -1,4 +1,5 @@
 import React from 'react'
+import Helmet from 'react-helmet'
 import querystring from 'querystring'
 import { Provider, connect } from 'react-redux'
 
@@ -21,6 +22,7 @@ import history from '../../utils/history'
 import { split } from '../../utils/codesplitting'
 import BugsnagErrorBoundary from '../../utils/bugsnag'
 import { isToolbarEnabled } from '../../utils/config'
+import { getSeoText } from '../../utils/seo'
 
 class InnerApp extends React.Component {
   handleSkip = () => {
@@ -56,6 +58,16 @@ class InnerApp extends React.Component {
 
     return (
       <div className="app">
+        <Helmet>
+          <title>{getSeoText('title', 'EthicalTree')}</title>
+          <meta
+            name="description"
+            content={getSeoText(
+              'description',
+              'Welcome to EthicalTree, the ethical business directory! We can help you make buying decisions with more peace of mind. Find businesses in your area.'
+            )}
+          />
+        </Helmet>
         <Loader loading={app.isAppLoading}>
           <Header handleSkip={this.handleSkip} />
 

@@ -14,6 +14,7 @@ import { Loader } from '../../components/Loader'
 import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
 
 import { deserializeEthicalities } from '../../utils/ethicalities'
+import { getSeoText } from '../../utils/seo'
 
 import {
   setSearchUrl,
@@ -259,8 +260,11 @@ class SearchResultsPage extends React.Component {
         loading={search.isLoading}
       >
         <Helmet>
-          <title>{title}</title>
-          <meta name="description" content={description} />
+          <title>{getSeoText('title', title)}</title>
+          <meta
+            name="description"
+            content={getSeoText('description', description)}
+          />
         </Helmet>
 
         <Col className="search-results-page">
@@ -277,7 +281,8 @@ class SearchResultsPage extends React.Component {
 }
 
 const SearchResultsWrapper = props => {
-  const { pathname, search } = props.router.location
+  const { router } = props
+  const { pathname, search } = router.location
   return <SearchResultsPage key={`${pathname}${search}`} {...props} />
 }
 

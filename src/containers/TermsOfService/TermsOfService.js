@@ -4,13 +4,17 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 import { Container, Jumbotron } from 'reactstrap'
+import { getSeoText } from '../../utils/seo'
 
 export const TermsOfService = () => {
   return (
     <div className="terms-of-service public-content">
       <Helmet>
-        <title>{'Terms of Service · EthicalTree'}</title>
-        <meta name="description" content={'EthicalTree Terms of Service'} />
+        <title>{getSeoText('title', 'Terms of Service · EthicalTree')}</title>
+        <meta
+          name="description"
+          content={getSeoText('description', 'EthicalTree Terms of Service')}
+        />
       </Helmet>
 
       <Jumbotron>

@@ -13,6 +13,8 @@ import { Collections } from '../Collections'
 
 import { toggleSearchEthicalities } from '../../actions/search'
 
+import { getSeoText } from '../../utils/seo'
+
 export class FrontPage extends React.Component {
   render() {
     const { app, dispatch, search } = this.props
@@ -35,8 +37,11 @@ export class FrontPage extends React.Component {
     return (
       <div className="front-page">
         <Helmet>
-          <title>{title}</title>
-          <meta name="description" content={description} />
+          <title>{getSeoText('title', title)}</title>
+          <meta
+            name="description"
+            content={getSeoText('description', description)}
+          />
         </Helmet>
 
         <Container className="text-center">
