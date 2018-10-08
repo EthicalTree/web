@@ -71,13 +71,13 @@ export const OpenCloseSelector = props => {
                   {selectedDay.hours.map((h, i) => {
                     return (
                       <div
-                        key={`${i}`}
+                        key={`${selectedDay.day}_${i}`}
                         className="d-flex justify-content-between mb-2"
                       >
                         <Input
                           bsSize="sm"
                           type="time"
-                          defaultValue={h.openAt24Hour}
+                          value={h.openAt24Hour}
                           onChange={e => {
                             h.openAt24Hour = e.target.value
                             setTime(selectedDay.hours)
@@ -87,7 +87,7 @@ export const OpenCloseSelector = props => {
                         <Input
                           bsSize="sm"
                           type="time"
-                          defaultValue={h.closedAt24Hour}
+                          value={h.closedAt24Hour}
                           onChange={e => {
                             h.closedAt24Hour = e.target.value
                             setTime(selectedDay.hours)
