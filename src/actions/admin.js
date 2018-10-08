@@ -377,3 +377,15 @@ export const deleteTag = id => {
       .catch(() => {})
   }
 }
+
+export const deleteSeoPath = id => {
+  return dispatch => {
+    api
+      .delete(`/v1/admin/seo_paths/${id}`)
+      .then(() => {
+        success('Seo Path deleted')
+        dispatch(getSeoPaths())
+      })
+      .catch(() => {})
+  }
+}

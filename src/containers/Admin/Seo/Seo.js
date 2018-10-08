@@ -10,7 +10,8 @@ import { Icon } from '../../../components/Icon'
 import { Paginator } from '../../../components/Paginator'
 import { Loader } from '../../../components/Loader'
 
-import { getSeoPaths } from '../../../actions/admin'
+import { setConfirm } from '../../../actions/confirm'
+import { deleteSeoPath, getSeoPaths } from '../../../actions/admin'
 
 export class Seo extends React.Component {
   handleAdd = () => {
@@ -37,6 +38,24 @@ export class Seo extends React.Component {
       dispatch({ type: 'OPEN_MODAL', data: 'admin-edit-seo-path' })
     }
   }
+
+  handleDelete = seoPath => {
+    const { dispatch } = this.props
+
+    return event => {
+      event.preventDefault()
+      dispatch(
+        setConfirm({
+          title: 'Delete Seo Path',
+          msg: 'Are you sure you want to delete this Seo Path?',
+          action: deleteSeoPath,
+          data: seoPath.id,
+        })
+      )
+    }
+  }
+
+
 
   componentDidMount() {
     const { dispatch } = this.props
@@ -95,6 +114,14 @@ export class Seo extends React.Component {
                         className="edit-seo-path"
                         clickable
                         onClick={this.handleEdit(seoPath)}
+                      />
+
+                      <Icon
+                        iconKey="trash"
+                        title="Delete Seo Path"
+                        className="edit-seo-path"
+                        clickable
+                        onClick={this.handleDelete(seoPath)}
                       />
                     </div>
                   </td>
