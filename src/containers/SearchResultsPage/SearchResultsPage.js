@@ -232,6 +232,7 @@ class SearchResultsPage extends React.Component {
           overlay={this.getOverlay()}
           session={session}
           style={style}
+          onUpdate={this.updateMapPosition}
         />
       </React.Fragment>
     )
