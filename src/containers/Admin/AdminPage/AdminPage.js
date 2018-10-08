@@ -123,12 +123,12 @@ export class AdminPage extends React.Component {
                 exact={true}
                 component={Locations}
               />
+              <Route path="/admin/seo" exact={true} component={Seo} />
               <Route
-                path="/admin/seo"
+                path="/admin/import-export"
                 exact={true}
-                component={Seo}
+                component={ImportExport}
               />
-              <Route path="/admin/import-export" exact={true} component={ImportExport} />
             </div>
           </TabPane>
         </TabContent>
