@@ -5,6 +5,7 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { Col, Row, Container, Jumbotron } from 'reactstrap'
 import { Helmet } from 'react-helmet'
+import { api } from '../../utils/api'
 
 import { Loader } from '../../components/Loader'
 import { Result } from '../../components/Search/Result'
@@ -17,10 +18,13 @@ import { setSearchLocation } from '../../actions/search'
 import { ResultsMap } from '../../components/Search/ResultsMap'
 import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
 
+import head from 'lodash/head'
+
 export class CollectionPage extends React.Component {
   state = {
     selectedResult: '',
     displayMode: 'listing',
+    location: null,
   }
 
   componentDidMount() {
@@ -29,26 +33,24 @@ export class CollectionPage extends React.Component {
 
     dispatch(setSearchLocation({ location: city }))
 
-    this.fetchCollection()
+    api.get(`/v1/locations?query=${city}`).then(results => {
+      const location = head(results.data)
+
+      this.setState({ location }, () => {
+        this.fetchCollection()
+      })
+    })
   }
 
-  componentDidUpdate(prevProps) {
-    const { search } = this.props
-    const didLocationChange = search.location !== prevProps.search.location
-
-    if (didLocationChange) {
-      this.fetchCollection()
-    }
-  }
-
-  fetchCollection() {
-    const { dispatch, match, search } = this.props
+  fetchCollection(page = 1) {
+    const { dispatch, match } = this.props
+    const { location } = this.state
 
     dispatch(
       getCollection({
-        location: search.location,
+        location,
         slug: match.params.slug,
-        page: 1,
+        page,
       })
     )
   }
@@ -67,11 +69,11 @@ export class CollectionPage extends React.Component {
   }
 
   render() {
-    const { dispatch, collection, session, search } = this.props
-    const { selectedResult, displayMode } = this.state
+    const { collection, session } = this.props
+    const { selectedResult, displayMode, location } = this.state
 
-    const title = search.location
-      ? `${search.location.city}'s ${
+    const title = location
+      ? `${location.city}'s ${
           collection.name
         } - Best Local Restaurants, Shops and More · EthicalTree`
       : `${
@@ -84,8 +86,8 @@ export class CollectionPage extends React.Component {
 
     let headerStyles
 
-    const collectionTitle = search.location
-      ? `${search.location.city} ${collection.name}`
+    const collectionTitle = location
+      ? `${location.city} ${collection.name}`
       : `${collection.name}`
 
     if (collection.coverImage) {
@@ -125,24 +127,30 @@ export class CollectionPage extends React.Component {
               </Jumbotron>
 
               <Container>
-                <ResultsMap
-                  handleMarkerClick={slug => {
-                    const newSlug =
-                      !!selectedResult && selectedResult === slug ? null : slug
-                    this.setState({
-                      selectedResult: newSlug,
-                    })
-                  }}
-                  handleMapClick={() => {
-                    setTimeout(() => {
-                      this.setState({ selectedResult: '' })
-                    }, 0)
-                  }}
-                  listings={collection.listings}
-                  resultMode={displayMode}
-                  overlay={this.getOverlay()}
-                  mapHeight={500}
-                />
+                {collection.listings.length > 0 && (
+                  <ResultsMap
+                    handleMarkerClick={slug => {
+                      const newSlug =
+                        !!selectedResult && selectedResult === slug
+                          ? null
+                          : slug
+                      this.setState({
+                        selectedResult: newSlug,
+                      })
+                    }}
+                    handleMapClick={() => {
+                      setTimeout(() => {
+                        this.setState({ selectedResult: '' })
+                      }, 0)
+                    }}
+                    listings={collection.listings}
+                    resultMode={displayMode}
+                    overlay={this.getOverlay()}
+                    style={{
+                      height: 400,
+                    }}
+                  />
+                )}
                 <div className={`search-results ${mobileCollectionHidden}`}>
                   <Row className="mt-2 no-gutters">
                     <div className="collection-listings">
@@ -174,7 +182,13 @@ export class CollectionPage extends React.Component {
                     </div>
                     <Col xs="12" lg="12" xl="12" className="col-xxl-12">
                       <div className="d-flex flex-wrap flex-direction-column">
-                        <Featured sm={6} lg={4} xl={3} xxl={3} />
+                        <Featured
+                          location={location}
+                          sm={6}
+                          lg={4}
+                          xl={3}
+                          xxl={3}
+                        />
                       </div>
                     </Col>
                   </Row>
@@ -185,13 +199,8 @@ export class CollectionPage extends React.Component {
                     className="text-center"
                     pageCount={collection.totalPages}
                     currentPage={collection.currentPage}
-                    onPageChange={data =>
-                      dispatch(
-                        getCollection({
-                          slug: collection.slug,
-                          page: data.selected,
-                        })
-                      )
+                    onPageChange={({ selected }) =>
+                      this.fetchCollection(selected)
                     }
                   />
                 </Row>
@@ -217,7 +226,6 @@ export class CollectionPage extends React.Component {
 const select = state => ({
   collection: state.collection,
   session: state.session,
-  search: state.search,
 })
 
 export default connect(select)(CollectionPage)

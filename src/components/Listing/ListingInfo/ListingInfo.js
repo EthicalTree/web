@@ -87,7 +87,7 @@ const ListingInfo = props => {
 
       <div className="clearfix" />
 
-      {!listing.plan && <Featured />}
+      {!listing.plan && <Featured location={listing.location} />}
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import './Featured.css'
 
+import querystring from 'querystring'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -7,39 +8,59 @@ import { connect } from 'react-redux'
 import { Col, Row } from 'reactstrap'
 import { Result } from '../../Search/Result'
 import { Loader } from '../../Loader'
-
-import { getFeaturedListings } from '../../../actions/search'
+import { api } from '../../../utils/api'
 
 export class Featured extends React.Component {
+  state = {
+    featuredListings: [],
+    loading: true,
+  }
+
   componentDidMount() {
     this.fetchListings()
   }
 
   componentDidUpdate(prevProps) {
-    const { search } = this.props
+    const { location } = this.props
 
-    if (search.location.name !== prevProps.search.location.name) {
+    if (location !== prevProps.location) {
       this.fetchListings()
     }
   }
 
   fetchListings() {
-    const { count, dispatch, search } = this.props
-    dispatch(getFeaturedListings({ count, location: search.location }))
+    const { count, location } = this.props
+
+    if (!location) {
+      return
+    }
+
+    const data = {
+      count,
+      location: location.city,
+      is_featured: true,
+    }
+
+    this.setState({ loading: true })
+
+    api
+      .get(`/v1/listings?${querystring.stringify(data)}`)
+      .then(({ data }) => {
+        this.setState({ loading: false, featuredListings: data.listings })
+      })
+      .catch(() => {})
   }
 
   render() {
-    const { search, session, xs, sm, md, lg, xl, xxl } = this.props
+    const { session, xs, sm, md, lg, xl, xxl, hoveredResult } = this.props
+    const { loading, featuredListings } = this.state
 
     return (
-      <Loader
-        className="featured-listings"
-        loading={search.featured.length === 0 && search.featuredListingsLoading}
-      >
+      <Loader className="featured-listings" loading={loading}>
         <h5 className="featured-listings-header">Featured</h5>
 
         <Row>
-          {search.featured.map(l => {
+          {featuredListings.map(l => {
             return (
               <Col
                 className={`col-xxl-${xxl}`}
@@ -52,6 +73,7 @@ export class Featured extends React.Component {
               >
                 <Result
                   listing={l}
+                  hovered={l.slug === hoveredResult}
                   location="Featured Listing"
                   session={session}
                 />
@@ -65,7 +87,6 @@ export class Featured extends React.Component {
 }
 
 const select = state => ({
-  search: state.search,
   session: state.session,
 })
 
@@ -73,6 +94,8 @@ Featured.propTypes = {
   count: PropTypes.number,
   xs: PropTypes.number,
   md: PropTypes.number,
+  hoveredResult: PropTypes.string,
+  location: PropTypes.object,
 }
 
 Featured.defaultProps = {

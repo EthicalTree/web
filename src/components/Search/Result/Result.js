@@ -12,7 +12,7 @@ import { OpenClose } from '../../OpenClose'
 
 import { listingProps } from '../../../utils/types'
 import { trackEvent } from '../../../utils/ga'
-import { getDistance } from '../../../utils/location'
+import { getDistance, getGeoLocation } from '../../../utils/location'
 
 export class Result extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ export class Result extends React.Component {
   }
 
   render() {
-    const { className, hovered, listing, location, session } = this.props
+    const { className, hovered, listing, location } = this.props
 
     const { currentImage } = this.state
 
@@ -35,15 +35,16 @@ export class Result extends React.Component {
       : {}
     const hoveredClass = hovered ? 'hovered' : ''
 
-    const distance =
-      session && session.location && listing.location
-        ? getDistance(
-            session.location.lat,
-            session.location.lng,
-            listing.location.lat,
-            listing.location.lng
-          )
-        : null
+    const geoLocation = getGeoLocation()
+
+    const distance = geoLocation
+      ? getDistance(
+          geoLocation.lat,
+          geoLocation.lng,
+          listing.location.lat,
+          listing.location.lng
+        )
+      : null
 
     return (
       <Link
@@ -87,7 +88,9 @@ export class Result extends React.Component {
                 hours={listing.operatingHours}
                 timezone={listing.timezone}
               />
-              {distance && `${numeral(distance).format('0.0')} km`}
+              <span className="listing-distance">
+                {distance && `${numeral(distance).format('0.0')} km`}
+              </span>
             </div>
           </CardBody>
         </Card>
