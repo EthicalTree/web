@@ -104,6 +104,7 @@ export class AllCollectionsPage extends React.Component {
               onPageChange={data =>
                 dispatch(
                   getCollections({
+                    location: search.location,
                     page: data.selected,
                   })
                 )

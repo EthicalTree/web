@@ -55,8 +55,6 @@ export class Seo extends React.Component {
     }
   }
 
-
-
   componentDidMount() {
     const { dispatch } = this.props
 
