@@ -20,9 +20,9 @@ export const S3Uploader = props => {
         }}
         signingUrlQueryParams={signingUrlQueryParams}
         server={`${process.env.REACT_APP_API_URL}`}
-        multiple={false}
         onProgress={onProgress}
         onFinish={onFinish}
+        multiple
       />
       {props.children}
     </label>

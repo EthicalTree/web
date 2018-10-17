@@ -194,11 +194,13 @@ export const addImageToListing = data => {
     api
       .post(`/v1/listings/${listingSlug}/images`, { key: imageKey, type })
       .then(response => {
-        if (response.data.images) {
-          dispatch({ type: 'SET_LISTING_IMAGES', data: response.data.images })
+        const images = response.data.images
+
+        if (images) {
+          dispatch({ type: 'SET_LISTING_IMAGES', data: images })
           dispatch({
             type: 'SET_LISTING_CURRENT_IMAGE',
-            data: response.data.images.reverse()[0],
+            data: images[images.length - 1],
           })
 
           trackEvent({
@@ -226,12 +228,17 @@ export const addImageToMenu = data => {
         type,
       })
       .then(response => {
-        if (response.data.images) {
+        const images = response.data.images
+
+        if (images) {
           dispatch({
             type: 'SET_LISTING_MENU_IMAGES',
-            data: response.data.images,
+            data: images,
           })
-          dispatch({ type: 'SET_LISTING_MENU_CURRENT_IMAGE' })
+          dispatch({
+            type: 'SET_LISTING_MENU_CURRENT_IMAGE',
+            data: images[images.length - 1],
+          })
 
           trackEvent({
             action: 'Add Image to Menu',
