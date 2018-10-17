@@ -3,7 +3,7 @@ import { error, success } from '../utils/notifications'
 import { trackEvent } from '../utils/ga'
 import history from '../utils/history'
 
-import { head } from 'lodash/head'
+import head from 'lodash/head'
 
 export const getListing = slug => {
   return dispatch => {
@@ -173,7 +173,7 @@ export const editLocation = (listingSlug, data) => {
         })
       })
       .catch(error => {
-        if (error.response.status === 400) {
+        if (error.response && error.response.status === 400) {
           dispatch({
             type: 'SET_MODAL_ERRORS',
             data: 'You must select a location on the map',

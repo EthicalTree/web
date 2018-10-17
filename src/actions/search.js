@@ -15,6 +15,9 @@ import { trackEvent } from '../utils/ga'
 
 export const setSearchUrl = (search, params) => {
   // set the url to /s/... to route to searchresultspage component/update it
+  const query = params.query || search.query
+  delete params['query']
+
   return dispatch => {
     dispatch({
       type: 'SET_SEARCH_QUERY_PARAMS',
@@ -23,17 +26,14 @@ export const setSearchUrl = (search, params) => {
 
     const { historyParams } = parseSearchParams(search)
     const mergedParams = { ...historyParams, ...params }
-    const { query, ...restOfMergedParams } = mergedParams
 
-    restOfMergedParams.ethicalities = serializeEthicalities(
-      restOfMergedParams.ethicalities
-    )
+    mergedParams.ethicalities = serializeEthicalities(mergedParams.ethicalities)
 
     // set the state flag so that the SearchResultsPage knows not to update the
     // history which would make the whole page re-render
     history.push({
       pathname: `/s/${encodeURIComponent(query || '')}`,
-      search: `${querystring.stringify(restOfMergedParams)}`,
+      search: `${querystring.stringify(mergedParams)}`,
       state: { dontUpdateHistoryOnApiFetch: true },
     })
   }
@@ -43,7 +43,6 @@ const parseSearchParams = search => {
   const params = {
     ethicalities: serializeEthicalities(search.selectedEthicalities),
     page: search.currentPage,
-    query: search.query,
     open_now: search.openNow,
     nelat: search.nelat,
     nelng: search.nelng,
