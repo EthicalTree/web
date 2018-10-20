@@ -1,6 +1,6 @@
 import './SearchResultsPage.css'
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import querystring from 'querystring'
 import { connect } from 'react-redux'
 import { Row, Col } from 'reactstrap'
@@ -10,7 +10,6 @@ import { SearchResults } from '../../components/Search/SearchResults'
 import { ResultsMap } from '../../components/Search/ResultsMap'
 import { MapSwitcher } from '../../components/Search/MapSwitcher'
 
-import { Loader } from '../../components/Loader'
 import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
 
 import { deserializeEthicalities } from '../../utils/ethicalities'
@@ -174,7 +173,7 @@ class SearchResultsPage extends React.Component {
       position: 'fixed',
     }
 
-    if (!search.located) {
+    if (!search.located && !search.isLoading) {
       return (
         <div className="location-not-found">
           <h4>Oh No!</h4>
@@ -254,11 +253,7 @@ class SearchResultsPage extends React.Component {
         }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
 
     return (
-      <Loader
-        fixed={true}
-        className="search-results-page-loader"
-        loading={search.isLoading}
-      >
+      <Fragment>
         <Helmet>
           <title>{getSeoText('title', title)}</title>
           <meta
@@ -275,7 +270,7 @@ class SearchResultsPage extends React.Component {
           onClick={() => dispatch({ type: 'TOGGLE_SEARCH_RESULTS_MODE' })}
           showText="Show Search Results"
         />
-      </Loader>
+      </Fragment>
     )
   }
 }

@@ -9,6 +9,8 @@ import { EthicalityBar } from '../../Ethicality/Ethicality'
 import { FilterBar } from '../../Filters/Filter'
 import { Paginator } from '../../Paginator'
 
+import { getListOrDummy } from '../../../utils/skeleton'
+
 import { toggleSearchEthicalities, setSearchUrl } from '../../../actions/search'
 
 export class SearchResults extends React.Component {
@@ -33,7 +35,7 @@ export class SearchResults extends React.Component {
   renderResultsHeader() {
     const { search } = this.props
 
-    if (search.matches === 0) {
+    if (search.matches === 0 && !search.isLoading) {
       return (
         <React.Fragment>
           <div className="no-matches">Oh no, nothing matched your search!</div>
@@ -98,10 +100,10 @@ export class SearchResults extends React.Component {
               {this.renderResultsHeader()}
 
               <div className="d-flex flex-wrap align-items-stretch">
-                {hasListings &&
-                  search.listings.map(listing => (
+                {(hasListings || search.isLoading) &&
+                  getListOrDummy(search.listings, 10).map((listing, i) => (
                     <Col
-                      key={listing.slug}
+                      key={i}
                       xs="12"
                       sm="6"
                       lg="4"
@@ -116,9 +118,11 @@ export class SearchResults extends React.Component {
                       />
                     </Col>
                   ))}
-                {!hasListings && (
-                  <Col className="text-center pt-5">No listings found!</Col>
-                )}
+
+                {!hasListings &&
+                  !search.isLoading && (
+                    <Col className="text-center pt-5">No listings found!</Col>
+                  )}
               </div>
             </div>
           </Col>

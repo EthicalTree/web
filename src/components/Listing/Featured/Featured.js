@@ -7,13 +7,13 @@ import { connect } from 'react-redux'
 
 import { Col, Row } from 'reactstrap'
 import { Result } from '../../Search/Result'
-import { Loader } from '../../Loader'
 import { api } from '../../../utils/api'
+
+import { getListOrDummy } from '../../../utils/skeleton'
 
 export class Featured extends React.Component {
   state = {
-    featuredListings: [],
-    loading: true,
+    featuredListings: null,
   }
 
   componentDidMount() {
@@ -41,26 +41,26 @@ export class Featured extends React.Component {
       is_featured: true,
     }
 
-    this.setState({ loading: true })
+    this.setState({ featuredListings: null })
 
     api
       .get(`/v1/listings?${querystring.stringify(data)}`)
       .then(({ data }) => {
-        this.setState({ loading: false, featuredListings: data.listings })
+        this.setState({ featuredListings: data.listings })
       })
       .catch(() => {})
   }
 
   render() {
     const { session, xs, sm, md, lg, xl, xxl, hoveredResult } = this.props
-    const { loading, featuredListings } = this.state
+    const { featuredListings } = this.state
 
     return (
-      <Loader className="featured-listings" loading={loading}>
+      <div className="featured-listings">
         <h5 className="featured-listings-header">Featured</h5>
 
         <Row>
-          {featuredListings.map(l => {
+          {getListOrDummy(featuredListings, 4).map((l, i) => {
             return (
               <Col
                 className={`col-xxl-${xxl}`}
@@ -69,7 +69,7 @@ export class Featured extends React.Component {
                 md={md}
                 lg={lg}
                 xl={xl}
-                key={l.id}
+                key={i}
               >
                 <Result
                   listing={l}
@@ -81,7 +81,7 @@ export class Featured extends React.Component {
             )
           })}
         </Row>
-      </Loader>
+      </div>
     )
   }
 }
