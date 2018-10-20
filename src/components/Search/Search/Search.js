@@ -3,6 +3,7 @@ import './Search.css'
 import React from 'react'
 import Autosuggest from 'react-autosuggest'
 import querystring from 'querystring'
+import union from 'lodash/union'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -12,8 +13,10 @@ import { IconInput } from '../../Icon'
 import { LocationSuggestion } from '../LocationSuggestion'
 import { LocationInput } from '../LocationInput'
 
-import { api } from '../../../utils/api'
+import { parseEthicalitiesFromString } from '../../../models/ethicalities'
 import { setSearchLocation, setSearchUrl } from '../../../actions/search'
+
+import { api } from '../../../utils/api'
 import {
   setGeoLocation,
   DEFAULT_LOCATION,
@@ -40,20 +43,33 @@ class Search extends React.Component {
   }
 
   search = event => {
-    const { dispatch, search } = this.props
+    const { app, dispatch, search } = this.props
     const { query } = this.state
+
+    const { result, ethicalities } = parseEthicalitiesFromString(
+      query,
+      app.ethicalities
+    )
 
     if ((event.key && event.key === 'Enter') || !event.key) {
       dispatch(
         setSearchUrl(search, {
-          query,
+          query: result,
           swlat: '',
           swlng: '',
           nelat: '',
           nelng: '',
           page: 1,
+          ethicalities: union(
+            search.selectedEthicalities,
+            ethicalities.map(e => e.slug)
+          ),
         })
       )
+
+      if (result !== query) {
+        this.setState({ query: result })
+      }
     }
   }
 
@@ -200,6 +216,7 @@ class Search extends React.Component {
 
 const select = state => {
   return {
+    app: state.app,
     search: state.search,
     session: state.session,
   }
