@@ -6,3 +6,11 @@ export const toTitleCase = str => {
     .map(s => startCase(s))
     .join(', ')
 }
+
+export const squish = str => {
+  return str.replace(/\s+/g, ' ').trim()
+}
+
+export const escapeRegex = str => {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
