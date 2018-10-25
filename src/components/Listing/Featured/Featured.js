@@ -6,10 +6,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { Col, Row } from 'reactstrap'
-import { Result } from '../../Search/Result'
+import { Result, ResultSkeleton } from '../../Search/Result'
 import { api } from '../../../utils/api'
 
-import { getListOrDummy } from '../../../utils/skeleton'
+import { genDummyList } from '../../../utils/skeleton'
 
 export class Featured extends React.Component {
   state = {
@@ -60,8 +60,30 @@ export class Featured extends React.Component {
         <h5 className="featured-listings-header">Featured</h5>
 
         <Row>
-          {getListOrDummy(featuredListings, 4).map((l, i) => {
-            return (
+          {featuredListings &&
+            featuredListings.map((l, i) => {
+              return (
+                <Col
+                  className={`col-xxl-${xxl}`}
+                  xs={xs}
+                  sm={sm}
+                  md={md}
+                  lg={lg}
+                  xl={xl}
+                  key={i}
+                >
+                  <Result
+                    listing={l}
+                    hovered={l.slug === hoveredResult}
+                    location="Featured Listing"
+                    session={session}
+                  />
+                </Col>
+              )
+            })}
+
+          {featuredListings == null &&
+            genDummyList(4).map(x => (
               <Col
                 className={`col-xxl-${xxl}`}
                 xs={xs}
@@ -69,17 +91,11 @@ export class Featured extends React.Component {
                 md={md}
                 lg={lg}
                 xl={xl}
-                key={i}
+                key={x}
               >
-                <Result
-                  listing={l}
-                  hovered={l.slug === hoveredResult}
-                  location="Featured Listing"
-                  session={session}
-                />
+                <ResultSkeleton />
               </Col>
-            )
-          })}
+            ))}
         </Row>
       </div>
     )

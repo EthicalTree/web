@@ -11,23 +11,30 @@ import { Featured } from '../Featured'
 import { trackEvent } from '../../../utils/ga'
 import { hasPermission } from '../../../utils/permissions'
 
+import { BioSkeleton } from '../Bio'
+
 const ListingInfo = props => {
   const { listing, className, dispatch } = props
 
   const activeTab = listing.listingInfoTab
   const menu = listing.menus.length > 0 ? listing.menus[0] : null
-  const isStore = listing.categories.map(c => c.slug).includes('store')
+  const isStore =
+    listing.categories && listing.categories.map(c => c.slug).includes('store')
 
   return (
     <div className={className}>
-      <Bio
-        bio={listing.bio}
-        canEdit={hasPermission('update', listing)}
-        onClickDescriptionEdit={props.onClickDescriptionEdit}
-        phone={listing.phone}
-        title={listing.title}
-        website={listing.website}
-      />
+      {!listing.id ? (
+        <BioSkeleton />
+      ) : (
+        <Bio
+          bio={listing.bio}
+          canEdit={hasPermission('update', listing)}
+          onClickDescriptionEdit={props.onClickDescriptionEdit}
+          phone={listing.phone}
+          title={listing.title}
+          website={listing.website}
+        />
+      )}
 
       <Nav tabs>
         <NavItem>

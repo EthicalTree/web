@@ -19,7 +19,6 @@ import {
 import { TagBar } from '../../components/Listing/TagBar'
 import { ListingContent } from '../../components/Listing/ListingContent'
 
-import { Loader } from '../../components/Loader'
 import { ImageManager } from '../../components/ImageManager'
 
 import { hasPermission, isAdmin } from '../../utils/permissions'
@@ -119,7 +118,7 @@ class Listing extends React.Component {
   }
 
   render() {
-    const { dispatch, history, listing, location, match } = this.props
+    const { dispatch, history, listing, location } = this.props
 
     const { claim } = this.getClaimParams()
     const { currentImage } = listing
@@ -145,11 +144,7 @@ class Listing extends React.Component {
     }
 
     return (
-      <Loader
-        key={match.params.slug}
-        loading={listing.isListingLoading}
-        fixed={true}
-      >
+      <div>
         <Helmet key={listing.id}>
           <title>{getSeoText('title', title)}</title>
           <meta
@@ -270,7 +265,7 @@ class Listing extends React.Component {
             />
           </div>
         </Container>
-      </Loader>
+      </div>
     )
   }
 }

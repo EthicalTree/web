@@ -5,9 +5,10 @@ const defaultState = {
   isImageLoading: false,
   listingInfoTab: 'location',
   menus: [{}],
-  images: [],
+  images: null,
   tags: [],
   featuredListings: [],
+  operatingHours: null,
 }
 
 const listing = (state = defaultState, { type, data }) => {

@@ -2,14 +2,14 @@ import React from 'react'
 import { Row, Col } from 'reactstrap'
 
 import { Search } from '../Search'
-import { Result } from '../Result'
+import { Result, ResultSkeleton } from '../../Search/Result'
 import { Featured } from '../../Listing/Featured'
 
 import { EthicalityBar } from '../../Ethicality/Ethicality'
 import { FilterBar } from '../../Filters/Filter'
 import { Paginator } from '../../Paginator'
 
-import { getListOrDummy } from '../../../utils/skeleton'
+import { genDummyList } from '../../../utils/skeleton'
 
 import { toggleSearchEthicalities, setSearchUrl } from '../../../actions/search'
 
@@ -100,8 +100,8 @@ export class SearchResults extends React.Component {
               {this.renderResultsHeader()}
 
               <div className="d-flex flex-wrap align-items-stretch">
-                {(hasListings || search.isLoading) &&
-                  getListOrDummy(search.listings, 10).map((listing, i) => (
+                {hasListings &&
+                  search.listings.map((listing, i) => (
                     <Col
                       key={i}
                       xs="12"
@@ -116,6 +116,20 @@ export class SearchResults extends React.Component {
                         location="Search Results"
                         session={session}
                       />
+                    </Col>
+                  ))}
+
+                {search.isLoading &&
+                  genDummyList(10).map(x => (
+                    <Col
+                      key={x}
+                      xs="12"
+                      sm="6"
+                      lg="4"
+                      xl="6"
+                      className="col-xxl-4"
+                    >
+                      <ResultSkeleton key={x} />
                     </Col>
                   ))}
 
