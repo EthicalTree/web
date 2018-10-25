@@ -8,8 +8,8 @@ axios.defaults.headers.common['X-Key-Inflection'] = 'camel'
 
 const ERRORS = [400, 401, 500]
 
-const apiRoute = path => {
-  return `${process.env.REACT_APP_API_URL}${path}`
+const apiRoute = url => {
+  return `${process.env.REACT_APP_API_URL}${url}`
 }
 
 const authenticate = jwt => {
@@ -75,6 +75,29 @@ const download = (url, filename, config, method) => {
   })
 }
 
+const delay = (time, value) => {
+  return new Promise(resolve => {
+    setTimeout(resolve.bind(null, value), time)
+  })
+}
+
+const externalDownload = (url, filename, config) => {
+  axios
+    .get(url, {
+      responseType: 'blob',
+      transformRequest: [
+        (data, headers) => {
+          delete headers.common.Authorization
+          return data
+        },
+      ],
+      ...config,
+    })
+    .then(response => {
+      FileDownload(response.data, filename)
+    })
+}
+
 const api = {
   all,
   get,
@@ -88,4 +111,4 @@ const api = {
   spread,
 }
 
-export { api, apiRoute, authenticate, deauthenticate }
+export { api, apiRoute, authenticate, deauthenticate, delay, externalDownload }
