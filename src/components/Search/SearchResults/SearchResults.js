@@ -100,7 +100,8 @@ export class SearchResults extends React.Component {
               {this.renderResultsHeader()}
 
               <div className="d-flex flex-wrap align-items-stretch">
-                {hasListings &&
+                {!search.isLoading &&
+                  hasListings &&
                   search.listings.map((listing, i) => (
                     <Col
                       key={i}
@@ -156,7 +157,8 @@ export class SearchResults extends React.Component {
           </Col>
         </Row>
 
-        {hasListings &&
+        {!search.isLoading &&
+          hasListings &&
           search.matches > 0 && (
             <Row className="text-center">
               <Paginator

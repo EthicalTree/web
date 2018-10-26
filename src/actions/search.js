@@ -15,7 +15,7 @@ import { trackEvent } from '../utils/ga'
 
 export const setSearchUrl = (search, params) => {
   // set the url to /s/... to route to searchresultspage component/update it
-  const query = params.query || search.query
+  const query = params.query == null ? search.query : params.query
   delete params['query']
 
   return dispatch => {
@@ -81,6 +81,8 @@ export const performSearchApiCall = search => {
       category: 'Search',
       label: search.query,
     })
+
+    dispatch({ type: 'SET_SEARCH_LOADING', data: true })
 
     api
       .get(
