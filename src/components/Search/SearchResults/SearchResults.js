@@ -9,9 +9,9 @@ import { EthicalityBar } from '../../Ethicality/Ethicality'
 import { FilterBar } from '../../Filters/Filter'
 import { Paginator } from '../../Paginator'
 
-import { genDummyList } from '../../../utils/skeleton'
-
 import { toggleSearchEthicalities, setSearchUrl } from '../../../actions/search'
+
+import { genDummyList } from '../../../utils/skeleton'
 
 export class SearchResults extends React.Component {
   handleResize = () => {

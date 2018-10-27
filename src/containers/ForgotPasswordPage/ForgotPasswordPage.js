@@ -13,7 +13,6 @@ import {
 } from 'reactstrap'
 
 import { changePassword, checkForgotPassword } from '../../actions/session'
-import { Loader } from '../../components/Loader'
 import { PasswordStrength } from '../../components/PasswordStrength'
 
 class ForgotPasswordPage extends React.Component {
@@ -39,7 +38,7 @@ class ForgotPasswordPage extends React.Component {
   }
 
   render() {
-    const { session, modal } = this.props
+    const { session } = this.props
 
     if (session.forgotPasswordEmail === '') {
       return (
@@ -50,71 +49,69 @@ class ForgotPasswordPage extends React.Component {
     }
 
     return (
-      <Loader loading={modal.isLoading}>
-        <Container className="mt-5 reset-password-container">
-          {session.changePasswordError && (
-            <Row>
-              <Col>
-                <Alert color="danger">{session.changePasswordError}</Alert>
-              </Col>
-            </Row>
-          )}
-
-          <Row className="text-center">
+      <Container className="mt-5 reset-password-container">
+        {session.changePasswordError && (
+          <Row>
             <Col>
-              <p>
-                Looks like you're having a hard time remembering your password.
-                We're not going to tell you how to live your life, but maybe
-                consider using a password manager ;)
-              </p>
+              <Alert color="danger">{session.changePasswordError}</Alert>
             </Col>
           </Row>
+        )}
 
-          <Row className="mt-3 mb-3">
-            <Col>
-              <Form method="post" onSubmit={this.submit.bind(this)}>
-                <FormGroup>
-                  <Input
-                    autoFocus
-                    value={this.state.email}
-                    onChange={e => {
-                      this.setState({ password: e.target.value })
-                    }}
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Enter a new password..."
-                  />
-                </FormGroup>
+        <Row className="text-center">
+          <Col>
+            <p>
+              Looks like you're having a hard time remembering your password.
+              We're not going to tell you how to live your life, but maybe
+              consider using a password manager ;)
+            </p>
+          </Col>
+        </Row>
 
-                <FormGroup>
-                  <Input
-                    value={this.state.email}
-                    onChange={e => {
-                      this.setState({ confirmPassword: e.target.value })
-                    }}
-                    type="password"
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    placeholder="Re-enter the same password..."
-                  />
-                </FormGroup>
-
-                <PasswordStrength
-                  email={session.forgotPasswordEmail}
-                  password={this.state.password}
+        <Row className="mt-3 mb-3">
+          <Col>
+            <Form method="post" onSubmit={this.submit.bind(this)}>
+              <FormGroup>
+                <Input
+                  autoFocus
+                  value={this.state.email}
+                  onChange={e => {
+                    this.setState({ password: e.target.value })
+                  }}
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Enter a new password..."
                 />
+              </FormGroup>
 
-                <FormGroup className="mt-4">
-                  <Button block color="primary" role="button" type="submit">
-                    Reset Password
-                  </Button>
-                </FormGroup>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
-      </Loader>
+              <FormGroup>
+                <Input
+                  value={this.state.email}
+                  onChange={e => {
+                    this.setState({ confirmPassword: e.target.value })
+                  }}
+                  type="password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  placeholder="Re-enter the same password..."
+                />
+              </FormGroup>
+
+              <PasswordStrength
+                email={session.forgotPasswordEmail}
+                password={this.state.password}
+              />
+
+              <FormGroup className="mt-4">
+                <Button block color="primary" role="button" type="submit">
+                  Reset Password
+                </Button>
+              </FormGroup>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
     )
   }
 }
