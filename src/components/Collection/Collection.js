@@ -55,7 +55,9 @@ export const Collection = props => {
 
       <div className="listings">
         {listings == null &&
-          genDummyList(4).map(x => <ResultSkeleton key={x} className="listing-result" />)}
+          genDummyList(4).map(x => (
+            <ResultSkeleton key={x} className="listing-result" />
+          ))}
 
         {listings &&
           listings.map(l => (
