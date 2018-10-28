@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { Loader } from '../../components/Loader'
 import { Collection } from '../../components/Collection'
 import { getCollections } from '../../actions/collections'
+
+import { genDummyList } from '../../utils/skeleton'
 
 export class Collections extends React.Component {
   componentDidMount() {
@@ -25,19 +26,21 @@ export class Collections extends React.Component {
     const { collections, session, search } = this.props
     const { location } = search
 
+    const realCollections = collections.isLoading
+      ? genDummyList(2)
+      : collections.collections
+
     return (
-      <Loader loading={collections.isLoading} className="collections">
-        {collections.collections.map(cl => {
-          return (
-            <Collection
-              city={location ? location.city : null}
-              key={cl.id}
-              session={session}
-              {...cl}
-            />
-          )
-        })}
-      </Loader>
+      <div className="collections">
+        {realCollections.map((cl, i) => (
+          <Collection
+            city={location ? location.city : null}
+            key={i}
+            session={session}
+            {...cl}
+          />
+        ))}
+      </div>
     )
   }
 }

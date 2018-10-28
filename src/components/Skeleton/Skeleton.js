@@ -13,6 +13,7 @@ Skeleton.propTypes = {
   secondaryColor: PropTypes.string,
   secondaryOpacity: PropTypes.number,
   speed: PropTypes.number,
+  preserveAspectRatio: PropTypes.string,
 }
 
 Skeleton.defaultProps = {
@@ -21,6 +22,7 @@ Skeleton.defaultProps = {
   secondaryColor: '#606060', //animation
   secondaryOpacity: 0.18,
   speed: 2,
+  preserveAspectRatio: 'none',
 }
 
 export default Skeleton
