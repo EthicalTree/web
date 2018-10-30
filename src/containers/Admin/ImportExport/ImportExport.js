@@ -31,7 +31,7 @@ export class ImportExport extends React.Component {
         ? { ...IMPORT_FIELDS[selectedDataType] }
         : { ...EXPORT_FIELDS[selectedDataType] }
 
-    Object.keys(fields).map(k => (fields[k] = false))
+    Object.keys(fields).map(k => (fields[k] = false)) //uncheck all fields
 
     this.setState({
       selectedDataType,
