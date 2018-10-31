@@ -9,7 +9,7 @@ const defaultSearch = {
   hoveredResult: null,
   isLoading: true,
   isPending: false,
-  listings: [],
+  listings: null,
   location: {},
   nelat: null,
   nelng: null,

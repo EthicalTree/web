@@ -4,30 +4,43 @@ import PropTypes from 'prop-types'
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
 
 import { Bio } from '../Bio'
-import { ListingMap } from '../ListingMap'
-import { ListingMenu } from '../ListingMenu'
+import { ListingMap, ListingMapSkeleton } from '../ListingMap'
+import { ListingMenu, ListingMenuSkeleton } from '../ListingMenu'
 import { Featured } from '../Featured'
 
 import { trackEvent } from '../../../utils/ga'
 import { hasPermission } from '../../../utils/permissions'
 
+import { BioSkeleton } from '../Bio'
+
 const ListingInfo = props => {
-  const { listing, className, dispatch } = props
+  const {
+    listing,
+    className,
+    dispatch,
+    onClickLocationEdit,
+    onClickDescriptionEdit,
+  } = props
 
   const activeTab = listing.listingInfoTab
   const menu = listing.menus.length > 0 ? listing.menus[0] : null
-  const isStore = listing.categories.map(c => c.slug).includes('store')
+  const isStore =
+    listing.categories && listing.categories.map(c => c.slug).includes('store')
 
   return (
     <div className={className}>
-      <Bio
-        bio={listing.bio}
-        canEdit={hasPermission('update', listing)}
-        onClickDescriptionEdit={props.onClickDescriptionEdit}
-        phone={listing.phone}
-        title={listing.title}
-        website={listing.website}
-      />
+      {listing.isListingLoading ? (
+        <BioSkeleton />
+      ) : (
+        <Bio
+          bio={listing.bio}
+          canEdit={hasPermission('update', listing)}
+          onClickDescriptionEdit={onClickDescriptionEdit}
+          phone={listing.phone}
+          title={listing.title}
+          website={listing.website}
+        />
+      )}
 
       <Nav tabs>
         <NavItem>
@@ -66,22 +79,28 @@ const ListingInfo = props => {
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="location">
-          <ListingMap
-            onClickLocationEdit={props.onClickLocationEdit}
-            location={listing.location}
-            canEdit={hasPermission('update', listing)}
-            dispatch={dispatch}
-          />
+          {listing.isListingLoading && <ListingMapSkeleton />}
+          {!listing.isListingLoading && (
+            <ListingMap
+              onClickLocationEdit={onClickLocationEdit}
+              location={listing.location}
+              canEdit={hasPermission('update', listing)}
+              dispatch={dispatch}
+            />
+          )}
         </TabPane>
 
         <TabPane tabId="menu">
-          <ListingMenu
-            dispatch={dispatch}
-            menu={menu}
-            listingSlug={listing.slug}
-            currentImage={listing.currentMenuImage}
-            canEdit={hasPermission('update', listing)}
-          />
+          {listing.isListingLoading && <ListingMenuSkeleton />}
+          {!listing.isListingLoading && (
+            <ListingMenu
+              dispatch={dispatch}
+              menu={menu}
+              listingSlug={listing.slug}
+              currentImage={listing.currentMenuImage}
+              canEdit={hasPermission('update', listing)}
+            />
+          )}
         </TabPane>
       </TabContent>
 

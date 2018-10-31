@@ -1,11 +1,10 @@
 import './AccountSettings.css'
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import { Loader } from '../../components/Loader'
 import { PasswordStrength } from '../../components/PasswordStrength'
 import { isLoggedIn } from '../../utils/permissions'
 
@@ -56,8 +55,12 @@ class AccountSettings extends React.Component {
       return <Redirect to="/" />
     }
 
+    if (session.userLoading) {
+      return null
+    }
+
     return (
-      <Loader loading={session.userLoading}>
+      <Fragment>
         <Helmet>
           <title>{'EthicalTree · Account Settings'}</title>
         </Helmet>
@@ -254,7 +257,7 @@ class AccountSettings extends React.Component {
             </Col>
           </Container>
         </div>
-      </Loader>
+      </Fragment>
     )
   }
 }

@@ -6,6 +6,6 @@ import { Loader } from '../components/Loader'
 export const split = importer => {
   return Loadable({
     loader: importer,
-    loading: () => <Loader loading={true} fixed={true} />,
+    loading: () => <Loader loading={false} fixed={true} />,
   })
 }

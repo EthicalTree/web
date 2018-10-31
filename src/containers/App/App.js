@@ -6,13 +6,13 @@ import { Provider, connect } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
 
-import { Loader } from '../../components/Loader'
 import { Header } from '../../components/Header'
 import { Footer } from '../../components/Footer'
 import { ScrollToTop } from '../../components/ScrollToTop'
 import { FacebookPixel } from '../../components/ThirdParty'
 import { DevTools } from '../../components/DevTools'
 import { VerifyEmail } from '../../containers/VerifyEmail'
+import { LoadingPage } from '../../components/LoadingPage'
 
 import Modals from '../Modals'
 
@@ -56,6 +56,8 @@ class InnerApp extends React.Component {
   render() {
     const { app } = this.props
 
+    if (app.isAppLoading) return <LoadingPage />
+
     return (
       <div className="app">
         <Helmet>
@@ -68,115 +70,113 @@ class InnerApp extends React.Component {
             )}
           />
         </Helmet>
-        <Loader loading={app.isAppLoading}>
-          <Header handleSkip={this.handleSkip} />
+        <Header handleSkip={this.handleSkip} />
 
-          <main ref={main => (this.main = main)} tabIndex="-1">
-            <Switch>
-              <Route
-                exact
-                path="/"
-                component={split(() => import('../FrontPage/FrontPage'))}
-              />
+        <main ref={main => (this.main = main)} tabIndex="-1">
+          <Switch>
+            <Route
+              exact
+              path="/"
+              component={split(() => import('../FrontPage/FrontPage'))}
+            />
 
-              <Route exact path="/verify-email" component={VerifyEmail} />
+            <Route exact path="/verify-email" component={VerifyEmail} />
 
-              <Route
-                exact
-                path="/forgot_password/:token"
-                component={split(() =>
-                  import('../ForgotPasswordPage/ForgotPasswordPage')
-                )}
-              />
+            <Route
+              exact
+              path="/forgot_password/:token"
+              component={split(() =>
+                import('../ForgotPasswordPage/ForgotPasswordPage')
+              )}
+            />
 
-              <Route
-                exact
-                path="/listings/:city/:slug"
-                component={split(() => import('../Listing/Listing'))}
-              />
+            <Route
+              exact
+              path="/listings/:city/:slug"
+              component={split(() => import('../Listing/Listing'))}
+            />
 
-              <Route
-                exact
-                path="/s/:query?"
-                component={split(() =>
-                  import('../SearchResultsPage/SearchResultsPage')
-                )}
-              />
+            <Route
+              exact
+              path="/s/:query?"
+              component={split(() =>
+                import('../SearchResultsPage/SearchResultsPage')
+              )}
+            />
 
-              <Route
-                exact
-                path="/collections/:city"
-                component={split(() =>
-                  import('../AllCollectionsPage/AllCollectionsPage')
-                )}
-              />
+            <Route
+              exact
+              path="/collections/:city"
+              component={split(() =>
+                import('../AllCollectionsPage/AllCollectionsPage')
+              )}
+            />
 
-              <Route
-                exact
-                path="/collections/:city/:slug"
-                component={split(() =>
-                  import('../CollectionPage/CollectionPage')
-                )}
-              />
+            <Route
+              exact
+              path="/collections/:city/:slug"
+              component={split(() =>
+                import('../CollectionPage/CollectionPage')
+              )}
+            />
 
-              <Route
-                exact
-                path="/account"
-                component={split(() =>
-                  import('../AccountSettings/AccountSettings')
-                )}
-              />
+            <Route
+              exact
+              path="/account"
+              component={split(() =>
+                import('../AccountSettings/AccountSettings')
+              )}
+            />
 
-              <Route
-                exact
-                path="/contact-us"
-                component={split(() => import('../ContactUs/ContactUs'))}
-              />
+            <Route
+              exact
+              path="/contact-us"
+              component={split(() => import('../ContactUs/ContactUs'))}
+            />
 
-              <Route
-                exact
-                path="/terms-of-service"
-                component={split(() =>
-                  import('../TermsOfService/TermsOfService')
-                )}
-              />
+            <Route
+              exact
+              path="/terms-of-service"
+              component={split(() =>
+                import('../TermsOfService/TermsOfService')
+              )}
+            />
 
-              <Route
-                exact
-                path="/faq"
-                component={split(() => import('../FAQ/FAQ'))}
-              />
+            <Route
+              exact
+              path="/faq"
+              component={split(() => import('../FAQ/FAQ'))}
+            />
 
-              <Route
-                exact
-                path="/about-us"
-                component={split(() => import('../AboutUs/AboutUs'))}
-              />
+            <Route
+              exact
+              path="/about-us"
+              component={split(() => import('../AboutUs/AboutUs'))}
+            />
 
-              <Route
-                path="/business"
-                component={split(() =>
-                  import('../Business/BusinessHome/BusinessHome')
-                )}
-              />
+            <Route
+              path="/business"
+              component={split(() =>
+                import('../Business/BusinessHome/BusinessHome')
+              )}
+            />
 
-              <Route
-                path="/admin"
-                component={split(() => import('../Admin/AdminPage/AdminPage'))}
-              />
+            <Route
+              path="/admin"
+              component={split(() => import('../Admin/AdminPage/AdminPage'))}
+            />
 
-              <Route
-                path="/"
-                component={split(() =>
-                  import('../../components/Status/Status404/Status404')
-                )}
-              />
-            </Switch>
-          </main>
+            <Route
+              path="/"
+              component={split(() =>
+                import('../../components/Status/Status404/Status404')
+              )}
+            />
+          </Switch>
+        </main>
 
-          <Footer />
-          <Modals />
-        </Loader>
+        <Footer />
+        <Modals />
 
         {isToolbarEnabled() && <DevTools />}
       </div>

@@ -4,11 +4,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Tooltip } from 'reactstrap'
-import { Loader } from '../Loader'
 import { S3Uploader } from '../S3Uploader'
 import { Icon } from '../Icon'
 import { Slider } from '../Slider'
 import { Repositioner } from './Repositioner'
+
+import { ImageManagerSkeleton } from './ImageManagerSkeleton'
 
 class Action extends React.Component {
   constructor(props) {
@@ -192,7 +193,7 @@ class ImageManager extends React.Component {
 
   componentDidMount() {
     const { images, onSetCurrentImage } = this.props
-    if (images.length > 0) onSetCurrentImage(images[0])
+    if (images && images.length > 0) onSetCurrentImage(images[0])
   }
 
   render() {
@@ -209,16 +210,18 @@ class ImageManager extends React.Component {
       handleReposition,
       images,
       imgStyle,
-      isLoading,
       onImageUploadProgress,
       repositionImages,
       signingParams,
       shiftPreviousAction,
       shiftNextAction,
-      uploadProgress,
     } = this.props
 
     const { isRepositioning, repositionData } = this.state
+
+    if (!images) {
+      return <ImageManagerSkeleton />
+    }
 
     const hasSlides = images && images.length > 0
     let displayImages
@@ -230,11 +233,7 @@ class ImageManager extends React.Component {
     }
 
     return (
-      <Loader
-        className={className}
-        loading={isLoading}
-        progress={uploadProgress}
-      >
+      <div className={className}>
         {hasSlides && (
           <div className="image-manager text-center">
             {!isRepositioning && (
@@ -331,7 +330,7 @@ class ImageManager extends React.Component {
               {emptyText}
             </div>
           )}
-      </Loader>
+      </div>
     )
   }
 }

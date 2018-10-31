@@ -6,13 +6,15 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Jumbotron } from 'reactstrap'
 
-import { Loader } from '../../components/Loader'
 import { Paginator } from '../../components/Paginator'
 
 import { getCollections } from '../../actions/collections'
 import { setSearchLocation } from '../../actions/search'
 
+import { CollectionSkeleton } from '../../components/Collection/CollectionSkeleton'
+
 import { getSeoText } from '../../utils/seo'
+import { genDummyList } from '../../utils/skeleton'
 
 export class AllCollectionsPage extends React.Component {
   componentDidMount() {
@@ -51,24 +53,33 @@ export class AllCollectionsPage extends React.Component {
 
     return (
       <div className="all-collections-page">
-        <Loader loading={collections.isLoading} fixed={true}>
-          <Helmet>
-            <title>{getSeoText('title', title)}</title>
-            <meta
-              name="description"
-              content={getSeoText(
-                'description',
-                'Discover the best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.'
-              )}
-            />
-          </Helmet>
+        <Helmet>
+          <title>{getSeoText('title', title)}</title>
+          <meta
+            name="description"
+            content={getSeoText(
+              'description',
+              'Discover the best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.'
+            )}
+          />
+        </Helmet>
 
-          <Jumbotron>
-            <h1>{getSeoText('header', collectionsTitle)}</h1>
-          </Jumbotron>
+        <Jumbotron>
+          <h1>{getSeoText('header', collectionsTitle)}</h1>
+        </Jumbotron>
 
-          <div className="collections">
-            {collections.collections.map(c => {
+        <div className="collections">
+          {collections.isLoading &&
+            genDummyList(12).map(x => (
+              <CollectionSkeleton
+                className="collection"
+                style={{ background: 'none' }}
+                key={x}
+              />
+            ))}
+
+          {!collections.isLoading &&
+            collections.collections.map(c => {
               let extraStyle
 
               if (c.listings.length === 0) {
@@ -97,21 +108,20 @@ export class AllCollectionsPage extends React.Component {
               )
             })}
 
-            <Paginator
-              className="text-center"
-              pageCount={collections.totalPages}
-              currentPage={collections.currentPage}
-              onPageChange={data =>
-                dispatch(
-                  getCollections({
-                    location: search.location,
-                    page: data.selected,
-                  })
-                )
-              }
-            />
-          </div>
-        </Loader>
+          <Paginator
+            className="text-center"
+            pageCount={collections.totalPages}
+            currentPage={collections.currentPage}
+            onPageChange={data =>
+              dispatch(
+                getCollections({
+                  location: search.location,
+                  page: data.selected,
+                })
+              )
+            }
+          />
+        </div>
       </div>
     )
   }

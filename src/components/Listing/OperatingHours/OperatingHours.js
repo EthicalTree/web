@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import groupBy from 'lodash/groupBy'
 
 import { OpenClose } from '../../OpenClose'
+import { DailyHoursSkeleton } from './DailyHoursSkeleton'
+
+import { genDummyList } from '../../../utils/skeleton'
 
 const DAY_LABELS = {
   sunday: 'Sunday',
@@ -80,24 +83,28 @@ class OperatingHours extends React.PureComponent {
             </div>
           )}
 
-          {!hasHours && (
-            <div className="daily-hours">
-              <p>No operating hours set!</p>
-              {canEdit && (
-                <button
-                  onClick={() =>
-                    dispatch({
-                      type: 'OPEN_MODAL',
-                      data: 'edit-operating-hours',
-                    })
-                  }
-                  className="btn btn-default btn-block"
-                >
-                  Add
-                </button>
-              )}
-            </div>
-          )}
+          {hours == null &&
+            genDummyList(5).map(x => <DailyHoursSkeleton key={x} />)}
+
+          {hours &&
+            hours.length < 1 && (
+              <div className="daily-hours">
+                <p>No operating hours set!</p>
+                {canEdit && (
+                  <button
+                    onClick={() =>
+                      dispatch({
+                        type: 'OPEN_MODAL',
+                        data: 'edit-operating-hours',
+                      })
+                    }
+                    className="btn btn-default btn-block"
+                  >
+                    Add
+                  </button>
+                )}
+              </div>
+            )}
         </div>
       </div>
     )

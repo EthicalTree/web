@@ -3,12 +3,15 @@ import './Result.css'
 import React from 'react'
 import PropTypes from 'prop-types'
 import numeral from 'numeral'
+import head from 'lodash/head'
+
 import { Link } from 'react-router-dom'
 
 import { Card, CardBody, CardTitle } from 'reactstrap'
 
 import { EthicalityIcon } from '../../Ethicality/Ethicality'
 import { OpenClose } from '../../OpenClose'
+import { ResultSkeleton } from './ResultSkeleton'
 
 import { listingProps } from '../../../utils/types'
 import { trackEvent } from '../../../utils/ga'
@@ -21,12 +24,27 @@ export class Result extends React.Component {
     const { listing } = props
 
     this.state = {
-      currentImage: listing.images[0],
+      currentImage: head(listing.images),
     }
+  }
+
+  _calcDistance(listing) {
+    const geoLocation = getGeoLocation()
+
+    return geoLocation
+      ? getDistance(
+          geoLocation.lat,
+          geoLocation.lng,
+          listing.location.lat,
+          listing.location.lng
+        )
+      : null
   }
 
   render() {
     const { className, hovered, listing, location } = this.props
+
+    if (!listing.id) return <ResultSkeleton />
 
     const { currentImage } = this.state
 
@@ -35,16 +53,7 @@ export class Result extends React.Component {
       : {}
     const hoveredClass = hovered ? 'hovered' : ''
 
-    const geoLocation = getGeoLocation()
-
-    const distance = geoLocation
-      ? getDistance(
-          geoLocation.lat,
-          geoLocation.lng,
-          listing.location.lat,
-          listing.location.lng
-        )
-      : null
+    const distance = listing.location ? this._calcDistance(listing) : null
 
     return (
       <Link

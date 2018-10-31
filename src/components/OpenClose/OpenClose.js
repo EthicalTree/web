@@ -5,10 +5,15 @@ import PropTypes from 'prop-types'
 import { Icon } from '../Icon'
 
 import { getOpenCloseStatus } from '../../models/hours'
+import { OpenCloseSkeleton } from './OpenCloseSkeleton'
 
 const OpenClose = props => {
   const { hours, timezone } = props
   let icon
+
+  if (hours == null) {
+    return <OpenCloseSkeleton />
+  }
 
   const status = getOpenCloseStatus(hours, timezone)
 

@@ -2,6 +2,9 @@ import React from 'react'
 import { Button, Card, CardBody } from 'reactstrap'
 
 import { Ethicality } from '../../Ethicality/Ethicality'
+import { EthicalityAreaSkeleton } from './EthicalityAreaSkeleton'
+
+import { genDummyList } from '../../../utils/skeleton'
 
 const AddEthicalityButton = props => {
   const { hasEthicalities, dispatch } = props
@@ -37,17 +40,20 @@ const AddEthicalityButton = props => {
 const EthicalityArea = props => {
   const { dispatch, ethicalities, className, canEdit } = props
   const hasEthicalities = ethicalities && ethicalities.length > 0
+  const noEthicalities = ethicalities && ethicalities.length < 1
 
   return (
     <Card className={`ethicality ${className}`}>
       <CardBody className="ethicalities d-flex justify-content-center d-lg-block">
-        {!hasEthicalities && <p>No ethicalities set!</p>}
+        {noEthicalities && <p>No ethicalities set!</p>}
 
         {hasEthicalities &&
           ethicalities.map(ethicality => {
             return (
               <Ethicality
-                key={ethicality.slug}
+                key={
+                  typeof ethicality === 'object' ? ethicality.slug : ethicality
+                }
                 className="p-3"
                 name={ethicality.name}
                 slug={ethicality.slug}
@@ -55,6 +61,9 @@ const EthicalityArea = props => {
               />
             )
           })}
+
+        {ethicalities == null &&
+          genDummyList(2).map((x, i) => <EthicalityAreaSkeleton key={i} />)}
 
         {canEdit && (
           <AddEthicalityButton

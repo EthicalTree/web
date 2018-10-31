@@ -15,14 +15,15 @@ import { trackEvent } from '../utils/ga'
 
 export const setSearchUrl = (search, params) => {
   // set the url to /s/... to route to searchresultspage component/update it
-  const query = params.query || search.query
-  delete params['query']
+  const query = params.query == null ? search.query : params.query
 
   return dispatch => {
     dispatch({
       type: 'SET_SEARCH_QUERY_PARAMS',
       data: params,
     })
+
+    delete params['query']
 
     const { historyParams } = parseSearchParams(search)
     const mergedParams = { ...historyParams, ...params }
@@ -81,6 +82,8 @@ export const performSearchApiCall = search => {
       category: 'Search',
       label: search.query,
     })
+
+    dispatch({ type: 'SET_SEARCH_LOADING', data: true })
 
     api
       .get(

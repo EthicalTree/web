@@ -92,7 +92,7 @@ export const Bio = props => {
               Add a description
             </a>
           )}
-          {!canEdit && <p>This listing has no desciption!</p>}
+          {!canEdit && <p>This listing has no description!</p>}
         </div>
       )}
     </div>

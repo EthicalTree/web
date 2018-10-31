@@ -6,14 +6,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { Col, Row } from 'reactstrap'
-import { Result } from '../../Search/Result'
-import { Loader } from '../../Loader'
+import { Result, ResultSkeleton } from '../../Search/Result'
 import { api } from '../../../utils/api'
+
+import { genDummyList } from '../../../utils/skeleton'
 
 export class Featured extends React.Component {
   state = {
-    featuredListings: [],
-    loading: true,
+    featuredListings: null,
   }
 
   componentDidMount() {
@@ -41,27 +41,49 @@ export class Featured extends React.Component {
       is_featured: true,
     }
 
-    this.setState({ loading: true })
+    this.setState({ featuredListings: null })
 
     api
       .get(`/v1/listings?${querystring.stringify(data)}`)
       .then(({ data }) => {
-        this.setState({ loading: false, featuredListings: data.listings })
+        this.setState({ featuredListings: data.listings })
       })
       .catch(() => {})
   }
 
   render() {
     const { session, xs, sm, md, lg, xl, xxl, hoveredResult } = this.props
-    const { loading, featuredListings } = this.state
+    const { featuredListings } = this.state
 
     return (
-      <Loader className="featured-listings" loading={loading}>
+      <div className="featured-listings">
         <h5 className="featured-listings-header">Featured</h5>
 
         <Row>
-          {featuredListings.map(l => {
-            return (
+          {featuredListings &&
+            featuredListings.map(l => {
+              return (
+                <Col
+                  className={`col-xxl-${xxl}`}
+                  xs={xs}
+                  sm={sm}
+                  md={md}
+                  lg={lg}
+                  xl={xl}
+                  key={l.id}
+                >
+                  <Result
+                    listing={l}
+                    hovered={l.slug === hoveredResult}
+                    location="Featured Listing"
+                    session={session}
+                  />
+                </Col>
+              )
+            })}
+
+          {featuredListings == null &&
+            genDummyList(4).map(x => (
               <Col
                 className={`col-xxl-${xxl}`}
                 xs={xs}
@@ -69,19 +91,13 @@ export class Featured extends React.Component {
                 md={md}
                 lg={lg}
                 xl={xl}
-                key={l.id}
+                key={x}
               >
-                <Result
-                  listing={l}
-                  hovered={l.slug === hoveredResult}
-                  location="Featured Listing"
-                  session={session}
-                />
+                <ResultSkeleton />
               </Col>
-            )
-          })}
+            ))}
         </Row>
-      </Loader>
+      </div>
     )
   }
 }

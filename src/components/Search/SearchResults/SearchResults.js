@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col } from 'reactstrap'
 
 import { Search } from '../Search'
-import { Result } from '../Result'
+import { Result, ResultSkeleton } from '../../Search/Result'
 import { Featured } from '../../Listing/Featured'
 
 import { EthicalityBar } from '../../Ethicality/Ethicality'
@@ -10,6 +10,8 @@ import { FilterBar } from '../../Filters/Filter'
 import { Paginator } from '../../Paginator'
 
 import { toggleSearchEthicalities, setSearchUrl } from '../../../actions/search'
+
+import { genDummyList } from '../../../utils/skeleton'
 
 export class SearchResults extends React.Component {
   handleResize = () => {
@@ -33,7 +35,7 @@ export class SearchResults extends React.Component {
   renderResultsHeader() {
     const { search } = this.props
 
-    if (search.matches === 0) {
+    if (search.matches === 0 && !search.isLoading) {
       return (
         <React.Fragment>
           <div className="no-matches">Oh no, nothing matched your search!</div>
@@ -98,7 +100,8 @@ export class SearchResults extends React.Component {
               {this.renderResultsHeader()}
 
               <div className="d-flex flex-wrap align-items-stretch">
-                {hasListings &&
+                {!search.isLoading &&
+                  hasListings &&
                   search.listings.map(listing => (
                     <Col
                       key={listing.slug}
@@ -116,9 +119,25 @@ export class SearchResults extends React.Component {
                       />
                     </Col>
                   ))}
-                {!hasListings && (
-                  <Col className="text-center pt-5">No listings found!</Col>
-                )}
+
+                {search.isLoading &&
+                  genDummyList(10).map(x => (
+                    <Col
+                      key={x}
+                      xs="12"
+                      sm="6"
+                      lg="4"
+                      xl="6"
+                      className="col-xxl-4"
+                    >
+                      <ResultSkeleton key={x} />
+                    </Col>
+                  ))}
+
+                {!hasListings &&
+                  !search.isLoading && (
+                    <Col className="text-center pt-5">No listings found!</Col>
+                  )}
               </div>
             </div>
           </Col>
@@ -138,7 +157,8 @@ export class SearchResults extends React.Component {
           </Col>
         </Row>
 
-        {hasListings &&
+        {!search.isLoading &&
+          hasListings &&
           search.matches > 0 && (
             <Row className="text-center">
               <Paginator
