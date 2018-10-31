@@ -102,9 +102,9 @@ export class SearchResults extends React.Component {
               <div className="d-flex flex-wrap align-items-stretch">
                 {!search.isLoading &&
                   hasListings &&
-                  search.listings.map((listing, i) => (
+                  search.listings.map(listing => (
                     <Col
-                      key={i}
+                      key={listing.slug}
                       xs="12"
                       sm="6"
                       lg="4"
