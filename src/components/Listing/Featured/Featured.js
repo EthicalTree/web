@@ -61,7 +61,7 @@ export class Featured extends React.Component {
 
         <Row>
           {featuredListings &&
-            featuredListings.map((l, i) => {
+            featuredListings.map(l => {
               return (
                 <Col
                   className={`col-xxl-${xxl}`}
@@ -70,7 +70,7 @@ export class Featured extends React.Component {
                   md={md}
                   lg={lg}
                   xl={xl}
-                  key={i}
+                  key={l.id}
                 >
                   <Result
                     listing={l}

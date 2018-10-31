@@ -48,10 +48,12 @@ const EthicalityArea = props => {
         {noEthicalities && <p>No ethicalities set!</p>}
 
         {hasEthicalities &&
-          ethicalities.map((ethicality, i) => {
+          ethicalities.map(ethicality => {
             return (
               <Ethicality
-                key={i}
+                key={
+                  typeof ethicality === 'object' ? ethicality.slug : ethicality
+                }
                 className="p-3"
                 name={ethicality.name}
                 slug={ethicality.slug}

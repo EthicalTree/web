@@ -32,10 +32,10 @@ export class Collections extends React.Component {
 
     return (
       <div className="collections">
-        {realCollections.map((cl, i) => (
+        {realCollections.map(cl => (
           <Collection
             city={location ? location.city : null}
-            key={i}
+            key={typeof cl === 'object' ? cl.id : cl}
             session={session}
             {...cl}
           />
