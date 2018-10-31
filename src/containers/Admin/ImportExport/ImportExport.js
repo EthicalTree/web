@@ -31,7 +31,7 @@ export class ImportExport extends React.Component {
         ? { ...IMPORT_FIELDS[selectedDataType] }
         : { ...EXPORT_FIELDS[selectedDataType] }
 
-    Object.keys(fields).map(k => (fields[k] = true))
+    Object.keys(fields).map(k => (fields[k] = false)) //uncheck all fields
 
     this.setState({
       selectedDataType,
@@ -240,15 +240,6 @@ export class ImportExport extends React.Component {
           >
             {buttonText}
           </Button>
-
-          {selectedFunction === 'export' && (
-            <p className="mt-3">
-              <i>
-                NOTE: Try to limit the use of this download as it's hard on the
-                servers right now :)
-              </i>
-            </p>
-          )}
         </div>
       </div>
     )

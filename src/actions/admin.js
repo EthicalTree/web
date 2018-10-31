@@ -1,6 +1,24 @@
 import querystring from 'querystring'
-import { api } from '../utils/api'
-import { success } from '../utils/notifications'
+import { api, delay, externalDownload } from '../utils/api'
+import { error, success } from '../utils/notifications'
+
+const POLL_INTERVAL = 1000
+
+export const pollJob = jobId => {
+  return api.get(`/v1/admin/jobs/${jobId}`).then(response => {
+    const { data } = response
+
+    if (data.status === 'complete') {
+      return response
+    } else if (data.status === 'error') {
+      return Promise.reject()
+    } else {
+      return delay(POLL_INTERVAL).then(() => {
+        return pollJob(jobId)
+      })
+    }
+  })
+}
 
 export const download = (type, fields, format) => {
   const queryObj = {
@@ -13,14 +31,34 @@ export const download = (type, fields, format) => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 
     api
-      .download(
+      .get(
         `/v1/admin/exports?${querystring.stringify(queryObj)}`,
         `${type}_export.${format}`
       )
-      .catch(() => {})
-      .then(() => {
-        dispatch({ type: 'SET_ADMIN_LOADING', data: false })
+      .then(({ data }) => {
+        if (data.id) {
+          setTimeout(() => {
+            pollJob(data.id)
+              .then(response => {
+                if (response && response.data && response.data.payloadObject) {
+                  externalDownload(
+                    response.data.payloadObject.downloadUrl,
+                    `${type}_export.${format}`
+                  )
+                }
+              })
+              .catch(() => {
+                error('An error occurred while running the job.')
+              })
+              .then(() => {
+                dispatch({ type: 'SET_ADMIN_LOADING', data: false })
+              })
+          }, 0)
+        } else {
+          error('There was an error starting the job.')
+        }
       })
+      .catch(() => {})
   }
 }
 
@@ -37,8 +75,23 @@ export const upload = (type, fields, file) => {
       .post(`/v1/admin/imports`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
-      .then(() => {
-        success('Items created/updated')
+      .then(({ data }) => {
+        if (data.id) {
+          setTimeout(() => {
+            pollJob(data.id)
+              .then(() => {
+                success('Items successfully imported. ')
+              })
+              .catch(() => {
+                error('An error occurred while running the job.')
+              })
+              .then(() => {
+                dispatch({ type: 'SET_ADMIN_LOADING', data: false })
+              })
+          }, 0)
+        } else {
+          error('There was an error starting the job.')
+        }
       })
       .catch(() => {})
       .then(() => {
