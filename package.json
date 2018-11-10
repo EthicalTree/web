@@ -94,7 +94,6 @@
     "redux-mock-store": "^1.4.0"
   },
   "pre-commit": [
-    "prettify",
     "eslint"
   ]
 }
