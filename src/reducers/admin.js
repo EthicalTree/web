@@ -2,6 +2,7 @@ const defaultState = {
   collections: [],
   currentPage: 1,
   filters: [],
+  importExportProgress: null,
   listings: [],
   locations: [],
   query: '',
@@ -30,6 +31,8 @@ const admin = (state = defaultState, { type, data }) => {
       return { ...state, query: data }
     case 'SET_ADMIN_LOADING':
       return { ...state, isAdminLoading: data }
+    case 'SET_ADMIN_IMPORT_EXPORT_PROGRESS':
+      return { ...state, importExportProgress: data }
     case 'SET_ADMIN_USERS':
       return { ...state, users: data }
     case 'SET_ADMIN_TAGS':

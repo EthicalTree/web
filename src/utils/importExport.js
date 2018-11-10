@@ -17,10 +17,30 @@ export const EXPORT_FIELDS = {
     menu_images: 'Menu Images',
     facebook_uri: 'Facebook URI',
   },
+  seo_paths: {
+    path: 'Path',
+    title: 'Title',
+    description: 'Description',
+    header: 'Header',
+  },
 }
 
 export const IMPORT_FIELDS = {
-  seoPaths: {
+  listings: {
+    id: 'ID',
+    description: 'Description',
+    visibility: 'Visibilty',
+    title: 'Title',
+    website: 'Website',
+    phone_number: 'Phone Number',
+    tags: 'Tags',
+    ethicalities: 'Ethicalities',
+    address: 'Address',
+    images: 'Images',
+    menu_images: 'Menu Images',
+    facebook_uri: 'Facebook URI',
+  },
+  seo_paths: {
     path: 'Path',
     title: 'Title',
     description: 'Description',

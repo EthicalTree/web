@@ -4,9 +4,13 @@ import { error, success } from '../utils/notifications'
 
 const POLL_INTERVAL = 1000
 
-export const pollJob = jobId => {
+export const pollJob = (jobId, onProgress) => {
   return api.get(`/v1/admin/jobs/${jobId}`).then(response => {
     const { data } = response
+
+    if (data.realtimeProgress >= 0) {
+      onProgress(data.realtimeProgress)
+    }
 
     if (data.status === 'complete') {
       return response
@@ -14,7 +18,7 @@ export const pollJob = jobId => {
       return Promise.reject()
     } else {
       return delay(POLL_INTERVAL).then(() => {
-        return pollJob(jobId)
+        return pollJob(jobId, onProgress)
       })
     }
   })
@@ -38,7 +42,16 @@ export const download = (type, fields, format) => {
       .then(({ data }) => {
         if (data.id) {
           setTimeout(() => {
-            pollJob(data.id)
+            const onProgress = progress => {
+              dispatch({
+                type: 'SET_ADMIN_IMPORT_EXPORT_PROGRESS',
+                data: progress,
+              })
+            }
+
+            onProgress(0)
+
+            pollJob(data.id, onProgress)
               .then(response => {
                 if (response && response.data && response.data.payloadObject) {
                   externalDownload(
@@ -78,7 +91,16 @@ export const upload = (type, fields, file) => {
       .then(({ data }) => {
         if (data.id) {
           setTimeout(() => {
-            pollJob(data.id)
+            const onProgress = progress => {
+              dispatch({
+                type: 'SET_ADMIN_IMPORT_EXPORT_PROGRESS',
+                data: progress,
+              })
+            }
+
+            onProgress(0)
+
+            pollJob(data.id, onProgress)
               .then(() => {
                 success('Items successfully imported. ')
               })
