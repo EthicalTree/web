@@ -118,13 +118,17 @@ export const updateWithSearchLocation = location => {
 }
 
 export const setSearchLocation = ({ id, location, nearMe }) => {
-  let url = id ? `/v1/locations/${id}` : `/v1/locations?name=${location}`
+  let url = id
+    ? `/v1/locations/${id}`
+    : `/v1/locations?name=${location}&withNeighbourhoods=1`
 
   return dispatch => {
     const latlng = getGeoLocation()
 
     if (nearMe && latlng) {
-      url = `/v1/locations?name=${latlng.lat},${latlng.lng}`
+      url = `/v1/locations?name=${latlng.lat},${
+        latlng.lng
+      }&withNeighbourhoods=1`
     }
 
     api.get(url).then(({ data }) => {

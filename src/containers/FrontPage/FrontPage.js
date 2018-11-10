@@ -9,6 +9,7 @@ import { Container, Col } from 'reactstrap'
 
 import { EthicalityBar } from '../../components/Ethicality'
 import { Search } from '../../components/Search'
+import { NeighbourhoodCard } from '../../components/NeighbourhoodCard'
 import { Collections } from '../Collections'
 
 import { toggleSearchEthicalities } from '../../actions/search'
@@ -74,6 +75,15 @@ export class FrontPage extends React.Component {
               }}
               selectedEthicalities={selectedEthicalities}
             />
+          </Col>
+          <Col xs="12">
+            {!search.location.id && null}
+            {search.location && (
+              <NeighbourhoodCard
+                city={search.location.city}
+                neighbourhoods={search.location.neighbourhoods}
+              />
+            )}
           </Col>
         </Container>
 

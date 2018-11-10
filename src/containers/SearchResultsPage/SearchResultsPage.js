@@ -11,6 +11,7 @@ import { ResultsMap } from '../../components/Search/ResultsMap'
 import { MapSwitcher } from '../../components/Search/MapSwitcher'
 
 import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
+import { setSearchLocation } from '../../actions/search'
 
 import { deserializeEthicalities } from '../../utils/ethicalities'
 import { getSeoText } from '../../utils/seo'
@@ -102,10 +103,14 @@ class SearchResultsPage extends React.Component {
   }
 
   componentDidMount() {
-    const { match, dispatch } = this.props
+    const { match, dispatch, search } = this.props
     const queryParams = this.getQueryParams()
 
     window.addEventListener('resize', this.updateMapPosition)
+
+    if (queryParams.location !== search.location.name) {
+      dispatch(setSearchLocation({ location: queryParams.location }))
+    }
 
     dispatch({
       type: 'SET_SEARCH_QUERY_PARAMS',
