@@ -36,11 +36,19 @@ export const initApp = (options = {}) => {
 
     // Set location
     if (location) {
-      requests.push(api.get(`/v1/locations?name=${location}`))
+      requests.push(
+        api.get(`/v1/locations?name=${location}&withNeighbourhoods=1`)
+      )
     } else if (savedLocation && latlng && nearMe) {
-      requests.push(api.get(`/v1/locations?name=${latlng.lat},${latlng.lng}`))
+      requests.push(
+        api.get(
+          `/v1/locations?name=${latlng.lat},${latlng.lng}&withNeighbourhoods=1`
+        )
+      )
     } else if (savedLocation && !nearMe) {
-      requests.push(api.get(`/v1/locations/${savedLocation}`))
+      requests.push(
+        api.get(`/v1/locations/${savedLocation}?withNeighbourhoods=1`)
+      )
     } else {
       requests.push(new Promise(resolve => resolve({ data: null })))
     }

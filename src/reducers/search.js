@@ -70,7 +70,7 @@ const search = (state = defaultSearch, { type, data }) => {
         swlat: data.swlat === undefined ? state.swlat : data.swlat,
         swlng: data.swlng === undefined ? state.swlng : data.swlng,
         lat: latlng ? latlng.lat : '',
-        lng: latlng ? latlng.lng : '',
+        lng: latlng ? latlng.lng : ''
       }
     }
     case 'SET_SEARCH_LOADING':

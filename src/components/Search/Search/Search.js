@@ -85,6 +85,16 @@ class Search extends React.Component {
     this.categoryInput.focus()
   }
 
+  componentWillReceiveProps = nextProps => {
+    const { location } = this.state
+    const { search } = nextProps
+    const newLocation = search.location || DEFAULT_LOCATION
+
+    if (newLocation.name !== location) {
+      this.setState({ location: newLocation.name, nearMe: newLocation.nearMe })
+    }
+  }
+
   constructor(props) {
     super(props)
 
