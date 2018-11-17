@@ -12,15 +12,38 @@ export const EXPORT_FIELDS = {
     tags: 'Tags',
     ethicalities: 'Ethicalities',
     address: 'Address',
+    latlng: 'Lat,Lng',
     city: 'City',
     images: 'Images',
     menu_images: 'Menu Images',
     facebook_uri: 'Facebook URI',
   },
+  seo_paths: {
+    path: 'Path',
+    title: 'Title',
+    description: 'Description',
+    header: 'Header',
+  },
 }
 
 export const IMPORT_FIELDS = {
-  seoPaths: {
+  listings: {
+    description: 'Description',
+    visibility: 'Visibilty',
+    title: 'Title',
+    website: 'Website',
+    phone_number: 'Phone Number',
+    tags: 'Tags',
+    ethicalities: 'Ethicalities',
+    address: 'Address',
+    latlng: 'Lat,Lng',
+    facebook_hours: 'Facebook Hours',
+    google_hours: 'Google Hours',
+    images: 'Images',
+    menu_images: 'Menu Images',
+    facebook_uri: 'Facebook URI',
+  },
+  seo_paths: {
     path: 'Path',
     title: 'Title',
     description: 'Description',

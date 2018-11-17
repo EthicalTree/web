@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { Button, Input } from 'reactstrap'
+import { Button, Input, Progress } from 'reactstrap'
 
 import { download, upload } from '../../../actions/admin'
 
@@ -56,6 +56,11 @@ export class ImportExport extends React.Component {
       selectedDataType: '',
       selectedFunction: '',
     }
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch({ type: 'SET_ADMIN_IMPORT_EXPORT_PROGRESS', data: null })
   }
 
   render() {
@@ -135,13 +140,15 @@ export class ImportExport extends React.Component {
 
             {selectedFunction === 'import' && (
               <React.Fragment>
-                <option value="seoPaths">SEO Paths</option>
+                <option value="listings">Listings</option>
+                <option value="seo_paths">SEO Paths</option>
               </React.Fragment>
             )}
 
             {selectedFunction === 'export' && (
               <React.Fragment>
                 <option value="listings">Listings</option>
+                <option value="seo_paths">SEO Paths</option>
               </React.Fragment>
             )}
           </Input>
@@ -232,6 +239,14 @@ export class ImportExport extends React.Component {
         )}
 
         <div className="mt-3">
+          {admin.importExportProgress !== null && (
+            <React.Fragment>
+              <div className="text-center">{admin.importExportProgress}%</div>
+              <Progress color="success" value={admin.importExportProgress} />
+              <div className="mb-3" />
+            </React.Fragment>
+          )}
+
           <Button
             disabled={admin.isAdminLoading}
             onClick={
