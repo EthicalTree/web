@@ -35,7 +35,7 @@
     "classnames": "^2.2.5",
     "core-js": "^2.5.5",
     "js-file-download": "^0.4.1",
-    "libphonenumber-js": "^1.2.15",
+    "libphonenumber-js": "^1.6.7",
     "lodash": "^4.17.5",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.21",

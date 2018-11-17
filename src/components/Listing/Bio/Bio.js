@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatNumber, parseNumber } from 'libphonenumber-js'
+import { parsePhoneNumber } from 'libphonenumber-js'
 
 import { Icon } from '../../Icon'
 import { trackEvent } from '../../../utils/ga'
@@ -9,9 +9,7 @@ export const Bio = props => {
 
   let formattedPhone
   try {
-    formattedPhone = phone
-      ? formatNumber(parseNumber(phone, 'CA'), 'National')
-      : ''
+    formattedPhone = phone ? parsePhoneNumber(phone, 'CA').formatNational() : ''
   } catch (e) {
     formattedPhone = phone
   }

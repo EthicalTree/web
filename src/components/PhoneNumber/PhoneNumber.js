@@ -4,12 +4,12 @@ import 'react-phone-number-input/style.css'
 
 import React from 'react'
 import PhoneInput from 'react-phone-number-input'
-import { isValidNumber } from 'libphonenumber-js'
+import { parsePhoneNumber } from 'libphonenumber-js'
 
 export class PhoneNumber extends React.Component {
   handleChange = phone => {
     const { onChange, onValidation } = this.props
-    const isValid = isValidNumber(phone || '')
+    const isValid = phone ? parsePhoneNumber(phone).isPossible() : true
     this.setState({ isValid })
 
     if (isValid) {
