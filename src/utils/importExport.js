@@ -12,6 +12,7 @@ export const EXPORT_FIELDS = {
     tags: 'Tags',
     ethicalities: 'Ethicalities',
     address: 'Address',
+    latlng: 'Lat,Lng',
     city: 'City',
     images: 'Images',
     menu_images: 'Menu Images',
@@ -27,7 +28,6 @@ export const EXPORT_FIELDS = {
 
 export const IMPORT_FIELDS = {
   listings: {
-    id: 'ID',
     description: 'Description',
     visibility: 'Visibilty',
     title: 'Title',
@@ -36,6 +36,9 @@ export const IMPORT_FIELDS = {
     tags: 'Tags',
     ethicalities: 'Ethicalities',
     address: 'Address',
+    latlng: 'Lat,Lng',
+    facebook_hours: 'Facebook Hours',
+    google_hours: 'Google Hours',
     images: 'Images',
     menu_images: 'Menu Images',
     facebook_uri: 'Facebook URI',
