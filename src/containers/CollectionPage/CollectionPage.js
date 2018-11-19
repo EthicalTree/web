@@ -191,13 +191,12 @@ export class CollectionPage extends React.Component {
                       />
                     </Col>
                   ))}
-                {!collection.isLoading &&
-                  collection.listings.length === 0 && (
-                    <i>
-                      There are no listings in this collection for your selected
-                      location.
-                    </i>
-                  )}
+                {!collection.isLoading && collection.listings.length === 0 && (
+                  <i>
+                    There are no listings in this collection for your selected
+                    location.
+                  </i>
+                )}
               </div>
               <Col xs="12" lg="12" xl="12" className="col-xxl-12">
                 <div className="d-flex flex-wrap flex-direction-column">

@@ -17,6 +17,7 @@ export const EXPORT_FIELDS = {
     images: 'Images',
     menu_images: 'Menu Images',
     facebook_uri: 'Facebook URI',
+    operating_hours: 'Operating Hours',
   },
   seo_paths: {
     path: 'Path',
