@@ -376,6 +376,21 @@ export const editCollection = ({
   }
 }
 
+export const addLocation = ({ lat, lng }) => {
+  return dispatch => {
+    api.post(`/v1/admin/locations/`, { lat, lng }).then(({ data }) => {
+      if (data.errors) {
+        dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
+      } else {
+        dispatch({ type: 'UPDATE_MODAL_DATA', data: { ...data.location } })
+        dispatch({ type: 'OPEN_MODAL', data: 'admin-edit-location' })
+        success('Location created')
+        dispatch(getLocations())
+      }
+    })
+  }
+}
+
 export const editLocation = location => {
   return dispatch => {
     api

@@ -4,7 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Modal } from '../../Modal'
 
-import { Form, Label, Input, Row, Col } from 'reactstrap'
+import { Form, FormGroup, Label, Input, Row, Col } from 'reactstrap'
 
 import { SelectAreaMap } from '../../../../components/Maps/SelectAreaMap'
 
@@ -42,6 +42,15 @@ class EditLocationModal extends React.Component {
 
   render() {
     const { modal } = this.props
+    const {
+      name,
+      city,
+      timezone,
+      state,
+      country,
+      neighbourhood,
+      locationType,
+    } = this.state
 
     return (
       <Modal
@@ -58,7 +67,7 @@ class EditLocationModal extends React.Component {
               <Label for="name">Name</Label>
               <Input
                 autoFocus
-                value={this.state.name}
+                value={name}
                 onChange={e => {
                   this.setState({ name: e.target.value })
                 }}
@@ -69,6 +78,33 @@ class EditLocationModal extends React.Component {
               />
             </Col>
           </Row>
+
+          {neighbourhood && (
+            <FormGroup row>
+              <Col xs={4}>Neighbourhood Name:</Col>
+              <Col xs={8}>{neighbourhood}</Col>
+            </FormGroup>
+          )}
+          <FormGroup row>
+            <Col xs={4}>City:</Col>
+            <Col xs={8}>{city}</Col>
+          </FormGroup>
+          <FormGroup row>
+            <Col xs={4}>State:</Col>
+            <Col xs={8}>{state}</Col>
+          </FormGroup>
+          <FormGroup row>
+            <Col xs={4}>Country:</Col>
+            <Col xs={8}>{country}</Col>
+          </FormGroup>
+          <FormGroup row>
+            <Col xs={4}>Neighbourhood/City:</Col>
+            <Col xs={8}>{locationType}</Col>
+          </FormGroup>
+          <FormGroup row>
+            <Col xs={4}>Timezone:</Col>
+            <Col xs={8}>{timezone}</Col>
+          </FormGroup>
 
           <Row className="mt-3">
             <Col className="location-map">

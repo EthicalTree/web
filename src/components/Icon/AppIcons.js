@@ -14,6 +14,7 @@ import Pencil3Icon from './RawIcons/Pencil3Icon'
 import CrossIcon from './RawIcons/CrossIcon'
 import PlusIcon from './RawIcons/PlusIcon'
 import CheckIcon from './RawIcons/CheckIcon'
+import InfoIcon from './RawIcons/InfoCircleIcon'
 
 import ArrowLeftIcon from './RawIcons/ArrowLeftIcon'
 import ArrowRightIcon from './RawIcons/ArrowRightIcon'
@@ -60,6 +61,7 @@ export default {
   pencil: Pencil3Icon,
   cross: CrossIcon,
   check: CheckIcon,
+  info: InfoIcon,
 
   chevron_left: ChevronLeftIcon,
   chevron_right: ChevronRightIcon,

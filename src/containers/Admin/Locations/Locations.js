@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 
-import { Table } from 'reactstrap'
+import { Table, Button } from 'reactstrap'
 
 import { Search } from '../Search'
 
@@ -20,6 +20,16 @@ export class Locations extends React.Component {
       event.preventDefault()
       dispatch({ type: 'UPDATE_MODAL_DATA', data: { ...location } })
       dispatch({ type: 'OPEN_MODAL', data: 'admin-edit-location' })
+    }
+  }
+
+  handleNew = () => {
+    const { dispatch } = this.props
+
+    return event => {
+      event.preventDefault()
+      dispatch({ type: 'UPDATE_MODAL_DATA', data: {} })
+      dispatch({ type: 'OPEN_MODAL', data: 'admin-new-location' })
     }
   }
 
@@ -43,6 +53,9 @@ export class Locations extends React.Component {
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
           Locations
           <div className="d-flex">
+            <Button className="mr-4" color="default" onClick={this.handleNew()}>
+              + New Location
+            </Button>
             <Search
               handleSearch={() =>
                 dispatch(getLocations({ page: 1, query: admin.query }))
