@@ -308,26 +308,28 @@ class ImageManager extends React.Component {
           </div>
         )}
 
-        {!hasSlides && canEdit && (
-          <S3Uploader
-            onProgress={onImageUploadProgress}
-            onFinish={addAction.handleAction}
-            signingUrlQueryParams={signingParams}
-          >
-            <div className="image-manager text-center no-content uploadable">
-              <div className="upload-wrapper">
-                <Icon iconKey="camera" className="camera" />
-                <span className="add-picture-cta">{addText}</span>
+        {!hasSlides &&
+          canEdit && (
+            <S3Uploader
+              onProgress={onImageUploadProgress}
+              onFinish={addAction.handleAction}
+              signingUrlQueryParams={signingParams}
+            >
+              <div className="image-manager text-center no-content uploadable">
+                <div className="upload-wrapper">
+                  <Icon iconKey="camera" className="camera" />
+                  <span className="add-picture-cta">{addText}</span>
+                </div>
               </div>
-            </div>
-          </S3Uploader>
-        )}
+            </S3Uploader>
+          )}
 
-        {!hasSlides && !canEdit && (
-          <div className="image-manager text-center no-content">
-            {emptyText}
-          </div>
-        )}
+        {!hasSlides &&
+          !canEdit && (
+            <div className="image-manager text-center no-content">
+              {emptyText}
+            </div>
+          )}
       </div>
     )
   }

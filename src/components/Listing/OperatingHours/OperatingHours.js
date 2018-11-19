@@ -57,16 +57,17 @@ class OperatingHours extends React.PureComponent {
         </div>
 
         <div className="card-body pt-3">
-          {canEdit && hasHours && (
-            <button
-              onClick={() =>
-                dispatch({ type: 'OPEN_MODAL', data: 'edit-operating-hours' })
-              }
-              className="btn btn-sm btn-default btn-block"
-            >
-              Edit
-            </button>
-          )}
+          {canEdit &&
+            hasHours && (
+              <button
+                onClick={() =>
+                  dispatch({ type: 'OPEN_MODAL', data: 'edit-operating-hours' })
+                }
+                className="btn btn-sm btn-default btn-block"
+              >
+                Edit
+              </button>
+            )}
 
           {hasHours && (
             <div>
@@ -85,24 +86,25 @@ class OperatingHours extends React.PureComponent {
           {hours == null &&
             genDummyList(5).map(x => <DailyHoursSkeleton key={x} />)}
 
-          {hours && hours.length < 1 && (
-            <div className="daily-hours">
-              <p>No operating hours set!</p>
-              {canEdit && (
-                <button
-                  onClick={() =>
-                    dispatch({
-                      type: 'OPEN_MODAL',
-                      data: 'edit-operating-hours',
-                    })
-                  }
-                  className="btn btn-default btn-block"
-                >
-                  Add
-                </button>
-              )}
-            </div>
-          )}
+          {hours &&
+            hours.length < 1 && (
+              <div className="daily-hours">
+                <p>No operating hours set!</p>
+                {canEdit && (
+                  <button
+                    onClick={() =>
+                      dispatch({
+                        type: 'OPEN_MODAL',
+                        data: 'edit-operating-hours',
+                      })
+                    }
+                    className="btn btn-default btn-block"
+                  >
+                    Add
+                  </button>
+                )}
+              </div>
+            )}
         </div>
       </div>
     )

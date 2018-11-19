@@ -26,15 +26,16 @@ const ListingMap = props => {
       <div className="location-title">
         <h3>
           How to get here
-          {canEdit && hasLocation && (
-            <a
-              className="btn btn-sm btn-default ml-3"
-              href=""
-              onClick={props.onClickLocationEdit}
-            >
-              Edit
-            </a>
-          )}
+          {canEdit &&
+            hasLocation && (
+              <a
+                className="btn btn-sm btn-default ml-3"
+                href=""
+                onClick={props.onClickLocationEdit}
+              >
+                Edit
+              </a>
+            )}
         </h3>
         {hasLocation && (
           <a

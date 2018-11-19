@@ -20,15 +20,16 @@ export const Bio = props => {
         <h3>
           {title}
 
-          {canEdit && bio && (
-            <a
-              className="btn btn-sm btn-default ml-3"
-              href=""
-              onClick={props.onClickDescriptionEdit}
-            >
-              Edit
-            </a>
-          )}
+          {canEdit &&
+            bio && (
+              <a
+                className="btn btn-sm btn-default ml-3"
+                href=""
+                onClick={props.onClickDescriptionEdit}
+              >
+                Edit
+              </a>
+            )}
         </h3>
 
         <div className="listing-contact">

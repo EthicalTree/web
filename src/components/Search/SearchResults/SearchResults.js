@@ -134,9 +134,10 @@ export class SearchResults extends React.Component {
                     </Col>
                   ))}
 
-                {!hasListings && !search.isLoading && (
-                  <Col className="text-center pt-5">No listings found!</Col>
-                )}
+                {!hasListings &&
+                  !search.isLoading && (
+                    <Col className="text-center pt-5">No listings found!</Col>
+                  )}
               </div>
             </div>
           </Col>
@@ -156,21 +157,23 @@ export class SearchResults extends React.Component {
           </Col>
         </Row>
 
-        {!search.isLoading && hasListings && search.matches > 0 && (
-          <Row className="text-center">
-            <Paginator
-              pageCount={search.pageCount}
-              currentPage={search.currentPage}
-              onPageChange={data => {
-                dispatch(
-                  setSearchUrl(search, {
-                    page: data.selected,
-                  })
-                )
-              }}
-            />
-          </Row>
-        )}
+        {!search.isLoading &&
+          hasListings &&
+          search.matches > 0 && (
+            <Row className="text-center">
+              <Paginator
+                pageCount={search.pageCount}
+                currentPage={search.currentPage}
+                onPageChange={data => {
+                  dispatch(
+                    setSearchUrl(search, {
+                      page: data.selected,
+                    })
+                  )
+                }}
+              />
+            </Row>
+          )}
       </Col>
     )
   }
