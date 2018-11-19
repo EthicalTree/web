@@ -407,6 +407,18 @@ export const editLocation = location => {
   }
 }
 
+export const deleteLocation = location => {
+  return dispatch => {
+    api
+      .delete(`/v1/admin/locations/${location.id}`)
+      .then(() => {
+        success(`Location deleted (${location.name})`)
+        dispatch(getLocations())
+      })
+      .catch(() => {})
+  }
+}
+
 export const editSeoPath = seoPath => {
   return dispatch => {
     api

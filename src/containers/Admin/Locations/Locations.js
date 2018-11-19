@@ -10,7 +10,8 @@ import { Icon } from '../../../components/Icon'
 import { Paginator } from '../../../components/Paginator'
 import { Loader } from '../../../components/Loader'
 
-import { getLocations } from '../../../actions/admin'
+import { setConfirm } from '../../../actions/confirm'
+import { getLocations, deleteLocation } from '../../../actions/admin'
 
 export class Locations extends React.Component {
   handleEdit = location => {
@@ -30,6 +31,24 @@ export class Locations extends React.Component {
       event.preventDefault()
       dispatch({ type: 'UPDATE_MODAL_DATA', data: {} })
       dispatch({ type: 'OPEN_MODAL', data: 'admin-new-location' })
+    }
+  }
+
+  handleDelete = location => {
+    const { dispatch } = this.props
+
+    return event => {
+      event.preventDefault()
+      dispatch(
+        setConfirm({
+          title: 'Delete Location',
+          msg: `Are you sure you want to delete this location (${
+            location.name
+          })?`,
+          action: deleteLocation,
+          data: location,
+        })
+      )
     }
   }
 
@@ -86,6 +105,13 @@ export class Locations extends React.Component {
                         className="edit-location"
                         clickable
                         onClick={this.handleEdit(l)}
+                      />
+                      <Icon
+                        iconKey="trash"
+                        title="Delete Location"
+                        className="delete-location"
+                        clickable
+                        onClick={this.handleDelete(l)}
                       />
                     </div>
                   </td>
