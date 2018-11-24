@@ -211,7 +211,12 @@ export const getCollections = queryObj => {
   }
 }
 
-export const getLocations = queryObj => {
+export const getLocations = ({ params, ...baseQueryObj }) => {
+  const queryObj = {
+    ...baseQueryObj,
+    ...params,
+  }
+
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 

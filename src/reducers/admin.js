@@ -10,6 +10,7 @@ const defaultState = {
   tags: [],
   totalPages: 1,
   users: [],
+  params: {}, //extra query params
 }
 
 const admin = (state = defaultState, { type, data }) => {
@@ -27,6 +28,8 @@ const admin = (state = defaultState, { type, data }) => {
     }
     case 'SET_ADMIN_FILTER':
       return { ...state, filters: data }
+    case 'SET_ADMIN_PARAMS':
+      return { ...state, params: data }
     case 'SET_ADMIN_SEARCH_QUERY':
       return { ...state, query: data }
     case 'SET_ADMIN_LOADING':
