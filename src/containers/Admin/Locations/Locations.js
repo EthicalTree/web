@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 
-import { Table, ButtonGroup, Button, Input } from 'reactstrap'
+import { Table, ButtonGroup, Button } from 'reactstrap'
 
 import { Search } from '../Search'
 
@@ -14,11 +14,7 @@ import { setConfirm } from '../../../actions/confirm'
 import { getLocations, deleteLocation } from '../../../actions/admin'
 
 import { blurClick } from '../../../utils/a11y'
-
-const LOCATION_TYPES = {
-  city: 'city',
-  neighbourhood: 'neighbourhood',
-}
+import { LOCATION_TYPES } from './utils'
 
 export class Locations extends React.Component {
   handleEdit = location => {
@@ -109,7 +105,7 @@ export class Locations extends React.Component {
 
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
           Locations
-          <div className="d-flex">
+          <div className="d-flex flex-wrap">
             <ButtonGroup className="mr-4">
               <Button
                 outline={params.locationType !== LOCATION_TYPES.neighbourhood}

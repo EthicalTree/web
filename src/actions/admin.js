@@ -211,7 +211,7 @@ export const getCollections = queryObj => {
   }
 }
 
-export const getLocations = ({ params, ...baseQueryObj }) => {
+export const getLocations = ({ params = {}, ...baseQueryObj }) => {
   const queryObj = {
     ...baseQueryObj,
     ...params,
@@ -390,7 +390,7 @@ export const addLocation = ({ lat, lng }) => {
         dispatch({ type: 'UPDATE_MODAL_DATA', data: { ...data.location } })
         dispatch({ type: 'OPEN_MODAL', data: 'admin-edit-location' })
         success('Location created')
-        dispatch(getLocations())
+        dispatch(getLocations({}))
       }
     })
   }
@@ -406,7 +406,7 @@ export const editLocation = location => {
         } else {
           dispatch({ type: 'CLOSE_MODAL' })
           success('Location updated')
-          dispatch(getLocations())
+          dispatch(getLocations({}))
         }
       })
   }
@@ -418,7 +418,7 @@ export const deleteLocation = location => {
       .delete(`/v1/admin/locations/${location.id}`)
       .then(() => {
         success(`Location deleted (${location.name})`)
-        dispatch(getLocations())
+        dispatch(getLocations({}))
       })
       .catch(() => {})
   }
