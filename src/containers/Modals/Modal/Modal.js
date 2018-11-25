@@ -152,7 +152,7 @@ class Modal extends React.Component {
                           <Col>
                             <Alert color="success">
                               {modal.successMessages.map(message => (
-                                <p key={message}>{message}</p>
+                                <div key={message}>{message}</div>
                               ))}
                             </Alert>
                           </Col>
@@ -164,7 +164,7 @@ class Modal extends React.Component {
                           <Col>
                             <Alert color="primary">
                               {modal.infoMessages.map(message => (
-                                <p key={message}>{message}</p>
+                                <div key={message}>{message}</div>
                               ))}
                             </Alert>
                           </Col>
@@ -176,7 +176,7 @@ class Modal extends React.Component {
                           <Col>
                             <Alert color="danger">
                               {modal.errors.map(error => (
-                                <p key={error}>{error}</p>
+                                <div key={error}>{error}</div>
                               ))}
                             </Alert>
                           </Col>
