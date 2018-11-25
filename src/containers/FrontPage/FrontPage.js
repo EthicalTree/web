@@ -78,13 +78,12 @@ export class FrontPage extends React.Component {
           </Col>
           <Col xs="12">
             {!search.location.id && null}
-            {search.location &&
-              search.location.city && (
-                <NeighbourhoodCard
-                  city={search.location.city}
-                  neighbourhoods={search.location.neighbourhoods}
-                />
-              )}
+            {search.location && search.location.city && (
+              <NeighbourhoodCard
+                city={search.location.city}
+                neighbourhoods={search.location.neighbourhoods}
+              />
+            )}
           </Col>
         </Container>
 

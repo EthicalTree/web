@@ -211,7 +211,27 @@ export const getCollections = queryObj => {
   }
 }
 
-export const getLocations = queryObj => {
+export const getLocationDefaults = ({ lat, lng }) => {
+  return dispatch => {
+    api
+      .get(`/v1/admin/locations?recommendedLocationLatlng=${lat},${lng}`)
+      .then(({ data }) => {
+        if (data.errors) {
+          dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
+        } else {
+          dispatch({ type: 'UPDATE_MODAL_DATA', data: { ...data.location } })
+          dispatch({ type: 'OPEN_MODAL', data: 'admin-edit-location' })
+        }
+      })
+  }
+}
+
+export const getLocations = ({ params = {}, ...baseQueryObj }) => {
+  const queryObj = {
+    ...baseQueryObj,
+    ...params,
+  }
+
   return dispatch => {
     dispatch({ type: 'SET_ADMIN_LOADING', data: true })
 
@@ -376,6 +396,20 @@ export const editCollection = ({
   }
 }
 
+export const addLocation = location => {
+  return dispatch => {
+    api.post(`/v1/admin/locations/`, { location }).then(({ data }) => {
+      if (data.errors) {
+        dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
+      } else {
+        dispatch({ type: 'CLOSE_MODAL' })
+        success('Collection created')
+        dispatch(getLocations({}))
+      }
+    })
+  }
+}
+
 export const editLocation = location => {
   return dispatch => {
     api
@@ -386,9 +420,21 @@ export const editLocation = location => {
         } else {
           dispatch({ type: 'CLOSE_MODAL' })
           success('Location updated')
-          dispatch(getLocations())
+          dispatch(getLocations({}))
         }
       })
+  }
+}
+
+export const deleteLocation = location => {
+  return dispatch => {
+    api
+      .delete(`/v1/admin/locations/${location.id}`)
+      .then(() => {
+        success(`Location deleted (${location.name})`)
+        dispatch(getLocations({}))
+      })
+      .catch(() => {})
   }
 }
 

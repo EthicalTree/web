@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 
-import { Table } from 'reactstrap'
+import { Table, ButtonGroup, Button } from 'reactstrap'
 
 import { Search } from '../Search'
 
@@ -10,7 +10,11 @@ import { Icon } from '../../../components/Icon'
 import { Paginator } from '../../../components/Paginator'
 import { Loader } from '../../../components/Loader'
 
-import { getLocations } from '../../../actions/admin'
+import { setConfirm } from '../../../actions/confirm'
+import { getLocations, deleteLocation } from '../../../actions/admin'
+
+import { blurClick } from '../../../utils/a11y'
+import { LOCATION_TYPES } from './utils'
 
 export class Locations extends React.Component {
   handleEdit = location => {
@@ -23,15 +27,74 @@ export class Locations extends React.Component {
     }
   }
 
+  handleNew = () => {
+    const { dispatch } = this.props
+
+    return event => {
+      event.preventDefault()
+      dispatch({ type: 'UPDATE_MODAL_DATA', data: {} })
+      dispatch({ type: 'OPEN_MODAL', data: 'admin-new-location' })
+    }
+  }
+
+  handleDelete = location => {
+    const { dispatch } = this.props
+
+    return event => {
+      event.preventDefault()
+      dispatch(
+        setConfirm({
+          title: 'Delete Location',
+          msg: `Are you sure you want to delete this location (${
+            location.name
+          })?`,
+          action: deleteLocation,
+          data: location,
+        })
+      )
+    }
+  }
+
+  filterLocationType = locationType => {
+    const { dispatch } = this.props
+    dispatch({ type: 'SET_ADMIN_PARAMS', data: { locationType } })
+    this.getLocations({ params: { locationType } })
+  }
+
+  getLocations = (newData = {}) => {
+    const { dispatch, admin } = this.props
+
+    const currentData = {
+      page: 1,
+      query: admin.query,
+      params: admin.params,
+    }
+
+    dispatch(getLocations({ ...currentData, ...newData }))
+  }
+
   componentDidMount() {
     const { dispatch } = this.props
 
     dispatch({ type: 'SET_ADMIN_SEARCH_QUERY', data: '' })
-    dispatch(getLocations({ page: 1, query: '' }))
+    dispatch({
+      type: 'SET_ADMIN_PARAMS',
+      data: { locationType: LOCATION_TYPES.neighbourhood },
+    })
+    dispatch(
+      getLocations({
+        page: 1,
+        query: '',
+        params: {
+          locationType: LOCATION_TYPES.neighbourhood,
+        },
+      })
+    )
   }
 
   render() {
-    const { dispatch, admin } = this.props
+    const { admin } = this.props
+    const { params } = admin
     const locations = admin.locations
 
     return (
@@ -42,11 +105,30 @@ export class Locations extends React.Component {
 
         <h4 className="mt-3 mb-3 d-flex justify-content-between">
           Locations
-          <div className="d-flex">
+          <div className="d-flex flex-wrap">
+            <ButtonGroup className="mr-4">
+              <Button
+                outline={params.locationType !== LOCATION_TYPES.neighbourhood}
+                onClick={blurClick(() =>
+                  this.filterLocationType(LOCATION_TYPES.neighbourhood)
+                )}
+              >
+                Neighbourhoods
+              </Button>
+              <Button
+                outline={params.locationType !== LOCATION_TYPES.city}
+                onClick={blurClick(() =>
+                  this.filterLocationType(LOCATION_TYPES.city)
+                )}
+              >
+                Cities
+              </Button>
+            </ButtonGroup>
+            <Button className="mr-4" color="default" onClick={this.handleNew()}>
+              + New Location
+            </Button>
             <Search
-              handleSearch={() =>
-                dispatch(getLocations({ page: 1, query: admin.query }))
-              }
+              handleSearch={() => this.getLocations({ query: admin.query })}
             />
           </div>
         </h4>
@@ -74,6 +156,13 @@ export class Locations extends React.Component {
                         clickable
                         onClick={this.handleEdit(l)}
                       />
+                      <Icon
+                        iconKey="trash"
+                        title="Delete Location"
+                        className="delete-location"
+                        clickable
+                        onClick={this.handleDelete(l)}
+                      />
                     </div>
                   </td>
                 </tr>
@@ -85,9 +174,7 @@ export class Locations extends React.Component {
           <Paginator
             pageCount={admin.totalPages}
             currentPage={admin.currentPage}
-            onPageChange={data =>
-              dispatch(getLocations({ page: data.selected }))
-            }
+            onPageChange={data => this.getLocations({ page: data.selected })}
           />
         </div>
       </Loader>

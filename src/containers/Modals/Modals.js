@@ -23,6 +23,7 @@ import {
   NewCollectionModal,
   EditListingModal as EditAdminListingModal,
   EditLocationModal as EditAdminLocationModal,
+  NewLocationModal as NewAdminLocationModal,
   EditSeoPathModal,
 } from './Admin'
 
@@ -43,6 +44,7 @@ const modals = {
   'new-collection': NewCollectionModal,
   'admin-edit-listing': EditAdminListingModal,
   'admin-edit-location': EditAdminLocationModal,
+  'admin-new-location': NewAdminLocationModal,
   'admin-edit-seo-path': EditSeoPathModal,
   feedback: FeedbackModal,
 }
