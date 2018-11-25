@@ -1,4 +1,6 @@
+import React from 'react'
 import history from '../utils/history'
+
 import { api, authenticate, deauthenticate } from '../utils/api'
 import { trackPageView } from '../utils/ga'
 import { assignBugsnagUser } from '../utils/bugsnag'
@@ -240,10 +242,14 @@ export const openClaimListingSignup = (listingSlug, claimId) => {
     dispatch({
       type: 'SET_MODAL_INFO_MESSAGES',
       data: [
-        `
-      Thanks for helping us improve our service by claiming your listing!
-      Sign up for an account below, and your listing will automatically be claimed for you.
-    `,
+        <div key="claim-listing-message">
+          Thanks for improving your page to show our users accurate information
+          and images for your business. Create a free account below to gain full
+          edit control of your page.
+          <br />
+          <br />
+          Claimed and updated pages receive 3.2x more traffic.
+        </div>,
       ],
     })
   }
