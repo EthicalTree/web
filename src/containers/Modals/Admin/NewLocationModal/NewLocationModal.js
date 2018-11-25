@@ -19,7 +19,7 @@ import {
   UncontrolledTooltip as Tooltip,
 } from 'reactstrap'
 
-import { addLocation } from '../../../../actions/admin'
+import { getLocationDefaults } from '../../../../actions/admin'
 
 const google = window.google
 
@@ -39,7 +39,7 @@ class NewLocationModal extends React.Component {
     const { dispatch } = this.props
     const { center } = this.state
 
-    dispatch(addLocation(center))
+    dispatch(getLocationDefaults(center))
   }
 
   onAddressChange = e => {
@@ -73,7 +73,7 @@ class NewLocationModal extends React.Component {
 
   render() {
     const { modal } = this.props
-    const { center } = this.state
+    const { center, existingLocations } = this.state
 
     return (
       <Modal
@@ -82,7 +82,7 @@ class NewLocationModal extends React.Component {
         contentLabel="New Location"
         onSave={this.submit.bind(this)}
         modalName="admin-new-location"
-        saveLabel="Create"
+        saveLabel="Search"
       >
         <Row>
           <Col>
@@ -94,9 +94,9 @@ class NewLocationModal extends React.Component {
                   target={'location-search-tooltip'}
                   delay={0}
                 >
-                  Search for an area to create a new location. If the location
-                  already exists, you will be directed to edit the existing
-                  location.
+                  Search for an area to create a new location. This will
+                  populate the location with values that our maps API think you
+                  want, but all fields are still editable.
                 </Tooltip>
               </Label>
               <InputGroup>
@@ -116,6 +116,8 @@ class NewLocationModal extends React.Component {
             </FormGroup>
           </Col>
         </Row>
+
+        {existingLocations && existingLocations.map(location => location.name)}
 
         {center && (
           <Row>

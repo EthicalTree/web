@@ -9,7 +9,7 @@ import { Form, FormGroup, Label, Input, Row, Col } from 'reactstrap'
 
 import { SelectAreaMap } from '../../../../components/Maps/SelectAreaMap'
 
-import { editLocation } from '../../../../actions/admin'
+import { editLocation, addLocation } from '../../../../actions/admin'
 import { LOCATION_TYPES } from '../../../Admin/Locations/utils'
 
 class EditLocationModal extends React.Component {
@@ -38,13 +38,18 @@ class EditLocationModal extends React.Component {
   submit(e) {
     e.preventDefault()
     const { dispatch } = this.props
-
-    dispatch(editLocation(this.state))
+    const { id } = this.state
+    if (id) {
+      dispatch(editLocation(this.state))
+    } else {
+      dispatch(addLocation(this.state))
+    }
   }
 
   render() {
     const { modal } = this.props
     const {
+      id,
       name,
       city,
       timezone,
@@ -61,7 +66,7 @@ class EditLocationModal extends React.Component {
         contentLabel="Edit Location"
         onSave={this.submit.bind(this)}
         modalName="admin-edit-location"
-        saveLabel="Save"
+        saveLabel={id ? "Save" : "Create"}
       >
         <Form onSubmit={this.submit.bind(this)}>
           <FormGroup row>
