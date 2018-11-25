@@ -335,8 +335,14 @@ export const updateListing = listingData => {
   return dispatch => {
     api
       .put(`/v1/admin/listings/${listingData.id}`, { listing: listingData })
-      .then(() => {
-        dispatch(getListings({ page: 1 }))
+      .then(({ data }) => {
+        if (data.errors) {
+          dispatch({ type: 'SET_MODAL_ERRORS', data: data.errors })
+        } else {
+          dispatch(getListings({ page: 1 }))
+          dispatch({ type: 'CLOSE_MODAL' })
+          success('Listing successfully updated')
+        }
       })
       .catch(() => {})
   }

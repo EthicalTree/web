@@ -12,7 +12,6 @@ class EditListingModal extends React.Component {
     e.preventDefault()
     const { dispatch, modal } = this.props
     dispatch(updateListing(modal.modalData))
-    dispatch({ type: 'CLOSE_MODAL' })
   }
 
   handleChange(obj) {
