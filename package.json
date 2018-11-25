@@ -20,7 +20,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "eslint": "eslint ./src --quiet",
-    "prettify": "prettier --write \"src/**/*.js\""
+    "prettify": "prettier --write \"src/**/*.js\"",
+    "pre-commit": "sh ./bin/precommit-hook.sh"
   },
   "dependencies": {
     "@fnando/password_strength": "^1.1.4",
@@ -94,6 +95,6 @@
     "redux-mock-store": "^1.4.0"
   },
   "pre-commit": [
-    "eslint"
+    "pre-commit"
   ]
 }
