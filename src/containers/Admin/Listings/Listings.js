@@ -49,6 +49,7 @@ export class Listings extends React.Component {
         id: listing.id,
         planType: listing.plan ? listing.plan.planType : '',
         price: listing.plan ? parseFloat(listing.plan.price) || '' : '',
+        slug: listing.slug,
         visibility: listing.visibility,
       },
     })

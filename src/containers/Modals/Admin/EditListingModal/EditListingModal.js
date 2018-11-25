@@ -22,7 +22,7 @@ class EditListingModal extends React.Component {
 
   render() {
     const { app, modal } = this.props
-    const { planType, price, visibility } = modal.modalData
+    const { planType, price, slug, visibility } = modal.modalData
 
     return (
       <Modal
@@ -35,15 +35,27 @@ class EditListingModal extends React.Component {
       >
         <Form onSubmit={this.submit.bind(this)}>
           <Col className="mt-3 mb-3">
-            <Label for="name">Plan Type</Label>
+            <Label for="slug">Slug</Label>
+            <Input
+              autoFocus
+              value={slug}
+              onChange={e => this.handleChange({ slug: e.target.value })}
+              type="text"
+              name="slug"
+              id="slug"
+              placeholder="Enter a Slug"
+            />
+          </Col>
+
+          <Col className="mt-3 mb-3">
+            <Label for="plan">Plan Type</Label>
             <Input
               autoFocus
               value={planType}
               onChange={e => this.handleChange({ planType: e.target.value })}
               type="select"
-              name="name"
-              id="name"
-              placeholder="Enter a name"
+              name="plan"
+              id="plan"
             >
               <option value="">Free</option>
               {app.plans.map(p => {
