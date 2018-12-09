@@ -2,6 +2,7 @@ import querystring from 'querystring'
 import { api } from '../utils/api'
 import history from '../utils/history'
 import { serializeEthicalities } from '../utils/ethicalities'
+import store from 'store'
 
 import {
   DEFAULT_LOCATION,
@@ -105,12 +106,14 @@ export const performSearchApiCall = search => {
 export const updateWithSearchLocation = location => {
   return dispatch => {
     if (location && location.id) {
-      const searchLocation = location.nearMe
-        ? { ...location, ...NEAR_ME_LOCATION }
-        : location
-
       setSavedSearchLocation(location.id)
-      dispatch({ type: 'SET_SEARCH_LOCATION', data: searchLocation })
+      dispatch({ type: 'SET_SEARCH_LOCATION', data: location })
+    } else if (location && location.nearMe) {
+      setSavedSearchLocation('nearme')
+      dispatch({
+        type: 'SET_SEARCH_LOCATION',
+        data: { ...location, ...NEAR_ME_LOCATION },
+      })
     } else {
       dispatch({ type: 'SET_SEARCH_LOCATION', data: DEFAULT_LOCATION })
     }
@@ -123,7 +126,7 @@ export const setSearchLocation = ({ id, location, nearMe }) => {
     : `/v1/locations?name=${location}&withNeighbourhoods=1`
 
   return dispatch => {
-    const latlng = getGeoLocation()
+    let latlng = getGeoLocation()
 
     if (nearMe && latlng) {
       url = `/v1/locations?name=${latlng.lat},${
@@ -132,7 +135,16 @@ export const setSearchLocation = ({ id, location, nearMe }) => {
     }
 
     api.get(url).then(({ data }) => {
-      if (nearMe && latlng) {
+      if (nearMe) {
+        // update nearme latlng from server if html5 location
+        // hasn't been accepted
+        if (!latlng) {
+          store.set('ETHICALTREE_GEOLOCATION', {
+            lat: data.latitude,
+            lng: data.longitude,
+          })
+        }
+
         dispatch(
           updateWithSearchLocation({
             ...data,
