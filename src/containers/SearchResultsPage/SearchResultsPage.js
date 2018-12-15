@@ -16,17 +16,12 @@ import { setSearchLocation } from '../../actions/search'
 import { deserializeEthicalities } from '../../utils/ethicalities'
 import { getSeoText } from '../../utils/seo'
 
-import {
-  setSearchUrl,
-  performSearchApiCall,
-  setHistoryFromSearch,
-} from '../../actions/search'
+import { setSearchUrl, performSearchApiCall } from '../../actions/search'
 
 class SearchResultsPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      dontUpdateHistoryOnApiFetch: false,
       mapHeight: 0,
       mapWidth: 0,
     }
@@ -72,8 +67,8 @@ class SearchResultsPage extends React.Component {
           nelng: ne.lng(),
         })
       )
+      dispatch({ type: 'SET_SEARCH_PENDING', data: true })
     }
-    dispatch({ type: 'SET_SEARCH_PENDING', data: true })
   }
 
   handleRedoSearch = bounds => {
@@ -90,18 +85,6 @@ class SearchResultsPage extends React.Component {
     return search
   }
 
-  componentWillMount() {
-    const { history } = this.props
-    if (
-      history.location.state &&
-      history.location.state.dontUpdateHistoryOnApiFetch
-    ) {
-      this.setState({
-        dontUpdateHistoryOnApiFetch: true,
-      })
-    }
-  }
-
   componentDidMount() {
     const { match, dispatch, search } = this.props
     const queryParams = this.getQueryParams()
@@ -110,6 +93,8 @@ class SearchResultsPage extends React.Component {
 
     if (queryParams.location !== search.location.name) {
       dispatch(setSearchLocation({ location: queryParams.location }))
+    } else {
+      dispatch({ type: 'SET_SEARCH_PENDING', data: true })
     }
 
     dispatch({
@@ -119,8 +104,6 @@ class SearchResultsPage extends React.Component {
         ...queryParams,
       },
     })
-
-    dispatch({ type: 'SET_SEARCH_PENDING', data: true })
     this.updateMapPosition()
   }
 
@@ -130,17 +113,10 @@ class SearchResultsPage extends React.Component {
 
   componentDidUpdate() {
     const { dispatch, search } = this.props
-    const { dontUpdateHistoryOnApiFetch } = this.state
 
     if (search.isPending) {
-      if (!dontUpdateHistoryOnApiFetch) {
-        setHistoryFromSearch(search)
-      }
       dispatch(performSearchApiCall(search))
       dispatch({ type: 'SET_SEARCH_PENDING', data: false })
-      this.setState({
-        dontUpdateHistoryOnApiFetch: false,
-      })
     }
   }
 

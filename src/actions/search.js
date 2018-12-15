@@ -36,7 +36,6 @@ export const setSearchUrl = (search, params) => {
     history.push({
       pathname: `/s/${encodeURIComponent(query || '')}`,
       search: `${querystring.stringify(mergedParams)}`,
-      state: { dontUpdateHistoryOnApiFetch: true },
     })
   }
 }
@@ -63,15 +62,6 @@ const parseSearchParams = search => {
   }
 
   return { params, apiParams, historyParams }
-}
-
-export const setHistoryFromSearch = search => {
-  const { historyParams } = parseSearchParams(search)
-  history.push(
-    `/s/${encodeURIComponent(search.query || '')}?${querystring.stringify(
-      historyParams
-    )}`
-  )
 }
 
 export const performSearchApiCall = search => {
