@@ -29,13 +29,28 @@ export const setSearchUrl = (search, params) => {
     const { historyParams } = parseSearchParams(search)
     const mergedParams = { ...historyParams, ...params }
 
-    mergedParams.ethicalities = serializeEthicalities(mergedParams.ethicalities)
+    // filter out the paramaters that that are the defaults
+    // this helps remove clutter in the url
+    let finalParams = {
+      location: mergedParams.location,
+    }
 
-    // set the state flag so that the SearchResultsPage knows not to update the
-    // history which would make the whole page re-render
+    if (mergedParams.page > 1) finalParams.page = mergedParams.page
+    if (mergedParams.openNow) finalParams.openNow = mergedParams.openNow
+    if (mergedParams.nelat) finalParams.nelat = mergedParams.nelat
+    if (mergedParams.nelng) finalParams.nelng = mergedParams.nelng
+    if (mergedParams.swlat) finalParams.swlat = mergedParams.swlat
+    if (mergedParams.swlng) finalParams.swlng = mergedParams.swlng
+    if (mergedParams.ethicalities.length > 0) {
+      finalParams.ethicalities = serializeEthicalities(
+        mergedParams.ethicalities
+      )
+    }
+
+    // link to the search
     history.push({
       pathname: `/s/${encodeURIComponent(query || '')}`,
-      search: `${querystring.stringify(mergedParams)}`,
+      search: `${querystring.stringify(finalParams)}`,
     })
   }
 }
@@ -44,7 +59,6 @@ const parseSearchParams = search => {
   const params = {
     ethicalities: serializeEthicalities(search.selectedEthicalities),
     page: search.currentPage,
-    open_now: search.openNow,
     nelat: search.nelat,
     nelng: search.nelng,
     swlat: search.swlng,
@@ -53,11 +67,13 @@ const parseSearchParams = search => {
 
   const apiParams = {
     ...params,
+    open_now: search.openNow,
     location: processLocation(search.location),
   }
 
   const historyParams = {
     ...params,
+    openNow: search.openNow,
     location: search.location.name,
   }
 

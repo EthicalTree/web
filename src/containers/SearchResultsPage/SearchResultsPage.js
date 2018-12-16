@@ -5,18 +5,22 @@ import querystring from 'querystring'
 import { connect } from 'react-redux'
 import { Row, Col } from 'reactstrap'
 import { Helmet } from 'react-helmet'
+import history from '../../utils/history'
 
 import { SearchResults } from '../../components/Search/SearchResults'
 import { ResultsMap } from '../../components/Search/ResultsMap'
 import { MapSwitcher } from '../../components/Search/MapSwitcher'
 
 import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
-import { setSearchLocation } from '../../actions/search'
 
 import { deserializeEthicalities } from '../../utils/ethicalities'
 import { getSeoText } from '../../utils/seo'
 
-import { setSearchUrl, performSearchApiCall } from '../../actions/search'
+import {
+  setSearchUrl,
+  performSearchApiCall,
+  setSearchLocation,
+} from '../../actions/search'
 
 class SearchResultsPage extends React.Component {
   constructor(props) {
@@ -75,8 +79,7 @@ class SearchResultsPage extends React.Component {
     this.changeBounds({ bounds })
   }
 
-  getQueryParams() {
-    const { location } = this.props
+  getQueryParams(location) {
     let search = querystring.parse(location.search.slice(1))
 
     search.page = search.page || 1
@@ -85,17 +88,8 @@ class SearchResultsPage extends React.Component {
     return search
   }
 
-  componentDidMount() {
-    const { match, dispatch, search } = this.props
-    const queryParams = this.getQueryParams()
-
-    window.addEventListener('resize', this.updateMapPosition)
-
-    if (queryParams.location !== search.location.name) {
-      dispatch(setSearchLocation({ location: queryParams.location }))
-    } else {
-      dispatch({ type: 'SET_SEARCH_PENDING', data: true })
-    }
+  setQueryParams(queryParams) {
+    const { match, dispatch } = this.props
 
     dispatch({
       type: 'SET_SEARCH_QUERY_PARAMS',
@@ -104,6 +98,27 @@ class SearchResultsPage extends React.Component {
         ...queryParams,
       },
     })
+  }
+
+  componentDidMount() {
+    const { dispatch, search, location } = this.props
+    const queryParams = this.getQueryParams(location)
+
+    window.addEventListener('resize', this.updateMapPosition)
+
+    if (queryParams.location && queryParams.location !== search.location.name) {
+      dispatch(setSearchLocation({ location: queryParams.location }))
+    }
+
+    dispatch({ type: 'SET_SEARCH_PENDING', data: true })
+
+    // handle when there are new queryparams
+    this.setQueryParams(queryParams)
+    this.backListener = history.listen(location => {
+      const newQueryParams = this.getQueryParams(location)
+      this.setQueryParams(newQueryParams)
+    })
+
     this.updateMapPosition()
   }
 
