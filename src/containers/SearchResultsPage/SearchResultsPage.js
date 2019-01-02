@@ -126,8 +126,12 @@ class SearchResultsPage extends React.Component {
     window.removeEventListener('resize', this.updateMapPosition)
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { dispatch, search } = this.props
+
+    if (prevProps.search.location.name !== search.location.name) {
+      dispatch(setSearchUrl(search, {}))
+    }
 
     if (search.isPending) {
       dispatch(performSearchApiCall(search))
