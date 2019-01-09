@@ -2,7 +2,6 @@ import './AllCollectionsPage.css'
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Jumbotron } from 'reactstrap'
 
@@ -12,6 +11,7 @@ import { getCollections } from '../../actions/collections'
 import { setSearchLocation } from '../../actions/search'
 
 import { CollectionSkeleton } from '../../components/Collection/CollectionSkeleton'
+import { Collection } from '../../components/Collection'
 
 import { getSeoText } from '../../utils/seo'
 import { genDummyList } from '../../utils/skeleton'
@@ -79,34 +79,9 @@ export class AllCollectionsPage extends React.Component {
             ))}
 
           {!collections.isLoading &&
-            collections.collections.map(c => {
-              let extraStyle
-
-              if (c.listings.length === 0) {
-                return null
-              }
-
-              if (c.coverImage) {
-                extraStyle = {
-                  backgroundImage: `url(${c.coverImage.thumbnailUrl})`,
-                }
-              }
-
-              return (
-                <Link
-                  key={c.id}
-                  className="collection"
-                  style={extraStyle}
-                  to={
-                    city
-                      ? `/collections/${city}/${c.slug}`
-                      : `/collections/_/${c.slug}`
-                  }
-                >
-                  <span className="collection-label">{c.name}</span>
-                </Link>
-              )
-            })}
+            collections.collections.map(c => (
+              <Collection collection={c} city={city} key={c.id} />
+            ))}
 
           <Paginator
             className="text-center"
