@@ -42,11 +42,27 @@ const DailyHours = props => {
 }
 
 class OperatingHours extends React.PureComponent {
+  state = {
+    expanded: false,
+  }
+
   render() {
     const { canEdit, dispatch, hours, timezone } = this.props
+    const { expanded } = this.state
     const hasHours = hours && hours.length > 0
 
     const groupedHours = groupBy(hours, h => h.day)
+
+    const days = [
+      'sunday',
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday',
+    ]
+    const today = days[new Date().getDay()]
 
     return (
       <div className="card operating-hours">
@@ -69,19 +85,50 @@ class OperatingHours extends React.PureComponent {
               </button>
             )}
 
-          {hasHours && (
-            <div>
-              {Object.keys(DAY_LABELS).map(day => {
-                return (
+          {hasHours &&
+            expanded && (
+              <div>
+                <div>
+                  {Object.keys(DAY_LABELS).map(day => {
+                    return (
+                      <DailyHours
+                        key={day}
+                        hours={groupedHours[today] || []}
+                        label={DAY_LABELS[day]}
+                      />
+                    )
+                  })}
+                </div>
+                <button
+                  onClick={() => {
+                    this.setState({ expanded: false })
+                  }}
+                  className="btn btn-sm btn-default btn-block mt-4"
+                >
+                  See today's hours...
+                </button>
+              </div>
+            )}
+
+          {hasHours &&
+            !expanded && (
+              <div>
+                <div>
                   <DailyHours
-                    key={day}
-                    hours={groupedHours[day] || []}
-                    label={DAY_LABELS[day]}
+                    hours={groupedHours[today] || []}
+                    label={'Today'}
                   />
-                )
-              })}
-            </div>
-          )}
+                </div>
+                <button
+                  onClick={() => {
+                    this.setState({ expanded: true })
+                  }}
+                  className="btn btn-sm btn-default btn-block mt-4"
+                >
+                  See all hours...
+                </button>
+              </div>
+            )}
 
           {hours == null &&
             genDummyList(5).map(x => <DailyHoursSkeleton key={x} />)}
