@@ -5,13 +5,13 @@ import querystring from 'querystring'
 import { connect } from 'react-redux'
 import { Row, Col } from 'reactstrap'
 import { Helmet } from 'react-helmet'
+import history from '../../utils/history'
 
 import { SearchResults } from '../../components/Search/SearchResults'
 import { ResultsMap } from '../../components/Search/ResultsMap'
 import { MapSwitcher } from '../../components/Search/MapSwitcher'
 
 import { ListingOverlay } from '../../components/Maps/CustomOverlayView'
-import { setSearchLocation } from '../../actions/search'
 
 import { deserializeEthicalities } from '../../utils/ethicalities'
 import { getSeoText } from '../../utils/seo'
@@ -19,14 +19,13 @@ import { getSeoText } from '../../utils/seo'
 import {
   setSearchUrl,
   performSearchApiCall,
-  setHistoryFromSearch,
+  setSearchLocation,
 } from '../../actions/search'
 
 class SearchResultsPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      dontUpdateHistoryOnApiFetch: false,
       mapHeight: 0,
       mapWidth: 0,
     }
@@ -72,16 +71,15 @@ class SearchResultsPage extends React.Component {
           nelng: ne.lng(),
         })
       )
+      dispatch({ type: 'SET_SEARCH_PENDING', data: true })
     }
-    dispatch({ type: 'SET_SEARCH_PENDING', data: true })
   }
 
   handleRedoSearch = bounds => {
     this.changeBounds({ bounds })
   }
 
-  getQueryParams() {
-    const { location } = this.props
+  getQueryParams(location) {
     let search = querystring.parse(location.search.slice(1))
 
     search.page = search.page || 1
@@ -90,27 +88,8 @@ class SearchResultsPage extends React.Component {
     return search
   }
 
-  componentWillMount() {
-    const { history } = this.props
-    if (
-      history.location.state &&
-      history.location.state.dontUpdateHistoryOnApiFetch
-    ) {
-      this.setState({
-        dontUpdateHistoryOnApiFetch: true,
-      })
-    }
-  }
-
-  componentDidMount() {
-    const { match, dispatch, search } = this.props
-    const queryParams = this.getQueryParams()
-
-    window.addEventListener('resize', this.updateMapPosition)
-
-    if (queryParams.location !== search.location.name) {
-      dispatch(setSearchLocation({ location: queryParams.location }))
-    }
+  setQueryParams(queryParams) {
+    const { match, dispatch } = this.props
 
     dispatch({
       type: 'SET_SEARCH_QUERY_PARAMS',
@@ -119,8 +98,27 @@ class SearchResultsPage extends React.Component {
         ...queryParams,
       },
     })
+  }
+
+  componentDidMount() {
+    const { dispatch, search, location } = this.props
+    const queryParams = this.getQueryParams(location)
+
+    window.addEventListener('resize', this.updateMapPosition)
+
+    if (queryParams.location && queryParams.location !== search.location.name) {
+      dispatch(setSearchLocation({ location: queryParams.location }))
+    }
 
     dispatch({ type: 'SET_SEARCH_PENDING', data: true })
+
+    // handle when there are new queryparams
+    this.setQueryParams(queryParams)
+    this.backListener = history.listen(location => {
+      const newQueryParams = this.getQueryParams(location)
+      this.setQueryParams(newQueryParams)
+    })
+
     this.updateMapPosition()
   }
 
@@ -128,19 +126,16 @@ class SearchResultsPage extends React.Component {
     window.removeEventListener('resize', this.updateMapPosition)
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { dispatch, search } = this.props
-    const { dontUpdateHistoryOnApiFetch } = this.state
+
+    if (prevProps.search.location.name !== search.location.name) {
+      dispatch(setSearchUrl(search, {}))
+    }
 
     if (search.isPending) {
-      if (!dontUpdateHistoryOnApiFetch) {
-        setHistoryFromSearch(search)
-      }
       dispatch(performSearchApiCall(search))
       dispatch({ type: 'SET_SEARCH_PENDING', data: false })
-      this.setState({
-        dontUpdateHistoryOnApiFetch: false,
-      })
     }
   }
 
