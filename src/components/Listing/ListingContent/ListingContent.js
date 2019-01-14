@@ -27,15 +27,13 @@ const ListingContent = props => {
         dispatch={dispatch}
       />
 
-      <aside className="col-xl-3 col-lg-4">
-        <div className="d-none d-lg-block">
-          <EthicalityArea
-            dispatch={dispatch}
-            ethicalityChoices={listing.ethicalityChoices}
-            ethicalities={listing.ethicalities}
-            canEdit={hasPermission('update', listing)}
-          />
-        </div>
+      <aside className="col-xl-3 col-lg-4 d-none d-lg-block">
+        <EthicalityArea
+          dispatch={dispatch}
+          ethicalityChoices={listing.ethicalityChoices}
+          ethicalities={listing.ethicalities}
+          canEdit={hasPermission('update', listing)}
+        />
 
         <OperatingHours
           canEdit={hasPermission('update', listing)}

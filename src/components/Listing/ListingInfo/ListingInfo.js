@@ -6,6 +6,7 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
 import { Bio } from '../Bio'
 import { ListingMap, ListingMapSkeleton } from '../ListingMap'
 import { ListingMenu, ListingMenuSkeleton } from '../ListingMenu'
+import { OperatingHours } from '../OperatingHours'
 import { Featured } from '../Featured'
 
 import { trackEvent } from '../../../utils/ga'
@@ -105,6 +106,15 @@ const ListingInfo = props => {
       </TabContent>
 
       <div className="clearfix" />
+
+      <div className="d-sm-block d-lg-none p-5 text-center">
+        <OperatingHours
+          canEdit={hasPermission('update', listing)}
+          dispatch={dispatch}
+          hours={listing.operatingHours}
+          timezone={listing.timezone}
+        />
+      </div>
 
       {!listing.plan && <Featured location={listing.location} />}
     </div>
