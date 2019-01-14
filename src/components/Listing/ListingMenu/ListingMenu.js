@@ -100,6 +100,13 @@ const ListingMenu = props => {
           title: 'Add a new photo',
         }}
       />
+      {menu.images.length > 0 && (
+        <div className="mt-5">
+          * Please note that menu options and pricing may change without prior
+          notice. Call or visit this business to confirm ingredients, pricing,
+          and other details with the staff.
+        </div>
+      )}
     </div>
   )
 }
