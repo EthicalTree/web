@@ -171,7 +171,7 @@ export const setSearchLocation = ({ id, location, nearMe }) => {
   }
 }
 
-export const toggleSearchEthicalities = (ethicalities, slug) => {
+export const toggleSearchEthicalities = (ethicalities, slug, track = false) => {
   let selectedEthicalities
 
   if (ethicalities.includes(slug)) {
@@ -180,11 +180,13 @@ export const toggleSearchEthicalities = (ethicalities, slug) => {
     selectedEthicalities = [...ethicalities, slug]
   }
 
-  trackEvent({
-    action: 'Select Ethicality',
-    category: 'Ethicality',
-    label: slug,
-  })
+  if (track) {
+    trackEvent({
+      action: 'Select Ethicality',
+      category: 'Ethicality',
+      label: slug,
+    })
+  }
 
   return selectedEthicalities
 }

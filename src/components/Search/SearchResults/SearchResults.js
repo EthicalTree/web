@@ -63,7 +63,8 @@ export class SearchResults extends React.Component {
         setSearchUrl(search, {
           ethicalities: toggleSearchEthicalities(
             search.selectedEthicalities,
-            slug
+            slug,
+            true
           ),
           page: 1,
         })
