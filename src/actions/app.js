@@ -83,6 +83,10 @@ export const initApp = (options = {}) => {
             })
             dispatch({ type: 'SET_ACCOUNT_FIRST_NAME', data: user.firstName })
             dispatch({ type: 'SET_ACCOUNT_LAST_NAME', data: user.lastName })
+            dispatch({
+              type: 'SET_ACCOUNT_ETHICALITIES',
+              data: user.ethicalities,
+            })
             trackPageView({ user })
             assignBugsnagUser(user)
           }

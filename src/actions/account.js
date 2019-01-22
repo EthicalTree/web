@@ -1,13 +1,11 @@
 import { api } from '../utils/api'
 import { success } from '../utils/notifications'
 
-export const changePersonalDetails = details => {
-  const { firstName, lastName } = details
-  const user = { firstName, lastName }
+export const changePersonalDetails = (details, onFinish) => {
+  const { firstName, lastName, ethicalities } = details
+  const user = { firstName, lastName, ethicalities }
 
   return dispatch => {
-    dispatch({ type: 'SET_LOADING', data: true })
-
     api
       .put('/users/current', user)
       .then(response => {
@@ -20,11 +18,13 @@ export const changePersonalDetails = details => {
         success('Your personal details have been saved.')
         dispatch({ type: 'SET_PERSONAL_DETAILS_DIRTY', data: false })
         dispatch({ type: 'UPDATE_CURRENT_USER', data: user })
+        dispatch({
+          type: 'SET_SEARCH_QUERY_PARAMS',
+          data: { ethicalities: user.ethicalities },
+        })
       })
-      .catch(() => {})
-      .then(() => {
-        dispatch({ type: 'SET_LOADING', data: false })
-      })
+      .catch(onFinish)
+      .then(onFinish)
   }
 }
 

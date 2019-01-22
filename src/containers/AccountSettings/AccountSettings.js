@@ -1,12 +1,15 @@
 import './AccountSettings.css'
 
-import React, { Fragment } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
+import { EthicalityBar } from '../../components/Ethicality/Ethicality'
 import { PasswordStrength } from '../../components/PasswordStrength'
+import { Loader } from '../../components/Loader'
 import { isLoggedIn } from '../../utils/permissions'
+import { toggleSearchEthicalities } from '../../actions/search'
 
 import {
   Container,
@@ -23,15 +26,23 @@ import {
 import { changePersonalDetails, changePassword } from '../../actions/account'
 
 class AccountSettings extends React.Component {
+  state = {
+    personalDetailsLoading: false,
+  }
   submitPersonalDetails = e => {
     e.preventDefault()
     const { dispatch, account } = this.props
 
+    this.setState({ personalDetailsLoading: true })
     dispatch(
-      changePersonalDetails({
-        firstName: account.firstName,
-        lastName: account.lastName,
-      })
+      changePersonalDetails(
+        {
+          firstName: account.firstName,
+          lastName: account.lastName,
+          ethicalities: account.ethicalities,
+        },
+        () => this.setState({ personalDetailsLoading: false })
+      )
     )
   }
 
@@ -48,8 +59,18 @@ class AccountSettings extends React.Component {
     )
   }
 
+  onEthicalitySelect = slug => {
+    const { dispatch, account } = this.props
+    dispatch({ type: 'SET_PERSONAL_DETAILS_DIRTY', data: true })
+    dispatch({
+      type: 'SET_ACCOUNT_ETHICALITIES',
+      data: toggleSearchEthicalities(account.ethicalities, slug),
+    })
+  }
+
   render() {
-    const { dispatch, session, account } = this.props
+    const { dispatch, session, account, app } = this.props
+    const { personalDetailsLoading } = this.state
 
     if (!isLoggedIn()) {
       return <Redirect to="/" />
@@ -60,7 +81,7 @@ class AccountSettings extends React.Component {
     }
 
     return (
-      <Fragment>
+      <Loader loading={personalDetailsLoading}>
         <Helmet>
           <title>{'EthicalTree · Account Settings'}</title>
         </Helmet>
@@ -115,6 +136,19 @@ class AccountSettings extends React.Component {
                         data: e.target.value,
                       })
                     }
+                  />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label>Ethical Preferences</Label>
+                  <EthicalityBar
+                    className={'justify-content-center'}
+                    showLabels={true}
+                    showTooltips={false}
+                    showIcons={true}
+                    ethicalities={app.ethicalities}
+                    onEthicalitySelect={this.onEthicalitySelect}
+                    selectedEthicalities={account.ethicalities}
                   />
                 </FormGroup>
 
@@ -257,7 +291,7 @@ class AccountSettings extends React.Component {
             </Col>
           </Container>
         </div>
-      </Fragment>
+      </Loader>
     )
   }
 }
@@ -266,6 +300,7 @@ const select = state => {
   return {
     session: state.session,
     account: state.account,
+    app: state.app,
   }
 }
 
