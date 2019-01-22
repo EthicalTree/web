@@ -224,13 +224,6 @@ class ImageManager extends React.Component {
     }
 
     const hasSlides = images && images.length > 0
-    let displayImages
-
-    if (images.length === 1) {
-      displayImages = [...images, ...images]
-    } else {
-      displayImages = images
-    }
 
     return (
       <div className={className}>
@@ -259,11 +252,11 @@ class ImageManager extends React.Component {
 
             {hasSlides && (
               <Slider
-                key={displayImages.map(image => image.id).join(',')}
+                key={images.map(image => image.id).join(',')}
                 afterChange={this.handleSlideChange}
                 arrows={!isRepositioning}
                 initialSlide={currentImage ? currentImage.order : 0}
-                slides={displayImages.map((image, i) => {
+                slides={images.map((image, i) => {
                   const key = `${image.url}-${i}`
                   let repositionStyle = {}
 
