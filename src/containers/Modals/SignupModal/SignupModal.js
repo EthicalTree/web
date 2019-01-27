@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Modal } from '../Modal'
 import { PasswordStrength } from '../../../components/PasswordStrength'
 import { PhoneNumber } from '../../../components/PhoneNumber'
+import { EthicalityBar } from '../../../components/Ethicality/Ethicality'
+import { toggleSearchEthicalities } from '../../../actions/search'
 
 import { Form, FormGroup, Label, Input, Button, Row, Col } from 'reactstrap'
 
@@ -25,6 +27,7 @@ class SignupModal extends React.Component {
       password: '',
       contactNumber: '',
       position: '',
+      selectedEthicalities: [],
     }
   }
 
@@ -35,8 +38,18 @@ class SignupModal extends React.Component {
     dispatch(signup(this.state))
   }
 
+  onEthicalitySelect = slug => {
+    const { selectedEthicalities } = this.state
+    this.setState({
+      selectedEthicalities: toggleSearchEthicalities(
+        selectedEthicalities,
+        slug
+      ),
+    })
+  }
+
   render() {
-    const { modal } = this.props
+    const { modal, app } = this.props
     const { modalData } = modal
 
     const {
@@ -47,11 +60,12 @@ class SignupModal extends React.Component {
       password,
       contactNumber,
       position,
+      selectedEthicalities,
     } = this.state
 
     return (
       <Modal
-        className="signup-modal large-modal"
+        className="signup-modal extra-large-modal"
         loading={modal.isLoading}
         contentLabel="Signup"
         modalName="signup"
@@ -182,6 +196,23 @@ class SignupModal extends React.Component {
 
               <PasswordStrength email={email} password={password} />
 
+              <Row className="mt-3">
+                <Col sm="12">
+                  <FormGroup>
+                    <Label>Ethical Preferences</Label>
+                    <EthicalityBar
+                      className={'justify-content-center'}
+                      showLabels={true}
+                      showTooltips={false}
+                      showIcons={true}
+                      ethicalities={app.ethicalities}
+                      onEthicalitySelect={this.onEthicalitySelect}
+                      selectedEthicalities={selectedEthicalities}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
               <FormGroup className="mt-4">
                 <Button block color="primary" role="button" type="submit">
                   Sign me up!
@@ -199,6 +230,7 @@ const select = state => {
   return {
     modal: state.modal,
     session: state.session,
+    app: state.app,
   }
 }
 

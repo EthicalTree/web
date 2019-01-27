@@ -135,6 +135,7 @@ export const signup = data => {
     const dataObj = {
       claimId: data.claimId,
       claimListingSlug: data.listingSlug,
+      ethicalities: data.selectedEthicalities,
       user: {
         email: data.email,
         firstName: data.firstName,
@@ -205,6 +206,10 @@ export const getCurrentUser = () => {
         const user = response.data.user
 
         dispatch({ type: 'SET_CURRENT_USER', data: user })
+        dispatch({
+          type: 'SET_SEARCH_QUERY_PARAMS',
+          data: { ethicalities: user.ethicalities },
+        })
         dispatch({ type: 'SET_ACCOUNT_FIRST_NAME', data: user.firstName })
         dispatch({ type: 'SET_ACCOUNT_LAST_NAME', data: user.lastName })
 

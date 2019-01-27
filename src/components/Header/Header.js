@@ -197,7 +197,8 @@ const Header = props => {
                     data: {
                       ethicalities: toggleSearchEthicalities(
                         search.selectedEthicalities,
-                        slug
+                        slug,
+                        true
                       ),
                     },
                   })

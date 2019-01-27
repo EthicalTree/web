@@ -6,6 +6,7 @@ const defaultState = {
   currentPassword: '************',
   newPassword: '',
   confirmPassword: '',
+  ethicalities: [],
 }
 
 const account = (state = defaultState, action) => {
@@ -15,12 +16,13 @@ const account = (state = defaultState, action) => {
     case 'SET_EDIT_ACCOUNT_PASSWORD_ERRORS':
       return { ...state, editPasswordErrors: action.data }
     case 'RESET_PERSONAL_DETAILS': {
-      const { firstName, lastName } = action.data
+      const { firstName, lastName, ethicalities } = action.data
 
       return {
         ...state,
         firstName,
         lastName,
+        ethicalities,
         isPersonalDetailsDirty: false,
       }
     }
@@ -37,6 +39,8 @@ const account = (state = defaultState, action) => {
       return { ...state, firstName: action.data }
     case 'SET_ACCOUNT_LAST_NAME':
       return { ...state, lastName: action.data }
+    case 'SET_ACCOUNT_ETHICALITIES':
+      return { ...state, ethicalities: action.data }
     case 'SET_ACCOUNT_CURRENT_PASSWORD':
       return { ...state, currentPassword: action.data }
     case 'SET_ACCOUNT_NEW_PASSWORD':

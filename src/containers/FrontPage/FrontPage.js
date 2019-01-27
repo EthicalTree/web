@@ -68,7 +68,8 @@ export class FrontPage extends React.Component {
                   data: {
                     ethicalities: toggleSearchEthicalities(
                       selectedEthicalities,
-                      slug
+                      slug,
+                      true
                     ),
                   },
                 })
