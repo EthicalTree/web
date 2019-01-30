@@ -65,7 +65,7 @@
     "react-s3-uploader": "^4.5.1",
     "react-scripts": "^1.1.5",
     "react-select": "^1.2.1",
-    "react-slick": "^0.17.1",
+    "react-slick": "^0.23.2",
     "react-spinkit": "^3.0.0",
     "react-toggle": "^4.0.2",
     "react-transition-group": "^2.2.1",

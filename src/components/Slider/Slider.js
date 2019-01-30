@@ -53,6 +53,7 @@ const Slider = props => {
       infinite={true}
       initialSlide={initialSlide >= 0 ? initialSlide : 0}
       slidesToShow={1}
+      speed={0}
       {...rest}
     >
       {slides}
