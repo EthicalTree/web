@@ -93,7 +93,7 @@ class OperatingHours extends React.PureComponent {
                     return (
                       <DailyHours
                         key={day}
-                        hours={groupedHours[today] || []}
+                        hours={groupedHours[day] || []}
                         label={DAY_LABELS[day]}
                       />
                     )
