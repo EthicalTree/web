@@ -10,6 +10,7 @@ import { Container, Col } from 'reactstrap'
 import { EthicalityBar } from '../../components/Ethicality'
 import { Search } from '../../components/Search'
 import { NeighbourhoodCard } from '../../components/NeighbourhoodCard'
+import { InlineCollection } from '../../components/InlineCollection'
 import { Collections } from '../Collections'
 
 import { toggleSearchEthicalities } from '../../actions/search'
@@ -18,7 +19,7 @@ import { getSeoText } from '../../utils/seo'
 
 export class FrontPage extends React.Component {
   render() {
-    const { app, dispatch, search } = this.props
+    const { app, collections, dispatch, search } = this.props
 
     const ethicalities = app.ethicalities || []
     const selectedEthicalities = search.selectedEthicalities || []
@@ -34,6 +35,10 @@ export class FrontPage extends React.Component {
           search.location.city
         }'s restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.`
       : 'Best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.'
+
+    const featuredCollection = collections.collections.find(
+      c => c.hashtag === 'featured'
+    )
 
     return (
       <div className="front-page">
@@ -87,7 +92,16 @@ export class FrontPage extends React.Component {
                 />
               )}
           </Col>
+        </Container>
 
+        {featuredCollection && (
+          <InlineCollection
+            city={search.location.city}
+            {...featuredCollection}
+          />
+        )}
+
+        <Container>
           <Col xs="12">
             <Collections />
           </Col>
@@ -100,6 +114,7 @@ export class FrontPage extends React.Component {
 const select = state => {
   return {
     app: state.app,
+    collections: state.collections,
     search: state.search,
   }
 }
