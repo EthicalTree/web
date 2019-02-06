@@ -50,6 +50,7 @@ class SignupModal extends React.Component {
 
   render() {
     const { modal, app } = this.props
+    const { claimId } = this.state
     const { modalData } = modal
 
     const {
@@ -196,22 +197,24 @@ class SignupModal extends React.Component {
 
               <PasswordStrength email={email} password={password} />
 
-              <Row className="mt-3">
-                <Col sm="12">
-                  <FormGroup>
-                    <Label>Ethical Preferences</Label>
-                    <EthicalityBar
-                      className={'justify-content-center'}
-                      showLabels={true}
-                      showTooltips={false}
-                      showIcons={true}
-                      ethicalities={app.ethicalities}
-                      onEthicalitySelect={this.onEthicalitySelect}
-                      selectedEthicalities={selectedEthicalities}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
+              {!claimId && (
+                <Row className="mt-3">
+                  <Col sm="12">
+                    <FormGroup>
+                      <Label>Ethical Preferences</Label>
+                      <EthicalityBar
+                        className={'justify-content-center'}
+                        showLabels={true}
+                        showTooltips={false}
+                        showIcons={true}
+                        ethicalities={app.ethicalities}
+                        onEthicalitySelect={this.onEthicalitySelect}
+                        selectedEthicalities={selectedEthicalities}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+              )}
 
               <FormGroup className="mt-4">
                 <Button block color="primary" role="button" type="submit">
