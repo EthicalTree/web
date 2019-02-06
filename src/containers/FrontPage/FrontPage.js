@@ -37,7 +37,7 @@ export class FrontPage extends React.Component {
       : 'Best restaurants, bakeries, cafés and stores. Organic, Woman-Owned, Fair Trade, Vegan, Vegetarian.'
 
     const featuredCollection = collections.collections.find(
-      c => c.hashtag === 'featured'
+      c => c.slug === 'featured'
     )
 
     return (
