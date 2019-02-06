@@ -92,16 +92,16 @@ export class FrontPage extends React.Component {
                 />
               )}
           </Col>
-        </Container>
 
-        {featuredCollection && (
-          <InlineCollection
-            city={search.location.city}
-            {...featuredCollection}
-          />
-        )}
+          <Col xs="12">
+            {featuredCollection && (
+              <InlineCollection
+                city={search.location.city}
+                {...featuredCollection}
+              />
+            )}
+          </Col>
 
-        <Container>
           <Col xs="12">
             <Collections />
           </Col>

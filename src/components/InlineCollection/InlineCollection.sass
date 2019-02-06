@@ -1,6 +1,8 @@
 @import 'variables.sass'
 
 .inline-collection
+  margin: $space-7 0
+
   .list-name
     margin: 0 $space-2
 
@@ -24,22 +26,12 @@
     white-space: nowrap
     font-weight: $font-light
 
-  @media (min-width: $screen-sm-min)//{}
+  @media (min-width: $screen-md-min)//{}
     .listings
       .listing-result
         width: 30%
 
-  @media (min-width: $screen-md-min)//{}
-    .list-name
-      margin: 0 $space-4
-
-    .listings
-      .listing-result
-        margin: $space-4
-        width: 20%
-
   @media (min-width: $screen-xl-min)//{}
-    margin: $space-7 $space-8
 
     .list-name
       margin: 0 $space-4
@@ -52,12 +44,5 @@
         margin: $space-4
         max-width: 21%
         min-width: 20%
-
-  @media (min-width: $screen-xxl-min)//{}
-    .listings
-      .listing-result
-        max-width: 15%
-        min-width: 14%
-
 
 
